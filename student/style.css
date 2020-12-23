@@ -1,0 +1,17 @@
+
+.cbox{
+  background-color: rgb(243,247,254);
+  padding:0;
+  height: 200px;
+  width: 250px;
+  margin-right: 10px;
+  margin-top: 10px;
+  display:inline-block;
+}
+.courseslist{
+
+    margin-top:30px ;
+    margin-left:50px ;
+    margin-bottom: 0px;
+
+}

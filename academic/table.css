@@ -1,0 +1,36 @@
+/* ---------------------------------------------------
+    table STYLE
+----------------------------------------------------- */
+.table-container{
+    background-color: rgba(31, 108, 236, 0.03);
+    border-radius: 8px;
+   padding: 0 10px;
+}
+
+.table thead tr th{
+    border: none !important;
+}
+.table td{
+  text-align: center;
+   vertical-align: middle;
+}
+.table th{
+  text-align: center;
+   vertical-align: middle;
+}
+/* ---------------------------------------------------
+    approve button
+----------------------------------------------------- */
+#button{
+/*   */
+  border-radius:8px;
+  font-family:Arial;
+/*  background-color: #1F6CEC;*/
+  padding:12px 30px;
+  float: right;
+  margin-right: 30px;
+}
+#button:hover{
+	background-color:rgba(31, 108, 236);
+color: white;
+}

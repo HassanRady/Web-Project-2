@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>landing page</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	
+
+	<link rel="stylesheet" type="text/css" href="css/landing.css">
+
+
+
+	
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <img src="media/logo.png" width="166" alt="" class="LOGO"> <!-- Logo Text --><span class="text-uppercase font-weight-bold"></span>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="#About">About SIM</a></li>
+                    <li><a href="#req">Requirements</a></li>
+                    <li><a href="#How">How to apply to SIM</a></li>
+                    <li><a href="#">Contact</a></li> 
+                    <li> <a href="login.html"><button style="width: 100px;height: 50px; margin-left: 15px; font-size: 20px; " id="loginbutton" type="button" class="btn btn-outline-light">Login</button></a></li>
+
+                </ul>
+            </div>
+            <span class="navTrigger">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </div>
+    </nav>
+
+    <section class="home">
+    <h1  class="h"> Welcome to SIM department</h1>
+    <hr style=" width:500px ; border-top: 1px solid white;" >
+    
+    </section>
+    <div style="height: 1000px">
+        <!-- just to make scrolling effect possible -->
+<br><br>
+<div class="maincourse" >
+
+	<div style="text-align:center">
+
+  <h2 style="font-size: 35px; color: #154360;">Our courses</h2>
+  <hr style="width: 450px;">
+ 
+</div>
+
+<br><Br>
+
+<!-- Three columns -->
+<div class="row" style=" text-align: center;  ">
+  <div class="column" onclick="openTab('b1');" style="background:#AED6F1; border-radius: 20px;">software</div>
+  <div class="column" onclick="openTab('b2');" style="background:#85C1E9;border-radius: 20px;">Gaming</div>
+  <div class="column" onclick="openTab('b3');" style="background:#3498DB;border-radius: 20px;">Multimedia</div>
+
+</div>
+
+<!-- Full-width columns: (hidden by default) -->
+<div id="b1" class="containerTab" style="display:none;background:#AED6F1;font-size: 17px;">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <h2>software</h2>
+  <p>Lorem ipsum dolor sit amet, te quo doctus abhorreant, et pri deleniti intellegat, te sanctus inermis ullamcorper nam. Ius error diceret deseruisse ad</p>
+  <ul><li>sohila</li>
+  <li>sohila</li>
+<li>sohila</li></ul>
+</div>
+
+<div id="b2" class="containerTab" style="display:none;background:#85C1E9;font-size: 17px;">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <h2>gaming</h2>
+  <p>Lorem ipsum dolor sit amet, te quo doctus abhorreant, et pri deleniti intellegat, te sanctus inermis ullamcorper nam. Ius error diceret deseruisse ad</p>
+  <ul><li>sohila</li>
+  <li>sohila</li>
+<li>sohila</li></ul>
+</div>
+
+<div id="b3" class="containerTab" style="display:none;background:#3498DB;font-size: 17px;">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <h2>multimedia</h2>
+  <p>Lorem ipsum dolor sit amet, te quo doctus abhorreant, et pri deleniti intellegat, te sanctus inermis ullamcorper nam. Ius error diceret deseruisse ad</p>
+  <ul><li>sohila</li>
+  <li>sohila</li>
+<li>sohila</li></ul>
+</div>
+
+<br><br><br>
+
+<div class="row" style=" text-align: center; ">
+  <div class="column" onclick="openTab('b4');" style="background:#A9CCE3 ; border-radius: 20px;">Data science</div>
+  <div class="column" onclick="openTab('b5');" style="background:  #7FB3D5;border-radius: 20px;">intelligence </div>
+  <div class="column" onclick="openTab('b6');" style="background:#5499C7 ;border-radius: 20px;">cloud comp</div>
+
+</div>
+
+<!-- Full-width columns: (hidden by default) -->
+<div id="b4" class="containerTab" style="display:none;background:#A9CCE3 ;font-size: 17px;">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <h2>Data science</h2>
+  <p>Lorem ipsum dolor sit amet, te quo doctus abhorreant, et pri deleniti intellegat, te sanctus inermis ullamcorper nam. Ius error diceret deseruisse ad</p>
+  <ul><li>sohila</li>
+  <li>sohila</li>
+<li>sohila</li></ul>
+</div>
+
+<div id="b5" class="containerTab" style="display:none;background:  #7FB3D5;font-size: 17px;">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <h2>intelligence</h2>
+  <p>Lorem ipsum dolor sit amet, te quo doctus abhorreant, et pri deleniti intellegat, te sanctus inermis ullamcorper nam. Ius error diceret deseruisse ad</p>
+  <ul><li>sohila</li>
+  <li>sohila</li>
+<li>sohila</li></ul>
+</div>
+
+<div id="b6" class="containerTab" style="display:none;background:#5499C7 ;font-size: 17px;">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <h2>cloud comp</h2>
+  <p>Lorem ipsum dolor sit amet, te quo doctus abhorreant, et pri deleniti intellegat, te sanctus inermis ullamcorper nam. Ius error diceret deseruisse ad</p>
+  <ul><li>sohila</li>
+  <li>lol</li>
+<li>lol</li></ul>
+</div>
+
+
+
+
+
+<script>
+function openTab(tabName) {
+  var i, x;
+  x = document.getElementsByClassName("containerTab");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  document.getElementById(tabName).style.display = "block";
+}
+</script>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+         <br>
+            <br>
+            <hr style=" border-top: 1px solid #154360;">
+            <br>
+            <h2 id="About" class="myH2">About SIM ?</h2>
+           
+            <p class="myP">I HOPE YOU FIND THIS USEFULL</p>
+          
+                <p class="myP">
+                
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+            </p>
+            <br>
+            <br>
+            <hr style=" border-top: 1px solid #154360;">
+            <br>
+              <h2 id="req" class="myH2">Requirements</h2>
+              <p class="myP">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam</p>
+                 <br>
+            <br>
+
+            <hr style=" border-top: 1px solid #154360;">
+            <br>
+                <h2 id="How" class="myH2">How to apply to SIM</h2>
+              <p class="myP">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam</p>
+    </div>
+
+
+<div class="foot">
+<footer style="background-color: #154360" class="page-footer font-small mdb-color pt-4" class="page-footer font-small blue">
+
+  <!-- Copyright -->
+
+   <!-- Footer Links -->
+  
+    <!-- Footer links -->
+  <div style="color: white;" class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a style="color: white;" href="#"> @BWCS & @PLUS ULTRA</a>
+  </div></div>
+  <!-- Copyright -->
+
+</footer>
+</div>
+<!-- Footer -->
+<!-- Jquery needed -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/scripts.js"></script>
+
+<!-- Function used to shrink nav bar removing paddings and adding black background -->
+    <script>
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > 50) {
+                $('.nav').addClass('affix');
+                console.log("OK");
+            } else {
+                $('.nav').removeClass('affix');
+            }
+        });
+    </script>
+
+
+<!-- Function btst5dam lma el window tb2a so8ira -->
+    <script >$('.navTrigger').click(function () {
+    $(this).toggleClass('active');
+    console.log("Clicked menu");
+    $("#mainListDiv").toggleClass("show_list");
+    $("#mainListDiv").fadeIn();
+
+});</script>
+
+
+</body>
+</html>

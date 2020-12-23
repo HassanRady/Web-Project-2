@@ -1,0 +1,39 @@
+.course-box{
+  color:#1F6CEC;
+  
+  border:#1F6CEC 1px solid;
+  
+}
+.right-btn{
+  float: right;
+}
+
+label{
+	color: rgba(31,108,236);
+}
+/* professors  and student*/ 
+
+.modal-title{
+	color: rgba(31,108,236);
+}
+.table-head{
+	color: rgba(31,108,236);
+}
+.bo{
+	color: rgba(0,0,0,0.5);
+}
+.col-form-label{
+	color: rgba(0,0,0,0.5);
+}
+
+/* students */
+.level{
+padding-left: 9px;
+}
+.phone{
+	padding-left: 5px;
+}
+.search-btn{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}

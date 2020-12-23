@@ -1,0 +1,40 @@
+.conbody{
+
+background-color: rgb(31,108,236,0.03);
+color:rgb(31,108,236);
+padding: 20px 50px ;
+border-radius: 8px;
+margin-bottom: 10px;
+
+}
+tr td {
+  color: rgb(0,0,0,0.5);
+}
+.btn-grp{
+  min-height: 100%;
+  /* padding-top: 18px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+.btn-grp button{
+  min-width: 100%;
+  margin-bottom: 10px;
+}
+.label{
+  font-weight: bold;
+
+}
+button{
+  display: inline-block;
+
+}
+
+
+a{
+  color:rgb(31,108,236);
+    color: rgb(0,0,0,0.5);
+  display: inline-block;
+}

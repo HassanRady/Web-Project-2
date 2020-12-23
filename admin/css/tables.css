@@ -1,0 +1,9 @@
+.table-container{
+    background-color: rgba(31, 108, 236, 0.03);
+    border-radius: 8px; 
+    padding: 0 10px;
+}
+
+.table thead tr th{
+    border: none !important; 
+}

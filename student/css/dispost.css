@@ -1,0 +1,50 @@
+.post{
+  background-color: rgb(31,108,236, 0.03);
+  padding:40px;
+  border-radius: 8px;
+  margin-top: 17px;
+}
+
+.discussion-form{
+  background-color: rgb(31,108,236, 0.03);
+  padding:20px;
+  border-radius: 8px;
+}
+
+.post h6, .discussion-form h5{
+  color:rgb(31,108,236);
+  font-weight: bold;
+}
+.post p{
+  padding-left: 15px;
+  font-size: 16px;
+}
+.date{
+  float: right;
+
+}
+.btn-grp{
+  min-height: 100%;
+  padding: 0 15px;
+  margin-top: 8px;
+  /* padding-top: 0px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly; 
+}
+
+.btn-grp div{
+  text-align: center;
+  color: rgb(31,108,236);
+}
+.btn-grp a{
+  color: #ffffff !important;
+  padding: 10px;
+}
+
+/* @media (max-width: 767.98px) { 
+  .btn-grp *{
+    margin-top: 0px;
+  }      
+} */
