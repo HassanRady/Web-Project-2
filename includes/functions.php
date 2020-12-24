@@ -177,6 +177,128 @@
         }
     }
 
+    function getCourseMaterial($courseId, $semester){
+      global $conn;
+        $query = "SELECT m.title, u.first_name, u.last_name, material_ref FROM materials m
+        INNER JOIN users u ON u.id = m.id_user
+        WHERE id_course = $courseId AND semester_id = $semester";
+        $query_result = mysqli_query($conn, $query);
+
+        while($row = mysqli_fetch_assoc($query_result)){
+          $title = $row['title'];
+          $fname = $row['first_name'];
+          $lname = $row['last_name'];
+          $material = $row['material_ref'];
+          echo "<div class='container-fluid'>
+          <div class='row conbody  text-center text-lg-left'>
+            <div class='col-lg-5'>
+              <a href='$material' target='_blank' class='a'>$title</a>
+            </div>
+            <div class='col-lg-4'>
+              <p>$fname $lname</p>
+            </div>
+            <div class='col-lg-3'>
+              <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
+            </div>
+          </div>
+        </div>";
+             
+        }      
+    }
+
+
+
+    function getCourseMaterialEditable($courseId, $semester){
+      global $conn;
+        $query = "SELECT m.title, u.first_name, u.last_name, material_ref, material_id FROM materials m
+        INNER JOIN users u ON u.id = m.id_user
+        WHERE id_course = $courseId AND semester_id = $semester";
+        $query_result = mysqli_query($conn, $query);
+
+        while($row = mysqli_fetch_assoc($query_result)){
+          $title = $row['title'];
+          $fname = $row['first_name'];
+          $lname = $row['last_name'];
+          $material = $row['material_ref'];
+          $material_id = $row['material_id'];
+          echo "<div class='container-fluid'>
+          <div class='row conbody  text-center text-lg-left' >
+            <div class='col-lg-5'>
+              <a href='$material' target='_blank' class='a'>$title</a>
+            </div>
+            <div class='col-lg-4'>
+              <p>$fname $lname</p>
+            </div>
+            <div class='col-lg-3'>
+            <a  data-id='$material_id' data-title='$title' data-file='../files/$material' class='btn btn-primary btn-block launch-modal' data-toggle='modal' data-target='#modalContactForm'>Options</a>
+            </div>
+          </div>
+        </div>";
+        // <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
+             
+        }      
+    }
+
+
+    
+
+
+    function uploadMaterial ($file){
+        $file_name = $file['name'];
+        $file_tmp_name = $file['tmp_name'];
+        $file_error = $file['error'];
+        $file_size = $file['size'];
+        $file_type = $file['type'];
+    
+        if($file_error === 0){
+            $fname=explode('.' , $file_name);
+            $new_file_name = uniqid('', true) . "." . strtolower(end($fname));
+            $destination = "../files/". $new_file_name ;
+            move_uploaded_file($file_tmp_name, $destination);
+            return $destination;
+        }
+
+        return false;
+
+    }
+
+
+    function putMaterialInDB($courseId, $semester, $title, $location, $user_id){
+      global $conn;
+      $title = mysqli_real_escape_string($conn, $title);
+      $query = "INSERT INTO materials(id_course, id_user, title, material_ref, semester_id)
+      VALUES('$courseId', '$user_id', '$title', '$location', '$semester')";
+      $query_result = mysqli_query($conn, $query);
+      if(!$query_result){
+        die(mysqli_error($conn));
+      }
+    }
+
+    function updateMaterial($title, $location, $material_id){
+      global $conn;
+      $title = mysqli_real_escape_string($conn, $title);
+      $query = "UPDATE materials SET
+      title='$title',
+      material_ref='$location'
+      WHERE
+      material_id=$material_id";
+      $query_result = mysqli_query($conn, $query);
+      if(!$query_result){
+        die(mysqli_error($conn));
+      }
+    }
+
+    function deleteMaterial($material_id){
+      global $conn;
+      $query = "DELETE FROM materials WHERE material_id=$material_id";
+      $query_result = mysqli_query($conn, $query);
+      if(!$query_result){
+        die(mysqli_error($conn));
+      }
+    }
+
+
+    
 
 
 

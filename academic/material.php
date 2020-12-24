@@ -1,5 +1,31 @@
 <?php
 include "../includes/functions.php";
+
+$courseId = $_GET['course_id'];      
+$semester = $_GET['sem_id'];
+
+
+if(isset($_POST['editChanges'])){
+  $newName=$_POST['materialTitle'];
+
+  if($newName && $newName != ''){
+    if(isset($_FILES['material_file'])){
+      $location = uploadMaterial($_FILES['material_file']);
+      updateMaterial($newName, $location, $_POST['materialId']);
+      header("Location: material.php?course_id=$courseId&sem_id=$semester");
+    }else{
+      die("something went wrong");
+    }
+    
+  }
+}
+
+if(isset($_POST['remove'])){
+  deleteMaterial($_POST['materialId']);
+  header("Location: material.php?course_id=$courseId&sem_id=$semester");
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,8 +50,7 @@ include "../includes/functions.php";
       <!-- Sidebar  -->
       <?php 
         include "../includes/prof_sidebar.php";
-        $courseId = $_GET['course_id'];      
-        $semester = $_GET['sem_id'];      
+              
       ?>
       <!-- Page Content  -->
       <div id="content">
@@ -82,28 +107,33 @@ include "../includes/functions.php";
 
           <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modalLabel">Edit Material</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+            <form action="#" method="post" enctype="multipart/form-data">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Edit Material</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <label class="label" for="materialTitle">Venue Name</label>
+                    <input type="text" class="form-control" id="materialTitle" name="materialTitle">
+                    <br />
+                    <label for="custom-file">Upload file</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" name="material_file" >
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                   <input type="text" class="form-control" name="materialId" id="materialId" style="display:none;">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" name="editChanges" class="btn btn-primary">Save changes</button>
+                    <button type="submit" name="remove" class="btn btn-outline-danger">Remove</button>
                 </div>
-                <div class="modal-body">
-                  <label class="label" for="materialTitle">Venue Name</label>
-                  <input type="text" class="form-control" id="materialTitle">
-                  <br />
-                  <label class="label" for="materialLocation">Vanue Location</label>
-                  <input type="file" class="form-control" id="materialLocation">
                 </div>
-                <div class="modal-footer">
-
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                  <button type="button" class="btn btn-outline-danger">Remove</button>
-               </div>
               </div>
-            </div>
+            </form>
           </div>
 
 
@@ -129,6 +159,13 @@ include "../includes/functions.php";
 
   <script type="text/javascript" src="../js/rootJS.js"></script>
   <script type="text/javascript" src="js/modal_material.js"></script>
+  <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+        </script>
 
 </body>
 

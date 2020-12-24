@@ -126,6 +126,7 @@
     </div>
 
     <?php include "../includes/bootstrap_styles_end.php"; ?>
+    <script type="text/javascript" src="../js/rootJS.js"></script>
 
 </body>
 

@@ -18,10 +18,11 @@ button{
 
 }
 
-
+.launch-modal{
+  color: #fff !important;
+}
 .a{
   text-align: center;
-  color:rgb(31,108,236);
     color: rgb(0,0,0,0.5);
     font-weight: bold;
   display: inline-block;
