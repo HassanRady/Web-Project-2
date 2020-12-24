@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
+<?php
+include '../includes/functions.php';
+$id_course=$_GET['courseid'];
+$id_instructor=$_GET['instructorid'];
+if(isset($_POST['remove'])){
+    remove_prof_assignment();
+}
+?>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>DOCTOR ASSIGNMENT 1</title>
+    <title>Collapsible sidebar using Bootstrap 4</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../css/rootStyles.css">
-    <link rel="stylesheet" href="prof-assmt.css">
+    <link rel="stylesheet" href="css/assmt_hand_ins.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -68,7 +76,7 @@
                         <i class="fas fa-align-left"></i>
                         <!-- <span id="nav-toggle-text">Navigation</span> -->
                     </button>
-                    <a class="navbar-brand" id="page-title" href="#">TITLE</a>
+                    <a class="navbar-brand" id="page-title" href="#">Assignments</a>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +89,7 @@
                                 <a class="nav-link" href="discussion.html">Discusssion</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
+                                <a class="nav-link" href="assignment-hand-ins.php">Assignments</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Material.html">Material</a>
@@ -98,74 +106,51 @@
 
 
 
-
+            <!--page body-->
             <div class="page-body">
-                <!-- START HERE -->
-
-                <div class="row">
-                    <div class="col-md-12 order-md-1 col-lg-12">
-                        <h4 class="mb-3">Upload Assignment</h4>
-                        <hr class="mb-4">
-                        <form class="needs-validation" novalidate>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="title">Title</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="" value=""
-                                        required>
-                                    <div class="invalid-feedback">
-                                        Valid title is required.
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-12 mb-3">
-                                    <label for="group">Group</label>
-                                    <input name="group" type="text" class="form-control" id="firstName" placeholder="" value=""
-                                        required>
-                                </div>
-                                <div class="col-lg-3 col-md-12 mb-3">
-                                    <label for="lastName">Due Date</label>
-                                    <input type="date" class="form-control" id="lastName" placeholder="" value=""
-                                        required>
-                                </div>
-                                <div class="col-lg-3 col-md-12 mb-3">
-                                    <label for="lastName">Time</label>
-                                    <input type="time" class="form-control" id="lastName" placeholder="" value=""
-                                        required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12 mb-3">
-                                    <label for="custom-file">Upload file</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-lg-12 mb-3">
-                                    <label for="aboutTextArea">Description</label>
-                                    <textarea class="form-control" placeholder="What is required?" id="aboutTextArea"
-                                        style="resize: none; height: 150px;"></textarea>
-                                </div>
-
-                            </div>
 
 
 
-                            <hr class="mb-4">
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Upload</button>
-                        </form>
-                        <br>
+                <div class="container-fluid">
+                    <div class="row justify-content-end">
+                        <a href="upload-prof-assmt.php" class=" btn btn-primary btn-block w-25">Upload New</a>
                     </div>
                 </div>
-                <!-- STOP HERE -->
+                <hr class="mb-4">
+
+<?php
+show_prof_assignment($id_course,$id_instructor);
+?>
+
 
             </div>
-
-
         </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!---->
+
+
+
+
+
+
+
+
+
+
+
+    </div>
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -184,7 +169,7 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Navbar -->
-    <script type="text/javascript" src="rootJS.js"></script>
+    <script type="text/javascript" src="../js/rootJS.js"></script>
 
 </body>
 

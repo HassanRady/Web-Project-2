@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
+<?php
+include "../includes/functions.php";
+$id_course=$_GET['courseid'];
+$id_instructor=$_GET['instructorid'];
+if(isset($_POST['upload'])){
 
+    add_assignment($id_course,$id_instructor);
+}
+?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+    <title>DOCTOR ASSIGNMENT 1</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../css/rootStyles.css">
-    <link rel="stylesheet" href="css/assmt_hand_ins.css">
+    <link rel="stylesheet" href="prof-assmt.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -68,7 +76,7 @@
                         <i class="fas fa-align-left"></i>
                         <!-- <span id="nav-toggle-text">Navigation</span> -->
                     </button>
-                    <a class="navbar-brand" id="page-title" href="#">Assignments</a>
+                    <a class="navbar-brand" id="page-title" href="#">TITLE</a>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +89,7 @@
                                 <a class="nav-link" href="discussion.html">Discusssion</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
+                                <a class="nav-link" href="assignment-hand-ins.php">Assignments</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Material.html">Material</a>
@@ -98,131 +106,75 @@
 
 
 
-            <!--page body-->
+
             <div class="page-body">
+                <!-- START HERE -->
+
+                <div class="row">
+                    <div class="col-md-12 order-md-1 col-lg-12">
+                        <h4 class="mb-3">Upload Assignment</h4>
+                        <hr class="mb-4">
+                        <form class="needs-validation" novalidate method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12 mb-3">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control" name="assignment-title" id="title" placeholder="" value=""
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Valid title is required.
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-12 mb-3">
+                                    <label for="group">Group</label>
+                                    <input name="group" type="text" name="group" class="form-control" id="group" placeholder="" value=""
+                                        required>
+                                </div>
+                                <div class="col-lg-3 col-md-12 mb-3">
+                                    <label for="due date">Due Date</label>
+                                    <input type="date" name="due_date" class="form-control" id="due_date" placeholder="" value=""
+                                        required>
+                                </div>
+                                <div class="col-lg-3 col-md-12 mb-3">
+                                    <label for="time">Time</label>
+                                    <input type="time" name="time" class="form-control" id="time" placeholder="" value=""
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 mb-3">
+                                    <label for="custom-file">Upload file</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="assignment" class="custom-file-input" id="customFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-12 mb-3">
+                                    <label for="aboutTextArea">Description</label>
+                                    <textarea class="form-control" name="description" placeholder="What is required?" id="aboutTextArea"
+                                        style="resize: none; height: 150px;"></textarea>
+                                </div>
+
+                            </div>
 
 
-                <!-- <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm">
-                            <br>
-                            <sub>Title:</sub>
-                            <p>web programming sheet</p>
 
+                            <hr class="mb-4">
 
-                        </div>
-                        <div class="col-sm">
-                            <br>
-                            <sub>Uploaded by:</sub>
-                            <p>prof.farah</p>
-                        </div>
-                        <div class="col-sm">
-                            <br>
-                            <sub>Date:</sub>
-                            <p> 11/11/2020</p>
-
-
-                        </div>
-
-                        <div class="col-sm" id="upload">
-                            <br>
-                            <button type="button" class="btn btn-primary btn-sm">student uplaod</button>
-
-
-                        </div>
-
-
-                        <div class="col-sm" id="edre">
-                            <br>
-                            <button type="button" class="btn btn-primary btn-sm" id="editt"> Edit</button>
-
-
-                            <button type="button" class="btn btn-outline-danger btn-sm " id="remove">Remove</button>
-
-                        </div>
-
-
-                    </div> -->
-
-                <div class="container-fluid">
-                    <div class="row justify-content-end">
-                        <a href="upload-prof-assmt.html" class=" btn btn-primary btn-block w-25">Upload New</a>
+                            <button class="btn btn-primary btn-lg btn-block" name="upload" type="submit">Upload</button>
+                        </form>
+                        <br>
                     </div>
                 </div>
-                <hr class="mb-4">
-                <div class="conbody container-fluid">
-
-                    <div class="row">
-                        <div class="btn-grp col-lg-5 col-md-12">
-                            <table class="table table-borderless ">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Assignment</th>
-                                        <td>Web Programming Sheet</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Due Date</th>
-                                        <td>1/1/2021</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="btn-grp col-lg-5 col-md-12">
-                            <table class="table table-borderless ">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Course</th>
-                                        <td>Web Programming</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Upload Date</th>
-                                        <td>31/12/2020</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="btn-grp col-lg-2 col-md-12">
-                            <a href="#" class="btn btn-primary">View</a>
-                            <a href="#" class="btn btn-outline-secondary">Edit</a>
-                            <a href="#" class="btn btn-outline-danger">Remove</a>
-                        </div>
-
-
-
-                    </div>
-                </div>
-
+                <!-- STOP HERE -->
 
             </div>
+
+
         </div>
-
-
-
     </div>
-
-
-
-
-
-
-
-
-    <!---->
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-    </div>
-
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -240,7 +192,13 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Navbar -->
     <script type="text/javascript" src="../js/rootJS.js"></script>
-
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
 </body>
 
 </html>
