@@ -24,7 +24,6 @@
     <?php 
       include "../includes/std_sidebar.php";
       $std_id = $_GET['std_id'];
-      $semester = $_GET['sem_id'];
     ?>
 
 
@@ -68,7 +67,7 @@
           <div class="row courseslist ">
 
               <?php
-                getStudentCourses($std_id, $semester);
+                getStudentCourses($std_id);
               ?>
 
             </div>

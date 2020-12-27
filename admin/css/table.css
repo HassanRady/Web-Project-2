@@ -1,0 +1,23 @@
+.table-container{
+    background-color: rgba(31, 108, 236, 0.03);
+    border-radius: 8px; 
+    padding: 0 10px;
+}
+
+.table thead tr th{
+    border: none !important; 
+}
+
+td a.assmt-downlaod{
+    color: rgb(31, 108, 236) !important;
+}
+td input{
+    width: 60px;
+}
+tbody{
+    color: rgba(0,0,0,0.5);
+}
+
+th{
+    color: rgb(31, 108, 236) !important;
+}

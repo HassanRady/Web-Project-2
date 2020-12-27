@@ -24,7 +24,6 @@ include "../includes/functions.php";
     <?php
         include "../includes/prof_sidebar.php";
         $courseId = $_GET['course_id'];
-        $semester = $_GET['sem_id'];
     ?>
     <!-- Page Content  -->
     <div id="content">
@@ -43,24 +42,24 @@ include "../includes/functions.php";
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto secondary-navigation">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="discussion.php?<?php echo "course_id=" . $courseId . "&sem_id=" . $semester ?>">Discusssion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="assignment-hand-ins.php?<?php echo "course_id=" . $courseId . "&sem_id=" . $semester ?>">Assignments</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Material.php?<?php echo "course_id=" . $courseId . "&sem_id=" . $semester ?>">Material</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#>">Students</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="std_grades.php?<?php echo "course_id=" . $courseId . "&sem_id=" . $semester ?>">Marks</a>
-                        </li>
-                    </ul>
-                </div>
+                      <ul class="nav navbar-nav ml-auto secondary-navigation">
+                          <li class="nav-item active">
+                              <a class="nav-link" href="discussion.php?course_id=<?php echo $courseId ?>">Discusssion</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="assignment-hand-ins.php?course_id=<?php echo $courseId ?>">Assignments</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="material.php?course_id=<?php echo $courseId ?>">Material</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="students_in_course.php?course_id=<?php echo $courseId ?>">Students</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="std_grades.php?course_id=<?php echo $courseId ?>">Marks</a>
+                          </li>
+                      </ul>
+                  </div>
             </div>
         </nav>
         <div class="page-body">
@@ -84,7 +83,7 @@ include "../includes/functions.php";
                         </thead>
                         <tbody style="color: rgb(0,0,0,0.5);">
                             <?php 
-                                getRegisteredStudents($courseId, $semester);
+                                getRegisteredStudents($courseId);
                             ?>
                         </tbody>
                     </table>

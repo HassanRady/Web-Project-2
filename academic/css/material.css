@@ -5,7 +5,7 @@ background-color: rgb(31,108,236,0.03);
 color:rgb(31,108,236);
 padding: 20px 50px ;
 border-radius: 8px;
-margin-bottom: 10px;
+/* margin-bottom: 5px; */
 
 }
 tr td {
@@ -27,6 +27,16 @@ button{
     font-weight: bold;
   display: inline-block;
 }
- p{
-   font-size: 16px;
- }
+p{
+  font-size: 16px;
+}
+
+.conbody> .text{
+  padding-top: 15px !important; 
+}
+.btn-column{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}

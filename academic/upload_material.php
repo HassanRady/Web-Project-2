@@ -1,15 +1,16 @@
 <?php
+ob_start();
 include "../includes/functions.php"; 
-
+session_start();
 $courseId = $_GET['course_id'];
-$semester = $_GET['sem_id'];
+// $user_id = $_SESSION['user_id'];
 $user_id = 1;
 
 if(isset($_POST['submit'])){
     $location = uploadMaterial($_FILES['material_file']);
     if($location){
-        putMaterialInDB($courseId, $semester, $_POST['material_title'], $location, $user_id);
-        header("Location: material.php?course_id=$courseId&sem_id=$semester");
+        putMaterialInDB($courseId, $_POST['material_title'], $location, $user_id);
+        header("Location: material.php?course_id=$courseId");
     }
 }
 
@@ -56,24 +57,24 @@ if(isset($_POST['submit'])){
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="discussion.html">Discusssion</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="Material.html">Material</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="students_in_course.html">Students</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="std_grades.html">Marks</a>
-                            </li>
-                        </ul>
-                    </div>
+                      <ul class="nav navbar-nav ml-auto secondary-navigation">
+                          <li class="nav-item active">
+                              <a class="nav-link" href="discussion.php?course_id=<?php echo $courseId ?>">Discusssion</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="assignment-hand-ins.php?course_id=<?php echo $courseId ?>">Assignments</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="material.php?course_id=<?php echo $courseId ?>">Material</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="students_in_course.php?course_id=<?php echo $courseId ?>">Students</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="std_grades.php?course_id=<?php echo $courseId ?>">Marks</a>
+                          </li>
+                      </ul>
+                  </div>
             </nav>
 
 

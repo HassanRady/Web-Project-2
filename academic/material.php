@@ -2,7 +2,6 @@
 include "../includes/functions.php";
 
 $courseId = $_GET['course_id'];      
-$semester = $_GET['sem_id'];
 
 
 if(isset($_POST['editChanges'])){
@@ -12,7 +11,7 @@ if(isset($_POST['editChanges'])){
     if(isset($_FILES['material_file'])){
       $location = uploadMaterial($_FILES['material_file']);
       updateMaterial($newName, $location, $_POST['materialId']);
-      header("Location: material.php?course_id=$courseId&sem_id=$semester");
+      header("Location: material.php?course_id=$courseId");
     }else{
       die("something went wrong");
     }
@@ -22,7 +21,7 @@ if(isset($_POST['editChanges'])){
 
 if(isset($_POST['remove'])){
   deleteMaterial($_POST['materialId']);
-  header("Location: material.php?course_id=$courseId&sem_id=$semester");
+  header("Location: material.php?course_id=$courseId");
 
 }
 
@@ -72,19 +71,19 @@ if(isset($_POST['remove'])){
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="nav navbar-nav ml-auto secondary-navigation">
                           <li class="nav-item active">
-                              <a class="nav-link" href="discussion.html">Discusssion</a>
+                              <a class="nav-link" href="discussion.php?course_id=<?php echo $courseId ?>">Discusssion</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
+                              <a class="nav-link" href="assignment-hand-ins.php?course_id=<?php echo $courseId ?>">Assignments</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="#">Material</a>
+                              <a class="nav-link" href="material.php?course_id=<?php echo $courseId ?>">Material</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="students_in_course.html">Students</a>
+                              <a class="nav-link" href="students_in_course.php?course_id=<?php echo $courseId ?>">Students</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="std_grades.html">Marks</a>
+                              <a class="nav-link" href="std_grades.php?course_id=<?php echo $courseId ?>">Marks</a>
                           </li>
                       </ul>
                   </div>
@@ -102,7 +101,7 @@ if(isset($_POST['remove'])){
         <hr class="mb-4">
 
         <?php 
-          getCourseMaterialEditable($courseId, $semester);
+          getCourseMaterialEditable($courseId);
         ?>
 
           <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

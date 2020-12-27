@@ -9,4 +9,4 @@ $(document).on("click", ".launch-modal", function () {
     // it is unnecessary to have to manually call the modal.
     // $('#addBookDialog').modal('show');
 });
-share  
+

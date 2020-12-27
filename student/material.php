@@ -25,7 +25,6 @@ include "../includes/functions.php";
       <?php 
         include "../includes/std_sidebar.php";
         $courseId = $_GET['course_id'];      
-        $semester = $_GET['sem_id'];      
       ?>
       <!-- Page Content  -->
       <div id="content">
@@ -47,19 +46,16 @@ include "../includes/functions.php";
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="nav navbar-nav ml-auto secondary-navigation">
                           <li class="nav-item active">
-                              <a class="nav-link" href="discussion.html">Discusssion</a>
+                              <a class="nav-link" href="discussion.php?course_id=<?php echo $courseId ?>">Discusssion</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
+                              <a class="nav-link" href="assignment-hand-ins.php?course_id=<?php echo $courseId ?>">Assignments</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="#">Material</a>
+                              <a class="nav-link" href="material.php?course_id=<?php echo $courseId ?>">Material</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link" href="students_in_course.html">Students</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="std_grades.html">Marks</a>
+                              <a class="nav-link" href="my_marks_std.php?course_id=<?php echo $courseId ?>">Marks</a>
                           </li>
                       </ul>
                   </div>
@@ -69,7 +65,7 @@ include "../includes/functions.php";
         <!-- START HERE -->
 
         <?php 
-          getCourseMaterial($courseId, $semester);
+          getCourseMaterial($courseId);
         ?>
 
         <!-- STOP HERE -->

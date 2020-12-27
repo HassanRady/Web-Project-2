@@ -22,7 +22,6 @@
     <?php 
       include "../includes/prof_sidebar.php";
       $instructorId = $_GET['instructor_id'];
-      $semester = $_GET['sem_id'];
     ?>
     <!-- Page Content  -->
     <div id="content">
@@ -50,7 +49,7 @@
 
             <?php
 
-            getInstructorCourses($instructorId, $semester);
+            getInstructorCourses($instructorId);
             ?>
             
             
