@@ -14,3 +14,13 @@ function encrypt_password($password, $cost = 10)
     $password_encrypted = password_hash($password, PASSWORD_BCRYPT, $options);
     return $password_encrypted;
 }
+
+// function to compare if a substring from an array of substrings exists in a string
+function which_type($haystack, $needle, $offset=0) {
+    if(!is_array($needle)) $needle = array($needle);
+    foreach($needle as $query) {
+        if(strpos($haystack, $query, $offset) !== false) 
+            return $query;   // stop on first true result
+    }
+    return false;
+}

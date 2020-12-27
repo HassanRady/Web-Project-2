@@ -1,5 +1,5 @@
 <?php
-include "../includes/SQLfunctions.php";
+include "../includes/functions.php";
 update();
 ?>
 
@@ -151,9 +151,16 @@ update();
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Gender</label>
                                     <select class="custom-select d-block w-100" id="country" name="gender" required>
-                                        <option><?php echo $gender ?></option>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                    <option><?php echo $gender ?></option>
+                                        <?php
+
+                                        if ($gender == "Male") {
+                                            echo "<option>Female</option>";
+                                        } else {
+                                            echo "<option>Male</option>";
+                                        }
+
+                                        ?>
                                     </select>
                                     <div class="invalid-feedback">
                                         Please select a valid country.

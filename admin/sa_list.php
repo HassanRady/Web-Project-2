@@ -145,7 +145,7 @@
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                include "../includes/SQLfunctions.php";
+                                include "../includes/functions.php";
                                 showData();
                                 ?>
 

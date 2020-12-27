@@ -1,3 +1,8 @@
+<?php 
+  include "includes/functions.php";
+  update();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -60,7 +65,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">My Profile</a>
+                    <a href="my_profile.php?id=<?php echo $id_user.'&type='.$type ?>">My Profile</a>
                 </li>
                 <li>
                     <a href="#">Timetable</a>
@@ -86,7 +91,7 @@
                         <i class="fas fa-align-left"></i>
                         <!-- <span id="nav-toggle-text">Navigation</span> -->
                     </button>
-                    <a class="navbar-brand" id="page-title" href="#">Web Programming</a>
+                    <a class="navbar-brand" id="page-title" href="#">Edit</a>
                     <div class="ml-auto"></div>
             </nav>
 
@@ -103,25 +108,25 @@
                 <div class="col-md-12 order-md-1 col-lg-12">
                   <h4 class="mb-3">Edit profile</h4>
                   <hr class="mb-4">
-                  <form class="needs-validation" novalidate>
+                  <form class="needs-validation" novalidate action="" method="POST">
                     <div class="row">
                       <div class="col-lg-4 col-md-12 mb-3">
                         <label for="firstName">First name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="firstName" name="first_name" value="<?php echo $first_name ?>" required>
                         <div class="invalid-feedback">
                           Valid first name is required.
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-12 mb-3">
                         <label for="lastName">Middle name </label>
-                        <input type="text" class="form-control" id="middleName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="middleName" name="middle_name" value="<?php echo $middle_name ?>" required>
                         <div class="invalid-feedback">
                           Valid middle name is required.
                         </div>
                       </div>
                       <div class="col-lg-4 col-md-12 mb-3">
                         <label for="lastName">Last name </label>
-                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                        <input type="text" class="form-control" id="lastName" name="last_name" value="<?php echo $last_name ?>" required>
                         <div class="invalid-feedback">
                           Valid last name is required.
                         </div>
@@ -154,7 +159,7 @@
                     <div class="row">
                           <div class="col-lg-6 col-md-12 mb-3">
                             <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                            <input type="text" class="form-control" id="address" name="address" value="<?php echo $address ?>" required>
                             <div class="invalid-feedback">
                               Please enter your address.
                             </div>
@@ -165,17 +170,17 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                           <label for="gender">Student Mobile Number</label>
-                          <input type="text" class="form-control" id="MobileNumber" placeholder="01234567890" required>
+                          <input type="text" class="form-control" id="MobileNumber" name="mobile_number" value="<?php echo $mobile_number ?>" required>
                             <div class="invalid-feedback">Please enter your Mobile Number.</div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                             <label for="gender">Guardian Mobile Number</label>
-                            <input type="text" class="form-control" id="GuardianMobileNumber" placeholder="01234567890" required>
+                            <input type="text" class="form-control" id="GuardianMobileNumber" name="guardian_mobile_number" value="<?php echo $guardian_mobile_number ?>" required>
                               <div class="invalid-feedback">Please enter your Guardian Mobile Number.</div>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                             <label for="gender">Home Phone Number</label>
-                            <input type="text" class="form-control" id="HomePhoneNumber" placeholder="(optional)" required>
+                            <input type="text" class="form-control" id="HomePhoneNumber" name="home_number" value="<?php echo $home_number ?>" required>
                               <div class="invalid-feedback">Please enter your Home Phone Number.</div>
                         </div>
                         
@@ -185,7 +190,7 @@
 
                     <hr class="mb-4">
                     
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">save changes</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">save changes</button>
                   </form>
                   <br>
                 </div>

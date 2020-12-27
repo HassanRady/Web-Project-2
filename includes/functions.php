@@ -9,11 +9,21 @@ function showData($one_record = false, $record_id = 0)
 {
     global $conn, $students_data, $professors_data, $tas_data, $admins_data;
 
-    // getting user type
-    $type = $_GET["type"];
+    // types of users
+    $types = array("sa", "ta", "professor", "student");
+
+    // checking that there is a type
+    if (isset($_GET["type"])) {
+        // getting users type
+        $type = $_GET["type"];
+    } else {
+        // check the file name which it has any type of users
+        $file_name = strtolower(basename($_SERVER['PHP_SELF']));
+        $type = which_type($file_name, $types);
+    }
 
     // subquery for displaying one recored
-    $sql0 = " WHERE u.id = {$record_id};";
+    $sql0 = " WHERE u.id = {$record_id};";         
 
     switch ($type) {
 
@@ -24,7 +34,7 @@ function showData($one_record = false, $record_id = 0)
                 join users u 
                     on s.id_user = u.id";
 
-            // completing the query 
+            // completing the query if one record only is asked for to show
             if ($one_record) {
                 $sql .= $sql0;
             } else {
@@ -328,7 +338,7 @@ function add()
 
 function update()
 {
-    global $conn, $first_name, $middle_name, $last_name, $national_id,
+    global $conn, $type, $first_name, $middle_name, $last_name, $national_id,
         $email, $gender, $mobile_number, $home_number;
 
     $id_user = (int)$_GET['id'];
@@ -365,16 +375,17 @@ function update()
             // if update is pressed 
             if (isset($_POST['update'])) {
 
+// ------------------------------------------------------------------------
                 // retrieving user values from the input form
                 $first_name = $_POST['first_name'];
                 $middle_name = $_POST['middle_name'];
-                $last_name = $_POST['last_name'];
+                $last_name = $_POST['last_name'];                   // this can be written one time with two switch statments (PRIVATE)
                 $national_id = $_POST['national_id'];
                 $email = $_POST['email'];
                 $gender = $_POST['gender'];
                 $mobile_number = $_POST['mobile_number'];
                 $home_number = $_POST['home_number'];
-
+// --------------------------------------------------------------------------
 
                 // handling realescape
                 $email = mysqli_real_escape_string($conn, $email);
@@ -434,7 +445,6 @@ function update()
                 $middle_name = $_POST['middle_name'];
                 $last_name = $_POST['last_name'];
                 $national_id = $_POST['national_id'];
-                $instructor_id = $national_id;
                 $email = $_POST['email'];
                 $gender = $_POST['gender'];
                 $mobile_number = $_POST['mobile_number'];
@@ -448,6 +458,7 @@ function update()
                 $password = encrypt_password($password);
 
                 // retrieving professor values from the input form
+                $instructor_id = $national_id;
                 $description = $_POST['description'];
 
                 // query for updating user in users table
@@ -502,7 +513,6 @@ function update()
                 $middle_name = $_POST['middle_name'];
                 $last_name = $_POST['last_name'];
                 $national_id = $_POST['national_id'];
-                $instructor_id = $national_id;
                 $email = $_POST['email'];
                 $gender = $_POST['gender'];
                 $mobile_number = $_POST['mobile_number'];
@@ -516,6 +526,7 @@ function update()
                 $password = encrypt_password($password);
 
                 // retrieving ta values from the input form
+                $instructor_id = $national_id;
                 $department = $_POST['department'];
 
                 // query for updating user in users table
@@ -565,7 +576,6 @@ function update()
                 $middle_name = $_POST['middle_name'];
                 $last_name = $_POST['last_name'];
                 $national_id = $_POST['national_id'];
-                $instructor_id = $national_id;                  // temp unitl 
                 $email = $_POST['email'];
                 $gender = $_POST['gender'];
                 $mobile_number = $_POST['mobile_number'];
@@ -577,6 +587,9 @@ function update()
                 // hashing password
                 $password = $national_id;
                 $password = encrypt_password($password);
+
+                // retrieving sa values from the input form
+                $instructor_id = $national_id; 
 
                 // query for updating user in users table
                 $sql1 = "UPDATE users
@@ -606,8 +619,48 @@ function update()
                     header("Location:./sa_list.php?type={$type}&update=success");
                 }
             }
-        break;
+            break;
+
+        default:
+            die("NONE TYPE");
     }
     // Close connection
     $conn->close();
+}
+
+// function to get user data
+function userProfile() {
+    global $conn, $id_user, $type, $first_name, $middle_name, $last_name, $full_name,
+            $email, $mobile_number, $home_number;
+    // user id and type
+    $id_user = $_GET["id"];
+    $type = $_GET["type"];
+    
+    // getting user's data
+    $data = showData(true, $id_user)[$id_user];
+    // Close connection
+    $conn->close();
+    // what can be shown for all users
+    $first_name = $data['first_name'];
+    $middle_name = $data['middle_name'];
+    $last_name = $data['last_name'];
+    $email = $data['email'];
+    $mobile_number = $data['mobile_number'];
+    $home_number = $data['home_number'];
+    // user full name
+    $full_name = $first_name. " " .$middle_name. " " .$last_name;
+
+    // what can't be shown
+    $national_id = $data['national_id'];
+    $type_user = $data['type'];
+    $gender = $data['gender'];
+
+    switch($type) {
+        case "student":
+            global $address, $level;
+
+            $address = $data['address'];
+            $level = $data['level'];
+
+    }
 }

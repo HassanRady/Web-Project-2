@@ -1,5 +1,5 @@
 <?php
-include "../includes/SQLfunctions.php";
+include "../includes/functions.php";
 update();
 ?>
 
@@ -163,8 +163,15 @@ update();
                                     <label for="gender">Gender</label>
                                     <select class="custom-select d-block w-100" id="country" name="gender" required>
                                         <option><?php echo $gender ?></option>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                        <?php
+
+                                        if ($gender == "Male") {
+                                            echo "<option>Female</option>";
+                                        } else {
+                                            echo "<option>Male</option>";
+                                        }
+
+                                        ?>
                                     </select>
                                     <div class="invalid-feedback">
                                         Please select a valid country.
@@ -175,9 +182,16 @@ update();
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="math">Starting Math</label>
                                     <select class="custom-select d-block w-100" id="state" name="student_type" required>
-                                        <option ><?php echo $student_type ?></option>
-                                        <option>Math 0</option>
-                                        <option>Math 1</option>
+                                        <option><?php echo $student_type ?></option>
+                                        <?php
+
+                                        if ($student_type == "Math 0") {
+                                            echo "<option>Math 1</option>";
+                                        } else {
+                                            echo "<option>Math 0</option>";
+                                        }
+
+                                        ?>
                                     </select>
                                     <div class="invalid-feedback">
                                         Please provide a valid state.

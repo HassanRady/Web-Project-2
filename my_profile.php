@@ -1,3 +1,8 @@
+<?php 
+  include "includes/functions.php";
+  userProfile();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -132,11 +137,11 @@
                   <div class="d-flex flex-column align-items-center text-center">
                     <img src="profile.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4>Sohila afify</h4>
-                      <p class="text-secondary mb-1">Level 3</p>
+                      <h4><?php echo $full_name; ?></h4>
+                      <p class="text-secondary mb-1"><?php echo $level; ?></p>
 
                       <button class="btn btn-outline-primary btn-md">change photo</button>
-                      <a href="editprofile.html" class="btn btn-outline-primary btn-md">Edit</a>
+                      <a href="editprofile.php?id=<?php echo $id_user.'&type='.$type ?>" class="btn btn-outline-primary btn-md">Edit</a>
                     </div>
                   </div>
                 </div>
@@ -153,7 +158,7 @@
                   <h6 >Full Name</h6>
                 </div>
                 <div class="col-md-6 text-secondary">
-                  sohila afify
+                  <?php echo $full_name; ?>
                 </div>
               </div>
               <hr class="mb-4">
@@ -162,7 +167,7 @@
                   <h6 >Email</h6>
                 </div>
                 <div class="col-md-6 text-secondary">
-                  sim.first.last@alexu.edu.eg
+                <?php echo $email; ?>
                 </div>
               </div>
               <hr class="mb-4">
@@ -171,16 +176,25 @@
                   <h6 >Phone</h6>
                 </div>
                 <div class="col-md-6 text-secondary">
-                  xx-xxx-xxx-xxx
+                <?php echo $mobile_number; ?>
                 </div>
               </div>
               <hr class="mb-4">
               <div class="row align-items-center">
                 <div class="col-md-6 ">
-                  <h6 >Mobile </h6>
+                  <h6 >Guardian Phone </h6>
                 </div>
                 <div class="col-md-6 text-secondary">
-                  03-xxxxxxx
+                <?php echo $full_name; ?>
+                </div>
+              </div>
+              <hr class="mb-4">
+              <div class="row align-items-center">
+                <div class="col-md-6 ">
+                  <h6 >Home Phone </h6>
+                </div>
+                <div class="col-md-6 text-secondary">
+                <?php echo $home_number; ?>
                 </div>
               </div>
               <hr class="mb-4">
@@ -189,7 +203,7 @@
                   <h6 >Address </h6>
                 </div>
                 <div class="col-md-6 text-secondary">
-                  Bay Area, San Francisco, CA
+                <?php echo $address; ?>
                 </div>
               </div>
             </div>
