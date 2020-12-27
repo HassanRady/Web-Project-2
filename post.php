@@ -111,20 +111,60 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
 
             <?php
 
+            //getting the post information
+            // triggering updating votes functions
+            if (isset($_POST['upvote'])) {
+
+                $post_id = $_POST['post_id'];
+                $votes = $_POST['votes'];
+                upVote($post_id, $the_user_id, $votes);
+            }
+            if (isset($_POST['downvote'])) {
+
+                $post_id = $_POST['post_id'];
+                $votes = $_POST['votes'];
+                downVote($post_id, $the_user_id, $votes);
+            }
+            if (isset($_POST['redo'])) {
+                $post_id = $_POST['post_id'];
+                redoVote($post_id, $the_user_id);
+            }
             $posts_result = getPost($the_post_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {
+
                 $result_post_date = $row['post_date'];
                 $result_post_author = $row['post_author'];
                 $result_post_content = $row['post_content'];
+                $result_post_votes = $row['votes'];
                 ?>
-
+                <!--posts-->
                 <div class="container post">
-                    <h6><?php echo $result_post_author ?></h6>
-                    <p>
-                        <?php echo $result_post_content; ?>
-                    </p>
+                    <form action="" method="post">
+                        <h6><?php echo $result_post_author ?></h6>
+                        <p>
+                            <?php echo $result_post_content; ?>
+                        </p>
 
-                    <p class="date"> <?php echo $result_post_date; ?> </p>
+                        <div class="row">
+                            <?php
+                            // if user hadn't voted on the post yet, show him/her the upvote, downvote buttons
+                            if (!checkIfVoted($the_post_id, $the_user_id)) {
+                                ?>
+                                <div class="col"><input type="submit" name="upvote" value="upvote"
+                                                        class="btn btn-primary"></div>
+                                <div class="col"><input type="submit" name="downvote" value="downvote"
+                                                        class="btn btn-danger"></div>
+                            <?php } else {
+                                echo "<div class='col'><input type='submit' name='redo' value='redo' class='btn btn-primary'></div>";
+                            }
+                            ?>
+                            <div class="col"><p>Votes: <?php echo $result_post_votes; ?> </p></div>
+                            <input type="hidden" name="post_id" value="<?php print $the_post_id; ?>"/>
+                            <input type="hidden" name="votes" value="<?php print $result_post_votes; ?>"/>
+                        </div>
+
+                        <p class="date"> <?php echo $result_post_date; ?> </p>
+                    </form>
                 </div>
             <?php } ?>
 
@@ -154,8 +194,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
                     $comment_id = $_POST['delete_comment_id'];
                     deleteComment($comment_id);
                 }
-
-
+                //getting all the comments
                 $comments_results = getAllComments($the_post_id);
                 while ($row = mysqli_fetch_assoc($comments_results)) {
                     $id_user = $row['id_user'];
@@ -169,6 +208,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
                         <h6><?php echo $author; ?></h6>
                         <p><?php echo $content; ?></p>
                         <?php
+                        //checking if the current user has posted a comment so if he did he can delete it
                         if ($id_user == $the_user_id ) {
                             ?>
                             <form action="post.php?p_id=<?php echo $the_post_id; ?>&&u_id=<?php echo $the_user_id; ?> "
@@ -189,6 +229,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
 
                 <div class="add-comment">
                     <h4>Leave a Comment:</h4>
+                                                    <!--  redirecting to the current page                   -->
                     <form action="post.php?p_id=<?php echo $the_post_id; ?>&&u_id=<?php echo $the_user_id; ?> "
                           method="post"
                           role="form">

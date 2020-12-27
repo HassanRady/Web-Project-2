@@ -218,12 +218,12 @@ $user_id = 2;
 
 
             <?php
-
+            //checking for delete button if clicked and delete the post
             if (isset($_POST['delete_post'])) {
                 $post_id = $_POST['delete_post_id'];
                 deletePost($post_id);
             }
-
+            // retrieving post information
             $posts_result = getAllPosts($course_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {
                 $result_id_user = $row['id_user'];

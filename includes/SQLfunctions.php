@@ -185,7 +185,7 @@ function addNewPost($id_user, $id_course,$post_title, $post_author, $post_user, 
 
 function getAllPosts($course_id){
     global  $conn ;
-    $query = "SELECT post_id, id_user,post_author, post_date, post_content FROM posts WHERE id_course ='$course_id' ORDER BY post_id  DESC ";
+    $query = "SELECT post_id, id_user,post_author, post_date, post_content, votes FROM posts WHERE id_course ='$course_id' ORDER BY post_id  DESC ";
     $result = mysqli_query($conn, $query);
     if(!$result){
         die("Cannot retrieve posts from database  ". mysqli_error($conn));
@@ -194,7 +194,7 @@ function getAllPosts($course_id){
 }
 function getPost($post_id){
      global  $conn ;
-    $query = "SELECT post_author, post_date, post_content FROM posts WHERE post_id = '$post_id' ";
+    $query = "SELECT post_author, post_date, post_content, votes FROM posts WHERE post_id = '$post_id' ";
     $result = mysqli_query($conn, $query);
     if(!$result){
         die("Cannot retrieve posts from database  ". mysqli_error($conn));
@@ -247,4 +247,69 @@ function deleteComment($comment_id){
     if(!$result){
         die("Cannot delete post". mysqli_error($conn));
     }
+}
+function upVote($post_id, $user_id){
+    global $conn;
+    $query1 = "INSERT INTO `votes`(id_post, id_user, vote_value) VALUES('$post_id', '$user_id', 1)";
+    $query2 = "UPDATE posts SET votes = votes + 1 WHERE post_id = '$post_id' ";
+    $result1 = mysqli_query($conn, $query1);
+    if($result1){
+        $result2 = mysqli_query($conn, $query2);
+        if (!$result2){
+            die("cannot update the votes value in posts " .mysqli_error($conn));
+        }
+    }
+    else{
+        die('cannot add vote record to votes database ' .mysqli_error($conn));
+    }
+
+}
+function downVote($post_id, $user_id){
+    global $conn;
+    $query1 = "INSERT INTO `votes`(id_post, id_user, vote_value) VALUES('$post_id', '$user_id', -1)";
+    $query2 = "UPDATE posts SET votes = votes - 1 WHERE post_id = '$post_id'";
+    $result1 = mysqli_query($conn, $query1);
+    if(!$result1){
+        die("query 1 error ".mysqli_error($conn));
+    }
+    $result2 = mysqli_query($conn, $query2);
+    if (!$result2){
+        die("query 2 error ".mysqli_error($conn));
+    }
+
+}
+function redoVote($post_id, $user_id){
+    global $conn;
+    $query1 = "SELECT vote_value FROM votes WHERE id_post = '$post_id' AND id_user = '$user_id'";
+    $query2 = "DELETE FROM votes WHERE id_post = '$post_id' AND id_user = '$user_id' ";
+    $result1 = mysqli_query($conn, $query1) ;
+    if(!$result1){
+        die("Query1 error redoVote".mysqli_error($conn));
+    }
+    while($row = mysqli_fetch_assoc($result1)){
+        $valueOfVote = $row['vote_value'];
+    }
+    $query3 = "UPDATE posts SET votes = votes - '$valueOfVote' WHERE post_id = '$post_id'";
+    $result2 = mysqli_query($conn, $query2) ;
+    if(!$result2){
+        die("Query2 error redoVote ".mysqli_error($conn));
+    }
+    $result3= mysqli_query($conn, $query3) ;
+    if(!$result3){
+        die("Query3 error redoVote ".mysqli_error($conn));
+    }
+
+}
+// to check if user has already vote in a post or not
+function checkIfVoted($post_id, $user_id){
+    global $conn;
+    $query = "SELECT * FROM votes WHERE id_post = '$post_id' AND id_user = '$user_id'";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die('there is an error while accessing votes db ' .mysqli_error($conn));
+    }
+
+    return mysqli_num_rows($result) != 0;
+
+
 }

@@ -4,8 +4,6 @@ global $conn;
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 $course_id = 1;
 $user_id = 1;
-
-
 ?>
 
 
@@ -107,125 +105,167 @@ $user_id = 1;
             <!-- START HERE -->
 
 
+            <!--            -->
+
             <?php
+            //
+
+            // triggering updating votes functions
+            if (isset($_POST['upvote'])) {
+
+                $post_id = $_POST['post_id'];
+                $votes = $_POST['votes'];
+                upVote($post_id, $user_id, $votes);
+            }
+            if (isset($_POST['downvote'])) {
+
+                $post_id = $_POST['post_id'];
+                $votes = $_POST['votes'];
+                downVote($post_id, $user_id, $votes);
+            }
+            if (isset($_POST['redo'])) {
+                $post_id = $_POST['post_id'];
+                redoVote($post_id, $user_id);
+            }
+
+            // retrieving post information
             $posts_result = getAllPosts($course_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {
-            $result_post_id = $row['post_id'];
-            $result_post_date = $row['post_date'];
-            $result_post_author = $row['post_author'];
-            $result_post_content = $row['post_content'];
-            ?>
+                $result_post_id = $row['post_id'];
+                $result_post_date = $row['post_date'];
+                $result_post_author = $row['post_author'];
+                $result_post_content = $row['post_content'];
+                $result_post_votes = $row['votes'];
+                ?>
+                            <!--posts-->
+                <div class="container post">
+                    <form action="" method="post">
+                        <h6><?php echo $result_post_author ?></h6>
+                        <p>
+                            <?php echo $result_post_content; ?>
+                        </p>
 
-            <div class="container post">
-                <form action="" method="post">
-                    <h6><?php echo $result_post_author ?></h6>
-                    <p>
-                        <?php echo $result_post_content; ?>
-                    </p>
-                    <p class="text-center"><a
-                                href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
-                            comments </a></p>
-                    <p class="date"> <?php echo $result_post_date; ?> </p>
-                </form>
-                <?php } ?>
-
-
-                <div class="line"></div>
-
-                <!--    <div class="container post">-->
-                <!--        <h6>Prof.Abdallah Yassser Gaber</h6>-->
-                <!--        <p>-->
-                <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut-->
-                <!--            labore et dolore magna aliqua.-->
-                <!--            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo-->
-                <!--            consequat.-->
-                <!--            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla-->
-                <!--            pariatur.-->
-                <!--            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim-->
-                <!--            id est laborum.-->
-                <!--        </p>-->
-                <!--        <p class="date"> 11/11/2020 </p>-->
-                <!--    </div>-->
-                <!---->
-                <!--    <div class="container post">-->
-                <!--        <h6>Prof.Abdallah Yassser Gaber</h6>-->
-                <!--        <p>-->
-                <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut-->
-                <!--            labore et dolore magna aliqua.-->
-                <!--        </p>-->
-                <!---->
-                <!--        <hr>-->
-
-                <!-- Radio -->
-                <!--        <p class="text-center"-->
-                <!--           style="color: rgba(0,0,0,0.5) ; font-size: 18px ; margin-top: 5px ; margin-bottom: 10px">-->
-                <!--            <strong>Your Vote</strong>-->
-                <!--        </p>-->
-                <!--        <div class="form-check mb-4">-->
-                <!--            <input class="form-check-input" name="group1" type="radio" id="radio-179" value="option1"-->
-                <!--                   checked>-->
-                <!--            <label class="form-check-label" for="radio-179">Very good</label>-->
-                <!--            <div class="progress" style="height: 20px;">-->
-                <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
-                <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
-                <!--                </div>-->
-                <!--            </div>-->
-                <!--        </div>-->
-                <!---->
-                <!--        <div class="form-check mb-4">-->
-                <!--            <input class="form-check-input" name="group1" type="radio" id="radio-279" value="option2">-->
-                <!--            <label class="form-check-label" for="radio-279">Good</label>-->
-                <!--            <div class="progress" style="height: 20px;">-->
-                <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
-                <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
-                <!--                </div>-->
-                <!--            </div>-->
-                <!--        </div>-->
-                <!---->
-                <!--        <div class="form-check mb-4">-->
-                <!--            <input class="form-check-input" name="group1" type="radio" id="radio-379" value="option3">-->
-                <!--            <label class="form-check-label" for="radio-379">Mediocre</label>-->
-                <!--            <div class="progress" style="height: 20px;">-->
-                <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
-                <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
-                <!--                </div>-->
-                <!--            </div>-->
-                <!--        </div>-->
-                <!--        <div class="form-check mb-4">-->
-                <!--            <input class="form-check-input" name="group1" type="radio" id="radio-479" value="option4">-->
-                <!--            <label class="form-check-label" for="radio-479">Bad</label>-->
-                <!--            <div class="progress" style="height: 20px;">-->
-                <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
-                <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
-                <!--                </div>-->
-                <!--            </div>-->
-                <!--        </div>-->
-                <!--        <div class="form-check mb-4">-->
-                <!--            <input class="form-check-input" name="group1" type="radio" id="radio-579" value="option5">-->
-                <!--            <label class="form-check-label" for="radio-579">Very bad</label>-->
-                <!--            <div class="progress" style="height: 20px;">-->
-                <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
-                <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
-                <!--                </div>-->
-                <!--            </div>-->
-                <!--        </div>-->
-                <!--         Radio -->
-                <!---->
-                <!--        <div class="modal-footer justify-content-center">-->
-                <!--            <a type="button" class="btn btn-primary waves-effect waves-light">Send-->
-                <!--                <i class="fa fa-paper-plane ml-1"></i>-->
-                <!--            </a>-->
-                <!--            <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>-->
-                <!--        </div>-->
-                <!--        <p class="date"> 11/11/2020 </p>-->
-                <!--    </div>-->
-
-                <!-- STOP HERE -->
-            </div>
+                        <div class="row">
+                            <?php
+                            // if user hadn't voted on the post yet, show him/her the upvote, downvote buttons
+                            if (!checkIfVoted($result_post_id, $user_id)) {
+                                ?>
+                                <div class="col"><input type="submit" name="upvote" value="upvote"
+                                                        class="btn btn-primary"></div>
+                                <div class="col"><input type="submit" name="downvote" value="downvote"
+                                                        class="btn btn-danger"></div>
+                            <?php } else {
+                                echo "<div class='col'><input type='submit' name='redo' value='redo' class='btn btn-primary'></div>";
+                            }
+                            ?>
+                            <div class="col"><p>Votes: <?php echo $result_post_votes; ?> </p></div>
+                            <input type="hidden" name="post_id" value="<?php print $result_post_id; ?>"/>
+                            <input type="hidden" name="votes" value="<?php print $result_post_votes; ?>"/>
+                        </div>
+                        <p class="text-center"><a
+                                    href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
+                                comments </a></p>
+                        <p class="date"> <?php echo $result_post_date; ?> </p>
+                    </form>
+                </div>
+            <?php } ?>
+            <div class="line"></div>
 
 
+            <!--    <div class="container post">-->
+            <!--        <h6>Prof.Abdallah Yassser Gaber</h6>-->
+            <!--        <p>-->
+            <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut-->
+            <!--            labore et dolore magna aliqua.-->
+            <!--            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo-->
+            <!--            consequat.-->
+            <!--            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla-->
+            <!--            pariatur.-->
+            <!--            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim-->
+            <!--            id est laborum.-->
+            <!--        </p>-->
+            <!--        <p class="date"> 11/11/2020 </p>-->
+            <!--    </div>-->
+            <!---->
+            <!--    <div class="container post">-->
+            <!--        <h6>Prof.Abdallah Yassser Gaber</h6>-->
+            <!--        <p>-->
+            <!--            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut-->
+            <!--            labore et dolore magna aliqua.-->
+            <!--        </p>-->
+            <!---->
+            <!--        <hr>-->
+
+            <!-- Radio -->
+            <!--        <p class="text-center"-->
+            <!--           style="color: rgba(0,0,0,0.5) ; font-size: 18px ; margin-top: 5px ; margin-bottom: 10px">-->
+            <!--            <strong>Your Vote</strong>-->
+            <!--        </p>-->
+            <!--        <div class="form-check mb-4">-->
+            <!--            <input class="form-check-input" name="group1" type="radio" id="radio-179" value="option1"-->
+            <!--                   checked>-->
+            <!--            <label class="form-check-label" for="radio-179">Very good</label>-->
+            <!--            <div class="progress" style="height: 20px;">-->
+            <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
+            <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!---->
+            <!--        <div class="form-check mb-4">-->
+            <!--            <input class="form-check-input" name="group1" type="radio" id="radio-279" value="option2">-->
+            <!--            <label class="form-check-label" for="radio-279">Good</label>-->
+            <!--            <div class="progress" style="height: 20px;">-->
+            <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
+            <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!---->
+            <!--        <div class="form-check mb-4">-->
+            <!--            <input class="form-check-input" name="group1" type="radio" id="radio-379" value="option3">-->
+            <!--            <label class="form-check-label" for="radio-379">Mediocre</label>-->
+            <!--            <div class="progress" style="height: 20px;">-->
+            <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
+            <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--        <div class="form-check mb-4">-->
+            <!--            <input class="form-check-input" name="group1" type="radio" id="radio-479" value="option4">-->
+            <!--            <label class="form-check-label" for="radio-479">Bad</label>-->
+            <!--            <div class="progress" style="height: 20px;">-->
+            <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
+            <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--        <div class="form-check mb-4">-->
+            <!--            <input class="form-check-input" name="group1" type="radio" id="radio-579" value="option5">-->
+            <!--            <label class="form-check-label" for="radio-579">Very bad</label>-->
+            <!--            <div class="progress" style="height: 20px;">-->
+            <!--                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"-->
+            <!--                     aria-valuemin="0" aria-valuemax="100">25%-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--         Radio -->
+            <!---->
+            <!--        <div class="modal-footer justify-content-center">-->
+            <!--            <a type="button" class="btn btn-primary waves-effect waves-light">Send-->
+            <!--                <i class="fa fa-paper-plane ml-1"></i>-->
+            <!--            </a>-->
+            <!--            <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>-->
+            <!--        </div>-->
+            <!--        <p class="date"> 11/11/2020 </p>-->
+            <!--    </div>-->
+
+            <!-- STOP HERE -->
         </div>
+
+
     </div>
+</div>
 
 <?php
 include "../includes/footer.php";
