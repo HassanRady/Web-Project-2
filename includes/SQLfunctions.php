@@ -150,6 +150,24 @@ else{
 }
 
 }
+function getUserName($user_id){
+    global  $conn ;
+    $query = "SELECT first_name, middle_name FROM users  WHERE id = '$user_id' ";
+    $result = mysqli_query($conn, $query);
+    $user_name = "";
+    if(!$result){
+        die("Cannot get user name ". mysqli_error($conn));
+    }
+    while ($row = mysqli_fetch_assoc($result)){
+        $first = $row['first_name'];
+        $middle = $row['middle_name'];
+        $user_name .= $first;
+        $user_name .=" ";
+        $user_name .= $middle;
+    }
+    return $user_name;
+
+}
 
 
 function addNewPost($id_user, $id_course,$post_title, $post_author, $post_user, $post_date, $post_content, $post_tags ){
@@ -165,12 +183,68 @@ function addNewPost($id_user, $id_course,$post_title, $post_author, $post_user, 
 
 
 
-function getAllPosts(){
+function getAllPosts($course_id){
     global  $conn ;
-    $query = "SELECT post_author, post_date, post_content FROM posts ORDER BY post_id  DESC ";
+    $query = "SELECT post_id, id_user,post_author, post_date, post_content FROM posts WHERE id_course ='$course_id' ORDER BY post_id  DESC ";
     $result = mysqli_query($conn, $query);
     if(!$result){
         die("Cannot retrieve posts from database  ". mysqli_error($conn));
     }
     return $result;
+}
+function getPost($post_id){
+     global  $conn ;
+    $query = "SELECT post_author, post_date, post_content FROM posts WHERE post_id = '$post_id' ";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die("Cannot retrieve posts from database  ". mysqli_error($conn));
+    }
+    return $result;
+}
+function deletePost($post_id){
+    global  $conn;
+    $query= "DELETE FROM posts WHERE post_id = '$post_id'";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die("Cannot delete post". mysqli_error($conn));
+    }
+    else{
+
+        deletePostComments($post_id);
+    }
+}
+function deletePostComments($id_post){
+    global $conn;
+    $query = "DELETE FROM comments WHERE id_post = '$id_post'";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die("Cannot delete comments". mysqli_error($conn));
+    }
+}
+function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date){
+    global $conn ;
+    $query = "INSERT INTO `comments`(id_post, id_user, comment_author, comment_content, comment_date) ";
+    $query.= "VALUES('$id_post', '$id_user', '$comment_author', '$comment_content', '$comment_date')";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die("Cannot add post to database  ". mysqli_error($conn));
+    }
+    return $result;
+}
+function getAllComments($id_post){
+    global  $conn ;
+    $query = "SELECT id_user, comment_id, comment_author, comment_content, comment_date FROM comments WHERE id_post ='$id_post' ORDER BY comment_id  ASC ";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die("Cannot retrieve comments from database  ". mysqli_error($conn));
+    }
+    return $result;
+}
+function deleteComment($comment_id){
+    global  $conn;
+    $query= "DELETE FROM comments WHERE comment_id = '$comment_id'";
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die("Cannot delete post". mysqli_error($conn));
+    }
 }

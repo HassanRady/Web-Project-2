@@ -1,6 +1,10 @@
 <?php
 
 include "../includes/SQLfunctions.php";
+//stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
+$course_id = 1;
+$user_id = 2;
+
 ?>
 
 
@@ -12,7 +16,7 @@ include "../includes/SQLfunctions.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Course Discussion</title>
+    <title>Add Announcements </title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
@@ -84,7 +88,7 @@ include "../includes/SQLfunctions.php";
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto secondary-navigation">
                         <li class="nav-item active">
-                            <a class="nav-link" href="discussion.php">Discusssion</a>
+                            <a class="nav-link" href="add_announcements.php">Discussion</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
@@ -106,14 +110,14 @@ include "../includes/SQLfunctions.php";
         <div class="page-body">
             <!-- START HERE -->
             <h3 style="color: #206cef;">
-                Course Discussion
+                Announcements
             </h3>
             <hr class="mb-4">
 
 
             <div class="container discussion-form">
                 <h5 class="">Start a new discussion:</h5>
-                <form class="row" action="discussion.php" method="post">
+                <form class="row" action="add_announcements.php" method="post">
                     <div class="col-lg-12">
                             <textarea class="w-100 p-3" id="exampleFormControlTextarea1"
                                       name="post_text"
@@ -133,16 +137,15 @@ include "../includes/SQLfunctions.php";
 
                     if (!empty($_POST['post_text'])) {
                         // retrieving data from the form and adding customized data for professor
-                        $id_user = 2;
-                        $id_course = 1;
+                        $id_user = $user_id;
+                        $id_course = $course_id;
                         $post_title = "title";
-                        $post_author = "Sherief Hazem";
-                        $post_user = "prof";
+                        $post_author = getUserName($id_user);
+                        $post_user = "SA";
                         $post_date = date("Y-m-d");
                         $post_content = $_POST['post_text'];
                         $post_tags = $post_author;
                         addNewPost($id_user, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
-
 
                     } else {
                         echo "<script>alert('Post cannot be empty')</script>";
@@ -215,99 +218,57 @@ include "../includes/SQLfunctions.php";
 
 
             <?php
-            $posts_result = getAllPosts();
+
+            if (isset($_POST['delete_post'])) {
+                $post_id = $_POST['delete_post_id'];
+                deletePost($post_id);
+            }
+
+            $posts_result = getAllPosts($course_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {
+                $result_id_user = $row['id_user'];
+                $result_post_id = $row['post_id'];
                 $result_post_date = $row['post_date'];
                 $result_post_author = $row['post_author'];
                 $result_post_content = $row['post_content'];
-//                    echo $result_post_date;
-//                    echo $result_post_content;
-//                    echo $result_post_author;
-//
+
                 ?>
                 <div class="container post">
-                    <?php echo " <h6><a href=''>$result_post_author</a></h6>" ?>
+                    <form action="add_announcements.php" method="post">
+                        <?php echo " <h6><a href=''>$result_post_author</a></h6>" ?>
 
-                    <?php
-                    echo "<p> $result_post_content </p>";
-                    ?>
+                        <?php
+                        echo "<p> $result_post_content </p>";
+                        //                    ?>
+                        <?php
+                        if ($result_id_user == $user_id) {
+                            ?>
+                            <input type="submit" name="delete_post" value="Delete post" class="btn btn-primary">
+                            <input type="hidden" name="delete_post_id" value="<?php print $result_post_id; ?>"/>
+                        <?php } ?>
+                        <p class="text-center"><a
+                                    href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
+                                comments </a></p>
+                        <?php
+                        echo "<p class='date'>$result_post_date </p>";
 
-                    <?php
-                    echo "<p class='date'>$result_post_date </p>";
-                    ?>
+                        ?>
+
+                    </form>
 
                 </div>
             <?php } ?>
 
 
-            <!-- Radio -->
-            <p class="text-center">
-                <strong>Your Vote</strong>
-            </p>
-            <div class="form-check mb-4">
-                <input class="form-check-input" name="group1" type="radio" id="radio-179" value="option1"
-                       checked>
-                <label class="form-check-label" for="radio-179">Very good</label>
-                <div class="progress" style="height: 20px;">
-                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                         aria-valuemin="0" aria-valuemax="100">25%
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-check mb-4">
-                <input class="form-check-input" name="group1" type="radio" id="radio-279" value="option2">
-                <label class="form-check-label" for="radio-279">Good</label>
-                <div class="progress" style="height: 20px;">
-                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                         aria-valuemin="0" aria-valuemax="100">25%
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-check mb-4">
-                <input class="form-check-input" name="group1" type="radio" id="radio-379" value="option3">
-                <label class="form-check-label" for="radio-379">Mediocre</label>
-                <div class="progress" style="height: 20px;">
-                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                         aria-valuemin="0" aria-valuemax="100">25%
-                    </div>
-                </div>
-            </div>
-            <div class="form-check mb-4">
-                <input class="form-check-input" name="group1" type="radio" id="radio-479" value="option4">
-                <label class="form-check-label" for="radio-479">Bad</label>
-                <div class="progress" style="height: 20px;">
-                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                         aria-valuemin="0" aria-valuemax="100">25%
-                    </div>
-                </div>
-            </div>
-            <div class="form-check mb-4">
-                <input class="form-check-input" name="group1" type="radio" id="radio-579" value="option5">
-                <label class="form-check-label" for="radio-579">Very bad</label>
-                <div class="progress" style="height: 20px;">
-                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                         aria-valuemin="0" aria-valuemax="100">25%
-                    </div>
-                </div>
-            </div>
             <!-- Radio -->
 
-            <div class="modal-footer justify-content-center">
-                <a type="button" class="btn btn-primary waves-effect waves-light">Send
-                    <i class="fa fa-paper-plane ml-1"></i>
-                </a>
-                <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
-            </div>
-            <p class="date"> 11/11/2020 </p>
+
+            <!-- STOP HERE -->
         </div>
 
-        <!-- STOP HERE -->
+
     </div>
-
-
-</div>
 </div>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->

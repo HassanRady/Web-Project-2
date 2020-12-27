@@ -7,35 +7,36 @@ global $conn;
 ?>
 
 
-<!DOCTYPE html>
-<html>
+    <!DOCTYPE html>
+    <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Collapsible sidebar using Bootstrap 4</title>
+        <title>Course Discussion</title>
 
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="../css/rootStyles.css">
-    <link rel="stylesheet" href="css/dispost.css">
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+              integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+              crossorigin="anonymous">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="../css/rootStyles.css">
+        <link rel="stylesheet" href="css/dispost.css">
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
-    <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
-            crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
-            crossorigin="anonymous"></script>
+        <!-- Font Awesome JS -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+                integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+                crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+                integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+                crossorigin="anonymous"></script>
 
-</head>
+    </head>
 
 <body>
 
@@ -43,12 +44,12 @@ global $conn;
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <img src="logo.jpeg" alt="SIM-LOGO">
+            <img src="../media/logo.jpeg" alt="SIM-LOGO">
         </div>
         <p>Navigation</p>
         <ul class="list-unstyled components">
             <li>
-                <a href="#">Home</a>
+                <a href="discussion_no_post.php">Home</a>
             </li>
             <li class="active">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
@@ -147,106 +148,115 @@ global $conn;
             <!-- START HERE -->
 
 
-
             <div class="line"></div>
             <?php
             $posts_result = getAllPosts();
             while ($row = mysqli_fetch_assoc($posts_result)) {
+                $result_post_id = $row['post_id'];
                 $result_post_date = $row['post_date'];
                 $result_post_author = $row['post_author'];
                 $result_post_content = $row['post_content'];
-//                    echo $result_post_date;
-//                    echo $result_post_content;
-//                    echo $result_post_author;
-//
                 ?>
+
+
                 <div class="container post">
-                    <?php echo " <h6><a href=''>$result_post_author</a></h6>" ?>
-
-                    <?php
-                    echo "<p> $result_post_content </p>";
-                    ?>
-
-                    <?php
-                    echo "<p class='date'>$result_post_date </p>";
-                    ?>
-
+                    <h6><?php echo $result_post_author?></h6>
+                    <p>
+                        <?php echo $result_post_content; ?>
+                    </p>
+                    <p class="text-center"><a href="../post.php?p_id=<?php echo $result_post_id;?>">show comments </a></p>
+                    <p class="date"> <?php echo $result_post_date;  ?> </p>
                 </div>
-            <?php } ?>
+            <?php }?>
 
-                <hr>
+            <hr>
 
-                <!-- Radio -->
-                <p class="text-center">
-                    <strong>Your Vote</strong>
-                </p>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" name="group1" type="radio" id="radio-179" value="option1" checked>
-                    <label class="form-check-label" for="radio-179">Very good</label>
-                    <div class="progress" style="height: 20px;">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">25%
-                        </div>
+                        <!-- a modal for comment section for each post         -->
+
+            <div class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="comment_section">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                            <p>text</p>
                     </div>
                 </div>
-
-                <div class="form-check mb-4">
-                    <input class="form-check-input" name="group1" type="radio" id="radio-279" value="option2">
-                    <label class="form-check-label" for="radio-279">Good</label>
-                    <div class="progress" style="height: 20px;">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">25%
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-check mb-4">
-                    <input class="form-check-input" name="group1" type="radio" id="radio-379" value="option3">
-                    <label class="form-check-label" for="radio-379">Mediocre</label>
-                    <div class="progress" style="height: 20px;">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">25%
-                        </div>
-                    </div>
-                </div>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" name="group1" type="radio" id="radio-479" value="option4">
-                    <label class="form-check-label" for="radio-479">Bad</label>
-                    <div class="progress" style="height: 20px;">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">25%
-                        </div>
-                    </div>
-                </div>
-                <div class="form-check mb-4">
-                    <input class="form-check-input" name="group1" type="radio" id="radio-579" value="option5">
-                    <label class="form-check-label" for="radio-579">Very bad</label>
-                    <div class="progress" style="height: 20px;">
-                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                             aria-valuemin="0" aria-valuemax="100">25%
-                        </div>
-                    </div>
-                </div>
-                <!-- Radio -->
-
-                <div class="modal-footer justify-content-center">
-                    <a type="button" class="btn btn-primary waves-effect waves-light">Send
-                        <i class="fa fa-paper-plane ml-1"></i>
-                    </a>
-                    <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
-                </div>
-                <p class="date"> 11/11/2020 </p>
             </div>
 
-            <!-- STOP HERE -->
+
+
+
+
+
+            <!-- Radio -->
+            <p class="text-center">
+                <strong>Your Vote</strong>
+            </p>
+            <div class="form-check mb-4">
+                <input class="form-check-input" name="group1" type="radio" id="radio-179" value="option1" checked>
+                <label class="form-check-label" for="radio-179">Very good</label>
+                <div class="progress" style="height: 20px;">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                         aria-valuemin="0" aria-valuemax="100">25%
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-check mb-4">
+                <input class="form-check-input" name="group1" type="radio" id="radio-279" value="option2">
+                <label class="form-check-label" for="radio-279">Good</label>
+                <div class="progress" style="height: 20px;">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                         aria-valuemin="0" aria-valuemax="100">25%
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-check mb-4">
+                <input class="form-check-input" name="group1" type="radio" id="radio-379" value="option3">
+                <label class="form-check-label" for="radio-379">Mediocre</label>
+                <div class="progress" style="height: 20px;">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                         aria-valuemin="0" aria-valuemax="100">25%
+                    </div>
+                </div>
+            </div>
+            <div class="form-check mb-4">
+                <input class="form-check-input" name="group1" type="radio" id="radio-479" value="option4">
+                <label class="form-check-label" for="radio-479">Bad</label>
+                <div class="progress" style="height: 20px;">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                         aria-valuemin="0" aria-valuemax="100">25%
+                    </div>
+                </div>
+            </div>
+            <div class="form-check mb-4">
+                <input class="form-check-input" name="group1" type="radio" id="radio-579" value="option5">
+                <label class="form-check-label" for="radio-579">Very bad</label>
+                <div class="progress" style="height: 20px;">
+                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                         aria-valuemin="0" aria-valuemax="100">25%
+                    </div>
+                </div>
+            </div>
+            <!-- Radio -->
+
+            <div class="modal-footer justify-content-center">
+                <a type="button" class="btn btn-primary waves-effect waves-light">Send
+                    <i class="fa fa-paper-plane ml-1"></i>
+                </a>
+                <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+            </div>
+            <p class="date"> 11/11/2020 </p>
         </div>
 
-
+        <!-- STOP HERE -->
     </div>
+
+
+</div>
 <?php
 
 
-include "../includes/footer.php" ;
+include "../includes/footer.php";
 
 
 ?>
