@@ -12,18 +12,29 @@ function showData($one_record = false, $record_id = 0)
     // types of users
     $types = array("sa", "ta", "professor", "student");
 
-    // checking that there is a type
-    if (isset($_GET["type"])) {
-        // getting users type
-        $type = $_GET["type"];
-    } else {
-        // check the file name which it has any type of users
-        $file_name = strtolower(basename($_SERVER['PHP_SELF']));
-        $type = which_type($file_name, $types);
+    // subquery for displaying one recored
+    $sql0 = " WHERE u.id = {$record_id};";
+
+    if ($one_record) {
+        $tmp = "SELECT type FROM users u" . $sql0;
+        $result_tmp = mysqli_query($conn, $tmp);
+        check_result($result_tmp, $conn);
+        $type = $result_tmp->fetch_assoc()['type'];
     }
 
-    // subquery for displaying one recored
-    $sql0 = " WHERE u.id = {$record_id};";         
+    if (!$one_record) {
+        // checking that there is a type
+        if (isset($_GET["type"])) {
+            // getting users type
+            $type = $_GET["type"];
+        } else {
+            // check the file name which it has any type of users
+            $file_name = strtolower(basename($_SERVER['PHP_SELF']));
+            $type = which_type($file_name, $types);
+        }
+    }
+
+
 
     switch ($type) {
 
@@ -375,7 +386,7 @@ function update()
             // if update is pressed 
             if (isset($_POST['update'])) {
 
-// ------------------------------------------------------------------------
+                // ------------------------------------------------------------------------
                 // retrieving user values from the input form
                 $first_name = $_POST['first_name'];
                 $middle_name = $_POST['middle_name'];
@@ -385,10 +396,7 @@ function update()
                 $gender = $_POST['gender'];
                 $mobile_number = $_POST['mobile_number'];
                 $home_number = $_POST['home_number'];
-// --------------------------------------------------------------------------
-
-                // handling realescape
-                $email = mysqli_real_escape_string($conn, $email);
+                // --------------------------------------------------------------------------
 
                 // hashing password
                 $password = $national_id;
@@ -400,6 +408,10 @@ function update()
                 $student_type = $_POST['student_type'];
                 $student_id = $_POST['student_id'];
                 $guardian_mobile_number = $_POST['guardian_mobile_number'];
+
+                // handling realescape
+                $email = mysqli_real_escape_string($conn, $email);
+                $address = mysqli_real_escape_string($conn, $address);
 
                 // query for updating user in users table
                 $sql1 = "UPDATE users
@@ -589,7 +601,7 @@ function update()
                 $password = encrypt_password($password);
 
                 // retrieving sa values from the input form
-                $instructor_id = $national_id; 
+                $instructor_id = $national_id;
 
                 // query for updating user in users table
                 $sql1 = "UPDATE users
@@ -629,17 +641,19 @@ function update()
 }
 
 // function to get user data
-function userProfile() {
+function userProfile()
+{
     global $conn, $id_user, $type, $first_name, $middle_name, $last_name, $full_name,
-            $email, $mobile_number, $home_number;
+        $email, $mobile_number, $home_number;
     // user id and type
     $id_user = $_GET["id"];
-    $type = $_GET["type"];
-    
+    // $type = $_GET["type"];
+
     // getting user's data
     $data = showData(true, $id_user)[$id_user];
     // Close connection
-    $conn->close();
+    // $conn->close();
+
     // what can be shown for all users
     $first_name = $data['first_name'];
     $middle_name = $data['middle_name'];
@@ -648,19 +662,82 @@ function userProfile() {
     $mobile_number = $data['mobile_number'];
     $home_number = $data['home_number'];
     // user full name
-    $full_name = $first_name. " " .$middle_name. " " .$last_name;
+    $full_name = $first_name . " " . $middle_name . " " . $last_name;
 
     // what can't be shown
     $national_id = $data['national_id'];
-    $type_user = $data['type'];
+    $type = $data['type'];
     $gender = $data['gender'];
 
-    switch($type) {
-        case "student":
-            global $address, $level;
+    if ($type === "student") {
+        global $address, $level, $guardian_mobile_number;
 
-            $address = $data['address'];
-            $level = $data['level'];
-
+        $address = $data['address'];
+        $level = $data['level'];
+        $guardian_mobile_number = $data['guardian_mobile_number'];
     }
+}
+
+
+function editProfile()
+{
+    userProfile();
+    global $conn, $type, $id_user;
+    // connection
+    // $conn->connect();
+
+    if (isset($_POST['update'])) {
+
+        $first_name = $_POST['first_name'];
+        $middle_name = $_POST['middle_name'];
+        $last_name = $_POST['last_name'];
+        $mobile_number = $_POST['mobile_number'];
+        $home_number = $_POST['home_number'];
+
+        // Setting auto commit to false
+        mysqli_autocommit($conn, FALSE);
+
+        if ($type === "student") {
+            $address = $_POST['address'];
+            $guardian_mobile_number = $_POST['guardian_mobile_number'];
+
+            // handling realescape
+            $address = mysqli_real_escape_string($conn, $address);
+
+            // query for updating user in users table
+            $sql1 = "UPDATE users
+             SET first_name='{$first_name}', middle_name='{$middle_name}',
+                 last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
+             WHERE id = {$id_user};";
+            // query for updating student in students table
+            $sql2 = "UPDATE students
+             SET address='{$address}', guardian_mobile_number='{$guardian_mobile_number}'
+             WHERE id_user = {$id_user};";
+
+            // executing query 1
+            $result1 = mysqli_query($conn, $sql1);
+            check_result($result1, $conn);
+
+            // executing query 2
+            $result2 = mysqli_query($conn, $sql2);
+            check_result($result2, $conn);
+        }
+
+        // query for updating user in users table
+        $sql1 = "UPDATE users
+         SET first_name='{$first_name}', middle_name='{$middle_name}',
+             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
+         WHERE id = {$id_user};";
+
+        // executing query 1
+        $result1 = mysqli_query($conn, $sql1);
+        check_result($result1, $conn);
+
+        // Commit transaction
+        mysqli_commit($conn);
+        header("Location:./my_profile.php?id={$id_user}&type={$type}&update=success");
+    }
+
+    // Close connection
+    $conn->close();
 }

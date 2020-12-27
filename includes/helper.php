@@ -16,11 +16,21 @@ function encrypt_password($password, $cost = 10)
 }
 
 // function to compare if a substring from an array of substrings exists in a string
-function which_type($haystack, $needle, $offset=0) {
-    if(!is_array($needle)) $needle = array($needle);
-    foreach($needle as $query) {
-        if(strpos($haystack, $query, $offset) !== false) 
+function which_type($haystack, $needle, $offset = 0)
+{
+    if (!is_array($needle)) $needle = array($needle);
+    foreach ($needle as $query) {
+        if (strpos($haystack, $query, $offset) !== false)
             return $query;   // stop on first true result
     }
     return false;
+}
+
+
+function check_result($result, $conn)
+{
+    if (!$result) {
+        die("Could not insert data from sql1-student-editProfile\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));
+        return;
+    }
 }
