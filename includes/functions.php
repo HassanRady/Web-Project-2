@@ -744,7 +744,8 @@ function editProfile()
         header("Location:./my_profile.php?id={$id_user}&type={$type}&update=success");
     }
 
-    
+  // Close connection
+  $conn->close();
 }
 
 
@@ -1459,7 +1460,5 @@ function openCourse($courseId, $professorId){
 }
 
 
-// Close connection
-$conn->close();
 
 ?>
