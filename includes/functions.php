@@ -467,12 +467,12 @@ function getAvailableUniCourses(){
       <td>$credits</td>
       <td>$type</td>
       <td>$prerequisite</td>
-      <td><a href='#' class='btn btn-primary'>Open</a></td>
+      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
 
-}
+  }
 }
 
 function getAvailableFacultyCourses(){
@@ -496,7 +496,7 @@ function getAvailableFacultyCourses(){
       <td>$credits</td>
       <td>$type</td>
       <td>$prerequisite</td>
-      <td><a href='#' class='btn btn-primary'>Open</a></td>
+      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
@@ -526,7 +526,7 @@ function getAvailableSIMCourses(){
       <td>$credits</td>
       <td>$type</td>
       <td>$prerequisite</td>
-      <td><a href='#' class='btn btn-primary'>Open</a></td>
+      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
@@ -554,7 +554,7 @@ function getAvailableFreeCourses(){
     <tr>
       <td>$cname</td>
       <td>$credits</td>
-      <td><a href='#' class='btn btn-primary'>Open</a></td>
+      <td><button type='submit' name='openFree' class='btn btn-primary'>Confirm</button></td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
@@ -677,6 +677,44 @@ function getCourseInfo($courseId){
   }
   return false;
 }
+
+function getProfessorList(){
+  global $conn;
+  $query = "SELECT u.id, u.first_name, u.middle_name, u.last_name, i.instructor_id FROM instructors i
+  INNER JOIN users u on i.id_user = u.id where u.type = 'professor' or u.type = 'admin'";
+  $query_result = mysqli_query($conn, $query);
+  checkQuery($query_result);
+
+  while($row = mysqli_fetch_assoc($query_result)){
+    $id = $row['instructor_id'];
+    $fname = $row['first_name'];
+    $mname = $row['middle_name'];
+    $lname = $row['last_name'];
+    echo "
+      <option value='$id'>$fname $mname $lname</option>
+    ";
+  }
+}
+
+
+function openCourse($courseId, $professorId){
+  global $conn;
+  $query = "INSERT INTO ";
+  $query_result = mysqli_query($conn, $query);
+  checkQuery($query_result);
+
+  while($row = mysqli_fetch_assoc($query_result)){
+    $id = $row['instructor_id'];
+    $fname = $row['first_name'];
+    $mname = $row['middle_name'];
+    $lname = $row['last_name'];
+    echo "
+      <option value='$id'>$fname $mname $lname</option>
+    ";
+  }
+
+}
+
 
 
 

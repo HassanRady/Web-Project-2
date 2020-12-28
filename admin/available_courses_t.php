@@ -5,6 +5,14 @@ session_start();
 // $courseId = $_GET['course_id'];
 
 ?>
+
+<?php
+  if(isset($_POST['openFree'])){
+    
+  }
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -136,11 +144,45 @@ session_start();
                   </table>
                 </div>
                 <br>
-                
-                
 
+              <!-- Open Course Modal -->
 
-                
+              <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <form action="#" method="post" enctype="multipart/form-data">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modalLabel">Open Course</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <label class="label" for="professorName">Professor</label>
+                      <select class="custom-select d-block w-100" name="category" id="category" required>
+                        <option value="">Choose...</option>
+                        <?php getProfessorList(); ?>
+                      </select>
+                      <br />
+                      <label class="label" for="level">Level</label>
+                      <select class="custom-select d-block w-100" name="level" id="level" required>
+                        <option value="1">Level 1</option>
+                        <option value="2">Level 2</option>
+                        <option value="3">Level 3</option>
+                        <option value="4">Level 4</option>
+                      </select>
+                    <input type="text" class="form-control" name="courseId" id="courseId" style="display:none;">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" name="editChanges" class="btn btn-primary">Confirm</button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
 
             </div>
 
