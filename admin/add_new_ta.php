@@ -1,3 +1,7 @@
+<?php
+include "../includes/functions.php";
+add();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -45,16 +49,16 @@
                         class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="Students.html">Students</a>
+                            <a href="Students.php?type=student">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.html">Professors</a>
+                            <a href="Professors.php?type=professor">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.html">Teaching Assistants</a>
+                            <a href="ta_list.php?type=ta">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.html">Student Affairs</a>
+                            <a href="sa_list.php?type=sa">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
@@ -95,16 +99,16 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="add_new_student.html">Student</a>
+                                <a class="nav-link" href="add_new_student.php?type=student">Student</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="add_new_prof.html">Professor</a>
+                                <a class="nav-link" href="add_new_prof.php?type=professor">Professor</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="add_new_ta.html">Teaching Assistant</a>
+                                <a class="nav-link" href="add_new_ta.php?type=ta">Teaching Assistant</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="add_new_sa.html">Student Affairs</a>
+                                <a class="nav-link" href="add_new_sa.php?type=sa">Student Affairs</a>
                             </li>
                         </ul>
                     </div>
@@ -116,13 +120,13 @@
 
                 <div class="row">
                     <div class="col-md-12 order-md-1 col-lg-12">
-                        <h4 class="mb-3">Add New Student Affairs Employee</h4>
+                        <h4 class="mb-3">Add New Teaching Assistant</h4>
                         <hr class="mb-4">
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" novalidate action="add_new_ta.php?type=ta" method="POST">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="" value=""
+                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="" value=""
                                         required>
                                     <div class="invalid-feedback">
                                         Valid first name is required.
@@ -130,7 +134,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="lastName">Middle name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                    <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value=""
                                         required>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
@@ -138,7 +142,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="lastName">Last name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value=""
                                         required>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
@@ -149,7 +153,7 @@
                             <div class="row">
                                 <div class="col-lg-8 col-md-12 mb-3">
                                     <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email"
+                                    <input type="email" class="form-control" id="email" name="email"
                                         placeholder="example@alexu.edu.eg">
                                     <div class="invalid-feedback">
                                         Please enter a valid email address.
@@ -157,7 +161,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="zip">National ID number</label>
-                                    <input type="text" class="form-control" id="zip" placeholder="" required>
+                                    <input type="text" class="form-control" id="zip" name="national_id" placeholder="" required>
                                     <div class="invalid-feedback">
                                         Zip code required.
                                     </div>
@@ -168,7 +172,7 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Gender</label>
-                                    <select class="custom-select d-block w-100" id="country" required>
+                                    <select class="custom-select d-block w-100" id="country" name="gender" required>
                                         <option value="">Choose...</option>
                                         <option>Male</option>
                                         <option>Female</option>
@@ -181,22 +185,35 @@
 
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Mobile Number</label>
-                                    <input type="text" class="form-control" id="address" placeholder="01234567890"
+                                    <input type="text" class="form-control" id="address" name="mobile_number" placeholder="01234567890"
                                         required>
                                     <div class="invalid-feedback">Please enter your shipping address.</div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Home Number</label>
-                                    <input type="text" class="form-control" id="address" placeholder="(optional)"
+                                    <input type="text" class="form-control" id="address" name="home_number" placeholder="(optional)"
                                         required>
                                     <div class="invalid-feedback">Please enter your shipping address.</div>
                                 </div>
 
                             </div>
                             <hr class="mb-4">
+                            <div class="row">
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Add Professor</button>
+                                
+                                <div class="col-lg-12 mb-3">
+                                    <label for="aboutTextArea">About</label>
+                                    <textarea class="form-control" placeholder="Brief Description" id="aboutTextArea" name="description" style="resize: none; height: 150px;"></textarea>    
+                                  </div>
+
+                            </div>
+
+
+
+                            <hr class="mb-4">
+
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">Add Professor</button>
                         </form>
                         <br>
                     </div>

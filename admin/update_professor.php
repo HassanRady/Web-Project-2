@@ -1,3 +1,8 @@
+<?php
+include "../includes/functions.php";
+update();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -6,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Add Professor</title>
+    <title>Update Professor</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
@@ -45,16 +50,16 @@
                         class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="Students.html">Students</a>
+                            <a href="Students.php?type=student">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.html">Professors</a>
+                            <a href="Professors.php?type=professor">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.html">Teaching Assistants</a>
+                            <a href="ta_list.php?type=ta">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.html">Student Affairs</a>
+                            <a href="sa_list.php?type=sa">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
@@ -84,30 +89,11 @@
                     <button type="button" id="sidebarCollapse" class="btn btn-primary">
                         <i class="fas fa-align-left"></i>
                         <!-- <span id="nav-toggle-text">Navigation</span> -->
-                    </button>
-                    <a class="navbar-brand" id="page-title" href="#">Add New User</a>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                        </button>
+                    <a class="navbar-brand mr-auto" id="page-title" href="#">Update Professor</a>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="add_new_student.html">Student</a>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="add_new_prof.html">Professor</a>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="add_new_ta.html">Teaching Assistant</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="add_new_sa.html">Student Affairs</a>
-                            </li>
-                        </ul>
-                    </div>
             </nav>
 
 
@@ -116,13 +102,13 @@
 
                 <div class="row">
                     <div class="col-md-12 order-md-1 col-lg-12">
-                        <h4 class="mb-3">Add New Professor</h4>
+                        <h4 class="mb-3">Update Professor</h4>
                         <hr class="mb-4">
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" novalidate action="" method="POST">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="" value=""
+                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="" value="<?php echo $first_name ?>"
                                         required>
                                     <div class="invalid-feedback">
                                         Valid first name is required.
@@ -130,7 +116,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="lastName">Middle name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                    <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value="<?php echo $middle_name ?>"
                                         required>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
@@ -138,7 +124,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="lastName">Last name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value="<?php echo $last_name ?>"
                                         required>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
@@ -149,15 +135,11 @@
                             <div class="row">
                                 <div class="col-lg-8 col-md-12 mb-3">
                                     <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email"
-                                        placeholder="example@alexu.edu.eg">
-                                    <div class="invalid-feedback">
-                                        Please enter a valid email address.
-                                    </div>
+                                    <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>">
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="zip">National ID number</label>
-                                    <input type="text" class="form-control" id="zip" placeholder="" required>
+                                    <input type="text" class="form-control" id="zip" name="national_id" value="<?php echo $national_id ?>" required>
                                     <div class="invalid-feedback">
                                         Zip code required.
                                     </div>
@@ -168,10 +150,17 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Gender</label>
-                                    <select class="custom-select d-block w-100" id="country" required>
-                                        <option value="">Choose...</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                    <select class="custom-select d-block w-100" id="country" name="gender" required>
+                                    <option><?php echo $gender ?></option>
+                                        <?php
+
+                                        if ($gender == "Male") {
+                                            echo "<option>Female</option>";
+                                        } else {
+                                            echo "<option>Male</option>";
+                                        }
+
+                                        ?>
                                     </select>
                                     <div class="invalid-feedback">
                                         Please select a valid country.
@@ -181,14 +170,14 @@
 
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Mobile Number</label>
-                                    <input type="text" class="form-control" id="address" placeholder="01234567890"
+                                    <input type="text" class="form-control" id="address" name="mobile_number" value="<?php echo $mobile_number ?>"
                                         required>
                                     <div class="invalid-feedback">Please enter your shipping address.</div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Home Number</label>
-                                    <input type="text" class="form-control" id="address" placeholder="(optional)"
+                                    <input type="text" class="form-control" id="address" name="home_number" value="<?php echo $home_number ?>"
                                         required>
                                     <div class="invalid-feedback">Please enter your shipping address.</div>
                                 </div>
@@ -200,7 +189,7 @@
                                 
                                 <div class="col-lg-12 mb-3">
                                     <label for="aboutTextArea">About</label>
-                                    <textarea class="form-control" placeholder="Brief Description" id="aboutTextArea" style="resize: none; height: 150px;"></textarea>    
+                                    <textarea class="form-control" id="aboutTextArea" name="description" style="resize: none; height: 150px;"><?php echo $description ?></textarea>    
                                   </div>
 
                             </div>
@@ -214,7 +203,7 @@
                               </div>
                             <!-- <hr class="mb-4"> -->
                             <br>
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Add Professor</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">Update</button>
                         </form>
                         <br>
                     </div>
