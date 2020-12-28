@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
+<?php
+include "../includes/functions.php";
+$id_course=$_GET['courseid'];
+$id_instructor=$_GET['instructorid'];
+$semester=$_GET['semester'];
+if(isset($_POST['upload'])){
 
+    add_assignment($id_course,$id_instructor,$semester);
+}
+?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,7 +90,7 @@
                                 <a class="nav-link" href="discussion.html">Discusssion</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
+                                <a class="nav-link" href="assignment-hand-ins.php">Assignments</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Material.html">Material</a>
@@ -106,11 +115,11 @@
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Upload Assignment</h4>
                         <hr class="mb-4">
-                        <form class="needs-validation" novalidate>
+                        <form class="needs-validation" novalidate method="post" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="title">Title</label>
-                                    <input type="text" class="form-control" id="firstName" placeholder="" value=""
+                                    <input type="text" class="form-control" name="assignment-title" id="title" placeholder="" value=""
                                         required>
                                     <div class="invalid-feedback">
                                         Valid title is required.
@@ -118,17 +127,17 @@
                                 </div>
                                 <div class="col-lg-2 col-md-12 mb-3">
                                     <label for="group">Group</label>
-                                    <input name="group" type="text" class="form-control" id="firstName" placeholder="" value=""
+                                    <input name="group" type="text" name="group" class="form-control" id="group" placeholder="" value=""
                                         required>
                                 </div>
                                 <div class="col-lg-3 col-md-12 mb-3">
-                                    <label for="lastName">Due Date</label>
-                                    <input type="date" class="form-control" id="lastName" placeholder="" value=""
+                                    <label for="due date">Due Date</label>
+                                    <input type="date" name="due_date" class="form-control" id="due_date" placeholder="" value=""
                                         required>
                                 </div>
                                 <div class="col-lg-3 col-md-12 mb-3">
-                                    <label for="lastName">Time</label>
-                                    <input type="time" class="form-control" id="lastName" placeholder="" value=""
+                                    <label for="time">Time</label>
+                                    <input type="time" name="time" class="form-control" id="time" placeholder="" value=""
                                         required>
                                 </div>
                             </div>
@@ -137,7 +146,7 @@
                                 <div class="col-lg-12 mb-3">
                                     <label for="custom-file">Upload file</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <input type="file" name="assignment" class="custom-file-input" id="customFile">
                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
 
@@ -145,7 +154,7 @@
 
                                 <div class="col-lg-12 mb-3">
                                     <label for="aboutTextArea">Description</label>
-                                    <textarea class="form-control" placeholder="What is required?" id="aboutTextArea"
+                                    <textarea class="form-control" name="description" placeholder="What is required?" id="aboutTextArea"
                                         style="resize: none; height: 150px;"></textarea>
                                 </div>
 
@@ -155,7 +164,7 @@
 
                             <hr class="mb-4">
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Upload</button>
+                            <button class="btn btn-primary btn-lg btn-block" name="upload" type="submit">Upload</button>
                         </form>
                         <br>
                     </div>
@@ -167,7 +176,6 @@
 
         </div>
     </div>
-
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -184,14 +192,14 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Navbar -->
-    <script type="text/javascript" src="rootJS.js"></script>
+    <script type="text/javascript" src="../js/rootJS.js"></script>
     <script>
         // Add the following code if you want the name of the file appear on select
         $(".custom-file-input").on("change", function() {
-          var fileName = $(this).val().split("\\").pop();
-          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
-        </script>
+    </script>
 
 </body>
 

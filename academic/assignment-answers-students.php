@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<?php include '../includes/functions.php' ; ?>
 
 <head>
     <meta charset="utf-8">
@@ -115,50 +116,25 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Group</th>
                                     <th scope="col">Solution</th>
+                                    <th scope="col">Turn Time</th>
                                     <th scope="col">Mark</th>
                                 </tr>
                             </thead>
                             <tbody >
-                                <tr>
-                                    <td>195232021</td>
-                                    <td>Omar Khalid Taha</td>
-                                    <td>3</td>
-                                    <td><a class="assmt-download" href="#">Download</a></td>
-                                    <td><input type="number" name="" id=""></td>
-                                </tr>
-                                <tr>
-                                    <td>195232021</td>
-                                    <td>Omar Khalid Taha</td>
-                                    <td>3</td>
-                                    <td><a href="#">Download</a></td>
-                                    <td><input type="number" name="" id=""></td>
-                                </tr>
-                                <tr>
-                                    <td>195232021</td>
-                                    <td>Omar Khalid Taha</td>
-                                    <td>3</td>
-                                    <td><a href="#">Download</a></td>
-                                    <td><input type="number" name="" id=""></td>
-                                </tr>
-                                <tr>
-                                    <td>195232021</td>
-                                    <td>Omar Khalid Taha</td>
-                                    <td>3</td>
-                                    <td><a href="#">Download</a></td>
-                                    <td><input type="number" name="" id=""></td>
-                                </tr>
-                                <tr>
-                                    <td>195232021</td>
-                                    <td>Omar Khalid Taha</td>
-                                    <td>3</td>
-                                    <td><a href="#">Download</a></td>
-                                    <td><input type="number" name="" id=""></td>
-                                </tr>
+<form method="post">
+                                <?php show_prof_student_assignments(19);  ?>
                             </tbody>
                         </table>
                     </div>
                     <br>
-                    <button class="btn btn-block btn-primary">Return</button>
+                    <button type="submit" name="return" class="btn btn-block btn-primary">Return</button>
+                    </form>
+                    <?php
+                    if(isset($_POST['return'])){
+                        add_assignment_grade();
+                    }
+
+                    ?>
                 </div>
 
 
