@@ -162,6 +162,7 @@ session_start();
                       <label class="label" for="professorName">Professor</label>
                       <select class="custom-select d-block w-100" name="category" id="category" required>
                         <option value="">Choose...</option>
+                        <option value="2147483647">External Professor</option>
                         <?php getProfessorList(); ?>
                       </select>
                       <br />
