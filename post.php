@@ -1,5 +1,5 @@
 <?php
-include "includes/SQLfunctions.php";
+include "includes/functions.php";
 global $conn;
 
 if (isset($_GET['p_id']) && isset($_GET['u_id'])) {

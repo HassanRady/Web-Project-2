@@ -1,5 +1,5 @@
 <?php
-include "../includes/SQLfunctions.php";
+include "../includes/functions.php";
 global $conn;
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 $course_id = 1;
