@@ -23,7 +23,7 @@ editProfile();
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
+<script type="text/javascript" src="forms.js"> </script>
 </head>
 
 <body>
@@ -108,23 +108,26 @@ editProfile();
           <div class="col-md-12 order-md-1 col-lg-12">
             <h4 class="mb-3">Edit profile</h4>
             <hr class="mb-4">
-            <form class="needs-validation" novalidate action="" method="POST">
+            <form novalidate action="/" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_GurdianNumber() & validate_MobileNumber() &  validate_HomeNumber() & validate_1stpassword() & validate_2ndpassword())">
               <div class="row">
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="firstName">First name</label>
-                  <input type="text" class="form-control" id="firstName" name="first_name" value="<?php echo $first_name ?>" required>
+                  <input type="text" class="form-control" id="firstName" name="first_name" value="<?php echo $first_name ?>" >
+                   <h6 id="warn1" style="font-style: italic;color: red;" ></h6>
                   <div class="invalid-feedback">
                     Valid first name is required.
                   </div>
                 </div>
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="lastName">Middle name </label>
-                  <input type="text" class="form-control" id="middleName" name="middle_name" value="<?php echo $middle_name ?>" required>
+                  <input type="text" class="form-control" id="middleName" name="middle_name" value="<?php echo $middle_name ?>" >
+                   <h6 id="warn2" style="font-style: italic;color: red;" ></h6>
 
                 </div>
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="lastName">Last name </label>
-                  <input type="text" class="form-control" id="lastName" name="last_name" value="<?php echo $last_name ?>" required>
+                  <input type="text" class="form-control" id="lastName" name="last_name" value="<?php echo $last_name ?>" >
+                   <h6 id="warn3" style="font-style: italic;color: red;" ></h6>
 
                 </div>
               </div>
@@ -134,12 +137,14 @@ editProfile();
               <div class="row">
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="password">Password</label>
-                  <input type="text" class="form-control" id="password" placeholder="" value="" required>
+                  <input type="text" class="form-control" id="password" placeholder="" value="" >
+                   <h6 id="warn4" style="font-style: italic;color: red;" ></h6>
 
                 </div>
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="Re-enter Password">Re-enter Password </label>
-                  <input type="text" class="form-control" id="Re-enter" placeholder="" value="" required>
+                  <input type="text" class="form-control" id="Re-enter" placeholder="" value="" onfocus ="check_password()" >
+                   <h6 id="warn5" style="font-style: italic;color: red;" ></h6>
 
                 </div>
 
@@ -154,7 +159,8 @@ editProfile();
                     <div class='row'>
                           <div class='col-lg-6 col-md-12 mb-3'>
                             <label for='address'>Address</label>
-                            <input type='text' class='form-control' id='address' name='address' value='$address' required>
+                            <input type='text' class='form-control' id='address' name='address' value='$address'>
+                             <h6 id='warn9' style='font-style: italic;color: red;'' ></h6>
                             <div class='invalid-feedback'>
                               Please enter your address.
                             </div>
@@ -166,7 +172,8 @@ editProfile();
               <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                   <label for="gender">Mobile Number</label>
-                  <input type="text" class="form-control" id="MobileNumber" name="mobile_number" value="<?php echo $mobile_number ?>" required>
+                  <input type="text" class="form-control" id="phone" name="mobile_number" value="<?php echo $mobile_number ?>" >
+                   <h6 id="warn6" style="font-style: italic;color: red;" ></h6>
                   <div class="invalid-feedback">Please enter your Mobile Number.</div>
                 </div>
 
@@ -175,14 +182,16 @@ editProfile();
                   echo "
                         <div class='col-lg-4 col-md-6 col-sm-12 mb-3'>
                             <label for='gender'>Guardian Mobile Number</label>
-                            <input type='text' class='form-control' id='GuardianMobileNumber' name='guardian_mobile_number' value='$guardian_mobile_number' required>
+                            <input type='text' class='form-control' id='phone2' name='guardian_mobile_number' value='$guardian_mobile_number' >
+                             <h6 id='warn7' style='font-style: italic;color: red;' ></h6>
                               <div class='invalid-feedback'>Please enter your Guardian Mobile Number.</div>
                         </div>";
                 ?>
                 
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                   <label for="gender">Home Phone Number</label>
-                  <input type="text" class="form-control" id="HomePhoneNumber" name="home_number" value="<?php echo $home_number ?>" required>
+                  <input type="text" class="form-control" id="HomeNumber" name="home_number" value="<?php echo $home_number ?>">
+                   <h6 id="warn8" style="font-style: italic;color: red;" ></h6>
                   <div class="invalid-feedback">Please enter your Home Phone Number.</div>
                 </div>
 
