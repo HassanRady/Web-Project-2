@@ -114,7 +114,7 @@ add();
                         <div class="col-md-12 order-md-1 col-lg-12">
                             <h4 class="mb-3">Add New Student</h4>
                             <hr class="mb-4">
-                            <form novalidate action="add_new_student.php?type=student" method="POST"  onsubmit="return !!(empty_field() & validate_names() & validate_NationalId() & validate_GurdianNumber() & validate_MobileNumber() & validate_StudentId() &  validate_HomeNumber() & validate_email())">
+                            <form novalidate action="add_new_student.php?type=student" method="POST"  onsubmit="return !!(empty_field() & validate_names() & validate_NationalId() & validate_GurdianNumber() & validate_MobileNumber() & validate_StudentId() &  validate_HomeNumber() & validate_email()  & validate_gender() & validate_math() )">
                                 <div class="row">
                                     <div class="col-lg-4 col-md-12 mb-3">
                                         <label for="firstName">First name (English)</label>
@@ -147,16 +147,16 @@ add();
                                         <label for="firstName">Full Name (Arabic)</label>
                                         <input type="text" class="form-control" id="firstName" name="arabic_name" placeholder="" value="" >
                                             <h6 id="warn" style="font-style: italic;color: red;" ></h6>
-                                        <div class="invalid-feedback">
-                                            Valid first name is required.
+                                        <div>
+                                           
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-12 mb-3">
                                         <label for="lastName">National ID Number</label>
                                         <input type="text" class="form-control" id="zip" name="national_id" placeholder="" value="">
                                             <h6 id="warn5" style="font-style: italic;color: red;" ></h6>
-                                        <div class="invalid-feedback">
-                                            Valid last name is required.
+                                        <div >
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -185,11 +185,12 @@ add();
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <label for="gender">Gender</label>
-                                        <select class="custom-select d-block w-100" id="country" name="gender" required>
-                    <option value="">Choose...</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
+                                    <select class="custom-select d-block w-100" id="gender" name="gender" >
+                                       <option value="" disabled selected>Choose...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                     <p id="warn_gender" style="font-style: italic;color: red;" ></p>
                                         <div class="invalid-feedback">
                                             Please select a valid country.
                                         </div>
@@ -198,11 +199,12 @@ add();
 
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <label for="math">Starting Math</label>
-                                        <select class="custom-select d-block w-100" id="state" name="student_type" required>
-                    <option value="">Choose...</option>
-                    <option>Math 0</option>
-                    <option>Math 1</option>
+                                        <select class="custom-select d-block w-100" id="math" name="student_type" required>
+                     <option value="" disabled selected hidden>Choose...</option>
+                    <option value="Math0">Math 0</option>
+                    <option value="Math1">Math 1</option>
                   </select>
+                  <p id="warn_math" style="font-style: italic;color: red;" ></p>
                                         <div class="invalid-feedback">
                                             Please provide a valid state.
                                         </div>

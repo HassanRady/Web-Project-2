@@ -215,6 +215,46 @@ var studentid= document.getElementById("studentid").value;
    
   }
 return flag;}
+
+
+  function validate_gender(){
+
+ var flag = true;
+ if (document.getElementById('gender').value=="")
+  {
+    error(document.getElementById('gender'),document.getElementById("warn_gender"),"please make a choice");
+   
+    flag= false;
+   
+  }
+  else{
+document.getElementById('gender').style.borderColor ="";
+document.getElementById("warn_gender").innerHTML ="";
+
+  }
+  
+
+return flag;}
+
+function validate_math(){
+
+ var flag = true;
+ if (document.getElementById('math').value=="")
+  {
+    error(document.getElementById('math'),document.getElementById("warn_math"),"please make a choice");
+   
+    flag= false;
+   
+  }
+  else{
+document.getElementById('math').style.borderColor ="";
+document.getElementById("warn_math").innerHTML ="";
+
+  }
+  
+
+return flag;}
+
   
   function error(border,warning,message){
 

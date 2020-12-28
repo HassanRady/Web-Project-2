@@ -122,7 +122,7 @@ add();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Teaching Assistant</h4>
                         <hr class="mb-4">
-                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId());">
+                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender() );">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
@@ -176,12 +176,13 @@ add();
                             <hr class="mb-4">
                             <div class="row">
                                 <div class="col-md-4 col-sm-12 mb-3">
-                                    <label for="gender">Gender</label>
-                                    <select class="custom-select d-block w-100" id="country" name="gender" required>
-                                        <option value="">Choose...</option>
-                                        <option>Male</option>
-                                        <option>Female</option>
+                                   <label for="gender">Gender</label>
+                                    <select class="custom-select d-block w-100" id="gender" name="gender" >
+                                       <option value="" disabled selected>Choose...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
+                                     <p id="warn_gender" style="font-style: italic;color: red;" ></p>
                                     <div class="invalid-feedback">
                                         Please select a valid country.
                                     </div>
