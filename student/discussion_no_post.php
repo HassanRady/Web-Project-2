@@ -1,6 +1,6 @@
 <?php
 
-include "../includes/SQLfunctions.php";
+include "../includes/functions.php";
 global $conn;
 
 

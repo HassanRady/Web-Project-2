@@ -212,5 +212,5 @@ function checkIfVoted($post_id, $user_id){
     }
 
     return mysqli_num_rows($result) != 0;
-    
+
 }
