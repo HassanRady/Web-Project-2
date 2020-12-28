@@ -9,6 +9,8 @@ function showData($one_record = false, $record_id = 0)
 {
     global $conn, $students_data, $professors_data, $tas_data, $admins_data;
 
+    $basename = basename($_SERVER['PHP_SELF']);
+
     // types of users
     $types = array("sa", "ta", "professor", "student");
 
@@ -29,12 +31,10 @@ function showData($one_record = false, $record_id = 0)
             $type = $_GET["type"];
         } else {
             // check the file name which it has any type of users
-            $file_name = strtolower(basename($_SERVER['PHP_SELF']));
+            $file_name = strtolower($basename);
             $type = which_type($file_name, $types);
         }
     }
-
-
 
     switch ($type) {
 
@@ -45,11 +45,19 @@ function showData($one_record = false, $record_id = 0)
                 join users u 
                     on s.id_user = u.id";
 
+            // for searching by level
+            if (isset($_POST['search'])) {
+                $level_search = $_POST['student-level'][6];
+                $sql_0_5 = " ORDER BY s.level = {$level_search} DESC;";
+            } else {
+                $sql_0_5 = " ORDER BY s.level DESC;";
+            }
+
             // completing the query if one record only is asked for to show
             if ($one_record) {
                 $sql .= $sql0;
             } else {
-                $sql .= ";";
+                $sql .= $sql_0_5;
             }
 
             // executing the query
@@ -73,6 +81,10 @@ function showData($one_record = false, $record_id = 0)
                     <td>" . $row["email"] . "</td> <td>" . $row["level"] . "</td> <td>";
                     // a link button element for editing 
                     aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_student.php?id={$row['id_user']}&type={$type}", "Edit");
+                    echo "<td>";
+                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
+
+
                     echo "</td></tr>";
                 }
             } else {
@@ -116,6 +128,8 @@ function showData($one_record = false, $record_id = 0)
                     <td>" . $row["mobile_number"] . "</td> <td>";
                     // a link button element for editing 
                     aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_professor.php?id={$row['id_user']}&type={$type}", "Edit");
+                    echo "<td>";
+                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
                     echo "</td></tr>";
                 }
             } else {
@@ -158,6 +172,8 @@ function showData($one_record = false, $record_id = 0)
                         <td>" . $row["mobile_number"] . "</td> <td>";
                     // a link button element for editing 
                     aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
+                    echo "<td>";
+                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
                     echo "</td></tr>";
                 }
             } else {
@@ -198,6 +214,8 @@ function showData($one_record = false, $record_id = 0)
                         <td>" . $row["mobile_number"] . "</td> <td>";
                     // a link button element for editing 
                     aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_sa.php?id={$row['id_user']}&type={$type}", "Edit");
+                    echo "<td>";
+                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
                     echo "</td></tr>";
                 }
             } else {
@@ -205,6 +223,8 @@ function showData($one_record = false, $record_id = 0)
                 die("RESULT FAILED from sql-sa-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
             }
             break;
+        default:
+            die("NONE TYPE");
     }
     // Close connection
     $conn->close();
@@ -640,19 +660,41 @@ function update()
     $conn->close();
 }
 
-// function to get user data
+// function to delete a user
+function delete()
+{
+    global $conn;
+
+    // checking if delete button is pressed
+    if (isset($_GET['delete'])) {
+        // db reconnection
+        reconnect();
+        $id_user = $_GET['delete'];
+        // getting file name to redirect
+        $basename = basename($_SERVER['PHP_SELF']);
+        // query for deleting a user
+        $sql = "DELETE FROM users WHERE id = {$id_user};";
+        $result = mysqli_query($conn, $sql);
+        check_result($result, $conn, "sql-delete");
+        header("Location:./{$basename}");
+    }
+}
+
+
+// function to get user's data
 function userProfile()
 {
     global $conn, $id_user, $type, $first_name, $middle_name, $last_name, $full_name,
         $email, $mobile_number, $home_number;
     // user id and type
     $id_user = $_GET["id"];
-    // $type = $_GET["type"];
 
     // getting user's data
     $data = showData(true, $id_user)[$id_user];
     // Close connection
-    // $conn->close();
+    $conn->close();
+
+    $type = $data['type'];
 
     // what can be shown for all users
     $first_name = $data['first_name'];
@@ -664,14 +706,8 @@ function userProfile()
     // user full name
     $full_name = $first_name . " " . $middle_name . " " . $last_name;
 
-    // what can't be shown
-    $national_id = $data['national_id'];
-    $type = $data['type'];
-    $gender = $data['gender'];
-
     if ($type === "student") {
         global $address, $level, $guardian_mobile_number;
-
         $address = $data['address'];
         $level = $data['level'];
         $guardian_mobile_number = $data['guardian_mobile_number'];
@@ -683,8 +719,8 @@ function editProfile()
 {
     userProfile();
     global $conn, $type, $id_user;
-    // connection
-    // $conn->connect();
+    // db reconnection
+    reconnect();
 
     if (isset($_POST['update'])) {
 

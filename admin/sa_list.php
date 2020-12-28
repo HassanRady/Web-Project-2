@@ -1,3 +1,7 @@
+<?php 
+ob_start();
+include "../includes/functions.php";
+?>
 <!DOCTYPE html>
 <html>
 
@@ -145,8 +149,8 @@
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                include "../includes/functions.php";
                                 showData();
+                                delete();
                                 ?>
 
                             </tbody>
@@ -233,3 +237,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

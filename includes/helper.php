@@ -27,10 +27,11 @@ function which_type($haystack, $needle, $offset = 0)
 }
 
 
-function check_result($result, $conn)
+// function to check if the sql query was successful
+function check_result($result, $conn, $source=null)
 {
     if (!$result) {
-        die("Could not insert data from sql1-student-editProfile\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));
+        die("RESULT FAILED from {$source}\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));
         return;
     }
 }

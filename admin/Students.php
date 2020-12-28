@@ -1,3 +1,8 @@
+<?php
+ob_start();
+include "../includes/functions.php";
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -102,7 +107,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="#">Student</a>
+                                <a class="nav-link" href="">Student</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="Professors.php?type=professor">Professor</a>
@@ -129,7 +134,7 @@
 
                 <div class="container-fluid table-container">
                     <!-- Search form -->
-                    <form>
+                    <form action="" method="POST">
                         <div class="row ">
                             <div class="col-md mt-3">
                                 <label for="student-name">Student Name</label>
@@ -155,7 +160,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center ">
-                            <button class="btn btn-primary w-50 btn-block right-btn search-btn">Search</button>
+                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="search">Search</button>
                         </div>
 
                     </form>
@@ -181,8 +186,8 @@
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                include "../includes/functions.php";
                                 showData();
+                                delete();
                                 ?>
 
                             </tbody>
@@ -190,8 +195,6 @@
                         </table>
                     </div>
                 </div>
-
-
                 <!-- <td><button class="btn btn-outline-primary right-btn" data-toggle="modal"
                                             data-target="#edit-info-modal">View</button></td> -->
 
@@ -270,3 +273,5 @@
 </body>
 
 </html>
+
+<?php ob_end_flush(); ?>

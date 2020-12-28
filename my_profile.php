@@ -31,57 +31,13 @@ userProfile();
 
   <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-      <div class="sidebar-header">
-        <img src="media/logo.jpeg" alt="SIM-LOGO">
-      </div>
-      <p>Navigation</p>
-      <ul class="list-unstyled components">
-        <li class="active">
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-              <a href="#">Students</a>
-            </li>
-            <li>
-              <a href="#">Professors</a>
-            </li>
-            <li>
-              <a href="#">Teaching Assistants</a>
-            </li>
-            <li>
-              <a href="#">Student Affairs</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li>
-              <a href="#">Open Courses</a>
-            </li>
-            <li>
-              <a href="#">All Courses</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">My Profile</a>
-        </li>
-        <li>
-          <a href="#">Timetable</a>
-        </li>
-        <li>
-          <a href="#">Others</a>
-        </li>
-      </ul>
-
-      <ul class="list-unstyled CTAs">
-        <li>
-          <a href="login.php" class="cta-logout" id="logout-btn">Logout</a>
-        </li>
-      </ul>
-    </nav>
+    <?php
+    if ($type === 'student') {
+      include "includes\std_sidebar.php";
+    } else {
+      include "includes\prof_sidebar.php";
+    }
+    ?>
     <!-- Page Content  -->
     <div id="content">
 
@@ -134,7 +90,7 @@ userProfile();
                   <?php
                   if ($type === 'student')
                     echo "
-                      <p class='text-secondary mb-1'>$level</p>";
+                      <p class='text-secondary mb-1'>Level $level</p>";
                   ?>
                   <button class="btn btn-outline-primary btn-md">change photo</button>
                   <a href="editprofile.php?id=<?php echo $id_user . '&type=' . $type ?>" class="btn btn-outline-primary btn-md">Edit</a>
@@ -185,7 +141,7 @@ userProfile();
                   <h6 >Guardian Phone </h6>
                 </div> 
                 <div class='col-md-6 text-secondary'>
-                '$guardian_mobile_number'
+                $guardian_mobile_number
                 </div>
               </div>";
               ?>
@@ -209,7 +165,7 @@ userProfile();
                   <h6>Address</h6>
                 </div>
                 <div class='col-md-6 text-secondary'>
-                '$address'
+                $address
                 </div>
               </div>";
               ?>
