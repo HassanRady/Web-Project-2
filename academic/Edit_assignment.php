@@ -4,7 +4,7 @@
 include "../includes/functions.php";
 $id=$_GET['id'];
 $id_course=$_GET['courseid'];
-$id_instructor=$_GET['instructorid'];
+$semester=$_GET['semester'];
 if(isset($_POST['update'])){
 
     edit_prof_assignment($id);
@@ -111,7 +111,7 @@ if(isset($_POST['update'])){
         <div class="page-body">
             <!-- START HERE -->
 <?php
-edit_prof_assignment_show($id,$id_course,$id_instructor);
+edit_prof_assignment_show($id,$id_course,$semester);
 
 ?>
             <!-- STOP HERE -->
