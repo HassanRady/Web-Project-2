@@ -409,7 +409,6 @@ $result=mysqli_query($conn, $query);
 
 }
 //grade for student choose semester id , course id , student id , name , group,
-
 function display_student_assignments($semester,$courseid){
     global $conn;
     $query="SELECT  a.assignment_id , a.title ,a.id_instructor ,
@@ -485,9 +484,6 @@ function display_student_assignments($semester,$courseid){
     
     }
 }
-
-
-
 function student_view_assignment($id,$studentid){
     global $conn;
 
@@ -548,7 +544,6 @@ Turned in $turndate at $turntime
               <h6 class='Instructions'>Instructions</h6>
               <p class='handtime'>
 $description <br>
-Assignment file: <a href='../media/$assignment'>$assignment</a>
               </p>
 
 
@@ -562,6 +557,13 @@ Assignment file: <a href='../media/$assignment'>$assignment</a>
 </p>
 </div>
 
+
+</div>
+<div class='row'>
+<div class='col-lg-6'>
+<h6>Referenece Metrial</h6>
+<p class='handtime'><a href='../media/$assignment'>$assignment</a></p>
+</div>
 
 </div>
 
@@ -625,7 +627,6 @@ function turnin_view($id,$studentid){
               <h6 class='Instructions'>Instructions</h6>
               <p class='handtime'>
 $description <br>
-<a href='../media/$assignment'>$assignment</a>
               </p>
 
 
@@ -641,7 +642,13 @@ $description <br>
 
 
 </div>
+<div class='row'>
+<div class='col-lg-6'>
+<h6>Referenece Metrial</h6>
+<p class='handtime'><a href='../media/$assignment'>$assignment</a></p>
+</div>
 
+</div>
 
 <div class='row'>
   <div class='col-lg-6'>
