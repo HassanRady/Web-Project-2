@@ -10,3 +10,4 @@ foreach ($db as $key => $value) {
 }
 // making the connection
 $conn = mysqli_connect(DB_HOST, DB_PATH, DB_PASSWORD, DB_NAME) or die("FAILED TO CONNECT");
+

@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
+<?php
+include '../includes/functions.php';
+$id_course=$_GET['courseid'];
+$semester=$_GET['semester'];
+if(isset($_POST['remove'])){
+    remove_prof_assignment();
+}
+?>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Add Course</title>
+    <title>Collapsible sidebar using Bootstrap 4</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href=".../css/rootStyles.css">
+    <link rel="stylesheet" href="../css/rootStyles.css">
+    <link rel="stylesheet" href="css/assmt_hand_ins.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -40,45 +49,14 @@
                 <li>
                     <a href="announcements.html">Home</a>
                 </li>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="Students.html">Students</a>
-                        </li>
-                        <li>
-                            <a href="Professors.html">Professors</a>
-                        </li>
-                        <li>
-                            <a href="ta_list.html">Teaching Assistants</a>
-                        </li>
-                        <li>
-                            <a href="sa_list.html">Student Affairs</a>
-                        </li>
-                    </ul>
-                </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="available_courses.html">All Courses</a>
-                        </li>
-                        <li>
-                            <a href="available_courses.html">Open Courses</a>
-                        </li>
-                        <li>
-                            <a href="#">My Courses</a>
-                        </li>
-                    </ul>
+                    <a href="my_courses_prof_ta.html">My Courses</a>
                 </li>
                 <li>
                     <a href="../my_profile.html">My Profile</a>
                 </li>
                 <li>
                     <a href="timetable.html">Timetable</a>
-                </li>
-                <li>
-                    <a href="venues.php">Venues</a>
                 </li>
             </ul>
 
@@ -98,7 +76,7 @@
                         <i class="fas fa-align-left"></i>
                         <!-- <span id="nav-toggle-text">Navigation</span> -->
                     </button>
-                    <a class="navbar-brand" id="page-title" href="#">Add New User</a>
+                    <a class="navbar-brand" id="page-title" href="#">Assignments</a>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -107,108 +85,72 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="add_new_student.html">Student</a>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="add_new_prof.html">Professor</a>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="add_new_ta.html">Teaching Assistant</a>
-                            </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="add_new_sa.html">Student Affairs</a>
+                                <a class="nav-link" href="discussion.html">Discusssion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="assignment-hand-ins.php">Assignments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Material.html">Material</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="students_in_course.html">Students</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="std_grades.html">Marks</a>
                             </li>
                         </ul>
                     </div>
             </nav>
 
 
+
+            <!--page body-->
             <div class="page-body">
-                <!--page body-->
-                <form>
-                    <div class="Container">
-                        <div class="form-row">
-
-
-
-                            <div class="col-md-6">
-                                <label for="coursename">Course Name</label>
-                                <input type="text" class="form-control" id="coursename">
-
-
-
-                            </div>
 
 
 
 
-
-                            <div class="col-md-6">
-                                <label for="credhours">Credit Hours</label>
-                                <input type="text" class="form-control" id="credhours">
-                            </div>
-
-
-
-
-                        </div>
-                        <br>
-
-
-
-                        <button type="submit" class="btn btn-primary  btn-lg btn-block">Submit</button>
-
+                <div class="container-fluid">
+                    <div class="row justify-content-end">
+                        <a href="upload-prof-assmt.php" class=" btn btn-primary btn-block w-25">Upload New</a>
                     </div>
+                </div>
+                <hr class="mb-4">
 
-                </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!---->
-
-
-
-
-
-
-
-
-
+<?php
+show_prof_assignment($id_course,$semester);
+?>
 
 
             </div>
         </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <!---->
+
+
+
+
+
+
+
+
+
+
+
+    </div>
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -227,7 +169,7 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Navbar -->
-    <script type="text/javascript" src="rootJS.js"></script>
+    <script type="text/javascript" src="../js/rootJS.js"></script>
 
 </body>
 

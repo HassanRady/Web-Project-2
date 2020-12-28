@@ -74,7 +74,7 @@
                     <a href="timetable.html">Timetable</a>
                 </li>
                 <li>
-                    <a href="venues.html">Venues</a>
+                    <a href="venues.php">Venues</a>
                 </li>
             </ul>
 

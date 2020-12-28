@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
+<?php
+include "../includes/functions.php";
+$id_course=$_GET['courseid'];
+$semester=$_GET['semester'];
 
+?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +18,7 @@
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../css/rootStyles.css">
-    <link rel="stylesheet" href="css/assmt_hand_ins.css">
+    <link rel="stylesheet" href="css/assmts.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -27,8 +32,10 @@
         crossorigin="anonymous"></script>
 
 </head>
-
 <body>
+
+
+
 
     <div class="wrapper">
         <!-- Sidebar  -->
@@ -42,10 +49,19 @@
                     <a href="announcements.html">Home</a>
                 </li>
                 <li>
-                    <a href="my_courses_prof_ta.html">My Courses</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Courses</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="my_courses_std.html">My Courses</a>
+                        </li>
+                        <li>
+                            <a href="course_registration.html">All Courses</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="../my_profile.html">My Profile</a>
+                    <a href="student_transcript.html">My Profile</a>
                 </li>
                 <li>
                     <a href="timetable.html">Timetable</a>
@@ -58,6 +74,8 @@
                 </li>
             </ul>
         </nav>
+
+
         <!-- Page Content  -->
         <div id="content">
 
@@ -68,7 +86,7 @@
                         <i class="fas fa-align-left"></i>
                         <!-- <span id="nav-toggle-text">Navigation</span> -->
                     </button>
-                    <a class="navbar-brand" id="page-title" href="#">Assignments</a>
+                    <a class="navbar-brand" id="page-title" href="#">TITLE</a>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -77,138 +95,45 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="discussion.html">Discusssion</a>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="discussion.html">Discussion</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="student_assignments.php">Assignments</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Material.html">Material</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="students_in_course.html">Students</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="std_grades.html">Marks</a>
+                                <a class="nav-link" href="my_marks_std.html">Marks</a>
                             </li>
                         </ul>
                     </div>
             </nav>
 
 
+                <!--page body-->
+                <div class="page-body">
 
-            <!--page body-->
-            <div class="page-body">
+<?php
+display_student_assignments($semester,$id_course);
+?>
 
-
-                <!-- <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm">
-                            <br>
-                            <sub>Title:</sub>
-                            <p>web programming sheet</p>
-
-
-                        </div>
-                        <div class="col-sm">
-                            <br>
-                            <sub>Uploaded by:</sub>
-                            <p>prof.farah</p>
-                        </div>
-                        <div class="col-sm">
-                            <br>
-                            <sub>Date:</sub>
-                            <p> 11/11/2020</p>
-
-
-                        </div>
-
-                        <div class="col-sm" id="upload">
-                            <br>
-                            <button type="button" class="btn btn-primary btn-sm">student uplaod</button>
-
-
-                        </div>
-
-
-                        <div class="col-sm" id="edre">
-                            <br>
-                            <button type="button" class="btn btn-primary btn-sm" id="editt"> Edit</button>
-
-
-                            <button type="button" class="btn btn-outline-danger btn-sm " id="remove">Remove</button>
-
-                        </div>
-
-
-                    </div> -->
-
-                <div class="container-fluid">
-                    <div class="row justify-content-end">
-                        <a href="upload-prof-assmt.html" class=" btn btn-primary btn-block w-25">Upload New</a>
-                    </div>
                 </div>
-                <hr class="mb-4">
-                <div class="conbody container-fluid">
-
-                    <div class="row">
-                        <div class="btn-grp col-lg-5 col-md-12">
-                            <table class="table table-borderless ">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Assignment</th>
-                                        <td>Web Programming Sheet</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Due Date</th>
-                                        <td>1/1/2021</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="btn-grp col-lg-5 col-md-12">
-                            <table class="table table-borderless ">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Course</th>
-                                        <td>Web Programming</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Upload Date</th>
-                                        <td>31/12/2020</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="btn-grp col-lg-2 col-md-12">
-                            <a href="#" class="btn btn-primary">View</a>
-                            <a href="#" class="btn btn-outline-secondary">Edit</a>
-                            <a href="#" class="btn btn-outline-danger">Remove</a>
-                        </div>
-
-
-
-                    </div>
-                </div>
-
-
             </div>
+
+
+
         </div>
 
 
 
-    </div>
 
 
 
 
 
-
-
-
-    <!---->
+        <!---->
 
 
 
