@@ -2169,12 +2169,6 @@ function openCourse($courseId, $professorId){
 }
 
 
-
-
-
-
-// getting connection
-include_once "db_conn.php";
 function showAllCourses(){
     global $conn;
     $query = "SELECT * FROM courses ";
