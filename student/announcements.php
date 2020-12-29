@@ -137,7 +137,7 @@ $user_id = 1;
                 $result_post_content = $row['post_content'];
                 $result_post_votes = $row['votes'];
                 ?>
-                            <!--posts-->
+                <!--posts-->
                 <div class="container post">
                     <form action="" method="post">
                         <h6><?php echo $result_post_author ?></h6>
@@ -150,21 +150,35 @@ $user_id = 1;
                             // if user hadn't voted on the post yet, show him/her the upvote, downvote buttons
                             if (!checkIfVoted($result_post_id, $user_id)) {
                                 ?>
-                                <div class="col"><input type="submit" name="upvote" value="upvote"
-                                                        class="btn btn-primary"></div>
-                                <div class="col"><input type="submit" name="downvote" value="downvote"
-                                                        class="btn btn-danger"></div>
+                                <div class="col">
+                                    <button type="submit" name="upvote" value="upvote" class="btn btn-outline-primary"
+                                            style=" background-color: rgba(31,108,236, 0.01); color: #000; border-color:rgba(31,108,236, 0.03) ; border-style: none;">
+                                        <i class="fas fa-arrow-circle-up" style="color: rgb(31,108,236);"></i></button>
+                                </div>
+                                <div class="col">
+                                    <div class="col"><p>Votes: <?php echo $result_post_votes; ?> </p></div>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" name="downvote" value="downvote"
+                                            class="btn btn-outline-primary"
+                                            style=" background-color: rgba(31,108,236, 0.01); color: #000; border-color:rgba(31,108,236, 0.03) ; border-style: none;">
+                                        <i class="fas fa-arrow-circle-down" style="color: rgb(31,108,236);"></i>
+                                    </button>
+                                </div>
                             <?php } else {
                                 echo "<div class='col'><input type='submit' name='redo' value='redo' class='btn btn-primary'></div>";
+                                echo "<div class='col'><p>Votes: $result_post_votes</p></div>";
                             }
                             ?>
-                            <div class="col"><p>Votes: <?php echo $result_post_votes; ?> </p></div>
+
                             <input type="hidden" name="post_id" value="<?php print $result_post_id; ?>"/>
                             <input type="hidden" name="votes" value="<?php print $result_post_votes; ?>"/>
                         </div>
                         <p class="text-center"><a
-                                    href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
-                                comments </a></p>
+                                    href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">
+                                <i class="fas fa-comment-alt" style="color: rgb(31,108,236);"></i>
+                            </a>
+                        </p>
                         <p class="date"> <?php echo $result_post_date; ?> </p>
                     </form>
                 </div>

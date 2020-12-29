@@ -150,15 +150,29 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
                             // if user hadn't voted on the post yet, show him/her the upvote, downvote buttons
                             if (!checkIfVoted($the_post_id, $the_user_id)) {
                                 ?>
-                                <div class="col"><input type="submit" name="upvote" value="upvote"
-                                                        class="btn btn-primary"></div>
-                                <div class="col"><input type="submit" name="downvote" value="downvote"
-                                                        class="btn btn-danger"></div>
-                            <?php } else {
+                                <div class="col">
+                                    <button type="submit" name="upvote" value="upvote" class="btn btn-outline-primary"
+                                            style=" background-color: rgba(31,108,236, 0.01); color: #000; border-color:rgba(31,108,236, 0.03) ; border-style: none;">
+                                        <i class="fas fa-arrow-circle-up" style="color: rgb(31,108,236);"></i></button>
+                                </div>
+                                <div class="col">
+                                    <div class="col"><p>Votes: <?php echo $result_post_votes; ?> </p></div>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" name="downvote" value="downvote"
+                                            class="btn btn-outline-primary"
+                                            style=" background-color: rgba(31,108,236, 0.01); color: #000; border-color:rgba(31,108,236, 0.03) ; border-style: none;">
+                                        <i class="fas fa-arrow-circle-down" style="color: rgb(31,108,236);"></i>
+                                    </button>
+                                </div>
+                            <?php }
+
+                            else {
                                 echo "<div class='col'><input type='submit' name='redo' value='redo' class='btn btn-primary'></div>";
+                                echo "<div class='col'><p>Votes: $result_post_votes</p></div>";
                             }
                             ?>
-                            <div class="col"><p>Votes: <?php echo $result_post_votes; ?> </p></div>
+                            
                             <input type="hidden" name="post_id" value="<?php print $the_post_id; ?>"/>
                             <input type="hidden" name="votes" value="<?php print $result_post_votes; ?>"/>
                         </div>
