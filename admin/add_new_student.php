@@ -23,7 +23,7 @@ add();
         <!-- Font Awesome JS -->
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
+<script type="text/javascript" src="forms.js"> </script>
     </head>
 
     <body>
@@ -114,25 +114,28 @@ add();
                         <div class="col-md-12 order-md-1 col-lg-12">
                             <h4 class="mb-3">Add New Student</h4>
                             <hr class="mb-4">
-                            <form class="needs-validation" novalidate action="add_new_student.php?type=student" method="POST">
+                            <form novalidate action="add_new_student.php?type=student" method="POST"  onsubmit="return !!(empty_field() & validate_names() & validate_NationalId() & validate_GurdianNumber() & validate_MobileNumber() & validate_StudentId() &  validate_HomeNumber() & validate_email()  & validate_gender() & validate_math() )">
                                 <div class="row">
                                     <div class="col-lg-4 col-md-12 mb-3">
                                         <label for="firstName">First name (English)</label>
-                                        <input type="text" class="form-control" id="firstName" name="first_name" placeholder="" value="" required>
+                                        <input type="text" class="form-control" id="firstName" name="first_name" placeholder="" value="" >
+                                            <h6 id="warn1" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">
                                             Valid first name is required.
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-12 mb-3">
                                         <label for="lastName">Middle name (English)</label>
-                                        <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value="" required>
+                                        <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value="" >
+                                            <h6 id="warn" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">
                                             Valid last name is required.
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-12 mb-3">
                                         <label for="lastName">Last name (English)</label>
-                                        <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value="" required>
+                                        <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value="" >
+                                            <h6 id="warn3" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">
                                             Valid last name is required.
                                         </div>
@@ -142,16 +145,18 @@ add();
                                 <div class="row">
                                     <div class="col-lg-8 col-md-12 mb-3">
                                         <label for="firstName">Full Name (Arabic)</label>
-                                        <input type="text" class="form-control" id="firstName" name="arabic_name" placeholder="" value="" required>
-                                        <div class="invalid-feedback">
-                                            Valid first name is required.
+                                        <input type="text" class="form-control" id="firstName" name="arabic_name" placeholder="" value="" >
+                                            <h6 id="warn" style="font-style: italic;color: red;" ></h6>
+                                        <div>
+                                           
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-12 mb-3">
                                         <label for="lastName">National ID Number</label>
-                                        <input type="text" class="form-control" id="lastName" name="national_id" placeholder="" value="" required>
-                                        <div class="invalid-feedback">
-                                            Valid last name is required.
+                                        <input type="text" class="form-control" id="zip" name="national_id" placeholder="" value="">
+                                            <h6 id="warn5" style="font-style: italic;color: red;" ></h6>
+                                        <div >
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -161,6 +166,7 @@ add();
                                     <div class="col-lg-6 col-md-12 mb-3">
                                         <label for="email">University E-mail</label>
                                         <input type="email" class="form-control" id="email" name="email" placeholder="example@alexu.edu.eg">
+                                            <h6 id="warn4" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">
                                             Please enter a valid email address.
                                         </div>
@@ -168,7 +174,8 @@ add();
 
                                     <div class="col-lg-6 col-md-12 mb-3">
                                         <label for="address">Address</label>
-                                        <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
+                                        <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" >
+                                            <h6 id="warn" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">
                                             Please enter your shipping address.
                                         </div>
@@ -178,11 +185,12 @@ add();
                                 <div class="row">
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <label for="gender">Gender</label>
-                                        <select class="custom-select d-block w-100" id="country" name="gender" required>
-                    <option value="">Choose...</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
+                                    <select class="custom-select d-block w-100" id="gender" name="gender" >
+                                       <option value="" disabled selected>Choose...</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                     <p id="warn_gender" style="font-style: italic;color: red;" ></p>
                                         <div class="invalid-feedback">
                                             Please select a valid country.
                                         </div>
@@ -191,18 +199,20 @@ add();
 
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <label for="math">Starting Math</label>
-                                        <select class="custom-select d-block w-100" id="state" name="student_type" required>
-                    <option value="">Choose...</option>
-                    <option>Math 0</option>
-                    <option>Math 1</option>
+                                        <select class="custom-select d-block w-100" id="math" name="student_type" required>
+                     <option value="" disabled selected hidden>Choose...</option>
+                    <option value="Math0">Math 0</option>
+                    <option value="Math1">Math 1</option>
                   </select>
+                  <p id="warn_math" style="font-style: italic;color: red;" ></p>
                                         <div class="invalid-feedback">
                                             Please provide a valid state.
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-sm-12 mb-3">
                                         <label for="zip">Student ID</label>
-                                        <input type="text" class="form-control" id="zip" name="student_id" placeholder="" required>
+                                        <input type="text" class="form-control" id="studentid" name="student_id" placeholder="" >
+                                            <h6 id="warn10" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">
                                             Zip code required.
                                         </div>
@@ -212,17 +222,20 @@ add();
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                                         <label for="gender">Student Mobile Number</label>
-                                        <input type="text" class="form-control" id="address" name="mobile_number" placeholder="01234567890" required>
+                                        <input type="text" class="form-control" id="phone" name="mobile_number" placeholder="01234567890" >
+                                            <h6 id="warn6" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">Please enter your shipping address.</div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                                         <label for="gender">Guardian Mobile Number</label>
-                                        <input type="text" class="form-control" id="address" name="guardian_mobile_number" placeholder="01234567890" required>
+                                        <input type="text" class="form-control" id="phone2" name="guardian_mobile_number" placeholder="01234567890" >
+                                            <h6 id="warn7" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">Please enter your shipping address.</div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                                         <label for="gender">Home Phone Number</label>
-                                        <input type="text" class="form-control" id="address" name="home_number" placeholder="(optional)" required>
+                                        <input type="text" class="form-control" id="HomeNumber" name="home_number" placeholder="(optional)" >
+                                            <h6 id="warn8" style="font-style: italic;color: red;" ></h6>
                                         <div class="invalid-feedback">Please enter your shipping address.</div>
                                     </div>
 

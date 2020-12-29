@@ -1,6 +1,6 @@
 <nav id="sidebar">
     <div class="sidebar-header">
-    <img src="../media/logo.jpeg" alt="SIM-LOGO">
+    <img src="media/logo.jpeg" alt="SIM-LOGO">
     </div>
     <p>Navigation</p>
     <ul class="list-unstyled components">
@@ -28,7 +28,7 @@
 
     <ul class="list-unstyled CTAs">
     <li>
-        <a href="#" class="cta-logout" id="logout-btn">Logout</a>
+        <a href="login.php" class="cta-logout" id="logout-btn">Logout</a>
     </li>
     </ul>
 </nav>
