@@ -86,7 +86,7 @@ if(isset($_POST['remove'])){
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item active">
-                                <a class="nav-link" href="discussion.html">Discusssion</a>
+                                <a class="nav-link" href="discussion.php">Discusssion</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="assignment-hand-ins.php">Assignments</a>
