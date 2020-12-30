@@ -120,8 +120,7 @@
                         <div class="btn-grp w-100">
                             <a type="button" class="col-lg-4 btn btn-primary">Post</a>
                             <div class="col-lg-4">OR</div>
-                            <a type="button" class="col-lg-4 btn btn-primary" data-toggle="modal"
-                                data-target="#myModal">Make Poll</a>
+                            <a type="button" class="col-lg-4 btn btn-primary" data-toggle="modal" data-target="#modalPoll">Launch a poll</a>
                         </div>
 
 
@@ -130,61 +129,79 @@
 
                 <!-- MODAL -->
 
-                <div class="modal" id="myModal" tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div class="modal-title">
-
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                        style=" height: 60px; position:relative;left:120px;"
-                                        placeholder="Enter Topic here..."></textarea>
-
-                                </div>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
+               
 
 
-                                <textarea class="w-50 p-3" id="exampleFormControlTextarea1" rows="3"
-                                    style=" height: 30px;"></textarea>
+  <!-- Modal: modalPoll -->
+  <div class="modal fade right" id="modalPoll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+      <div class="modal-content">
+        <!--Header-->
+        <div class="modal-header">
+          <p class="heading lead">Poll Making
+          </p>
 
-                                <textarea class="w-50 p-3" id="exampleFormControlTextarea1" rows="3"
-                                    style=" height: 30px;position:relative;left:14px; "></textarea>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="white-text">×</span>
+          </button>
+        </div>
 
-                                <a href="#"
-                                    style="text-decoration: none; color:blue; font-weight: bold; font-size: 40px; position:relative;left:20px;">+</a>
+        <!--Body-->
+        <div class="modal-body">
+          <div class="text-center">
+            <i class="fa fa-file-text-o fa-4x mb-3 animated rotateIn"></i>
+            <p>
+              <strong>Your students opinions matters !</strong>
+            </p>
+            <p>
+              <strong>Tell the audience the news.</strong>
+            </p>
+          </div>
 
-                            </div>
-                            <div class="modal-footer">
-                                <div class="container">
-                                    <div class="text-left">
-                                        <div class="row ">
-                                            <div class="form-group col-xs-3 ">
-                                                <select class="form-control form-control-lg "
-                                                    style="background-color: #206cef; color: white; cursor: pointer;">
-                                                    <option value="" disabled selected>Poll Length</option>
-                                                    <option>1 Day</option>
-                                                    <option>2 Days</option>
-                                                    <option>3 Days</option>
-                                                    <option>4 Days</option>
-                                                    <option>5 Days</option>
-                                                    <option>6 Days</option>
-                                                    <option>7 Days</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+          <hr>
 
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Post Poll</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <!-- Radio -->
+          <p class="text-center">
+            <strong>Your Suggestions</strong>
+          </p>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">1</span>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">2</span>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+          </div>
+          <button type="button" class="btn btn-outline-primary">+</button>
+
+         
+          <!-- Radio -->
+
+          <p class="text-center">
+            <strong>What are the suggestions for?</strong>
+          </p>
+          <!--Basic textarea-->
+          <div class="md-form">
+            <textarea type="text" id="form79textarea" class="md-textarea form-control" rows="3"></textarea>
+            <label for="form79textarea">Your post</label>
+          </div>
+
+        </div>
+
+        <!--Footer-->
+        <div class="modal-footer justify-content-center">
+          <a type="button" class="btn btn-primary waves-effect waves-light">Post
+            <i class="fa fa-paper-plane ml-1"></i>
+          </a>
+          <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal: modalPoll -->
 
                 <!-- POSTS -->
 
