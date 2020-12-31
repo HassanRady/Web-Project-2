@@ -1493,17 +1493,6 @@ function editProfile()
   $conn->close();
 }
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  /******************************** FUNCTIONS **********************************/
   
   //get the last semester_id in the database;
   function getCurrentSemester(){
@@ -1677,7 +1666,7 @@ function editProfile()
                 $cname
               </div>
               <div class='course-info'>
-                Prof. $fname $lname
+                $fname $lname
               </div>
             </a>
             </div>              
@@ -1848,7 +1837,7 @@ function editProfile()
 
   function getOpenCourses(){
     global $conn;
-    $query = "SELECT c.name, c.course_id, c.credits, c.category, c.has_preq, u.first_name, u.last_name FROM open_courses oc
+    $query = "SELECT c.name, c.course_id, c.credits, c.category, c.has_preq, u.first_name, u.last_name, i.instructor_id, oc.level FROM open_courses oc
     INNER JOIN courses c ON c.course_id = oc.course_id
     INNER JOIN open_courses_instructors oci ON oci.course_id = oc.course_id
     INNER JOIN instructors i ON i.instructor_id = oci.instructor_id
@@ -1861,10 +1850,12 @@ function editProfile()
       $cname = $row['name'];
       $id = $row['course_id'];
       $credits = $row['credits'];
+      $instructor_id = $row['instructor_id'];
       $fname = $row['first_name'];
       $lname = $row['last_name'];
       $category = $row['category'];
       $has_preq = $row['has_preq'];
+      $level = $row['level'];
       $prerequisite = '-';
 
       if($category == 'sim'){
@@ -1887,7 +1878,7 @@ function editProfile()
       <div class='conbody container-fluid'>
         <div class='row'>
           <div class='col-lg-5 col-md-12'>
-            <table class='table table-borderless '>
+            <table class='table table-borderless'>
               <tbody>
                 <tr>
                   <th scope='row'>Course Name</th>
@@ -1910,7 +1901,7 @@ function editProfile()
               <tbody>
                 <tr>
                   <th scope='row'>Professor</th>
-                  <td>Prof. $fname $lname</td>
+                  <td>$fname $lname</td>
                 </tr>
                 <tr>
                   <th scope='row'>Prerequisites</th>
@@ -1924,9 +1915,9 @@ function editProfile()
             </table>
           </div>
           <div class='btn-grp col-lg-2 col-md-12'>
-            <a href='#' class='btn btn-primary'>View</a>
-            <a href='#' class='btn btn-outline-primary'>Add Class</a>
-            <a href='#' class='btn btn-outline-secondary'>Options</a>
+            <a href='../academic/discussion.php?course_id=$id' class='btn btn-primary'>View</a>
+            <a href='add_class.php?course_id=$id' class='btn btn-outline-primary'>Add Class</a>
+            <button data-courseId='$id' data-professor='$instructor_id' data-level='$level' class='btn btn-outline-secondary launch-modal' data-toggle='modal' data-target='#modalContactForm'>Options</button>
           </div>
         </div>
       </div>
@@ -1935,7 +1926,39 @@ function editProfile()
   }
   }
 
-function getAvailableUniCourses(){
+
+  function openCourse($id_to_open, $professor_id, $level){
+
+    global $conn;
+    $course_query = "INSERT INTO open_courses(course_id, level, student_count) 
+    VALUES('$id_to_open', '$level', '0' ) ";
+    $course_query_result = mysqli_query($conn, $course_query);
+    checkQuery($course_query_result);
+
+    $instructor_query = "INSERT INTO open_courses_instructors(instructor_id, course_id) 
+    VALUES($professor_id, $id_to_open)";
+    $instructor_query_result = mysqli_query($conn, $instructor_query);
+    checkQuery($instructor_query_result);
+  
+  }
+
+
+  function getOpenCoursesForChecking(){
+    global $conn;
+    $query = "SELECT course_id FROM open_courses";
+    $query_result = mysqli_query($conn, $query);
+    checkQuery($query_result);
+    $new_array = [];
+    while($row = mysqli_fetch_assoc($query_result)){
+        $new_array[] = $row['course_id']; 
+    }
+    return $new_array;
+
+    
+  }
+
+
+function getAvailableUniCourses($openCourses){
   global $conn;
   $query = "SELECT * FROM courses WHERE category='university'";
   $query_result = mysqli_query($conn, $query);
@@ -1949,6 +1972,13 @@ function getAvailableUniCourses(){
     $has_preq = $row['has_preq'];
     $prerequisite = getCoursePrerequisite($id);
 
+    $button = '';
+    if(in_array($id, $openCourses)){
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm' disabled>Open</button>";
+    }else{
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm'>Open</button>";
+    }
+
     echo "
     <tr>
       <td>$id</td>
@@ -1956,7 +1986,7 @@ function getAvailableUniCourses(){
       <td>$credits</td>
       <td>$type</td>
       <td>$prerequisite</td>
-      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
+      <td>$button</td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
@@ -1964,7 +1994,7 @@ function getAvailableUniCourses(){
   }
 }
 
-function getAvailableFacultyCourses(){
+function getAvailableFacultyCourses($openCourses){
   global $conn;
   $query = "SELECT * FROM courses WHERE category='faculty'";
   $query_result = mysqli_query($conn, $query);
@@ -1978,6 +2008,13 @@ function getAvailableFacultyCourses(){
     $has_preq = $row['has_preq'];
     $prerequisite = getCoursePrerequisite($id); 
 
+    $button = '';
+    if(in_array($id, $openCourses)){
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm' disabled>Open</button>";
+    }else{
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm'>Open</button>";
+    }
+
     echo "
     <tr>
       <td>$id</td>
@@ -1985,7 +2022,7 @@ function getAvailableFacultyCourses(){
       <td>$credits</td>
       <td>$type</td>
       <td>$prerequisite</td>
-      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
+      <td>$button</td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
@@ -1994,7 +2031,7 @@ function getAvailableFacultyCourses(){
 
 }
 
-function getAvailableSIMCourses(){
+function getAvailableSIMCourses($openCourses){
   global $conn;
   $query = "SELECT * FROM courses WHERE category='sim'";
   $query_result = mysqli_query($conn, $query);
@@ -2008,6 +2045,13 @@ function getAvailableSIMCourses(){
     $has_preq = $row['has_preq'];
     $prerequisite = getCoursePrerequisite($id);
 
+    $button = '';
+    if(in_array($id, $openCourses)){
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm' disabled>Open</button>";
+    }else{
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm'>Open</button>";
+    }
+
     echo "
     <tr>
       <td>$id</td>
@@ -2015,7 +2059,7 @@ function getAvailableSIMCourses(){
       <td>$credits</td>
       <td>$type</td>
       <td>$prerequisite</td>
-      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
+      <td>$button</td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
@@ -2026,7 +2070,7 @@ function getAvailableSIMCourses(){
 }
 
 
-function getAvailableFreeCourses(){
+function getAvailableFreeCourses($openCourses){
   global $conn;
   $query = "SELECT * FROM courses WHERE category='free'";
   $query_result = mysqli_query($conn, $query);
@@ -2037,13 +2081,18 @@ function getAvailableFreeCourses(){
     $credits = $row['credits'];
     $id = $row['course_id'];
 
-
+    $button = '';
+    if(in_array($id, $openCourses)){
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm' disabled>Open</button>";
+    }else{
+        $button = "<button data-courseId='$id' class='btn btn-primary launch-modal' data-toggle='modal' data-target='#modalContactForm'>Open</button>";
+    }
 
     echo "
     <tr>
       <td>$cname</td>
       <td>$credits</td>
-      <td><button type='submit' name='openFree' class='btn btn-primary'>Confirm</button></td>
+      <td>$button</td>
       <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
     </tr>
     ";
@@ -2144,16 +2193,16 @@ function deleteCourse($courseId){
 }
 
 
-function checkIfCourseIsOpen($courseId){
-  global $conn;
-  $query = "SELECT EXISTS (SELECT * FROM open_courses WHERE course_id = $courseId)";
-  $query_result = mysqli_query($conn, $query);
-  checkQuery($query_result);
-  if(mysqli_num_rows($query_result) == 1){
-    return true;
-  }
-  return false;
-}
+// function checkIfCourseIsOpen($courseId){
+//   global $conn;
+//   $query = "SELECT EXISTS (SELECT * FROM open_courses WHERE course_id = $courseId)";
+//   $query_result = mysqli_query($conn, $query);
+//   checkQuery($query_result);
+//   if(mysqli_num_rows($query_result) == 1){
+//     return true;
+//   }
+//   return false;
+// }
 
 function getCourseInfo($courseId){
   global $conn;
@@ -2186,22 +2235,24 @@ function getProfessorList(){
 }
 
 
-function openCourse($courseId, $professorId){
-  global $conn;
-  $query = "INSERT INTO ";
-  $query_result = mysqli_query($conn, $query);
-  checkQuery($query_result);
+function updateOpenCourse($course_id, $instructor_id, $level){
+    global $conn;
+    $courses_query = "UPDATE open_courses SET level = $level WHERE course_id = $course_id";
+    $courses_query_result = mysqli_query($conn, $courses_query);
+    checkQuery($courses_query_result);
+    $instructor_courses_query = "UPDATE open_courses_instructors SET instructor_id = $instructor_id WHERE course_id = $course_id";
+    $instructor_query_result = mysqli_query($conn, $instructor_courses_query);
+    checkQuery($instructor_query_result);
+}
 
-  while($row = mysqli_fetch_assoc($query_result)){
-    $id = $row['instructor_id'];
-    $fname = $row['first_name'];
-    $mname = $row['middle_name'];
-    $lname = $row['last_name'];
-    echo "
-      <option value='$id'>$fname $mname $lname</option>
-    ";
-  }
-
+function closeOpenCourse($course_id){
+    global $conn;
+    $courses_query = "DELETE FROM open_courses WHERE course_id = $course_id";
+    $courses_query_result = mysqli_query($conn, $courses_query);
+    checkQuery($courses_query_result);
+    $instructor_courses_query = "DELETE FROM open_courses_instructors WHERE course_id = $course_id";
+    $instructor_query_result = mysqli_query($conn, $instructor_courses_query);
+    checkQuery($instructor_query_result);
 }
 
 

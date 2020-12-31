@@ -1,6 +1,6 @@
 <nav id="sidebar">
     <div class="sidebar-header">
-        <img src="media/logo.jpeg" alt="SIM-LOGO">
+        <img src="../media/logo.jpeg" alt="SIM-LOGO">
     </div>
     <p>Navigation</p>
     <ul class="list-unstyled components">

@@ -16,87 +16,17 @@ global $conn;
 
         <title>Add Class</title>
 
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
-              integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-              crossorigin="anonymous">
-        <!-- Our Custom CSS -->
+        <?php include "../includes/bootstrap_styles_start.php"; ?>
         <link rel="stylesheet" href="../css/rootStyles.css">
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet"
-              href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-        <!-- Font Awesome JS -->
-        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
-                integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
-                crossorigin="anonymous"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
-                integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
-                crossorigin="anonymous"></script>
-
+        
     </head>
 
 <body>
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <img src="../media/logo.jpeg" alt="SIM-LOGO">
-        </div>
-        <p>Navigation</p>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="announcements.html">Home</a>
-            </li>
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="Students.html">Students</a>
-                    </li>
-                    <li>
-                        <a href="Professors.html">Professors</a>
-                    </li>
-                    <li>
-                        <a href="ta_list.html">Teaching Assistants</a>
-                    </li>
-                    <li>
-                        <a href="sa_list.html">Student Affairs</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="available_courses.html">All Courses</a>
-                    </li>
-                    <li>
-                        <a href="available_courses.html">Open Courses</a>
-                    </li>
-                    <li>
-                        <a href="#">My Courses</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="../my_profile.html">My Profile</a>
-            </li>
-            <li>
-                <a href="timetable.html">Timetable</a>
-            </li>
-            <li>
-                <a href="venues.html">Venues</a>
-            </li>
-        </ul>
+    <?php include "../includes/admin_sidebar.php"; ?>
 
-        <ul class="list-unstyled CTAs">
-            <li>
-                <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-            </li>
-        </ul>
-    </nav>
 
     <!-- Page Content  -->
     <div id="content">
@@ -126,122 +56,91 @@ global $conn;
 
         <div class="page-body">
             <!--page body-->
-            <form action="Add_Class.php" method="post">
-                <div class="Container">
-                    <?php
-                    $courses = showAllCourses();
-                    $venues = showALlVenues();
-                     ?>
+                <?php
+                $courses = showAllCourses();
+                $venues = showALlVenues();
+                ?>
 
-                    <div class="form-row">
+<div class="row">
+                    <div class="col-md-12 order-md-1 col-lg-12">
+                        <h4 class="mb-3">Add New Class</h4>
+                        <hr class="mb-4">
+                        <form class="needs-validation" action='#' method='post' novalidate>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label for="type">Class Type</label>
+                                    <select class="custom-select d-block w-100" name="type" id="type">
+                                        <option value="lecture">Lecture</option>
+                                        <option value="section">Section</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label for="instructor">Instructor</label>
+                                    <select class="custom-select d-block w-100" name="instructor" id="instructor">
+                                        <option value="">something</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label for="location">Location</label>
+                                    <select class="custom-select d-block w-100" name="location" id="location">
+                                        <option value="">hall 9</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="mb-4">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label for="startTime">Start Time</label>
+                                    <input class="form-control" type="time" name="startTime" id="startTime">
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                <label for="endTime">End Time</label>
+                                    <input class="form-control" type="time" name="endTime" id="endTime">
+                                </div>
+                                <div class="col-md-4 col-sm-12 mb-3">
+                                    <label for="frequency">Frequency</label>
+                                    <select class="custom-select d-block w-100" name="frequency" id="frequency">
+                                        <option value="odd">Odd</option>
+                                        <option value="even">Even</option>
+                                        <option value="all">All</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <hr class="mb-4">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 mb-3">
+                                    <label for="day">Day</label>
+                                    <select class="custom-select d-block w-100" name="day" id="day">
+                                        <option value="saturday">Saturday</option>
+                                        <option value="sunday">Sunday</option>
+                                        <option value="monday">Monday</option>
+                                        <option value="tuesday">Tuesday</option>
+                                        <option value="wednesday">Wednesday</option>
+                                        <option value="thursday">Thursday</option>
+                                        <option value="friday">Friday</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 col-sm-12 mb-3">
+                                    <label for="day">Group</label>
+                                    <select class="custom-select d-block w-100" name="day" id="day">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="mb-4">
+                            
+                            
 
-                        <div class="form-group col-md-6">
-                            <label for="courseName">Course Name</label>
-                            <select class="form-control" name="courseName" >
-                                <?php while($row = mysqli_fetch_assoc($courses)){
-                                $courseName = $row['name'];
-
-
-                                  echo "<option value='$courseName'>$courseName</option>";
-                                }
-
-                                ?>
-
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="profName">Professor Name</label>
-                            <input type="text" class="form-control" id="profName" name="prof_name">
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            <label for="sTime">Start Time</label>
-                            <input type="time" class="form-control" id="sTime" name="lec_sTime">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="endtime">End Time</label>
-                            <input type="time" class="form-control" id="endime" name="lec_eTime">
-                        </div>
-
-
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" name='submit'>Add Class</button>
+                        </form>
+                        <br>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-
-                            <label for="freq">Frequency</label>
-                            <select class="form-control" name="freq">
-                                <option value="even">Even</option>
-                                <option value="odd">Odd</option>
-                                <option value="all">All</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="lecplace">Lecture Place</label>
-                            <select class="form-control" name="lec_venue">
-                                <?php while($row = mysqli_fetch_assoc($venues)){
-                                    $venue_name= $row['name'];
-
-
-                                    echo "<option value='$venue_name'>$venue_name</option>";}
-                                    $venues->close();
-
-
-                                ?>
-
-                            </select>
-                        </div>
-
-
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-
-                            <label for="TAName">TA Name</label>
-                            <input type="text" class="form-control" id="TAName" name="ta_name">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="secplace">Section Place</label>
-                            <select class="form-control" name="sec_place">
-
-                                 <?php
-                                 $venues = showALlVenues();
-                                 while($row = mysqli_fetch_assoc($venues)){
-                                    $venue_name= $row['name'];
-
-
-                                    echo "<option value='$venue_name'>$venue_name</option>";}
-                                    ?>
-
-
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="endtime">StartTime</label>
-                            <input type="time" class="form-control" id="sectime" name="sec_sTime">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="endtime">End Time</label>
-                            <input type="time" class="form-control" id="endime" name="sec_eTime">
-                        </div>
-
-
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-
-                            <label for="lecDay">Lecture Day</label>
-                            <input type="text" class="form-control" id="lecDay" name="lecture_day">
-                        </div>
-                        <div class="form-group col-md-6">
-
-                            <label for="secDay">Section Day</label>
-                            <input type="text" class="form-control" id="secDay" name="section_day">
-                        </div>
-                    </div>
-
-                    <button type="submit" name="submit" class="btn btn-primary  btn-lg btn-block">Submit</button>
-
                 </div>
+
+                    
                 <?php
 
                 if(isset($_POST['submit'])){
@@ -269,8 +168,8 @@ global $conn;
                     while ($row = mysqli_fetch_assoc($secVen_idQ)){
                         $sec_ven = $row['venue  _id'];
                     }
-$type = gettype($lec_sTime);
-//
+                    $type = gettype($lec_sTime);
+                    //
                     echo "<h1>$type</h1>";
                     echo "<h1>$lec_eTime</h1>";
                     addToClassTable($course_id,$lec_ven,$lec_sTime,$lec_eTime,$lec_day,"lecture",$frequency);
@@ -279,7 +178,7 @@ $type = gettype($lec_sTime);
 
                 ?>
 
-            </form>
+            
 
 
 

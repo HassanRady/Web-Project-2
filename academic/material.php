@@ -116,7 +116,7 @@ if(isset($_POST['remove'])){
                     </button>
                   </div>
                   <div class="modal-body">
-                    <label class="label" for="materialTitle">Venue Name</label>
+                    <label class="label" for="materialTitle">Title</label>
                     <input type="text" class="form-control" id="materialTitle" name="materialTitle">
                     <br />
                     <label for="custom-file">Upload file</label>

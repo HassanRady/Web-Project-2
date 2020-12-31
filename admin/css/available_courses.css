@@ -19,8 +19,8 @@ tr td {
   justify-content: center;
   
 }
-.btn-grp a{
-  min-width: 100%;
+.btn-grp *{
+  min-width: 100% !important;
   margin-bottom: 10px;
 }
 

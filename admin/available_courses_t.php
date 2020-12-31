@@ -6,10 +6,16 @@ session_start();
 
 ?>
 
-<?php
-  if(isset($_POST['openFree'])){
-    
+<?php  
+  if(isset($_POST['openCourse'])){
+    $id_to_open = $_POST['courseID'];
+    $professor_id = $_POST['professorName'];
+    $level = $_POST['level'];
+    openCourse($id_to_open, $professor_id, $level);
+    header("Location open_courses.php");
   }
+
+  $openCourses = getOpenCoursesForChecking();
 ?>
 
 
@@ -74,7 +80,7 @@ session_start();
                     </thead>
                     <tbody>
                       <?php 
-                        getAvailableUniCourses();
+                        getAvailableUniCourses($openCourses);
                       ?> 
                     </tbody>
                   </table>
@@ -97,7 +103,7 @@ session_start();
                     </thead>
                     <tbody>
                       <?php 
-                        getAvailableFacultyCourses();
+                        getAvailableFacultyCourses($openCourses);
                       ?> 
                     </tbody>
                   </table>
@@ -119,7 +125,7 @@ session_start();
                     </thead>
                     <tbody>
                       <?php 
-                        getAvailableSIMCourses();
+                        getAvailableSIMCourses($openCourses);
                       ?> 
                     </tbody>
                   </table>
@@ -138,7 +144,7 @@ session_start();
                     </thead>
                     <tbody>
                       <?php 
-                        getAvailableFreeCourses();
+                        getAvailableFreeCourses($openCourses);
                       ?> 
                     </tbody>
                   </table>
@@ -160,12 +166,11 @@ session_start();
                     </div>
                     <div class="modal-body">
                       <label class="label" for="professorName">Professor</label>
-                      <select class="custom-select d-block w-100" name="category" id="category" required>
+                      <select class="custom-select d-block w-100" name="professorName" id="professorName" required>
                         <option value="">Choose...</option>
-                        <option value="2147483647">External Professor</option>
                         <?php getProfessorList(); ?>
                       </select>
-                      <br />
+                      <br>
                       <label class="label" for="level">Level</label>
                       <select class="custom-select d-block w-100" name="level" id="level" required>
                         <option value="1">Level 1</option>
@@ -173,11 +178,10 @@ session_start();
                         <option value="3">Level 3</option>
                         <option value="4">Level 4</option>
                       </select>
-                    <input type="text" class="form-control" name="courseId" id="courseId" style="display:none;">
+                      <input type="text" class="form-control" name="courseID" id="courseID" style="display:none;">
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" name="editChanges" class="btn btn-primary">Confirm</button>
-                      
+                      <button type="submit" name="openCourse" class="btn btn-primary">Confirm</button>  
                     </div>
                   </div>
                 </div>
@@ -196,6 +200,9 @@ session_start();
 
     <?php include "../includes/bootstrap_styles_end.php"; ?>
     <script type="text/javascript" src="../js/rootJS.js"></script>
+    <script type="text/javascript" src="js/modal_courses.js"></script>
+    
+
 
 </body>
 
