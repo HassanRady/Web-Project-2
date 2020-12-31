@@ -201,8 +201,8 @@ add();
                                         <label for="math">Starting Math</label>
                                         <select class="custom-select d-block w-100" id="math" name="student_type" required>
                      <option value="" disabled selected hidden>Choose...</option>
-                    <option value="Math0">Math 0</option>
-                    <option value="Math1">Math 1</option>
+                    <option value="">Math 0</option>
+                    <option value="">Math 1</option>
                   </select>
                   <p id="warn_math" style="font-style: italic;color: red;" ></p>
                                         <div class="invalid-feedback">

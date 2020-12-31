@@ -134,12 +134,12 @@ editProfile();
               <div class="row">
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="password">Password</label>
-                  <input type="text" class="form-control" id="password" placeholder="" value="" required>
+                  <input type="text" class="form-control" id="password" name="password" value="" required>
 
                 </div>
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="Re-enter Password">Re-enter Password </label>
-                  <input type="text" class="form-control" id="Re-enter" placeholder="" value="" required>
+                  <input type="text" class="form-control" id="Re-enter" name="repassword" value="" required>
 
                 </div>
 

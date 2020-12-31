@@ -1,4 +1,4 @@
-<?php 
+<?php
 ob_start();
 include "../includes/functions.php";
 ?>
@@ -232,10 +232,17 @@ include "../includes/functions.php";
                 <hr class="mb-4">
                 <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-primary">1</button>
-                        <button type="button" class="btn btn-primary">2</button>
-                        <button type="button" class="btn btn-primary">3</button>
-                        <button type="button" class="btn btn-primary">4</button>
+                        <?php
+
+                        for ($i = 1; $i <= $count; $i++) {
+                            if ($i == $page) {
+                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='ta_list.php?page={$i}'>{$i}</a></button>";
+                            } else {
+                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='ta_list.php?page={$i}'>{$i}</a></button>";
+                            }
+                        }
+
+                        ?>
                     </div>
 
                 </div>
