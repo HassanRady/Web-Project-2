@@ -3,6 +3,30 @@
 include "../includes/functions.php";
 global $conn;
 
+$courseId='';
+if(isset($_GET['course_id'])){
+    $courseId = $_GET['course_id'];
+}else {
+    header("Location: open_courses.php");
+}
+
+
+if(isset($_POST['submit'])){
+    $type = $_POST['type'];
+    $location = $_POST['location'];
+    $instructorId = $_POST['instructor'];
+    $start_time = $_POST['startTime'];
+    $end_time = $_POST['endTime'];
+    $frequency = $_POST['frequency'];
+    $day = $_POST['day'];
+    $group = $_POST['group'];
+    
+    addToClassTable($courseId, $instructorId, $location, $start_time, $end_time, $day, $type, $group, $frequency);
+    header("Location: open_courses.php");
+    
+}
+
+
 ?>
 
 
@@ -58,7 +82,7 @@ global $conn;
             <!--page body-->
                 <?php
                 $courses = showAllCourses();
-                $venues = showALlVenues();
+                $venues = showAllVenues();
                 ?>
 
 <div class="row">
@@ -77,13 +101,21 @@ global $conn;
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="instructor">Instructor</label>
                                     <select class="custom-select d-block w-100" name="instructor" id="instructor">
-                                        <option value="">something</option>
+                                        <option value="">Choose...</option>
+                                        <?php getInstructorList() ?>
                                     </select>
                                 </div>
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="location">Location</label>
                                     <select class="custom-select d-block w-100" name="location" id="location">
-                                        <option value="">hall 9</option>
+                                        <option value="">Choose...</option>
+                                        <?php
+                                            while($row = mysqli_fetch_assoc($venues)){
+                                                $venue_name = $row['name'];
+                                                $venue_id = $row['venue_id'];
+                                                echo "<option value='$venue_id'>$venue_name</option>";
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -104,8 +136,7 @@ global $conn;
                                         <option value="even">Even</option>
                                         <option value="all">All</option>
                                     </select>
-                                </div>
-                                
+                                </div>                             
                             </div>
                             <hr class="mb-4">
                             <div class="row">
@@ -122,11 +153,12 @@ global $conn;
                                     </select>
                                 </div>
                                 <div class="col-md-6 col-sm-12 mb-3">
-                                    <label for="day">Group</label>
-                                    <select class="custom-select d-block w-100" name="day" id="day">
+                                    <label for="group">Group</label>
+                                    <select class="custom-select d-block w-100" name="group" id="group">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
+                                        <option value="0">All</option>
                                     </select>
                                 </div>
                             </div>
@@ -139,44 +171,6 @@ global $conn;
                         <br>
                     </div>
                 </div>
-
-                    
-                <?php
-
-                if(isset($_POST['submit'])){
-                    $course_name = $_POST['courseName'];
-                    $prof_name = $_POST['prof_name'];
-                    $lec_sTime = $_POST['lec_sTime'];
-                    $lec_eTime = $_POST['lec_eTime'];
-                    $frequency = $_POST['freq'];
-                    $lec_day = $_POST['lecture_day'];
-                    $lec_place = $_POST['lec_venue'];
-                    $ta_name = $_POST['ta_name'];
-                    $sec_place = $_POST['sec_place'];
-                    $sec_sTime = $_POST['sec_sTime'];
-                    $sec_eTime = $_POST['sec_eTime'];
-                    $sec_day = $_POST['section_day'];
-                    $course_idQ = getCourseID($course_name);
-                    $lecVen_idQ = getVenueID($lec_place);
-                    $secVen_idQ = getVenueID($sec_place);
-                    while ($row = mysqli_fetch_assoc($course_idQ)){
-                        $course_id = $row['course_id'];
-                    }
-                    while ($row = mysqli_fetch_assoc($lecVen_idQ)){
-                        $lec_ven = $row['venue_id'];
-                    }
-                    while ($row = mysqli_fetch_assoc($secVen_idQ)){
-                        $sec_ven = $row['venue  _id'];
-                    }
-                    $type = gettype($lec_sTime);
-                    //
-                    echo "<h1>$type</h1>";
-                    echo "<h1>$lec_eTime</h1>";
-                    addToClassTable($course_id,$lec_ven,$lec_sTime,$lec_eTime,$lec_day,"lecture",$frequency);
-                    addToClassTable($course_id,$sec_ven,$sec_sTime,$sec_eTime,$sec_day,"section",$frequency);
-                }
-
-                ?>
 
             
 

@@ -2234,6 +2234,24 @@ function getProfessorList(){
   }
 }
 
+function getInstructorList(){
+    global $conn;
+    $query = "SELECT u.id, u.first_name, u.middle_name, u.last_name, i.instructor_id FROM instructors i
+    INNER JOIN users u on i.id_user = u.id";
+    $query_result = mysqli_query($conn, $query);
+    checkQuery($query_result);
+  
+    while($row = mysqli_fetch_assoc($query_result)){
+      $id = $row['instructor_id'];
+      $fname = $row['first_name'];
+      $mname = $row['middle_name'];
+      $lname = $row['last_name'];
+      echo "
+        <option value='$id'>$fname $mname $lname</option>
+      ";
+    }
+  }
+
 
 function updateOpenCourse($course_id, $instructor_id, $level){
     global $conn;
@@ -2285,9 +2303,9 @@ function getVenueID($venueName){
 }
 
 
-function showALlVenues(){
+function showAllVenues(){
     global $conn;
-    $query = "SELECT `name` FROM venues ";
+    $query = "SELECT venue_id, name FROM venues";
     $result = mysqli_query($conn,$query);
     if(!$result){
         die("QUERY OF SHOW ALL COURSES FAILED". mysqli_error($conn));
@@ -2295,16 +2313,12 @@ function showALlVenues(){
     return $result;
 }
 
-function addToClassTable($course_id,$venue_id,$startTime,$endTime,$day,$type,$freq){
-global $conn;
-$query = "INSERT INTO `classes` (`class_id`, `id_course`, `id_venue`, `start`, `end`, `day`, `type`, `freq`) VALUES(NULL,'$course_id','$venue_id','$startTime','$endTime','$day','$type','$freq' );";
-$result = mysqli_query($conn,$query);
-if($result){
-    echo "DATA ARE INSERTED";
-}
-else{
- die("cannot insert data". mysqli_error($conn));
-}
+function addToClassTable($courseId, $instructorId, $location, $start_time, $end_time, $day, $type, $group, $frequency){
+    global $conn;
+    $query = "INSERT INTO `classes` (`class_id`, `id_course`, `id_venue`, `start`, `end`, `day`, `type`, `students_group`, `freq`, `instructor_id`) 
+    VALUES(NULL,'$courseId','$location','$start_time','$end_time','$day','$type', '$group', '$frequency', '$instructorId' );";
+    $result = mysqli_query($conn,$query);
+    checkQuery($result);
 
 }
 function getUserName($user_id){
