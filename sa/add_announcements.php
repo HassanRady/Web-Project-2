@@ -4,7 +4,7 @@ include "../includes/functions.php";
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 $course_id = 1;
 $user_id = 2;
-
+$user_name = getUserName($user_id);
 ?>
 
 
@@ -128,11 +128,14 @@ $user_id = 2;
                         <button type="submit" name="post_btn" class="btn btn-primary  btn-lg btn-block">Post</button>
                         <div class="col-lg-4">OR</div>
                         <a type="button" class="col-lg-4 btn btn-primary" data-toggle="modal"
-                           data-target="#myModal" name="make_poll">Make Poll</a>
+                           data-target="#modalPoll" name="modalPoll">Make Poll</a>
                     </div>
                 </form>
+            </div>
+
 
                 <?php
+
                 if (isset($_POST['post_btn'])) {
 
                     if (!empty($_POST['post_text'])) {
@@ -140,7 +143,7 @@ $user_id = 2;
                         $id_user = $user_id;
                         $id_course = $course_id;
                         $post_title = "title";
-                        $post_author = getUserName($id_user);
+                        $post_author = $user_name;
                         $post_user = "SA";
                         $post_date = date("Y-m-d");
                         $post_content = $_POST['post_text'];
@@ -154,117 +157,231 @@ $user_id = 2;
 
 
                 ?>
-            </div>
+                <?php
+                $polls = getPolls();
+                while ($row = mysqli_fetch_assoc($polls)) {
+                $res_poll_id = $row['poll_id'];
+                $poll_id_user = $row['id_user'];
+                $res_poll_content = $row['poll_content'];
+                $res_poll_date = $row['poll_date'];
+                $poll_author = getUserName($poll_id_user);
+                ?>
 
-            <!-- MODAL -->
+            <!-- POLLS -->
+            <form action="" method="post">
+                <div class="container post">
+                    <h6>
+                        <?php echo $poll_author; ?>
+                    </h6>
+                    <p>
+                        <?php echo $res_poll_content; ?>
+                    </p>
+                    <hr>
+                    <!-- Radio -->
+                    <p class="text-center">
+                        <strong>Your Vote</strong>
+                    </p>
+                    <?php
+                    $poll_options = getPollOptions($res_poll_id);
+                    while ($row = mysqli_fetch_assoc($poll_options)){
+                        $option_id = $row['option_id'];
+                        $option_content = $row['option_content'];
+                        $option_votes = $row['votes'];
+                    ?>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" name="option_id" type="radio" id="<?php echo $res_poll_id?>" value="<?php echo $option_id?>">
+                        <label class="form-check-label" for="<?php echo $res_poll_id?>"><?php echo $option_content?></label>
+                    </div>
+                        <p>Votes: <?php echo $option_votes;?></p>
 
-            <div class="modal" id="myModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="modal-title">
+                    <?php   }
 
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                              style=" height: 60px; position:relative;left:120px;"
-                                              placeholder="Enter Topic here..."></textarea>
+                    if(!checkIfVotedPoll($res_poll_id,$user_id)){
+                    ?>
+                    <div class=" container">
+                        <input type="submit" name="poll_vote" value="Vote" class="btn btn-primary ">
+                    </div>
+                    <?php }?>
+                    <div class="poll-data">
+                        <input type="text" hidden name="poll_id" value="<?php echo $res_poll_id?>">
 
+                    </div>
+                    <p class="date"> <?php echo $res_poll_date ?> </p>
+                </div>
+            </form>
+                <?php }
+
+                /// when user votes in polls
+                if(isset($_POST['poll_vote'])){
+                    if(isset($_POST['option_id'])){
+                        $option_id = $_POST['option_id'];
+                        $poll_id = $_POST['poll_id'];
+                        votePoll($user_id, $poll_id, $option_id );
+                    }
+                    else{
+                        echo "<script>alert('Please select an option to vote')</script>";
+                    }
+
+                }
+
+                ?>
+
+
+
+
+
+
+                <!-- POSTS -->
+                <?php
+                //checking for delete button if clicked and delete the post
+                if (isset($_POST['delete_post'])) {
+                    $post_id = $_POST['delete_post_id'];
+                    deletePost($post_id);
+                }
+                // retrieving post information
+                $posts_result = getAllPosts($course_id);
+                while ($row = mysqli_fetch_assoc($posts_result)) {
+                    $result_id_user = $row['id_user'];
+                    $result_post_id = $row['post_id'];
+                    $result_post_date = $row['post_date'];
+                    $result_post_author = $row['post_author'];
+                    $result_post_content = $row['post_content'];
+
+                    ?>
+                    <div class="container post">
+                        <form action="add_announcements.php" method="post">
+                            <?php echo " <h6><a href=''>$result_post_author</a></h6>" ?>
+
+                            <?php
+                            echo "<p> $result_post_content </p>";
+                            //                    ?>
+                            <?php
+                            if ($result_id_user == $user_id) {
+                                ?>
+                                <input type="submit" name="delete_post" value="Delete post" class="btn btn-primary">
+                                <input type="hidden" name="delete_post_id" value="<?php print $result_post_id; ?>"/>
+                            <?php } ?>
+                            <p class="text-center"><a
+                                        href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
+                                    comments </a></p>
+                            <?php
+                            echo "<p class='date'>$result_post_date </p>";
+
+                            ?>
+
+                        </form>
+
+                    </div>
+                <?php } ?>
+
+
+                <!-- MODAL -->
+
+                <!--Notes:
+                - Ajax technology is needed in order to:
+                              - adding more options without refreshing the whole page
+                              - making the add poll button disabled untill all options input and poll content have data
+                  until using ajax the default option inputs are 3
+
+
+                -->
+                <!-- Modal: modalPoll -->
+                <div class="modal fade right" id="modalPoll" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true" data-backdrop="false">
+                    <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header">
+                                <p class="heading lead">Poll Making
+                                </p>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="white-text">×</span>
+                                </button>
                             </div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
 
-
-                                <textarea class="w-50 p-3" id="exampleFormControlTextarea1" rows="3"
-                                          style=" height: 30px;"></textarea>
-
-                            <textarea class="w-50 p-3" id="exampleFormControlTextarea1" rows="3"
-                                      style=" height: 30px;position:relative;left:14px; "></textarea>
-
-                            <a href="#"
-                               style="text-decoration: none; color:blue; font-weight: bold; font-size: 40px; position:relative;left:20px;">+</a>
-
-                        </div>
-                        <div class="modal-footer">
-                            <div class="container">
-                                <div class="text-left">
-                                    <div class="row ">
-                                        <div class="form-group col-xs-3 ">
-                                            <select class="form-control form-control-lg "
-                                                    style="background-color: #206cef; color: white; cursor: pointer;">
-                                                <option value="" disabled selected>Poll Length</option>
-                                                <option>1 Day</option>
-                                                <option>2 Days</option>
-                                                <option>3 Days</option>
-                                                <option>4 Days</option>
-                                                <option>5 Days</option>
-                                                <option>6 Days</option>
-                                                <option>7 Days</option>
-                                            </select>
-                                        </div>
+                            <!--Body-->
+                            <form action="add_announcements.php" method="post">
+                                <div class="modal-body">
+                                    <div class="text-center">
+                                        <i class="fa fa-file-text-o fa-4x mb-3 animated rotateIn"></i>
+                                        <p>
+                                            <strong>Your students opinions matters !</strong>
+                                        </p>
+                                        <p>
+                                            <strong>Tell the audience the news.</strong>
+                                        </p>
+                                    </div>
+                                    <hr>
+                                    <!-- Radio -->
+                                    <p class="text-center">
+                                        <strong>Your Suggestions</strong>
+                                    </p>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">1</span>
+                                        <input type="text" class="form-control" name="option-1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">2</span>
+                                        <input type="text" class="form-control" name="option-2">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">3</span>
+                                        <input type="text" class="form-control" name="option-3">
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary">+</button>
+                                    <!-- Radio -->
+                                    <p class="text-center">
+                                        <strong>Poll Content</strong>
+                                    </p>
+                                    <!--Basic textarea-->
+                                    <div class="md-form">
+                                <textarea type="text" name="poll-content" class="md-textarea form-control"
+                                          rows="3"></textarea>
                                     </div>
                                 </div>
-                            </div>
-
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Post Poll</button>
+                                <!--Footer-->
+                                <div class="modal-footer justify-content-center">
+                                    <button type="submit" name="add-poll"
+                                            class="btn btn-primary waves-effect waves-light">Add
+                                        new poll
+                                    </button>
+                                    <button class="btn btn-outline-primary waves-effect"
+                                            data-dismiss="modal">Cancel
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
+                <!-- Modal: modalPoll -->
+                <!-- Handling the poll form in the modal            -->
+                <?php
+                if (isset($_POST['add-poll'])) {
+                    if (!empty($_POST['poll-content'])) {
+                        $poll_content = $_POST['poll-content'];
+                        $poll_date = date("Y-m-d");
+                        $poll_id = addNewPoll($user_id, $poll_content, $poll_date);;
 
-            <!-- POSTS -->
 
+                        //poll_op_no will be changed in next sprint and will be flexible
+                        $poll_options_no = 3;
+                        for ($i = 1; $i <= $poll_options_no; $i++) {
+                            $option_no = 'option-' . $i;
+                            $option_content = $_POST[$option_no];
+                            addPollOption($poll_id, $option_content);
 
-            <?php
-            //checking for delete button if clicked and delete the post
-            if (isset($_POST['delete_post'])) {
-                $post_id = $_POST['delete_post_id'];
-                deletePost($post_id);
-            }
-            // retrieving post information
-            $posts_result = getAllPosts($course_id);
-            while ($row = mysqli_fetch_assoc($posts_result)) {
-                $result_id_user = $row['id_user'];
-                $result_post_id = $row['post_id'];
-                $result_post_date = $row['post_date'];
-                $result_post_author = $row['post_author'];
-                $result_post_content = $row['post_content'];
+                        }
 
+                    } else {
+                        echo "<script>alert('poll content cannot be empty')</script>";
+                    }
+                }
                 ?>
-                <div class="container post">
-                    <form action="add_announcements.php" method="post">
-                        <?php echo " <h6><a href=''>$result_post_author</a></h6>" ?>
-
-                        <?php
-                        echo "<p> $result_post_content </p>";
-                        //                    ?>
-                        <?php
-                        if ($result_id_user == $user_id) {
-                            ?>
-                            <input type="submit" name="delete_post" value="Delete post" class="btn btn-primary">
-                            <input type="hidden" name="delete_post_id" value="<?php print $result_post_id; ?>"/>
-                        <?php } ?>
-                        <p class="text-center"><a
-                                    href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
-                                comments </a></p>
-                        <?php
-                        echo "<p class='date'>$result_post_date </p>";
-
-                        ?>
-
-                    </form>
-
-                </div>
-            <?php } ?>
 
 
-
-            <!-- Radio -->
-
-
-            <!-- STOP HERE -->
+                <!-- STOP HERE -->
         </div>
 
 

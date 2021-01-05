@@ -105,10 +105,81 @@ $user_id = 1;
             <!-- START HERE -->
 
 
-            <!--            -->
+            <!--
+                  -->
 
             <?php
-            //
+            $polls = getPolls();
+            while($row = mysqli_fetch_assoc($polls)) {
+                $res_poll_id = $row['poll_id'];
+                $poll_id_user = $row['id_user'];
+                $res_poll_content = $row['poll_content'];
+                $res_poll_date = $row['poll_date'];
+                $poll_author = getUserName($poll_id_user);
+                ?>
+
+                <!-- POLLS -->
+                <form action="" method="post">
+                    <div class="container post">
+                        <h6>
+                            <?php echo $poll_author; ?>
+                        </h6>
+                        <p>
+                            <?php echo $res_poll_content; ?>
+                        </p>
+                        <hr>
+                        <!-- Radio -->
+                        <p class="text-center">
+                            <strong>Your Vote</strong>
+                        </p>
+                        <?php
+                        $poll_options = getPollOptions($res_poll_id);
+                        while ($row = mysqli_fetch_assoc($poll_options)){
+                            $option_id = $row['option_id'];
+                            $option_content = $row['option_content'];
+                            $option_votes = $row['votes'];
+                            ?>
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" name="option_id" type="radio" id="<?php echo $res_poll_id?>" value="<?php echo $option_id?>">
+                                <label class="form-check-label" for="<?php echo $res_poll_id?>"><?php echo $option_content?></label>
+                            </div>
+                            <p>Votes: <?php echo $option_votes;?></p>
+
+                        <?php   }
+
+                        if(!checkIfVotedPoll($res_poll_id,$user_id)){
+                            ?>
+                            <div class=" container">
+                                <input type="submit" name="poll_vote" value="Vote" class="btn btn-primary ">
+                            </div>
+                        <?php }?>
+                        <div class="poll-data">
+                            <input type="text" hidden name="poll_id" value="<?php echo $res_poll_id?>">
+
+                        </div>
+                        <p class="date"> <?php echo $res_poll_date ?> </p>
+                    </div>
+                </form>
+            <?php }
+
+            /// when user votes in polls
+            if(isset($_POST['poll_vote'])){
+                if(isset($_POST['option_id'])){
+                    $option_id = $_POST['option_id'];
+                    $poll_id = $_POST['poll_id'];
+                    votePoll($user_id, $poll_id, $option_id );
+                }
+                else{
+                    echo "<script>alert('Please select an option to vote')</script>";
+                }
+
+            }
+
+            ?>
+
+            <?php
+            //POLLS
+
 
             // triggering updating votes functions
             if (isset($_POST['upvote'])) {
@@ -148,7 +219,7 @@ $user_id = 1;
                         <div class="row">
                             <?php
                             // if user hadn't voted on the post yet, show him/her the upvote, downvote buttons
-                            if (!checkIfVoted($result_post_id, $user_id)) {
+                            if (!checkIfVotedPost($result_post_id, $user_id)) {
                                 ?>
                                 <div class="col"><input type="submit" name="upvote" value="upvote"
                                                         class="btn btn-primary"></div>
