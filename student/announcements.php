@@ -147,12 +147,19 @@ $user_id = 1;
 
                         <?php   }
 
+
                         if(!checkIfVotedPoll($res_poll_id,$user_id)){
                             ?>
                             <div class=" container">
                                 <input type="submit" name="poll_vote" value="Vote" class="btn btn-primary ">
                             </div>
-                        <?php }?>
+                        <?php }
+                        else{
+                            ?>
+                            <div class=" container">
+                                <input type="submit" name="redo_vote" value="Redo" class="btn btn-primary ">
+                            </div>
+                        <?php } ?>
                         <div class="poll-data">
                             <input type="text" hidden name="poll_id" value="<?php echo $res_poll_id?>">
 
@@ -172,13 +179,19 @@ $user_id = 1;
                 else{
                     echo "<script>alert('Please select an option to vote')</script>";
                 }
+            }
+            //redo vote
+            if(isset($_POST['redo_vote'])){
 
+                $poll_id = $_POST['poll_id'];
+                redoVotePoll($user_id,$poll_id);
             }
 
             ?>
 
+
             <?php
-            //POLLS
+
 
 
             // triggering updating votes functions
@@ -196,7 +209,7 @@ $user_id = 1;
             }
             if (isset($_POST['redo'])) {
                 $post_id = $_POST['post_id'];
-                redoVote($post_id, $user_id);
+                redoVotePost($post_id, $user_id);
             }
 
             // retrieving post information

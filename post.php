@@ -127,7 +127,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
             }
             if (isset($_POST['redo'])) {
                 $post_id = $_POST['post_id'];
-                redoVote($post_id, $the_user_id);
+                redoVotePost($post_id, $the_user_id);
             }
             $posts_result = getPost($the_post_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {

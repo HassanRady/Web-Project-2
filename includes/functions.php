@@ -2452,7 +2452,7 @@ function downVote($post_id, $user_id)
 
 }
 
-function redoVote($post_id, $user_id)
+function redoVotePost($post_id, $user_id)
 {
     global $conn;
     $query1 = "SELECT vote_value FROM votes WHERE id_post = '$post_id' AND id_user = '$user_id'";
@@ -2568,5 +2568,37 @@ function checkIfVotedPoll($poll_id, $user_id)
     }
 
     return mysqli_num_rows($result) != 0;
+
+}
+function redoVotePoll($user_id, $poll_id){
+    global $conn ;
+    $query1 = "SELECT id_option FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
+    $query2 = "DELETE FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
+    $result1 = mysqli_query($conn, $query1);
+    if(!$result1){
+        die("Cannot select the option_id record redoVotePoll.. " .mysqli_error($conn));
+    }
+    $option_id = null ;
+    while($row = mysqli_fetch_assoc($result1)){
+        $option_id = $row['id_option'];
+    }
+    $query3 = "UPDATE poll_options SET votes = votes - 1 WHERE option_id = $option_id";
+    $result2 = mysqli_query($conn, $query2);
+    if(!$result2){
+        die("Cannot delete the vote record in redoVotePoll" .mysqli_error($conn));
+    }
+    $result3= mysqli_query($conn, $query3);
+    if(!$result3){
+        die("Cannot update the votes in redoVotePoll" .mysqli_error($conn));
+    }
+}
+function deletePoll($poll_id){
+    global $conn;
+    $query1 = "DELETE FROM polls WHERE poll_id = '$poll_id'";
+    $result1 = mysqli_query($conn, $query1);
+    if(!$result1){
+        die("Cannot delete the poll deletePoll" .mysqli_error($conn));
+    }
+
 
 }
