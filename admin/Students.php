@@ -243,8 +243,9 @@ include "../includes/functions.php";
                 <hr class="mb-4">
                 <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <?php
 
+                        <?php
+                            list($per_page, $page_1, $count, $page) = getRowsPerPage("students");
                         for ($i = 1; $i <= $count; $i++) {
                             if ($i == $page) {
                                 echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
@@ -252,11 +253,8 @@ include "../includes/functions.php";
                                 echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
                             }
                         }
-
                         ?>
-                        <!-- <button type="button" class="btn btn-primary"><a class='active_link' href='Students.php?page=1'>1</a></button>
-                        <button type="button" class="btn btn-primary"><a class='active_link' href='Students.php?page=2'>2</a></button>
-                        <button type="button" class="btn btn-primary"><a class='active_link' href='Students.php?page=3'>3</a></button> -->
+                        
                     </div>
 
                 </div>

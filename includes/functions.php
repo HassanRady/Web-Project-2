@@ -75,9 +75,9 @@ function add_venue()
     $venue_name = mysqli_real_escape_string($conn, $venue_name);
     $venue_location = mysqli_real_escape_string($conn, $venue_location);
 
-    $sql = "INSERT INTO venues (name,venue_location) VALUE ('$venue_name','$venue_location') ";
+    $mainSqlQuery = "INSERT INTO venues (name,venue_location) VALUE ('$venue_name','$venue_location') ";
 
-    $venue_query = mysqli_query($conn, $sql);
+    $venue_query = mysqli_query($conn, $mainSqlQuery);
     if (!$venue_query) {
         die("Failed" . mysqli_error($conn));
     }
@@ -93,8 +93,8 @@ function update_venue()
     // Create connection
     $venue_name = mysqli_real_escape_string($conn, $venue_name);
     $venue_id = mysqli_real_escape_string($conn, $venue_id);
-    $sql = "UPDATE venues SET name='{$venue_name}', venue_location='{$venue_location}' WHERE venue_id='{$venue_id}' ";
-    $venue_query = mysqli_query($conn, $sql);
+    $mainSqlQuery = "UPDATE venues SET name='{$venue_name}', venue_location='{$venue_location}' WHERE venue_id='{$venue_id}' ";
+    $venue_query = mysqli_query($conn, $mainSqlQuery);
     if (!$venue_query) {
         die("Failed" . mysqli_error($conn));
     }
@@ -106,8 +106,8 @@ function remove_venue()
 
     // Create connection
     $venue_id = mysqli_real_escape_string($conn, $venue_id);
-    $sql = "Delete from venues WHERE venue_id='{$venue_id}' ";
-    $venue_query = mysqli_query($conn, $sql);
+    $mainSqlQuery = "Delete from venues WHERE venue_id='{$venue_id}' ";
+    $venue_query = mysqli_query($conn, $mainSqlQuery);
     if (!$venue_query) {
         die("Failed" . mysqli_error($conn));
     }
@@ -194,8 +194,8 @@ function add_assignment($id_course, $id_instructor, $semester)
     move_uploaded_file($assignment_temp, "../media/$assignment");
     $description = $_POST['description'];
     // Need semester id and join on course id && semester id
-    $sql = "INSERT INTO asignments (id_course,id_semester,id_instructor,title,due_time,due_date,publish_date, assignment ,description) VALUES ('$id_course', '$semester','$id_instructor','$title','$time','$due_date','$publish_date','$assignment','$description') ";
-    $assignment_query = mysqli_query($conn, $sql);
+    $mainSqlQuery = "INSERT INTO asignments (id_course,id_semester,id_instructor,title,due_time,due_date,publish_date, assignment ,description) VALUES ('$id_course', '$semester','$id_instructor','$title','$time','$due_date','$publish_date','$assignment','$description') ";
+    $assignment_query = mysqli_query($conn, $mainSqlQuery);
     if (!$assignment_query) {
         die("Failed " . mysqli_error($conn));
     }
@@ -271,8 +271,8 @@ function remove_prof_assignment()
 {
     global $conn;
     $id = $_POST['id'];
-    $sql = "Delete from asignments WHERE assignment_id='{$id}' ";
-    $ass_query = mysqli_query($conn, $sql);
+    $mainSqlQuery = "Delete from asignments WHERE assignment_id='{$id}' ";
+    $ass_query = mysqli_query($conn, $mainSqlQuery);
     if (!$ass_query) {
         die("Failed" . mysqli_error($conn));
     }
@@ -367,12 +367,12 @@ function edit_prof_assignment($id)
     $assignment_temp = $_FILES['assignment']['tmp_name'];
     move_uploaded_file($assignment_temp, "../media/$assignment");
     $description = $_POST['description'];
-    $sql = "UPDATE  asignments SET title ='$title',
+    $mainSqlQuery = "UPDATE  asignments SET title ='$title',
     due_time= '$time',
     due_date= '$due_date',
     assignment = '$assignment',
     description = '$description'WHERE assignment_id='$id' ";
-    $Edit_query = mysqli_query($conn, $sql);
+    $Edit_query = mysqli_query($conn, $mainSqlQuery);
     if (!$Edit_query) {
         die("Failed" . mysqli_error($conn));
     }
@@ -710,12 +710,21 @@ function add_assignment_grade()
     echo "<meta http-equiv='refresh' content='0'>";
 }
 
+########################################################################################################################################
+########################################################################################################################################
 
-function showPerPage($table="")
+/**
+ * This function is getting the number of records to show in the list
+ * @param string $table the table from the database that need to be shown
+ * @return int  
+ */
+function getRowsPerPage($table)
 {
-    global $conn, $per_page, $page_1, $count, $page;
-    // number of rows to show per page
+    global $conn;
+    reconnect();
+
     $per_page = 2;
+
     if (isset($_GET['page'])) {
         $page = $_GET['page'];
     } else {
@@ -729,12 +738,125 @@ function showPerPage($table="")
     }
 
     $post_query_count = "SELECT * FROM {$table}";
-    $find_count = mysqli_query($conn, $post_query_count);
-    $count = mysqli_num_rows($find_count);
-    $count  = ceil($count /$per_page);
+    $result = mysqli_query($conn, $post_query_count);
+
+    check_result($result, $conn, __FUNCTION__);
+
+    $count = mysqli_num_rows($result);
+    $count  = ceil($count / $per_page);
+
+    return array($per_page, $page_1, $count, $page);
 }
 
 
+function getTypeForData()
+{
+    $userTypes = array("sa", "ta", "professor", "student");
+    $pageName = basename($_SERVER['PHP_SELF']);
+
+    if (isset($_GET["type"])) {
+        // getting users type
+        $type = $_GET["type"];
+    } else {
+        // check the file name which it has any type of users
+        $pageUrl = strtolower($pageName);
+        $type = which_type($pageUrl, $userTypes);
+    }
+
+    return $type;
+}
+
+/**
+ * @return array all students data
+ */
+function getStudentsData()
+{
+    global $conn;
+
+    list($per_page, $page_1, $_, $_) = getRowsPerPage("students");
+
+    $mainSqlQuery = "SELECT s.*, u.* 
+                FROM students s 
+                join users u 
+                    on s.id_user = u.id";
+
+    // for searching by level
+    if (isset($_POST['search'])) {
+        $level_search_str = $_POST['student-level'];
+        $level_search = $level_search_str[6];
+        $searchSqlQuery = " ORDER BY s.level = {$level_search} DESC, s.level DESC limit {$per_page};";
+    } else {
+        $searchSqlQuery = " ORDER BY s.level ASC limit {$page_1}, {$per_page};";
+    }
+    $mainSqlQuery .= $searchSqlQuery;
+
+    $result = mysqli_query($conn, $mainSqlQuery);
+
+    $studentsData = array();
+    $count = 0;
+
+    check_result($result, $conn, __FUNCTION__);
+
+    while ($row = $result->fetch_assoc()) {
+        $studentsData[$count++] = $row;
+    }
+
+    return $studentsData;
+}
+
+/**
+ * @return array all professors data
+ */
+function getProfessorsData()
+{
+    global $conn;
+
+    list($per_page, $page_1, $_, $_) = getRowsPerPage("professors");
+
+    $mainSqlQuery = "SELECT p.*, u.* 
+                        FROM professors p 
+                        join users u 
+                            on p.id_user = u.id";
+
+    $result = mysqli_query($conn, $mainSqlQuery);
+    check_result($result, $conn, __FUNCTION__);
+
+    $professorsData = array();
+    $count = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $professorsData[$count++] = $row;
+    }
+
+    return $professorsData;
+}
+
+/**
+ * This function is displaying data in table format
+ * @param array $data the data to be displayed
+ * @param string $type data's type that it belongs to
+ * @param string $pageName the url of the current page
+ * @return void
+ * 
+ */
+function displayData($data, $type, $pageName)
+{
+
+    foreach ($data as $row) {
+
+        // displaying student data
+        echo "<tr>
+     <td>" . $row["student_id"] . "</td> <td>" . $row["arabic_name"] . "</td> 
+     <td>" . $row["email"] . "</td> <td>" . $row["level"] . "</td> <td>";
+        // a link button element for editing 
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_student.php?id={$row['id_user']}&type={$type}", "Edit");
+        echo "<td>";
+        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
+
+
+        echo "</td></tr>";
+    }
+}
 
 function showData($one_record = false, $record_id = 0)
 {
@@ -743,7 +865,7 @@ function showData($one_record = false, $record_id = 0)
     // current file name
     $basename = basename($_SERVER['PHP_SELF']);
     // number of rows to show per page
-    
+
 
 
     // types of users
@@ -770,13 +892,14 @@ function showData($one_record = false, $record_id = 0)
             $type = which_type($file_name, $types);
         }
     }
-  
+
     switch ($type) {
-        
+
         case "student":
-            showPerPage("students");
+            list($per_page, $page_1, $_, $_) = getRowsPerPage("students");
+
             // query for displaying students
-            $sql = "SELECT s.*, u.* 
+            $mainSqlQuery = "SELECT s.*, u.* 
                 FROM students s 
                 join users u 
                     on s.id_user = u.id";
@@ -785,115 +908,79 @@ function showData($one_record = false, $record_id = 0)
             if (isset($_POST['search'])) {
                 $level_search_str = $_POST['student-level'];
                 $level_search = $level_search_str[6];
-                $sql_0_5 = " ORDER BY s.level = {$level_search} DESC, s.level DESC limit {$per_page};";
+                $searchSqlQuery = " ORDER BY s.level = {$level_search} DESC, s.level DESC limit {$per_page};";
             } else {
-                $sql_0_5 = " ORDER BY s.level ASC limit {$page_1}, {$per_page};";
+                $searchSqlQuery = " ORDER BY s.level ASC limit {$page_1}, {$per_page};";
             }
 
             // completing the query if one record only is asked for to show
             if ($one_record) {
-                $sql .= $sql0;
+                $mainSqlQuery .= $sql0;
             } else {
-                $sql .= $sql_0_5;
+                $mainSqlQuery .= $searchSqlQuery;
             }
 
             // executing the query
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $mainSqlQuery);
             $students_data = array();
             // check the query
             if ($result) {
-                // output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    // saving data
-                    $students_data[$row['id_user']] = $row;
-
-                    // if only one record then return with the user data
-                    if ($one_record) {
-                        return $students_data;
-                    }
-
-                    // displaying student data
-                    echo "<tr>
-                    <td>" . $row["student_id"] . "</td> <td>" . $row["arabic_name"] . "</td> 
-                    <td>" . $row["email"] . "</td> <td>" . $row["level"] . "</td> <td>";
-                    // a link button element for editing 
-                    aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_student.php?id={$row['id_user']}&type={$type}", "Edit");
-                    echo "<td>";
-                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
-
-
-                    echo "</td></tr>";
-                }
+                $d = getStudentsData();
+                displayData($d, $type, $basename);
             } else {
                 // error message
-                die("RESULT FAILED from sql-students-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
+                die("RESULT FAILED from mainSqlQuery-students-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
             }
             break;
 
         case "professor":
-            showPerPage("professors");
+            list($per_page, $page_1, $_, $_) = getRowsPerPage("professors");
+
 
             // query for displaying professors
-            $sql = "SELECT p.*, u.* 
+            $mainSqlQuery = "SELECT p.*, u.* 
                     FROM professors p 
                     join users u 
                         on p.id_user = u.id";
 
             // completing the query 
             if ($one_record) {
-                $sql .= $sql0;
+                $mainSqlQuery .= $sql0;
             } else {
-                $sql .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
+                $mainSqlQuery .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
             }
 
             // executing the query
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $mainSqlQuery);
             $professors_data = array();
             // check the query
             if ($result) {
-                // output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    // saving data
-                    $professors_data[$row['id_user']] = $row;
-
-                    // if only one record then return with the user data
-                    if ($one_record) {
-                        return $professors_data;
-                    }
-
-                    // displaying professor data
-                    echo "<tr>
-                    <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
-                    <td>" . $row["mobile_number"] . "</td> <td>";
-                    // a link button element for editing 
-                    aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_professor.php?id={$row['id_user']}&type={$type}", "Edit");
-                    echo "<td>";
-                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
-                    echo "</td></tr>";
-                }
+                $d = getProfessorsData();
+                displayData($d, $type, $basename);
             } else {
                 // error message
-                die("RESULT FAILED from sql-professors-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
+                die("RESULT FAILED from mainSqlQuery-professors-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
             }
             break;
 
         case "ta":
-            showPerPage("tas");
+            list($per_page, $page_1, $_, $_) = getRowsPerPage("tas");
+
             // query for showing tas
-            $sql = "SELECT t.*, u.* 
+            $mainSqlQuery = "SELECT t.*, u.* 
                 FROM tas t 
                 join users u 
                     on t.id_user = u.id";
 
             // completing the query 
             if ($one_record) {
-                $sql .= $sql0;
+                $mainSqlQuery .= $sql0;
             } else {
-                $sql .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
+                $mainSqlQuery .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
             }
 
             // executing the query
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $mainSqlQuery);
             $tas_data = array();
             // check the query
             if ($result) {
@@ -918,26 +1005,26 @@ function showData($one_record = false, $record_id = 0)
                 }
             } else {
                 // error message
-                die("RESULT FAILED from sql-tas-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
+                die("RESULT FAILED from mainSqlQuery-tas-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
             }
             break;
         case "sa":
-            showPerPage("admins");
+            list($per_page, $page_1, $_, $_) = getRowsPerPage("admins");
 
             // query for showing tas
-            $sql = "SELECT a.*, u.* 
+            $mainSqlQuery = "SELECT a.*, u.* 
                 FROM admins a 
                 join users u 
                     on a.id_user = u.id";
 
             // completing the query 
             if ($one_record) {
-                $sql .= $sql0;
+                $mainSqlQuery .= $sql0;
             } else {
-                $sql .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
+                $mainSqlQuery .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
             }
 
-            $result = mysqli_query($conn, $sql);
+            $result = mysqli_query($conn, $mainSqlQuery);
             $admins_data = array();
             // check the query
             if ($result) {
@@ -962,7 +1049,7 @@ function showData($one_record = false, $record_id = 0)
                 }
             } else {
                 // error message
-                die("RESULT FAILED from sql-sa-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
+                die("RESULT FAILED from mainSqlQuery-sa-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
             }
             break;
         default:
@@ -1415,9 +1502,9 @@ function delete()
         // getting file name to redirect
         $basename = basename($_SERVER['PHP_SELF']);
         // query for deleting a user
-        $sql = "DELETE FROM users WHERE id = {$id_user};";
-        $result = mysqli_query($conn, $sql);
-        check_result($result, $conn, "sql-delete");
+        $mainSqlQuery = "DELETE FROM users WHERE id = {$id_user};";
+        $result = mysqli_query($conn, $mainSqlQuery);
+        check_result($result, $conn, "mainSqlQuery-delete");
         header("Location:./{$basename}");
     }
 }
@@ -1526,6 +1613,8 @@ function editProfile()
     $conn->close();
 }
 
+########################################################################################################################################
+########################################################################################################################################
 
 //get the last semester_id in the database;
 function getCurrentSemester()
