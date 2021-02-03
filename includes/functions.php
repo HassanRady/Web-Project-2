@@ -5,6 +5,13 @@ include_once "db_conn.php";
 include "helper.php";
 
 /******************************** Global variables **********************************/
+$studentsTable = "students";
+$professorsTable = "professors";
+$tasTable = "tas";
+$sasTable = "sas";
+$adminsTable = "admins";
+$userTypes = array("students", "professors", "tas", "sas", "admins");
+
 // $semester = getCurrentSemester();
 /******************************** Global variables **********************************/
 
@@ -749,13 +756,13 @@ function getRowsPerPage($table)
 }
 
 
+// TODO
 function getTypeForData()
 {
-    $userTypes = array("sa", "ta", "professor", "student");
+    global $userTypes;
     $pageName = basename($_SERVER['PHP_SELF']);
 
     if (isset($_GET["type"])) {
-        // getting users type
         $type = $_GET["type"];
     } else {
         // check the file name which it has any type of users
@@ -766,17 +773,18 @@ function getTypeForData()
     return $type;
 }
 
+
 /**
  * @return array all students data
  */
 function getStudentsData()
 {
-    global $conn;
+    global $conn, $studentsTable;
 
-    list($per_page, $page_1, $_, $_) = getRowsPerPage("students");
+    list($per_page, $page_1, $_, $_) = getRowsPerPage($studentsTable);
 
     $mainSqlQuery = "SELECT s.*, u.* 
-                FROM students s 
+                FROM {$studentsTable} s 
                 join users u 
                     on s.id_user = u.id";
 
@@ -804,19 +812,21 @@ function getStudentsData()
     return $studentsData;
 }
 
+
 /**
  * @return array all professors data
  */
 function getProfessorsData()
 {
-    global $conn;
+    global $conn, $professorsTable;
 
-    list($per_page, $page_1, $_, $_) = getRowsPerPage("professors");
+    list($per_page, $page_1, $_, $_) = getRowsPerPage($professorsTable);
 
     $mainSqlQuery = "SELECT p.*, u.* 
-                        FROM professors p 
+                        FROM {$professorsTable} p 
                         join users u 
-                            on p.id_user = u.id";
+                            on p.id_user = u.id
+                        limit {$page_1}, {$per_page}";
 
     $result = mysqli_query($conn, $mainSqlQuery);
     check_result($result, $conn, __FUNCTION__);
@@ -831,233 +841,189 @@ function getProfessorsData()
     return $professorsData;
 }
 
+
 /**
- * This function is displaying data in table format
- * @param array $data the data to be displayed
+ * @return array all TA's data
+ */
+function getTasData()
+{
+    global $conn, $tasTable;
+
+    list($per_page, $page_1, $_, $_) = getRowsPerPage($tasTable);
+
+    $mainSqlQuery = "SELECT t.*, u.* 
+                        FROM {$tasTable} t 
+                        join users u 
+                            on t.id_user = u.id
+                        limit {$page_1}, {$per_page}";
+
+    $result = mysqli_query($conn, $mainSqlQuery);
+    check_result($result, $conn, __FUNCTION__);
+
+    $tasData = array();
+    $count = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $tasData[$count++] = $row;
+    }
+
+    return $tasData;
+}
+
+
+/**
+ * @return array all SA's data
+ */
+function getSasData()
+{
+    global $conn, $sasTable;
+
+    list($per_page, $page_1, $_, $_) = getRowsPerPage($sasTable);
+
+    $mainSqlQuery = "SELECT s.*, u.* 
+                        FROM {$sasTable} s 
+                        join users u 
+                            on s.id_user = u.id
+                        limit {$page_1}, {$per_page}";
+
+    $result = mysqli_query($conn, $mainSqlQuery);
+    check_result($result, $conn, __FUNCTION__);
+
+    $sasData = array();
+    $count = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $sasData[$count++] = $row;
+    }
+
+    return $sasData;
+}
+
+
+/**
+ * @return array all admins data
+ */
+function getAdminsData()
+{
+    global $conn, $adminsTable;
+
+    list($per_page, $page_1, $_, $_) = getRowsPerPage($adminsTable);
+
+    $mainSqlQuery = "SELECT a.*, u.* 
+                        FROM {$adminsTable} a 
+                        join users u 
+                            on a.id_user = u.id
+                        limit {$page_1}, {$per_page}";
+
+    $result = mysqli_query($conn, $mainSqlQuery);
+    check_result($result, $conn, __FUNCTION__);
+
+    $adminsData = array();
+    $count = 0;
+
+    while ($row = $result->fetch_assoc()) {
+        $adminsData[$count++] = $row;
+    }
+
+    return $adminsData;
+}
+
+
+/**
+ * @param array $data 
  * @param string $type data's type that it belongs to
  * @param string $pageName the url of the current page
  * @return void
  * 
  */
-function displayData($data, $type, $pageName)
+function displayStudentsData($data, $type, $pageName)
 {
-
     foreach ($data as $row) {
 
-        // displaying student data
         echo "<tr>
-     <td>" . $row["student_id"] . "</td> <td>" . $row["arabic_name"] . "</td> 
-     <td>" . $row["email"] . "</td> <td>" . $row["level"] . "</td> <td>";
+        <td>" . $row["student_id"] . "</td> <td>" . $row["arabic_name"] . "</td> 
+        <td>" . $row["email"] . "</td> <td>" . $row["level"] . "</td> <td>";
         // a link button element for editing 
         aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_student.php?id={$row['id_user']}&type={$type}", "Edit");
         echo "<td>";
         aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
 
+        echo "</td></tr>";
+    }
+}
+
+
+/**
+ * @param array $data 
+ * @param string $type data's type that it belongs to
+ * @param string $pageName the url of the current page
+ * @return void
+ * 
+ */
+function displayProfessorsData($data, $type, $pageName)
+{
+    foreach ($data as $row) {
+
+        echo "<tr>
+        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
+        <td>" . $row["mobile_number"] . "</td> <td>";
+        // a link button element for editing 
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
+        echo "<td>";
+        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
 
         echo "</td></tr>";
     }
 }
 
-function showData($one_record = false, $record_id = 0)
+
+/**
+ * @param array $data 
+ * @param string $type data's type that it belongs to
+ * @param string $pageName the url of the current page
+ * @return void
+ * 
+ */
+function displayTasData($data, $type, $pageName)
 {
-    global $conn, $students_data, $professors_data, $tas_data, $admins_data, $per_page, $page_1;
+    foreach ($data as $row) {
 
-    // current file name
-    $basename = basename($_SERVER['PHP_SELF']);
-    // number of rows to show per page
+        echo "<tr>
+        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
+        <td>" . $row["mobile_number"] . "</td> <td>";
+        // a link button element for editing 
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
+        echo "<td>";
+        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
 
-
-
-    // types of users
-    $types = array("sa", "ta", "professor", "student");
-
-    // subquery for displaying one recored
-    $sql0 = " WHERE u.id = {$record_id};";
-
-    if ($one_record) {
-        $tmp = "SELECT type FROM users u" . $sql0;
-        $result_tmp = mysqli_query($conn, $tmp);
-        check_result($result_tmp, $conn);
-        $type = $result_tmp->fetch_assoc()['type'];
+        echo "</td></tr>";
     }
-
-    if (!$one_record) {
-        // checking that there is a type
-        if (isset($_GET["type"])) {
-            // getting users type
-            $type = $_GET["type"];
-        } else {
-            // check the file name which it has any type of users
-            $file_name = strtolower($basename);
-            $type = which_type($file_name, $types);
-        }
-    }
-
-    switch ($type) {
-
-        case "student":
-            list($per_page, $page_1, $_, $_) = getRowsPerPage("students");
-
-            // query for displaying students
-            $mainSqlQuery = "SELECT s.*, u.* 
-                FROM students s 
-                join users u 
-                    on s.id_user = u.id";
-
-            // for searching by level
-            if (isset($_POST['search'])) {
-                $level_search_str = $_POST['student-level'];
-                $level_search = $level_search_str[6];
-                $searchSqlQuery = " ORDER BY s.level = {$level_search} DESC, s.level DESC limit {$per_page};";
-            } else {
-                $searchSqlQuery = " ORDER BY s.level ASC limit {$page_1}, {$per_page};";
-            }
-
-            // completing the query if one record only is asked for to show
-            if ($one_record) {
-                $mainSqlQuery .= $sql0;
-            } else {
-                $mainSqlQuery .= $searchSqlQuery;
-            }
-
-            // executing the query
-            $result = mysqli_query($conn, $mainSqlQuery);
-            $students_data = array();
-            // check the query
-            if ($result) {
-                $d = getStudentsData();
-                displayData($d, $type, $basename);
-            } else {
-                // error message
-                die("RESULT FAILED from mainSqlQuery-students-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
-            }
-            break;
-
-        case "professor":
-            list($per_page, $page_1, $_, $_) = getRowsPerPage("professors");
-
-
-            // query for displaying professors
-            $mainSqlQuery = "SELECT p.*, u.* 
-                    FROM professors p 
-                    join users u 
-                        on p.id_user = u.id";
-
-            // completing the query 
-            if ($one_record) {
-                $mainSqlQuery .= $sql0;
-            } else {
-                $mainSqlQuery .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
-            }
-
-            // executing the query
-            $result = mysqli_query($conn, $mainSqlQuery);
-            $professors_data = array();
-            // check the query
-            if ($result) {
-                $d = getProfessorsData();
-                displayData($d, $type, $basename);
-            } else {
-                // error message
-                die("RESULT FAILED from mainSqlQuery-professors-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
-            }
-            break;
-
-        case "ta":
-            list($per_page, $page_1, $_, $_) = getRowsPerPage("tas");
-
-            // query for showing tas
-            $mainSqlQuery = "SELECT t.*, u.* 
-                FROM tas t 
-                join users u 
-                    on t.id_user = u.id";
-
-            // completing the query 
-            if ($one_record) {
-                $mainSqlQuery .= $sql0;
-            } else {
-                $mainSqlQuery .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
-            }
-
-            // executing the query
-            $result = mysqli_query($conn, $mainSqlQuery);
-            $tas_data = array();
-            // check the query
-            if ($result) {
-                // output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    // saving data
-                    $tas_data[$row['id_user']] = $row;
-
-                    // if only one record then return with the user data
-                    if ($one_record) {
-                        return $tas_data;
-                    }
-
-                    echo "<tr>
-                        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
-                        <td>" . $row["mobile_number"] . "</td> <td>";
-                    // a link button element for editing 
-                    aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
-                    echo "<td>";
-                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
-                    echo "</td></tr>";
-                }
-            } else {
-                // error message
-                die("RESULT FAILED from mainSqlQuery-tas-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
-            }
-            break;
-        case "sa":
-            list($per_page, $page_1, $_, $_) = getRowsPerPage("admins");
-
-            // query for showing tas
-            $mainSqlQuery = "SELECT a.*, u.* 
-                FROM admins a 
-                join users u 
-                    on a.id_user = u.id";
-
-            // completing the query 
-            if ($one_record) {
-                $mainSqlQuery .= $sql0;
-            } else {
-                $mainSqlQuery .= " ORDER BY u.first_name ASC limit {$page_1}, {$per_page};";
-            }
-
-            $result = mysqli_query($conn, $mainSqlQuery);
-            $admins_data = array();
-            // check the query
-            if ($result) {
-                // output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    // saving data
-                    $admins_data[$row['id_user']] = $row;
-
-                    // if only one record then return with the user data
-                    if ($one_record) {
-                        return $admins_data;
-                    }
-
-                    echo "<tr>
-                        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
-                        <td>" . $row["mobile_number"] . "</td> <td>";
-                    // a link button element for editing 
-                    aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_sa.php?id={$row['id_user']}&type={$type}", "Edit");
-                    echo "<td>";
-                    aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$basename}?delete={$row['id_user']}", "Remove");
-                    echo "</td></tr>";
-                }
-            } else {
-                // error message
-                die("RESULT FAILED from mainSqlQuery-sa-showData" . mysqli_error($conn) . " " . mysqli_errno($conn));
-            }
-            break;
-        default:
-            die("NONE TYPE");
-    }
-    // Close connection
-    $conn->close();
 }
+
+
+/**
+ * @param array $data 
+ * @param string $type data's type that it belongs to
+ * @param string $pageName the url of the current page
+ * @return void
+ * 
+ */
+function displaySasData($data, $type, $pageName)
+{
+    foreach ($data as $row) {
+
+        echo "<tr>
+        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
+        <td>" . $row["mobile_number"] . "</td> <td>";
+        // a link button element for editing 
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
+        echo "<td>";
+        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
+
+        echo "</td></tr>";
+    }
+}
+
 
 
 function add()

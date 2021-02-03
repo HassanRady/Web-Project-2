@@ -207,7 +207,9 @@ include "../includes/functions.php";
                 <hr class="mb-4">
                 <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="First group">
+
                         <?php
+                        list($per_page, $page_1, $count, $page) = getRowsPerPage("admins");   
 
                         for ($i = 1; $i <= $count; $i++) {
                             if ($i == $page) {
@@ -216,8 +218,8 @@ include "../includes/functions.php";
                                 echo "<button type='button' class='btn btn-primary'><a class='active_link' href='sa_list.php?page={$i}'>{$i}</a></button>";
                             }
                         }
-
                         ?>
+
                     </div>
 
                 </div>
