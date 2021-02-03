@@ -1,17 +1,17 @@
 <?php
 // getting connection
 include_once "db_conn.php";
+
+// global variables
+include "variables.php";
+
 // helper functions
 include "helper.php";
 
-/******************************** Global variables **********************************/
-$studentsTable = "students";
-$professorsTable = "professors";
-$tasTable = "tas";
-$sasTable = "sas";
-$adminsTable = "admins";
-$userTypes = array("students", "professors", "tas", "sas", "admins");
+// displaying functions
+include "display_data.php";
 
+/******************************** Global variables **********************************/
 // $semester = getCurrentSemester();
 /******************************** Global variables **********************************/
 
@@ -756,7 +756,42 @@ function getRowsPerPage($table)
 }
 
 
-// TODO
+function showStudents() {
+    $data = getStudentsData();
+    displayStudentsData($data, $type, $pageName);
+}
+
+
+function showWichData()
+{
+    global $studentsType, $professorsType, $tasType, $sasType, $adminsType;
+    $pageName = basename($_SERVER['PHP_SELF']);
+    $type = getTypeForData();
+
+    switch ($type) {
+        case $studentsType:
+            $data = getStudentsData();
+            displayStudentsData($data, $type, $pageName);
+            break;
+        case $professorsType:
+            $data = getProfessorsData();
+            displayProfessorsData($data, $type, $pageName);
+            break;
+        case $tasType:
+            $data = getTasData();
+            displayTasData($data, $type, $pageName);
+            break;
+        case $sasType:
+            $data = getSasData();
+            displaySasData($data, $type, $pageName);
+            break;
+    }
+}
+
+
+/**
+ * @return string
+ */
 function getTypeForData()
 {
     global $userTypes;
@@ -808,7 +843,7 @@ function getStudentsData()
     while ($row = $result->fetch_assoc()) {
         $studentsData[$count++] = $row;
     }
-
+    $conn->close();
     return $studentsData;
 }
 
@@ -837,7 +872,7 @@ function getProfessorsData()
     while ($row = $result->fetch_assoc()) {
         $professorsData[$count++] = $row;
     }
-
+    $conn->close();
     return $professorsData;
 }
 
@@ -866,7 +901,7 @@ function getTasData()
     while ($row = $result->fetch_assoc()) {
         $tasData[$count++] = $row;
     }
-
+    $conn->close();
     return $tasData;
 }
 
@@ -895,7 +930,7 @@ function getSasData()
     while ($row = $result->fetch_assoc()) {
         $sasData[$count++] = $row;
     }
-
+    $conn->close();
     return $sasData;
 }
 
@@ -924,105 +959,12 @@ function getAdminsData()
     while ($row = $result->fetch_assoc()) {
         $adminsData[$count++] = $row;
     }
-
+    $conn->close();
     return $adminsData;
 }
 
 
-/**
- * @param array $data 
- * @param string $type data's type that it belongs to
- * @param string $pageName the url of the current page
- * @return void
- * 
- */
-function displayStudentsData($data, $type, $pageName)
-{
-    foreach ($data as $row) {
 
-        echo "<tr>
-        <td>" . $row["student_id"] . "</td> <td>" . $row["arabic_name"] . "</td> 
-        <td>" . $row["email"] . "</td> <td>" . $row["level"] . "</td> <td>";
-        // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_student.php?id={$row['id_user']}&type={$type}", "Edit");
-        echo "<td>";
-        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
-
-        echo "</td></tr>";
-    }
-}
-
-
-/**
- * @param array $data 
- * @param string $type data's type that it belongs to
- * @param string $pageName the url of the current page
- * @return void
- * 
- */
-function displayProfessorsData($data, $type, $pageName)
-{
-    foreach ($data as $row) {
-
-        echo "<tr>
-        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
-        <td>" . $row["mobile_number"] . "</td> <td>";
-        // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
-        echo "<td>";
-        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
-
-        echo "</td></tr>";
-    }
-}
-
-
-/**
- * @param array $data 
- * @param string $type data's type that it belongs to
- * @param string $pageName the url of the current page
- * @return void
- * 
- */
-function displayTasData($data, $type, $pageName)
-{
-    foreach ($data as $row) {
-
-        echo "<tr>
-        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
-        <td>" . $row["mobile_number"] . "</td> <td>";
-        // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
-        echo "<td>";
-        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
-
-        echo "</td></tr>";
-    }
-}
-
-
-/**
- * @param array $data 
- * @param string $type data's type that it belongs to
- * @param string $pageName the url of the current page
- * @return void
- * 
- */
-function displaySasData($data, $type, $pageName)
-{
-    foreach ($data as $row) {
-
-        echo "<tr>
-        <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
-        <td>" . $row["mobile_number"] . "</td> <td>";
-        // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
-        echo "<td>";
-        aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
-
-        echo "</td></tr>";
-    }
-}
 
 
 

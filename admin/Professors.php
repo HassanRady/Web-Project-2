@@ -174,7 +174,7 @@ include "../includes/functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                showData();
+                                showWichData();
                                 delete();
                                 ?>
 
