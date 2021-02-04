@@ -8,8 +8,11 @@ include "variables.php";
 // helper functions
 include "helper.php";
 
-// displaying functions
-include "print_data.php";
+// printing functions
+include "print_functions.php";
+
+// form data retriever functions
+include "form_functions.php";
 
 /******************************** Global variables **********************************/
 // $semester = getCurrentSemester();
@@ -988,7 +991,41 @@ function getAdminsData()
 }
 
 
+function addStudent()
+{
+    $pageName = basename($_SERVER['PHP_SELF']);
+    if (isset($_POST['submit'])) {
 
+        $type = getTypeForData();
+
+        list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+        list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
+
+        // handling realescape
+        $dataBaseConnection = connectToDataBase();
+        $email = mysqli_real_escape_string($dataBaseConnection, $email);
+
+        $password = encrypt_password($password);
+
+        // for users table
+        $firstSqlQuery = "INSERT INTO users 
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$type', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
+        $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
+        check_result($result, $dataBaseConnection, __FUNCTION__);
+
+        $last_id = mysqli_insert_id($dataBaseConnection);
+
+        // query for adding a student
+        $secondSqlQuery = "INSERT INTO students (id_user, student_id, arabic_name, address, guardian_mobile_number, student_type)
+                                    VALUES ($last_id, $student_id, '$arabic_name', '$address', '$guardian_mobile_number', '$student_type');";
+        $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
+        check_result($result, $dataBaseConnection, __FUNCTION__);
+        $dataBaseConnection->close();
+
+
+        header("Location:./{$pageName}?type={$type}&add=success");
+    }
+}
 
 
 
@@ -2353,7 +2390,7 @@ function getAllPosts($course_id)
     $query = "SELECT post_id, id_user,post_author, post_date, post_content, votes FROM posts WHERE id_course ='$course_id' ORDER BY post_id  DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
-        die("Cannot retrieve posts from database  " . mysqli_error($conn));
+        die("Cannot  postsForm from database  " . mysqli_error($conn));
     }
     return $result;
 }
@@ -2363,7 +2400,7 @@ function getPost($post_id)
     $query = "SELECT post_author, post_date, post_content, votes FROM posts WHERE post_id = '$post_id' ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
-        die("Cannot retrieve posts from database  " . mysqli_error($conn));
+        die("Cannot  postsForm from database  " . mysqli_error($conn));
     }
     return $result;
 }
@@ -2405,7 +2442,7 @@ function getAllComments($id_post)
     $query = "SELECT id_user, comment_id, comment_author, comment_content, comment_date FROM comments WHERE id_post ='$id_post' ORDER BY comment_id  ASC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
-        die("Cannot retrieve comments from database  " . mysqli_error($conn));
+        die("Cannot  commentsForm from database  " . mysqli_error($conn));
     }
     return $result;
 }
