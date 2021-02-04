@@ -1,6 +1,6 @@
 <?php
 ob_start();
-include "../includes/functions.php";
+include "../includes/callable_functions.php";
 include "../includes/variables.php";
 
 ?>
@@ -108,7 +108,7 @@ include "../includes/variables.php";
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="">Student</a>
+                                <a class="nav-link" href="Students.php?type=<?php echo $studentsType ?>">Student</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link" href="Professors.php?type=<?php echo $professorsType ?>">Professor</a>
@@ -128,7 +128,7 @@ include "../includes/variables.php";
                 <!-- START HERE -->
                 <div class="container-fluid">
                     <div class="row justify-content-end">
-                        <a href="add_new_student.php?type=student" class=" btn btn-primary btn-block w-25">Add New</a>
+                        <a href="add_new_student.php?type=<?php echo $studentsType ?>" class=" btn btn-primary btn-block w-25">Add New</a>
                     </div>
                 </div>
                 <hr class="mb-4">
@@ -188,7 +188,7 @@ include "../includes/variables.php";
 
                                 <?php
                                 showWichData();
-                                delete();
+                                deleteUser();
                                 ?>
 
                             </tbody>

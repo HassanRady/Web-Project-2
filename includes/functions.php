@@ -755,7 +755,6 @@ function getRowsPerPage($table)
     $count = mysqli_num_rows($result);
     $count  = ceil($count / $per_page);
 
-
     return array($per_page, $page_1, $count, $page);
 }
 
@@ -826,6 +825,99 @@ function getTypeForData()
     return $type;
 }
 
+/**
+ * @param int $id
+ * @return array student's data
+ */
+function getStudent($id)
+{
+    global $studentsTable;
+
+    $mainSqlQuery = "SELECT s.*, u.* 
+    FROM {$studentsTable} s 
+    join users u 
+        on s.id_user = u.id
+    WHERE u.id = $id";
+
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $studentData =  $result->fetch_assoc();
+    return $studentData;
+}
+
+
+/**
+ * @param int $id
+ * @return array professor's data
+ */
+function getProfessor($id)
+{
+    global $professorsTable;
+
+    $mainSqlQuery = "SELECT p.*, u.* 
+    FROM {$professorsTable} p 
+    join users u 
+        on p.id_user = u.id
+    WHERE u.id = $id";
+
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $professorsData =  $result->fetch_assoc();
+    return $professorsData;
+}
+
+
+/**
+ * @param int $id
+ * @return array TA's data
+ */
+function getTa($id)
+{
+    global $tasTable;
+
+    $mainSqlQuery = "SELECT t.*, u.* 
+    FROM {$tasTable} t 
+    join users u 
+        on t.id_user = u.id
+    WHERE u.id = $id";
+
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $taData =  $result->fetch_assoc();
+    return $taData;
+}
+
+/**
+ * @param int $id
+ * @return array SA's data
+ */
+function getSa($id)
+{
+    global $sasTable;
+
+    $mainSqlQuery = "SELECT s.*, u.* 
+    FROM {$sasTable} s 
+    join users u 
+        on s.id_user = u.id
+    WHERE u.id = $id";
+
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $saData =  $result->fetch_assoc();
+    return $saData;
+}
 
 /**
  * @return array all students data
@@ -993,176 +1085,132 @@ function getAdminsData()
 
 function addStudent()
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    if (isset($_POST['submit'])) {
+    global $studentsType;
 
-        $type = getTypeForData();
+    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
 
-        list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
-        list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
+    // handling realescape
+    $dataBaseConnection = connectToDataBase();
+    $email = mysqli_real_escape_string($dataBaseConnection, $email);
 
-        // handling realescape
-        $dataBaseConnection = connectToDataBase();
-        $email = mysqli_real_escape_string($dataBaseConnection, $email);
+    $password = encrypt_password($password);
 
-        $password = encrypt_password($password);
+    // for users table
+    $firstSqlQuery = "INSERT INTO users 
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$studentsType', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
+    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
 
-        // for users table
-        $firstSqlQuery = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$type', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
-        $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-        check_result($result, $dataBaseConnection, __FUNCTION__);
+    $last_id = mysqli_insert_id($dataBaseConnection);
 
-        $last_id = mysqli_insert_id($dataBaseConnection);
-
-        // query for adding a student
-        $secondSqlQuery = "INSERT INTO students (id_user, student_id, arabic_name, address, guardian_mobile_number, student_type)
+    // query for adding a student
+    $secondSqlQuery = "INSERT INTO students (id_user, student_id, arabic_name, address, guardian_mobile_number, student_type)
                                     VALUES ($last_id, $student_id, '$arabic_name', '$address', '$guardian_mobile_number', '$student_type');";
-        $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
-        check_result($result, $dataBaseConnection, __FUNCTION__);
-        $dataBaseConnection->close();
-
-
-        header("Location:./{$pageName}?type={$type}&add=success");
-    }
+    $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 }
 
 
-
-function add()
+function addProfessor()
 {
-    global $conn;
-    $basename = basename($_SERVER['PHP_SELF']);
-    if (isset($_POST['submit'])) {
+    global $professorsType;
 
-        // user type
-        $type = $_GET["type"];
+    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($instructor_id, $description) = NewProfessorDataForm();
 
-        // retrieving user values from the input form
-        $first_name = $_POST['first_name'];
-        $middle_name = $_POST['middle_name'];
-        $last_name = $_POST['last_name'];
-        $national_id = $_POST['national_id'];
-        $email = $_POST['email'];
-        $gender = $_POST['gender'];
-        $mobile_number = $_POST['mobile_number'];
-        $home_number = $_POST['home_number'];
-        $password =  $national_id;         // temp until user changes it
+    // handling realescape
+    $dataBaseConnection = connectToDataBase();
+    $email = mysqli_real_escape_string($dataBaseConnection, $email);
 
-        // handling realescape
-        $email = mysqli_real_escape_string($conn, $email);
+    $password = encrypt_password($password);
 
-        // hashing password
-        $password = encrypt_password($password);
+    // for users table
+    $firstSqlQuery = "INSERT INTO users 
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$professorsType', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
+    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
 
-        // query for adding the user
-        $sql1 = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$type', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
-        // execute the query
-        $result =  mysqli_query($conn, $sql1);
-        // check the first query
-        if ($result) {
-            $last_id = mysqli_insert_id($conn);
-            $sql2 = null;
+    $last_id = mysqli_insert_id($dataBaseConnection);
 
-            switch ($type) {
+    $secondSqlQuery = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
+    $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
 
-                    // adding the student user in students table with deafult values
-                case "student":
+    $thirdSqlQuery = "INSERT INTO professors VALUES ($last_id, $instructor_id, '$description');";
+    $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
 
-                    // retrieving student values from the input form
-                    $arabic_name = $_POST['arabic_name'];
-                    $address = $_POST["address"];
-                    $student_type = $_POST['student_type'];
-                    $student_id = $_POST['student_id'];
-                    $guardian_mobile_number = $_POST['guardian_mobile_number'];
-
-                    // query for adding a student
-                    $sql2 = "INSERT INTO students (id_user, student_id, arabic_name, address, guardian_mobile_number, student_type)
-                                    VALUES ($last_id, $student_id, '$arabic_name', '$address', '$guardian_mobile_number', '$student_type');";
-
-                    break;
-
-                    // adding the professor user in professors table with deafult values
-                case "professor":
-                    // retrieving professor values from the input form
-                    $description = $_POST['description'];
-                    $instructor_id = $national_id;             // temp until we figure it out
-
-                    // query for adding instructor
-                    $sql1_5 = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
-                    $result1_1 = mysqli_query($conn, $sql1_5);
-                    if ($result1_1) {
-                        // query for adding a professor
-                        $sql2 = "INSERT INTO professors VALUES ($last_id, $instructor_id, '$description');";
-                    } else {
-                        // error message
-                        die("Could not insert data from sql1_5-add: " . mysqli_error($conn) . " " . mysqli_errno($conn));
-                    }
-                    break;
-
-                    // adding the TA user in TAs table with deafult values
-                case "ta":
-                    // retrieving TA values from the input form
-                    $description = $_POST['description'];
-                    $instructor_id = $national_id;             // temp until we figure it out
-
-                    // query for adding instructor
-                    $sql1_5 = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
-                    $result1_1 = mysqli_query($conn, $sql1_5);
-                    if ($result1_1) {
-                        // query for adding a TA
-                        $sql2 = "INSERT INTO tas VALUES ($last_id, $instructor_id, '$description');";
-                    } else {
-                        // error message
-                        die("Could not insert data from sql1_5-add: " . mysqli_error($conn) . " " . mysqli_errno($conn));
-                    }
-                    break;
-
-                    // adding the sa user in admins table with deafult values
-                case "sa":
-                    // retrieving SA values from the input form
-                    $instructor_id = $national_id;             // temp until we figure it out
-
-                    // query for adding instructor
-                    $sql1_5 = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
-                    $result1_1 = mysqli_query($conn, $sql1_5);
-                    if ($result1_1) {
-                        // query for adding an admin
-                        $sql2 = "INSERT INTO admins VALUES ($last_id, $instructor_id);";
-                    } else {
-                        // error message
-                        die("Could not insert data from sql1_5-add: " . mysqli_error($conn) . " " . mysqli_errno($conn));
-                    }
-                    break;
-
-                default:
-                    echo "There is no type";
-            }
-            // checking sql2 is formed by one of the above cases got selected
-            if (!is_null($sql2)) {
-
-                $result2 =  mysqli_query($conn, $sql2);
-
-                // // check the second query
-                if ($result2) {
-                    header("Location:./{$basename}?type={$type}&add=success");
-                } else {
-                    // error message
-                    die("Could not insert data from sql2-add: " . mysqli_error($conn) . " " . mysqli_errno($conn));
-                }
-            } else {
-                // error message
-                echo "sql2 wasn't formed";
-            }
-        } else {
-            // error message
-            die("Could not insert data from sql1-add: " . mysqli_error($conn) . " " . mysqli_errno($conn));
-        }
-    }
-    // Close connection
-    $conn->close();
+    $dataBaseConnection->close();
 }
+
+
+function addTa()
+{
+    global $tasType;
+
+    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($instructor_id, $description) = NewProfessorDataForm();
+
+    // handling realescape
+    $dataBaseConnection = connectToDataBase();
+    $email = mysqli_real_escape_string($dataBaseConnection, $email);
+
+    $password = encrypt_password($password);
+
+    // for users table
+    $firstSqlQuery = "INSERT INTO users 
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$tasType', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
+    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+
+    $last_id = mysqli_insert_id($dataBaseConnection);
+
+    $secondSqlQuery = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
+    $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+
+    $thirdSqlQuery = "INSERT INTO tas VALUES ($last_id, $instructor_id, '$description');";
+    $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+
+    $dataBaseConnection->close();
+}
+
+function addsa()
+{
+    global $sasType;
+
+    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($instructor_id, $description) = NewProfessorDataForm();
+
+    // handling realescape
+    $dataBaseConnection = connectToDataBase();
+    $email = mysqli_real_escape_string($dataBaseConnection, $email);
+
+    $password = encrypt_password($password);
+
+    // for users table
+    $firstSqlQuery = "INSERT INTO users 
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$sasType', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
+    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+
+    $last_id = mysqli_insert_id($dataBaseConnection);
+
+    $secondSqlQuery = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
+    $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+
+    $thirdSqlQuery = "INSERT INTO sas VALUES ($last_id);";
+    $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+
+    $dataBaseConnection->close();
+}
+
+
 
 
 function update()

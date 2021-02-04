@@ -1,6 +1,8 @@
 <?php
 ob_start();
 include "../includes/callable_functions.php";
+include "../includes/variables.php";
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,17 +45,17 @@ include "../includes/callable_functions.php";
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="Students.php?type=student">Students</a>
+                    <li>
+                            <a href="Students.php?type=<?php echo $studentsType ?>">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.php?type=professor">Professors</a>
+                            <a href="Professors.php?type=<?php echo $professorsType ?>">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.php?type=ta">Teaching Assistants</a>
+                            <a href="ta_list.php?type=<?php echo $tasType ?>">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.php?type=sa">Student Affairs</a>
+                            <a href="sa_list.php?type=<?php echo $sasType ?>">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
@@ -105,17 +107,17 @@ include "../includes/callable_functions.php";
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="Students.php?type=student">Student</a>
+                        <li class="nav-item ">
+                                <a class="nav-link" href="Students.php?type=<?php echo $studentsType ?>">Student</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="#">Professor</a>
+                                <a class="nav-link" href="Professors.php?type=<?php echo $professorsType ?>">Professor</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="ta_list.php?type=ta">Teaching Assistant</a>
+                                <a class="nav-link" href="ta_list.php?type=<?php echo $tasType ?>">Teaching Assistant</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="sa_list.php?type=sa">Student Affairs</a>
+                                <a class="nav-link" href="sa_list.php?type=<?php echo $sasType ?>">Student Affairs</a>
                             </li>
                         </ul>
                     </div>
@@ -126,7 +128,7 @@ include "../includes/callable_functions.php";
                 <!-- START HERE -->
                 <div class="container-fluid">
                     <div class="row justify-content-end">
-                        <a href="add_new_prof.php?type=professor" class=" btn btn-primary btn-block w-25">Add New</a>
+                        <a href="add_new_prof.php?type=<?php echo $professorsType ?>" class=" btn btn-primary btn-block w-25">Add New</a>
                     </div>
                 </div>
                 <hr class="mb-4">
@@ -175,7 +177,7 @@ include "../includes/callable_functions.php";
 
                                 <?php
                                 showWichData();
-                                delete();
+                                deleteUser();
                                 ?>
 
                             </tbody>

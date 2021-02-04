@@ -38,8 +38,9 @@ function NewStudentDataForm()
 function NewProfessorDataForm()
 {
     $description = $_POST['description'];
+    $instructor_id = $_POST['national_id'];
 
-    return array($description);
+    return array($instructor_id, $description);
 }
 
 
@@ -49,8 +50,9 @@ function NewProfessorDataForm()
 function NewTaDataForm()
 {
     $description = $_POST['description'];
+    $instructor_id = $_POST['national_id'];
 
-    return array($description);
+    return array($instructor_id, $description);
 }
 
 
@@ -60,6 +62,6 @@ function NewTaDataForm()
  */
 function NewSaDataForm()
 {
-    
-    return array();
+    $instructor_id = $_POST['national_id'];
+    return array($instructor_id);
 }
