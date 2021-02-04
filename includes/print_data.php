@@ -8,7 +8,7 @@
  * @return void
  * 
  */
-function displayStudentsData($data, $type, $pageName)
+function printStudentsData($data, $type, $pageName)
 {
     foreach ($data as $row) {
 
@@ -32,7 +32,7 @@ function displayStudentsData($data, $type, $pageName)
  * @return void
  * 
  */
-function displayProfessorsData($data, $type, $pageName)
+function printProfessorsData($data, $type, $pageName)
 {
     foreach ($data as $row) {
 
@@ -56,7 +56,7 @@ function displayProfessorsData($data, $type, $pageName)
  * @return void
  * 
  */
-function displayTasData($data, $type, $pageName)
+function printTasData($data, $type, $pageName)
 {
     foreach ($data as $row) {
 
@@ -80,7 +80,7 @@ function displayTasData($data, $type, $pageName)
  * @return void
  * 
  */
-function displaySasData($data, $type, $pageName)
+function printSasData($data, $type, $pageName)
 {
     foreach ($data as $row) {
 

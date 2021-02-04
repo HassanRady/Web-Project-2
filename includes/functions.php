@@ -9,7 +9,7 @@ include "variables.php";
 include "helper.php";
 
 // displaying functions
-include "display_data.php";
+include "print_data.php";
 
 /******************************** Global variables **********************************/
 // $semester = getCurrentSemester();
@@ -727,10 +727,9 @@ function add_assignment_grade()
  */
 function getRowsPerPage($table)
 {
-    global $conn;
-    reconnect();
+    global $rowsPerPage;
 
-    $per_page = 2;
+    $per_page = $rowsPerPage;
 
     if (isset($_GET['page'])) {
         $page = $_GET['page'];
@@ -744,49 +743,65 @@ function getRowsPerPage($table)
         $page_1 = ($page * $per_page) - $per_page;
     }
 
+    $dataBaseConnection = connectToDataBase();
     $post_query_count = "SELECT * FROM {$table}";
-    $result = mysqli_query($conn, $post_query_count);
-
-    check_result($result, $conn, __FUNCTION__);
+    $result = mysqli_query($dataBaseConnection, $post_query_count);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 
     $count = mysqli_num_rows($result);
     $count  = ceil($count / $per_page);
 
+
     return array($per_page, $page_1, $count, $page);
 }
 
-
-function showStudents() {
-    $data = getStudentsData();
-    displayStudentsData($data, $type, $pageName);
-}
-
-
-function showWichData()
+/**
+ * @param string $pageName
+ */
+function showStudents($pageName)
 {
-    global $studentsType, $professorsType, $tasType, $sasType, $adminsType;
-    $pageName = basename($_SERVER['PHP_SELF']);
-    $type = getTypeForData();
-
-    switch ($type) {
-        case $studentsType:
-            $data = getStudentsData();
-            displayStudentsData($data, $type, $pageName);
-            break;
-        case $professorsType:
-            $data = getProfessorsData();
-            displayProfessorsData($data, $type, $pageName);
-            break;
-        case $tasType:
-            $data = getTasData();
-            displayTasData($data, $type, $pageName);
-            break;
-        case $sasType:
-            $data = getSasData();
-            displaySasData($data, $type, $pageName);
-            break;
-    }
+    global $studentsType;
+    $type = $studentsType;
+    $data = getStudentsData();
+    printStudentsData($data, $type, $pageName);
 }
+
+/**
+ * @param string $pageName
+ */
+function showProfessors($pageName)
+{
+    global $ProfessorsType;
+    $type = $ProfessorsType;
+    $data = getProfessorsData();
+    printProfessorsData($data, $type, $pageName);
+}
+
+/**
+ * @param string $pageName
+ */
+function showTas($pageName)
+{
+    global $TasType;
+    $type = $TasType;
+    $data = getTasData();
+    printTasData($data, $type, $pageName);
+}
+
+/**
+ * @param string $pageName
+ */
+function showSas($pageName)
+{
+    global $SasType;
+    $type = $SasType;
+    $data = getSasData();
+    printSasData($data, $type, $pageName);
+}
+
+
+
 
 
 /**
@@ -814,7 +829,7 @@ function getTypeForData()
  */
 function getStudentsData()
 {
-    global $conn, $studentsTable;
+    global $studentsTable;
 
     list($per_page, $page_1, $_, $_) = getRowsPerPage($studentsTable);
 
@@ -833,17 +848,18 @@ function getStudentsData()
     }
     $mainSqlQuery .= $searchSqlQuery;
 
-    $result = mysqli_query($conn, $mainSqlQuery);
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 
     $studentsData = array();
     $count = 0;
 
-    check_result($result, $conn, __FUNCTION__);
-
     while ($row = $result->fetch_assoc()) {
         $studentsData[$count++] = $row;
     }
-    $conn->close();
+
     return $studentsData;
 }
 
@@ -853,7 +869,7 @@ function getStudentsData()
  */
 function getProfessorsData()
 {
-    global $conn, $professorsTable;
+    global $professorsTable;
 
     list($per_page, $page_1, $_, $_) = getRowsPerPage($professorsTable);
 
@@ -863,8 +879,10 @@ function getProfessorsData()
                             on p.id_user = u.id
                         limit {$page_1}, {$per_page}";
 
-    $result = mysqli_query($conn, $mainSqlQuery);
-    check_result($result, $conn, __FUNCTION__);
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 
     $professorsData = array();
     $count = 0;
@@ -872,7 +890,7 @@ function getProfessorsData()
     while ($row = $result->fetch_assoc()) {
         $professorsData[$count++] = $row;
     }
-    $conn->close();
+
     return $professorsData;
 }
 
@@ -882,7 +900,7 @@ function getProfessorsData()
  */
 function getTasData()
 {
-    global $conn, $tasTable;
+    global $tasTable;
 
     list($per_page, $page_1, $_, $_) = getRowsPerPage($tasTable);
 
@@ -892,8 +910,10 @@ function getTasData()
                             on t.id_user = u.id
                         limit {$page_1}, {$per_page}";
 
-    $result = mysqli_query($conn, $mainSqlQuery);
-    check_result($result, $conn, __FUNCTION__);
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 
     $tasData = array();
     $count = 0;
@@ -901,7 +921,7 @@ function getTasData()
     while ($row = $result->fetch_assoc()) {
         $tasData[$count++] = $row;
     }
-    $conn->close();
+
     return $tasData;
 }
 
@@ -911,7 +931,7 @@ function getTasData()
  */
 function getSasData()
 {
-    global $conn, $sasTable;
+    global $sasTable;
 
     list($per_page, $page_1, $_, $_) = getRowsPerPage($sasTable);
 
@@ -921,8 +941,10 @@ function getSasData()
                             on s.id_user = u.id
                         limit {$page_1}, {$per_page}";
 
-    $result = mysqli_query($conn, $mainSqlQuery);
-    check_result($result, $conn, __FUNCTION__);
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 
     $sasData = array();
     $count = 0;
@@ -930,7 +952,7 @@ function getSasData()
     while ($row = $result->fetch_assoc()) {
         $sasData[$count++] = $row;
     }
-    $conn->close();
+
     return $sasData;
 }
 
@@ -940,7 +962,7 @@ function getSasData()
  */
 function getAdminsData()
 {
-    global $conn, $adminsTable;
+    global $adminsTable;
 
     list($per_page, $page_1, $_, $_) = getRowsPerPage($adminsTable);
 
@@ -950,8 +972,10 @@ function getAdminsData()
                             on a.id_user = u.id
                         limit {$page_1}, {$per_page}";
 
-    $result = mysqli_query($conn, $mainSqlQuery);
-    check_result($result, $conn, __FUNCTION__);
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 
     $adminsData = array();
     $count = 0;
@@ -959,7 +983,7 @@ function getAdminsData()
     while ($row = $result->fetch_assoc()) {
         $adminsData[$count++] = $row;
     }
-    $conn->close();
+
     return $adminsData;
 }
 
@@ -1112,7 +1136,7 @@ function update()
     $id_user = (int)$_GET['id'];
     $type = $_GET['type'];
     // retrieving data
-    $data = showData(true, $id_user)[$id_user];
+    $data = NULL;
     $first_name = $data['first_name'];
     $middle_name = $data['middle_name'];
     $last_name = $data['last_name'];
@@ -1397,23 +1421,23 @@ function update()
     $conn->close();
 }
 
-// function to delete a user
-function delete()
+
+function deleteUser()
 {
     global $conn;
 
-    // checking if delete button is pressed
     if (isset($_GET['delete'])) {
-        // db reconnection
-        reconnect();
+        reconnectToDataBase();
+
         $id_user = $_GET['delete'];
-        // getting file name to redirect
-        $basename = basename($_SERVER['PHP_SELF']);
-        // query for deleting a user
+        $pageName = basename($_SERVER['PHP_SELF']);
+
         $mainSqlQuery = "DELETE FROM users WHERE id = {$id_user};";
         $result = mysqli_query($conn, $mainSqlQuery);
+
         check_result($result, $conn, "mainSqlQuery-delete");
-        header("Location:./{$basename}");
+
+        header("Location:./{$pageName}");
     }
 }
 
@@ -1427,7 +1451,7 @@ function userProfile()
     $id_user = $_GET["id"];
 
     // getting user's data
-    $data = showData(true, $id_user)[$id_user];
+    $data = NULL;
     // Close connection
     $conn->close();
 
@@ -1456,8 +1480,8 @@ function editProfile()
 {
     userProfile();
     global $conn, $type, $id_user;
-    // db reconnection
-    reconnect();
+    // db reconnectToDataBaseion
+    reconnectToDataBase();
 
     if (isset($_POST['update'])) {
 

@@ -1,6 +1,6 @@
 <?php
 ob_start();
-include "../includes/functions.php";
+include "../includes/callable_functions.php";
 ?>
 <!DOCTYPE html>
 <html>
