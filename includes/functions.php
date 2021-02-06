@@ -1093,6 +1093,7 @@ function addStudent()
     // handling realescape
     $dataBaseConnection = connectToDataBase();
     $email = mysqli_real_escape_string($dataBaseConnection, $email);
+    $address = mysqli_real_escape_string($dataBaseConnection, $address);
 
     $password = encrypt_password($password);
 
@@ -1211,6 +1212,65 @@ function addsa()
 }
 
 
+/**
+ * @param int $id
+ */
+function studentProfile($id)
+{
+    global  $address, $level, $guardian_mobile_number;
+
+    $data = getStudent($id);
+
+    getDataForProfile($data);
+
+    $address = $data['address'];
+    $level = $data['level'];
+    $guardian_mobile_number = $data['guardian_mobile_number'];
+
+}
+
+
+/**
+ * @param array $data
+ */
+function getDataForProfile($data)
+{
+    global $first_name, $middle_name, $last_name, $full_name,
+        $email, $mobile_number, $home_number;
+
+    $first_name = $data['first_name'];
+    $middle_name = $data['middle_name'];
+    $last_name = $data['last_name'];
+    $email = $data['email'];
+    $mobile_number = $data['mobile_number'];
+    $home_number = $data['home_number'];
+
+    $full_name = $first_name . " " . $middle_name . " " . $last_name;
+}
+/**
+ * @param int $id
+ */
+function professorProfile($id)
+{
+    $data = getProfessor($id);
+    getDataForProfile($data);
+}
+/**
+ * @param int $id
+ */
+function taProfile($id)
+{
+    $data = getTa($id);
+    getDataForProfile($data);
+}
+/**
+ * @param int $id
+ */
+function saProfile($id)
+{
+    $data = getSa($id);
+    getDataForProfile($data);
+}
 
 
 function update()
@@ -1520,115 +1580,111 @@ function deleteUser()
         $mainSqlQuery = "DELETE FROM users WHERE id = {$id_user};";
         $result = mysqli_query($conn, $mainSqlQuery);
 
-        check_result($result, $conn, "mainSqlQuery-delete");
+        check_result($result, $conn, __FUNCTION__);
 
         header("Location:./{$pageName}");
     }
 }
 
 
-// function to get user's data
-function userProfile()
+/**
+ * @param int $id
+ */
+function editStudentProfile($id)
 {
-    global $conn, $id_user, $type, $first_name, $middle_name, $last_name, $full_name,
-        $email, $mobile_number, $home_number;
-    // user id and type
-    $id_user = $_GET["id"];
+    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
+    list($_, $_, $address, $guardian_mobile_number, $_) = NewStudentDataForm();
 
-    // getting user's data
-    $data = NULL;
-    // Close connection
-    $conn->close();
+    // handling realescape
+    $dataBaseConnection = connectToDataBase();
+    $address = mysqli_real_escape_string($dataBaseConnection, $address);
 
-    $type = $data['type'];
+    $password = encrypt_password($password);
 
-    // what can be shown for all users
-    $first_name = $data['first_name'];
-    $middle_name = $data['middle_name'];
-    $last_name = $data['last_name'];
-    $email = $data['email'];
-    $mobile_number = $data['mobile_number'];
-    $home_number = $data['home_number'];
-    // user full name
-    $full_name = $first_name . " " . $middle_name . " " . $last_name;
-
-    if ($type === "student") {
-        global $address, $level, $guardian_mobile_number;
-        $address = $data['address'];
-        $level = $data['level'];
-        $guardian_mobile_number = $data['guardian_mobile_number'];
-    }
-}
-
-
-function editProfile()
-{
-    userProfile();
-    global $conn, $type, $id_user;
-    // db reconnectToDataBaseion
-    reconnectToDataBase();
-
-    if (isset($_POST['update'])) {
-
-        $first_name = $_POST['first_name'];
-        $middle_name = $_POST['middle_name'];
-        $last_name = $_POST['last_name'];
-        $mobile_number = $_POST['mobile_number'];
-        $home_number = $_POST['home_number'];
-        $password  = $_POST['password'];
-        // $repassword  = $_POST['repassword'];
-
-        // handling realescape and enrypting
-        $password = mysqli_real_escape_string($conn, $password);
-        $password = encrypt_password($password);
-
-        // Setting auto commit to false
-        mysqli_autocommit($conn, FALSE);
-
-        if ($type === "student") {
-            $address = $_POST['address'];
-            $guardian_mobile_number = $_POST['guardian_mobile_number'];
-
-            // handling realescape
-            $address = mysqli_real_escape_string($conn, $address);
-
-            // query for updating user in users table
-            $sql1 = "UPDATE users
+    $firstSqlQuery = "UPDATE users
              SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
                  last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-             WHERE id = {$id_user};";
-            // query for updating student in students table
-            $sql2 = "UPDATE students
+             WHERE id = {$id};";
+    // query for updating student in students table
+    $secondSqlQuery = "UPDATE students
              SET address='{$address}', guardian_mobile_number='{$guardian_mobile_number}'
-             WHERE id_user = {$id_user};";
+             WHERE id_user = {$id};";
 
-            // executing query 1
-            $result1 = mysqli_query($conn, $sql1);
-            check_result($result1, $conn);
+    // mysqli_autocommit($dataBaseConnection, FALSE);
 
-            // executing query 2
-            $result2 = mysqli_query($conn, $sql2);
-            check_result($result2, $conn);
-        }
+    $result1 = mysqli_query($dataBaseConnection, $firstSqlQuery);
+    check_result($result1, $dataBaseConnection, __FUNCTION__);
 
-        // query for updating user in users table
-        $sql1 = "UPDATE users
+    $result2 = mysqli_query($dataBaseConnection, $secondSqlQuery);
+    check_result($result2, $dataBaseConnection, __FUNCTION__);
+
+    // mysqli_commit($dataBaseConnection);
+    $dataBaseConnection->close();
+}
+
+/**
+ * @param int $id
+ */
+function editProfessorProfile($id)
+{
+    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
+
+    $dataBaseConnection = connectToDataBase();
+    $password = encrypt_password($password);
+
+    $mainSqlQuery = "UPDATE users
          SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
              last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-         WHERE id = {$id_user};";
+         WHERE id = {$id};";
 
-        // executing query 1
-        $result1 = mysqli_query($conn, $sql1);
-        check_result($result1, $conn);
-
-        // Commit transaction
-        mysqli_commit($conn);
-        header("Location:./my_profile.php?id={$id_user}&type={$type}&update=success");
-    }
-
-    // Close connection
-    $conn->close();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
 }
+
+
+/**
+ * @param int $id
+ */
+function editTaProfile($id)
+{
+    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
+
+    $dataBaseConnection = connectToDataBase();
+    $password = encrypt_password($password);
+
+    $mainSqlQuery = "UPDATE users
+         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
+             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
+         WHERE id = {$id};";
+
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+}
+
+/**
+ * @param int $id
+ */
+function editSaProfile($id)
+{
+    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
+
+    $dataBaseConnection = connectToDataBase();
+    $password = encrypt_password($password);
+
+    $mainSqlQuery = "UPDATE users
+         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
+             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
+         WHERE id = {$id};";
+
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    check_result($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+}
+
+
+
 
 ########################################################################################################################################
 ########################################################################################################################################

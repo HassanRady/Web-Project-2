@@ -1,5 +1,6 @@
 <?php
-include "includes/functions.php";
+include "includes/callable_functions.php";
+include "includes/variables.php";
 userProfile();
 ?>
 
@@ -32,7 +33,7 @@ userProfile();
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php
-    if ($type === 'student') {
+    if ($type === $studentType) {
       include "includes\std_sidebar.php";
     } else {
       include "includes\prof_sidebar.php";
@@ -93,7 +94,7 @@ userProfile();
                       <p class='text-secondary mb-1'>Level $level</p>";
                   ?>
                   <button class="btn btn-outline-primary btn-md">change photo</button>
-                  <a href="editprofile.php?id=<?php echo $id_user . '&type=' . $type ?>" class="btn btn-outline-primary btn-md">Edit</a>
+                  <a href="editprofile.php" class="btn btn-outline-primary btn-md">Edit</a>
                 </div>
               </div>
             </div>
