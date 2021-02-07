@@ -1,5 +1,7 @@
 <?php
 
+include_once "helper.php";
+
 
 /**
  * @param array $data 
@@ -8,7 +10,7 @@
  * @return void
  * 
  */
-function printStudentsData($data, $type, $pageName)
+function printStudentsData($data, $pageName)
 {
     foreach ($data as $row) {
 
@@ -16,7 +18,7 @@ function printStudentsData($data, $type, $pageName)
         <td>" . $row["student_id"] . "</td> <td>" . $row["arabic_name"] . "</td> 
         <td>" . $row["email"] . "</td> <td>" . $row["level"] . "</td> <td>";
         // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_student.php?id={$row['id_user']}&type={$type}", "Edit");
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_student.php?id={$row['id_user']}", "Edit");
         echo "<td>";
         aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
 
@@ -32,7 +34,7 @@ function printStudentsData($data, $type, $pageName)
  * @return void
  * 
  */
-function printProfessorsData($data, $type, $pageName)
+function printProfessorsData($data, $pageName)
 {
     foreach ($data as $row) {
 
@@ -40,7 +42,7 @@ function printProfessorsData($data, $type, $pageName)
         <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
         <td>" . $row["mobile_number"] . "</td> <td>";
         // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_professor.php?id={$row['id_user']}", "Edit");
         echo "<td>";
         aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
 
@@ -56,7 +58,7 @@ function printProfessorsData($data, $type, $pageName)
  * @return void
  * 
  */
-function printTasData($data, $type, $pageName)
+function printTasData($data, $pageName)
 {
     foreach ($data as $row) {
 
@@ -64,7 +66,7 @@ function printTasData($data, $type, $pageName)
         <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
         <td>" . $row["mobile_number"] . "</td> <td>";
         // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}", "Edit");
         echo "<td>";
         aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
 
@@ -80,7 +82,7 @@ function printTasData($data, $type, $pageName)
  * @return void
  * 
  */
-function printSasData($data, $type, $pageName)
+function printSasData($data, $pageName)
 {
     foreach ($data as $row) {
 
@@ -88,7 +90,7 @@ function printSasData($data, $type, $pageName)
         <td>" . $row["first_name"] . "</td> <td>" . $row["email"] . "</td> 
         <td>" . $row["mobile_number"] . "</td> <td>";
         // a link button element for editing 
-        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}&type={$type}", "Edit");
+        aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_sa.php?id={$row['id_user']}", "Edit");
         echo "<td>";
         aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
 

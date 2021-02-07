@@ -1,18 +1,33 @@
 <?php
+
 // getting connection
-include_once "../db_conn.php";
+include_once dirname(__FILE__, 2) . "\\db_conn.php";
 
 // global variables
-include "../variables.php";
+include_once dirname(__FILE__, 2) . "\\utils\\variables.php";
 
 // helper functions
-include "../helper.php";
+include_once dirname(__FILE__, 2) . "\\utils\\helper.php";
 
 // printing functions
-include "../print_functions.php";
+include_once dirname(__FILE__, 2) . "\\utils\\print_functions.php";
 
 // form data retriever functions
-include "../form_functions.php";
+include_once dirname(__FILE__, 2) . "\\utils\\form_functions.php";
+
+include_once dirname(__FILE__, 2) . "\\utils\\all.php";
+
+
+/**
+ * @param string $pageName
+ */
+function showStudents($pageName)
+{
+    global $studentsType;
+    $type = $studentsType;
+    $data = getStudentsData();
+    printStudentsData($data, $pageName);
+}
 
 
 /**
@@ -36,6 +51,22 @@ function getStudent($id)
 
     $studentData =  $result->fetch_assoc();
     return $studentData;
+}
+
+
+/**
+ * @param array $data
+ */
+function getDataFromStudent($data)
+{
+    global $student_id, $arabic_name, $address, $guardian_mobile_number, $student_type;
+
+    $student_id = $data['student_id'];
+    $arabic_name = $data['arabic_name'];
+
+    $address = $data['address'];
+    $guardian_mobile_number = $data['guardian_mobile_number'];
+    $student_type = $data['student_type'];
 }
 
 
@@ -96,6 +127,9 @@ function addStudent()
     // for users table
     $firstSqlQuery = "INSERT INTO users 
                         VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$studentsType', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
+
+    mysqli_autocommit($dataBaseConnection, FALSE);
+                        
     $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
     check_result($result, $dataBaseConnection, __FUNCTION__);
 
@@ -106,6 +140,48 @@ function addStudent()
                                     VALUES ($last_id, $student_id, '$arabic_name', '$address', '$guardian_mobile_number', '$student_type');";
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
     check_result($result, $dataBaseConnection, __FUNCTION__);
+
+    mysqli_commit($dataBaseConnection);
+    $dataBaseConnection->close();
+}
+
+
+function updateStudentData($id)
+{
+
+    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
+
+    // handling realescape
+    $dataBaseConnection = connectToDataBase();
+    $email = mysqli_real_escape_string($dataBaseConnection, $email);
+    $address = mysqli_real_escape_string($dataBaseConnection, $address);
+
+    $password = encrypt_password($password);
+
+    // query for updating user in users table
+    $firstSqlQuery = "UPDATE users
+    SET first_name='{$first_name}', middle_name='{$middle_name}', password='{$password}',
+        last_name='{$last_name}', national_id={$national_id},
+        email='{$email}', gender='{$gender}', mobile_number='{$mobile_number}', home_number='{$home_number}'
+    WHERE id = {$id};";
+
+    // query for updating student in students table
+    $secondSqlQuery = "UPDATE students
+    SET student_id={$student_id}, arabic_name='{$arabic_name}', 
+        address='{$address}', guardian_mobile_number='{$guardian_mobile_number}',
+        student_type='{$student_type}'
+    WHERE id_user = {$id};";
+
+    mysqli_autocommit($dataBaseConnection, FALSE);
+
+    $result1 = mysqli_query($dataBaseConnection, $firstSqlQuery);
+    check_result($result1, $dataBaseConnection, __FUNCTION__);
+
+    $result2 = mysqli_query($dataBaseConnection, $secondSqlQuery);
+    check_result($result2, $dataBaseConnection, __FUNCTION__);
+
+    mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();
 }
 
@@ -124,4 +200,40 @@ function studentProfile($id)
     $address = $data['address'];
     $level = $data['level'];
     $guardian_mobile_number = $data['guardian_mobile_number'];
+}
+
+
+/**
+ * @param int $id
+ */
+function editStudentProfile($id)
+{
+    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
+    list($_, $_, $address, $guardian_mobile_number, $_) = NewStudentDataForm();
+
+    // handling realescape
+    $dataBaseConnection = connectToDataBase();
+    $address = mysqli_real_escape_string($dataBaseConnection, $address);
+
+    $password = encrypt_password($password);
+
+    $firstSqlQuery = "UPDATE users
+             SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
+                 last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
+             WHERE id = {$id};";
+    // query for updating student in students table
+    $secondSqlQuery = "UPDATE students
+             SET address='{$address}', guardian_mobile_number='{$guardian_mobile_number}'
+             WHERE id_user = {$id};";
+
+    mysqli_autocommit($dataBaseConnection, FALSE);
+
+    $result1 = mysqli_query($dataBaseConnection, $firstSqlQuery);
+    check_result($result1, $dataBaseConnection, __FUNCTION__);
+
+    $result2 = mysqli_query($dataBaseConnection, $secondSqlQuery);
+    check_result($result2, $dataBaseConnection, __FUNCTION__);
+
+    mysqli_commit($dataBaseConnection);
+    $dataBaseConnection->close();
 }

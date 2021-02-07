@@ -1,32 +1,92 @@
 <?php
+include_once "utils/variables.php";
+include_once "all_types/functions.php";
+include_once "students/functions.php";
+include_once "professors/functions.php";
+include_once "tas/functions.php";
+include_once "sas/functions.php";
 
-include "functions.php";
-include "students/functions.php";
 
 
-
-
-function showWichData()
+function updateStudent()
 {
-    global $studentsType, $professorsType, $tasType, $sasType, $adminsType;
-    $pageName = basename($_SERVER['PHP_SELF']);
-    $type = getTypeForData();
+    $id = $_GET['id'];
 
-    switch ($type) {
-        case $studentsType:
-            showStudents($pageName);
-            break;
-        case $professorsType:
-            showProfessors($pageName);
-            break;
-        case $tasType:
-            showTas($pageName);
-            break;
-        case $sasType:
-            showSas($pageName);
-            break;
+    $data = getStudent($id);
+    getCommenDataFromUser($data);
+    getDataFromStudent($data);
+    if (isset($_POST['submit'])) {
+        updateStudentData($id);
+        header("Location:./Students.php?update=success");
     }
 }
+
+
+function updateProfessor()
+{
+    $id = $_GET['id'];
+
+    $data = getProfessor($id);
+    getCommenDataFromUser($data);
+    getDataFromProfessor($data);
+    if (isset($_POST['submit'])) {
+        updateProfessorData($id);
+        header("Location:./Professors.php?update=success");
+    }
+}
+
+
+function updateTa()
+{
+    $id = $_GET['id'];
+
+    $data = getTa($id);
+    getCommenDataFromUser($data);
+    getDataFromTa($data);
+    if (isset($_POST['submit'])) {
+        updateTaData($id);
+        header("Location:./ta_list.php?update=success");
+    }
+}
+
+
+function updateSa()
+{
+    $id = $_GET['id'];
+
+    $data = getSa($id);
+    getCommenDataFromUser($data);
+    getDataFromSa($data);
+    if (isset($_POST['submit'])) {
+        updateSaData($id);
+        header("Location:./sa_list.php?update=success");
+    }
+}
+
+function showProfessorsList()
+{
+    $pageName = basename($_SERVER['PHP_SELF']);
+    showProfessors($pageName);
+}
+
+function showStudentsList()
+{
+    $pageName = basename($_SERVER['PHP_SELF']);
+    showStudents($pageName);
+}
+
+function showTasList()
+{
+    $pageName = basename($_SERVER['PHP_SELF']);
+    showTas($pageName);
+}
+
+function showSasList()
+{
+    $pageName = basename($_SERVER['PHP_SELF']);
+    showSas($pageName);
+}
+
 
 
 function addNewStudent()
@@ -35,7 +95,7 @@ function addNewStudent()
     if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addStudent();
-        header("Location:./{$pageName}?type={$studentsType}&add=success");
+        header("Location:./{$pageName}?add=success");
     }
 }
 
@@ -46,7 +106,7 @@ function addNewProfessor()
     if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addProfessor();
-        header("Location:./{$pageName}?type={$professorsType}&add=success");
+        header("Location:./{$pageName}?add=success");
     }
 }
 
@@ -56,7 +116,7 @@ function addNewTa()
     if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addTa();
-        header("Location:./{$pageName}?type={$tasType}&add=success");
+        header("Location:./{$pageName}?add=success");
     }
 }
 
@@ -66,7 +126,7 @@ function addNewSa()
     if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addSa();
-        header("Location:./{$pageName}?type={$sasType}&add=success");
+        header("Location:./{$pageName}?add=success");
     }
 }
 
@@ -100,7 +160,6 @@ function userProfile()
 
 function updateStudentProfile($id)
 {
-    global $studentsType;
     studentProfile($id);
     if (isset($_POST['submit'])) {
         editStudentProfile($id);
@@ -111,7 +170,6 @@ function updateStudentProfile($id)
 
 function updateProfessorProfile($id)
 {
-    global $professorsType;
     professorProfile($id);
     if (isset($_POST['submit'])) {
         editProfessorProfile($id);
@@ -121,7 +179,6 @@ function updateProfessorProfile($id)
 
 function updateTaProfile($id)
 {
-    global $tasType;
     taProfile($id);
     if (isset($_POST['submit'])) {
         editTaProfile($id);
@@ -131,7 +188,6 @@ function updateTaProfile($id)
 
 function updateSaProfile($id)
 {
-    global $sasType;
     saProfile($id);
     if (isset($_POST['submit'])) {
         editSaProfile($id);

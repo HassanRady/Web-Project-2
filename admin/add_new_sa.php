@@ -1,6 +1,5 @@
 <?php
 include "../includes/callable_functions.php";
-include "../includes/variables.php";
 addNewSa();
 ?>
 
@@ -44,16 +43,16 @@ addNewSa();
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="Students.php?type=<?php echo $studentsType ?>">Students</a>
+                            <a href="Students.php">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.php?type=<?php echo $professorsType ?>">Professors</a>
+                            <a href="Professors.php">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.php?type=<?php echo $tasType ?>">Teaching Assistants</a>
+                            <a href="ta_list.php">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.php?type=<?php echo $sasType ?>">Student Affairs</a>
+                            <a href="sa_list.php">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
@@ -92,16 +91,16 @@ addNewSa();
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="Students.php?type=<?php echo $studentsType ?>">Student</a>
+                                <a class="nav-link" href="Students.php">Student</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="Professors.php?type=<?php echo $professorsType ?>">Professor</a>
+                                <a class="nav-link" href="Professors.php">Professor</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="ta_list.php?type=<?php echo $tasType ?>">Teaching Assistant</a>
+                                <a class="nav-link" href="ta_list.php">Teaching Assistant</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="sa_list.php?type=<?php echo $sasType ?>">Student Affairs</a>
+                                <a class="nav-link" href="sa_list.php">Student Affairs</a>
                             </li>
                         </ul>
                     </div>
@@ -194,6 +193,16 @@ addNewSa();
 
                             </div>
                             <hr class="mb-4">
+                            <div class="row">
+
+                                
+                                <div class="col-lg-12 mb-3">
+                                    <label for="aboutTextArea">About</label>
+                                    <textarea class="form-control" id="aboutTextArea" name="department" style="resize: none; height: 150px;"></textarea>    
+                                  </div>
+
+                            </div>
+
 
                             <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">Add Professor</button>
                         </form>
