@@ -1,7 +1,6 @@
 <?php
 ob_start();
-include "../includes/functions.php";
-
+include "../includes/callable_functions.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,16 +44,16 @@ include "../includes/functions.php";
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="Students.php?type=student">Students</a>
+                            <a href="Students.php">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.php?type=professor">Professors</a>
+                            <a href="Professors.php">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.php?type=ta">Teaching Assistants</a>
+                            <a href="ta_list.php">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.php?type=sa">Student Affairs</a>
+                            <a href="sa_list.php">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
@@ -107,16 +106,16 @@ include "../includes/functions.php";
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="">Student</a>
+                                <a class="nav-link" href="Students.php">Student</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="Professors.php?type=professor">Professor</a>
+                                <a class="nav-link" href="Professors.php">Professor</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="ta_list.php?type=ta">Teaching Assistant</a>
+                                <a class="nav-link" href="ta_list.php">Teaching Assistant</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="sa_list.php?type=sa">Student Affairs</a>
+                                <a class="nav-link" href="sa_list.php">Student Affairs</a>
                             </li>
                         </ul>
                     </div>
@@ -127,7 +126,7 @@ include "../includes/functions.php";
                 <!-- START HERE -->
                 <div class="container-fluid">
                     <div class="row justify-content-end">
-                        <a href="add_new_student.php?type=student" class=" btn btn-primary btn-block w-25">Add New</a>
+                        <a href="add_new_student.php" class=" btn btn-primary btn-block w-25">Add New</a>
                     </div>
                 </div>
                 <hr class="mb-4">
@@ -186,8 +185,8 @@ include "../includes/functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                showData();
-                                delete();
+                                showStudentsList();
+                                deleteUser();
                                 ?>
 
                             </tbody>
@@ -243,8 +242,9 @@ include "../includes/functions.php";
                 <hr class="mb-4">
                 <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <?php
 
+                        <?php
+                            list($per_page, $page_1, $count, $page) = getRowsPerPage("students");
                         for ($i = 1; $i <= $count; $i++) {
                             if ($i == $page) {
                                 echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
@@ -252,11 +252,8 @@ include "../includes/functions.php";
                                 echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
                             }
                         }
-
                         ?>
-                        <!-- <button type="button" class="btn btn-primary"><a class='active_link' href='Students.php?page=1'>1</a></button>
-                        <button type="button" class="btn btn-primary"><a class='active_link' href='Students.php?page=2'>2</a></button>
-                        <button type="button" class="btn btn-primary"><a class='active_link' href='Students.php?page=3'>3</a></button> -->
+                        
                     </div>
 
                 </div>

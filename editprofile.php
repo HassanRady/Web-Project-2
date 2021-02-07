@@ -1,6 +1,6 @@
 <?php
-include "includes/functions.php";
-editProfile();
+include "includes/callable_functions.php";
+updateProfile();
 ?>
 
 <!DOCTYPE html>
@@ -148,7 +148,7 @@ editProfile();
 
 
               <?php
-              if ($type === 'student')
+              if ($type === 'students')
                 echo "
                     <hr class='mb-4'>
                     <div class='row'>
@@ -171,7 +171,7 @@ editProfile();
                 </div>
 
                 <?php
-                if ($type == 'student')
+                if ($type == 'students')
                   echo "
                         <div class='col-lg-4 col-md-6 col-sm-12 mb-3'>
                             <label for='gender'>Guardian Mobile Number</label>
@@ -192,7 +192,7 @@ editProfile();
 
               <hr class="mb-4">
 
-              <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">save changes</button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">save changes</button>
             </form>
             <br>
           </div>

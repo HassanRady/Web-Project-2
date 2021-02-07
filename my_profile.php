@@ -1,5 +1,7 @@
 <?php
-include "includes/functions.php";
+// die(dirname(__DIR__));
+include "includes/callable_functions.php";
+include "includes/utils/variables.php";
 userProfile();
 ?>
 
@@ -32,7 +34,7 @@ userProfile();
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php
-    if ($type === 'student') {
+    if ($type === $studentsType) {
       include "includes\std_sidebar.php";
     } else {
       include "includes\prof_sidebar.php";
@@ -88,12 +90,12 @@ userProfile();
                   <h4><?php echo $full_name; ?></h4>
 
                   <?php
-                  if ($type === 'student')
+                  if ($type === $studentsType)
                     echo "
                       <p class='text-secondary mb-1'>Level $level</p>";
                   ?>
                   <button class="btn btn-outline-primary btn-md">change photo</button>
-                  <a href="editprofile.php?id=<?php echo $id_user . '&type=' . $type ?>" class="btn btn-outline-primary btn-md">Edit</a>
+                  <a href="editprofile.php" class="btn btn-outline-primary btn-md">Edit</a>
                 </div>
               </div>
             </div>
@@ -133,7 +135,7 @@ userProfile();
               </div>
 
               <?php
-              if ($type === 'student')
+              if ($type === $studentsType)
                 echo "
               <hr class='mb-4'>
               <div class='row align-items-center'>
@@ -157,7 +159,7 @@ userProfile();
               </div>
 
               <?php
-              if ($type === 'student')
+              if ($type === $studentsType)
                 echo "
               <hr class='mb-4'>
               <div class='row align-items-center'>

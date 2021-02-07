@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2020 at 08:01 AM
+-- Generation Time: Dec 30, 2020 at 01:49 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -85,9 +85,10 @@ CREATE TABLE `courses` (
   `name` varchar(255) NOT NULL,
   `credits` int(11) NOT NULL,
   `has_preq` tinyint(1) DEFAULT NULL,
-  `is_preq` tinyint(1) DEFAULT NULL,
   `has_labs` tinyint(1) DEFAULT NULL,
-  `has_practical` tinyint(1) DEFAULT NULL
+  `has_practical` tinyint(1) DEFAULT NULL,
+  `category` varchar(20) NOT NULL DEFAULT 'university',
+  `elective` varchar(5) NOT NULL DEFAULT 'no'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -113,13 +114,13 @@ CREATE TABLE `course_semester_students` (
   `id_student` int(12) NOT NULL,
   `id_course` int(12) NOT NULL,
   `id_semester` int(12) NOT NULL,
-  `grade` float DEFAULT NULL,
-  `gpa` float DEFAULT NULL,
-  `oral` float DEFAULT NULL,
-  `midterm` float DEFAULT NULL,
-  `course_work` varchar(255) DEFAULT NULL,
-  `practical` float DEFAULT NULL,
-  `final` float DEFAULT NULL
+  `grade` varchar(1) DEFAULT NULL,
+  `gpa` float DEFAULT 0,
+  `oral` float DEFAULT 0,
+  `midterm` float DEFAULT 0,
+  `course_work` float DEFAULT 0,
+  `practical` float DEFAULT 0,
+  `final` float DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -155,7 +156,9 @@ CREATE TABLE `materials` (
   `material_id` int(12) NOT NULL,
   `id_course` int(12) NOT NULL,
   `id_user` int(12) NOT NULL,
-  `title` varchar(255) DEFAULT NULL
+  `title` varchar(255) DEFAULT NULL,
+  `material_ref` varchar(255) NOT NULL,
+  `semester_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -165,10 +168,20 @@ CREATE TABLE `materials` (
 --
 
 CREATE TABLE `open_courses` (
-  `id_course` int(12) NOT NULL,
-  `id_instructor` int(12) NOT NULL,
-  `instrutcor_type` varchar(255) NOT NULL,
-  `level` int(11) DEFAULT NULL
+  `level` int(1) DEFAULT 1,
+  `student_count` int(11) NOT NULL DEFAULT 0,
+  `course_id` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `open_courses_instructors`
+--
+
+CREATE TABLE `open_courses_instructors` (
+  `instructor_id` int(11) NOT NULL,
+  `course_id` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -200,9 +213,8 @@ CREATE TABLE `posts` (
   `post_image` text NOT NULL,
   `post_content` text NOT NULL,
   `post_tags` varchar(255) NOT NULL,
-  `post_comment_count` varchar(255) NOT NULL,
-  `post_status` varchar(255) NOT NULL DEFAULT 'draft',
-  `post_views_count` int(11) NOT NULL
+  `post_views_count` int(11) NOT NULL,
+  `votes` int(5) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -318,6 +330,18 @@ CREATE TABLE `venues` (
   `venue_location` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `votes`
+--
+
+CREATE TABLE `votes` (
+  `id_user` int(12) NOT NULL,
+  `id_post` int(12) NOT NULL,
+  `vote_value` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -386,14 +410,21 @@ ALTER TABLE `instructors`
 ALTER TABLE `materials`
   ADD PRIMARY KEY (`material_id`,`id_course`,`id_user`),
   ADD UNIQUE KEY `course_id` (`id_course`),
+  ADD KEY `id_semester_materials_fk` (`semester_id`),
   ADD KEY `id_user_materials_fk` (`id_user`);
 
 --
 -- Indexes for table `open_courses`
 --
 ALTER TABLE `open_courses`
-  ADD PRIMARY KEY (`id_course`,`id_instructor`),
-  ADD KEY `id_instructor_open_fk` (`id_instructor`);
+  ADD PRIMARY KEY (`course_id`);
+
+--
+-- Indexes for table `open_courses_instructors`
+--
+ALTER TABLE `open_courses_instructors`
+  ADD KEY `oci_instructor_fk` (`instructor_id`),
+  ADD KEY `oci_course_fk` (`course_id`);
 
 --
 -- Indexes for table `poll_options`
@@ -467,6 +498,13 @@ ALTER TABLE `users`
 ALTER TABLE `venues`
   ADD PRIMARY KEY (`venue_id`),
   ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `votes`
+--
+ALTER TABLE `votes`
+  ADD KEY `id_post_votes_fk` (`id_post`),
+  ADD KEY `id_user_votes_fk` (`id_user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -571,15 +609,16 @@ ALTER TABLE `instructors`
 -- Constraints for table `materials`
 --
 ALTER TABLE `materials`
-  ADD CONSTRAINT `id_course_materials_fk` FOREIGN KEY (`id_course`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_user_materials_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `id_course_materials_fk` FOREIGN KEY (`id_course`) REFERENCES `courses` (`course_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_semester_materials_fk` FOREIGN KEY (`semester_id`) REFERENCES `semesters` (`semester_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_user_materials_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Constraints for table `open_courses`
+-- Constraints for table `open_courses_instructors`
 --
-ALTER TABLE `open_courses`
-  ADD CONSTRAINT `id_course_open_fk` FOREIGN KEY (`id_course`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_instructor_open_fk` FOREIGN KEY (`id_instructor`) REFERENCES `instructors` (`instructor_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `open_courses_instructors`
+  ADD CONSTRAINT `oci_course_fk` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `oci_instructor_fk` FOREIGN KEY (`instructor_id`) REFERENCES `instructors` (`instructor_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `poll_options`
@@ -627,6 +666,13 @@ ALTER TABLE `student_assignments`
 ALTER TABLE `tas`
   ADD CONSTRAINT `id_instructors_tas_fk` FOREIGN KEY (`id_instructor`) REFERENCES `instructors` (`instructor_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `id_user_tas_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `votes`
+--
+ALTER TABLE `votes`
+  ADD CONSTRAINT `id_post_votes_fk` FOREIGN KEY (`id_post`) REFERENCES `posts` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `id_user_votes_fk` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
