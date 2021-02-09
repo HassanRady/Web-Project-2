@@ -1,6 +1,6 @@
 <?php
-include "../includes/functions.php";
-update();
+include "../includes/callable_functions.php";
+updateSa();
 ?>
 
 <!DOCTYPE html>
@@ -177,8 +177,18 @@ update();
 
                             </div>
                             <hr class="mb-4">
+                            <div class="row">
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">Update</button>
+                                
+                                <div class="col-lg-12 mb-3">
+                                    <label for="aboutTextArea">About</label>
+                                    <textarea class="form-control" id="aboutTextArea" name="department" style="resize: none; height: 150px;"><?php echo $department ?></textarea>    
+                                  </div>
+
+                            </div>
+
+
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">Update</button>
                         </form>
                         <br>
                     </div>
