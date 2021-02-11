@@ -1,7 +1,7 @@
 <?php
 ob_start();
 include "../includes/callable_functions.php";
-
+professorSearchEngine();
 ?>
 <!DOCTYPE html>
 <html>
@@ -134,23 +134,23 @@ include "../includes/callable_functions.php";
 
                 <div class="container-fluid table-container">
                     <!-- Search form -->
-                    <form>
+                    <form action="" method="POST">
                         <div class="row ">
                             <div class="col-md mt-4">
                                 <label for="student-name">Professor Name</label>
-                                <input type="text" class="form-control" placeholder="Professor Name" id="student-name" name="student-name">
+                                <input type="text" class="form-control" placeholder="Professor Name" id="professor-name" name="professor-name" value="<?php echo $professor_name ?>">
                             </div>
                             <div class="col-md mt-4">
                                 <label for="student-id">Professor Email</label>
-                                <input type="text" class="form-control" placeholder="Professor ID" id="student-id" name="student-id">
+                                <input type="text" class="form-control" placeholder="Professor Email" id="professor-email" name="professor-email" value="<?php echo $professor_email ?>">
                             </div>
                             <div class="col-md mt-4">
                                 <label for="student-email">Phone Number</label>
-                                <input type="text" class="form-control" placeholder="Professor Phone Number" id="student-email" name="student-email">
+                                <input type="text" class="form-control" placeholder="Professor Phone Number" id="professor-phone" name="professor-phone" value="<?php echo $professor_phone ?>">
                             </div>
                         </div>
                         <div class="row justify-content-center ">
-                            <button class="btn btn-primary w-50 btn-block right-btn search-btn">Search</button>
+                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="submit">Search</button>
                         </div>
 
                     </form>
@@ -175,7 +175,7 @@ include "../includes/callable_functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                showProfessorsList();
+                                searchProfessor();
                                 deleteUser();
                                 ?>
 

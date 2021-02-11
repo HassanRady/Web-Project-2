@@ -1,34 +1,35 @@
-
-#card-container{
-	margin: 0;
-	padding: 0;
-}
-.row{
-	color: rgba(31,108,236); 
+#card-container {
+    margin: 0;
+    padding: 0;
 }
 
-.info{
-    
-    background-color: rgba(31,108,236,0.03);
-}
-.card{
-	background-color: rgba(31,108,236,0.03);
-	/* text-align: center; */
+.row {
+    color: rgba(31, 108, 236);
 }
 
-.card h6{
-	padding-left: 50%;
+.info {
+    background-color: rgba(31, 108, 236, 0.03);
 }
 
-.card button, .card a{
-	margin-top: 10px;
+.card {
+    background-color: rgba(31, 108, 236, 0.03);
+    /* text-align: center; */
 }
 
-@media (max-width: 767.98px) { 
-	.card{
-		text-align: center;
-	}
-	.card h6{
-		padding-left: 0;
-	}
- }
+.card h6 {
+    padding-left: 50%;
+}
+
+.card button,
+.card a {
+    margin-top: 10px;
+}
+
+@media (max-width: 767.98px) {
+    .card {
+        text-align: center;
+    }
+    .card h6 {
+        padding-left: 0;
+    }
+}

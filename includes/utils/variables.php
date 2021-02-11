@@ -13,4 +13,4 @@ $sasType = "sas";
 $adminsType = "admins";
 $userTypes = array($studentsType, $professorsType, $tasType, $sasType, $adminsType);
 
-$rowsPerPage = 2;
+$rowsPerPage = 3;

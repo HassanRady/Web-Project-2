@@ -3,6 +3,7 @@
 include "includes/callable_functions.php";
 include "includes/utils/variables.php";
 userProfile();
+// die($image_path);
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +86,7 @@ userProfile();
           <div class="card col-md-6 col-sm-12 ">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <img src="profile.png" alt="Admin" class="rounded-circle" width="150">
+                <img src="<?php echo $image_path ?>" alt="profile-pic" class="rounded-circle" width="150">
                 <div class="mt-3">
                   <h4><?php echo $full_name; ?></h4>
 
@@ -94,7 +95,15 @@ userProfile();
                     echo "
                       <p class='text-secondary mb-1'>Level $level</p>";
                   ?>
-                  <button class="btn btn-outline-primary btn-md">change photo</button>
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                  <div class="file-input" id="f">
+                    <input type="file" id="file" class="file" name="image">
+                    <button type="submit" class="" name="submit">submit</button>
+                  </div>
+                </form>
+                
+
                   <a href="editprofile.php" class="btn btn-outline-primary btn-md">Edit</a>
                 </div>
               </div>
@@ -182,11 +191,7 @@ userProfile();
 
 
 
-
-
-
-
-      <!-- STOP HERE -->
+     <!-- STOP HERE -->
     </div>
 
 
