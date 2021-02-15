@@ -35,3 +35,7 @@ function check_result($result, $conn, $source=null)
         return;
     }
 }
+
+function displayError($result) {
+
+}

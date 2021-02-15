@@ -1,6 +1,6 @@
 <?php
-include "includes/functions.php";
-editProfile();
+include "includes/callable_functions.php";
+updateProfile();
 ?>
 
 <!DOCTYPE html>
@@ -134,12 +134,12 @@ editProfile();
               <div class="row">
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="password">Password</label>
-                  <input type="text" class="form-control" id="password" placeholder="" value="" required>
+                  <input type="text" class="form-control" id="password" name="password" value="" required>
 
                 </div>
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="Re-enter Password">Re-enter Password </label>
-                  <input type="text" class="form-control" id="Re-enter" placeholder="" value="" required>
+                  <input type="text" class="form-control" id="Re-enter" name="repassword" value="" required>
 
                 </div>
 
@@ -148,7 +148,7 @@ editProfile();
 
 
               <?php
-              if ($type === 'student')
+              if ($type === 'students')
                 echo "
                     <hr class='mb-4'>
                     <div class='row'>
@@ -171,7 +171,7 @@ editProfile();
                 </div>
 
                 <?php
-                if ($type == 'student')
+                if ($type == 'students')
                   echo "
                         <div class='col-lg-4 col-md-6 col-sm-12 mb-3'>
                             <label for='gender'>Guardian Mobile Number</label>
@@ -192,7 +192,7 @@ editProfile();
 
               <hr class="mb-4">
 
-              <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">save changes</button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">save changes</button>
             </form>
             <br>
           </div>

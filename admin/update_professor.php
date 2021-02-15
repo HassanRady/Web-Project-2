@@ -1,6 +1,6 @@
 <?php
-include "../includes/functions.php";
-update();
+include "../includes/callable_functions.php";
+updateProfessor();
 ?>
 
 <!DOCTYPE html>
@@ -203,7 +203,7 @@ update();
                               </div>
                             <!-- <hr class="mb-4"> -->
                             <br>
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">Update</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">Update</button>
                         </form>
                         <br>
                     </div>
