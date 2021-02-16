@@ -108,7 +108,7 @@ function addProfessor()
 
     // for users table
     $firstSqlQuery = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$professorsType', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$professorsType', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
     
     mysqli_autocommit($dataBaseConnection, FALSE);
 

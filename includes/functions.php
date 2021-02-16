@@ -3,11 +3,6 @@
 include_once "db_conn.php";
 
 
-// helper functions
-include_once "helper.php";
-
-
-
 /******************************** Global variables **********************************/
 // $semester = getCurrentSemester();
 /******************************** Global variables **********************************/
@@ -48,7 +43,7 @@ function login()
         $_SESSION['type'] = $type;
         switch ($type) {
             case "student":
-                header("Location: /alpha/student/announcements.html");
+                header("Location: student/announcements.php");
                 break;
             case "sa":
                 header("Location: /alpha/academic/discussion.html");

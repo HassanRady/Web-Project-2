@@ -113,7 +113,7 @@ function changeImage($id) {
 
         $image = $_FILES['image']['name'];
         $imageTmp = $_FILES['image']['tmp_name'];
-        $image_dir = "profile images/$image";
+        $image_dir = "profile_images/$image";
         move_uploaded_file($imageTmp, $image_dir);
 
         $dataBaseConnection = connectToDataBase();

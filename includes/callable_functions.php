@@ -211,7 +211,7 @@ function userProfile()
     // $id = $_SESSION['id'];
     // $type = $_SESSION['type'];
 
-    $id = 1;
+    $id = 32;
     $type = $studentsType;
 
     changeImage($id);
