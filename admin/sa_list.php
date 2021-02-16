@@ -1,6 +1,7 @@
 <?php
 ob_start();
 include "../includes/callable_functions.php";
+saSearchEngine();
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,7 +44,7 @@ include "../includes/callable_functions.php";
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
+                        <li>
                             <a href="Students.php">Students</a>
                         </li>
                         <li>
@@ -105,7 +106,7 @@ include "../includes/callable_functions.php";
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
-                        <li class="nav-item ">
+                            <li class="nav-item ">
                                 <a class="nav-link" href="Students.php">Student</a>
                             </li>
                             <li class="nav-item ">
@@ -132,6 +133,32 @@ include "../includes/callable_functions.php";
                 </div>
                 <hr class="mb-4">
 
+                <div class="container-fluid table-container">
+                    <!-- Search form -->
+                    <form action="" method="POST">
+                        <div class="row ">
+                            <div class="col-md mt-4">
+                                <label for="student-name">SA Name</label>
+                                <input type="text" class="form-control" placeholder="SA Name" id="sa-name" name="sa-name" value="<?php echo $sa_name ?>">
+                            </div>
+                            <div class="col-md mt-4">
+                                <label for="student-id">SA Email</label>
+                                <input type="text" class="form-control" placeholder="SA Email" id="sa-email" name="sa-email" value="<?php echo $sa_email ?>">
+                            </div>
+                            <div class="col-md mt-4">
+                                <label for="student-email">Phone Number</label>
+                                <input type="text" class="form-control" placeholder="SA Phone Number" id="sa-phone" name="sa-phone" value="<?php echo $sa_phone ?>">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center ">
+                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="submit">Search</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <br>
+
                 <h3 class="font-weight-bold" style=" color:rgb(31,108,236);">
                     Student Affairs Employees List
                 </h3>
@@ -149,7 +176,7 @@ include "../includes/callable_functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                showSasList();
+                                searchSa();
                                 deleteUser();
                                 ?>
 
@@ -209,7 +236,7 @@ include "../includes/callable_functions.php";
                     <div class="btn-group mr-2" role="group" aria-label="First group">
 
                         <?php
-                        list($per_page, $page_1, $count, $page) = getRowsPerPage("sas");   
+                        list($per_page, $page_1, $count, $page) = getRowsPerPage("sas");
 
                         for ($i = 1; $i <= $count; $i++) {
                             if ($i == $page) {

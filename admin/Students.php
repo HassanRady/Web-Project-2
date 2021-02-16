@@ -1,6 +1,7 @@
 <?php
 ob_start();
 include "../includes/callable_functions.php";
+studentSearchEngine();
 ?>
 <!DOCTYPE html>
 <html>
@@ -141,15 +142,15 @@ include "../includes/callable_functions.php";
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-id">Student ID</label>
-                                <input type="text" class="form-control" placeholder="Student ID" id="student-id" name="student-id">
+                                <input type="text" class="form-control" placeholder="Student ID" id="student-id" name="student-id" value="<?php echo $student_id ?>">
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-email">Student University Email</label>
-                                <input type="text" class="form-control" placeholder="Student University Email" id="student-email" name="student-email">
+                                <input type="text" class="form-control" placeholder="Student University Email" id="student-email" name="student-email" value="<?php echo $student_email ?>">
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-level">Student Level</label>
-                                <select class="form-control" name="student-level" id="student-level">
+                                <select class="form-control" name="student-level" id="student-level" selected="<?php echo $student_level ?>">
                                     <option>Level 1</option>
                                     <option>Level 2</option>
                                     <option>Level 3</option>
@@ -159,7 +160,7 @@ include "../includes/callable_functions.php";
                             </div>
                         </div>
                         <div class="row justify-content-center ">
-                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="search">Search</button>
+                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="submit">Search</button>
                         </div>
 
                     </form>
@@ -185,7 +186,8 @@ include "../includes/callable_functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                showStudentsList();
+                                // showStudentsList();
+                                searchStudent();
                                 deleteUser();
                                 ?>
 
@@ -194,8 +196,7 @@ include "../includes/callable_functions.php";
                         </table>
                     </div>
                 </div>
-                <!-- <td><button class="btn btn-outline-primary right-btn" data-toggle="modal"
-                                            data-target="#edit-info-modal">View</button></td> -->
+                
 
 
                 <div class="modal fade" id="edit-info-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -244,13 +245,10 @@ include "../includes/callable_functions.php";
                     <div class="btn-group mr-2" role="group" aria-label="First group">
 
                         <?php
-                            list($per_page, $page_1, $count, $page) = getRowsPerPage("students");
-                        for ($i = 1; $i <= $count; $i++) {
-                            if ($i == $page) {
+                        for ($i = 1; $i <= $countRows; $i++) {
+                            
                                 echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
-                            } else {
-                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
-                            }
+                            
                         }
                         ?>
                         

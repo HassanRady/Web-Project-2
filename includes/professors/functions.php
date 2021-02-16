@@ -45,7 +45,7 @@ function getProfessor($id)
 
     $dataBaseConnection = connectToDataBase();
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 
     $professorsData =  $result->fetch_assoc();
@@ -79,7 +79,7 @@ function getProfessorsData()
 
     $dataBaseConnection = connectToDataBase();
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 
     $professorsData = array();
@@ -113,17 +113,17 @@ function addProfessor()
     mysqli_autocommit($dataBaseConnection, FALSE);
 
     $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $last_id = mysqli_insert_id($dataBaseConnection);
 
     $secondSqlQuery = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $thirdSqlQuery = "INSERT INTO professors VALUES ($last_id, $instructor_id, '$description');";
     $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();
@@ -159,13 +159,13 @@ function updateProfessorData($id)
     mysqli_autocommit($dataBaseConnection, FALSE);
 
     $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();
@@ -198,6 +198,6 @@ function editProfessorProfile($id)
          WHERE id = {$id};";
 
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 }

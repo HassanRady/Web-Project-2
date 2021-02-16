@@ -45,7 +45,7 @@ function getSa($id)
 
     $dataBaseConnection = connectToDataBase();
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 
     $saData =  $result->fetch_assoc();
@@ -80,7 +80,7 @@ function getSasData()
 
     $dataBaseConnection = connectToDataBase();
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 
     $sasData = array();
@@ -111,7 +111,7 @@ function getAdminsData()
 
     $dataBaseConnection = connectToDataBase();
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 
     $adminsData = array();
@@ -145,17 +145,17 @@ function addsa()
     mysqli_autocommit($dataBaseConnection, FALSE);
 
     $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $last_id = mysqli_insert_id($dataBaseConnection);
 
     $secondSqlQuery = "INSERT INTO instructors VALUES ($last_id, $instructor_id);";
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $thirdSqlQuery = "INSERT INTO sas VALUES ($last_id, '$department');";
     $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();
@@ -191,13 +191,13 @@ function updateSaData($id)
     mysqli_autocommit($dataBaseConnection, FALSE);
 
     $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();
@@ -230,6 +230,6 @@ function editSaProfile($id)
          WHERE id = {$id};";
 
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 }
