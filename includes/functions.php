@@ -1050,21 +1050,6 @@ function deleteMaterial($material_id)
 }
 
 
-function getCoursePrerequisite($courseId)
-{
-    global $conn;
-    $prerequisite = "-";
-    $preq_query = "SELECT name from prerequisites p
-    INNER JOIN courses c on p.prerequisite_id = c.course_id
-    WHERE p.id_course = $courseId";
-    $preq_query_result = mysqli_query($conn, $preq_query);
-    $data = mysqli_fetch_assoc($preq_query_result);
-    if (mysqli_num_rows($preq_query_result)) {
-        $prerequisite = $data['name'];
-    }
-    return $prerequisite;
-}
-
 function getOpenCourses()
 {
     global $conn;
@@ -1154,118 +1139,6 @@ function getOpenCourses()
     }
 }
 
-function getAvailableUniCourses()
-{
-    global $conn;
-    $query = "SELECT * FROM courses WHERE category='university'";
-    $query_result = mysqli_query($conn, $query);
-    checkQuery($query_result);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $cname = $row['name'];
-        $id = $row['course_id'];
-        $credits = $row['credits'];
-        $type = $row['elective'] == "yes" ? "Elective" : "Mandatory";
-        $has_preq = $row['has_preq'];
-        $prerequisite = getCoursePrerequisite($id);
-
-        echo "
-    <tr>
-      <td>$id</td>
-      <td>$cname</td>
-      <td>$credits</td>
-      <td>$type</td>
-      <td>$prerequisite</td>
-      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
-      <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
-    </tr>
-    ";
-    }
-}
-
-function getAvailableFacultyCourses()
-{
-    global $conn;
-    $query = "SELECT * FROM courses WHERE category='faculty'";
-    $query_result = mysqli_query($conn, $query);
-    checkQuery($query_result);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $cname = $row['name'];
-        $id = $row['course_id'];
-        $credits = $row['credits'];
-        $type = $row['elective'] == "yes" ? "Elective" : "Mandatory";
-        $has_preq = $row['has_preq'];
-        $prerequisite = getCoursePrerequisite($id);
-
-        echo "
-    <tr>
-      <td>$id</td>
-      <td>$cname</td>
-      <td>$credits</td>
-      <td>$type</td>
-      <td>$prerequisite</td>
-      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
-      <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
-    </tr>
-    ";
-    }
-}
-
-function getAvailableSIMCourses()
-{
-    global $conn;
-    $query = "SELECT * FROM courses WHERE category='sim'";
-    $query_result = mysqli_query($conn, $query);
-    checkQuery($query_result);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $cname = $row['name'];
-        $id = $row['course_id'];
-        $credits = $row['credits'];
-        $type = $row['elective'] == "yes" ? "Elective" : "Mandatory";
-        $has_preq = $row['has_preq'];
-        $prerequisite = getCoursePrerequisite($id);
-
-        echo "
-    <tr>
-      <td>$id</td>
-      <td>$cname</td>
-      <td>$credits</td>
-      <td>$type</td>
-      <td>$prerequisite</td>
-      <td><a data-courseId='$id' class='btn btn-primary' data-toggle='modal' data-target='#modalContactForm'>Open</a></td>
-      <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
-    </tr>
-    ";
-    }
-}
-
-
-function getAvailableFreeCourses()
-{
-    global $conn;
-    $query = "SELECT * FROM courses WHERE category='free'";
-    $query_result = mysqli_query($conn, $query);
-    checkQuery($query_result);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $cname = $row['name'];
-        $credits = $row['credits'];
-        $id = $row['course_id'];
-
-
-
-        echo "
-    <tr>
-      <td>$cname</td>
-      <td>$credits</td>
-      <td><button type='submit' name='openFree' class='btn btn-primary'>Confirm</button></td>
-      <td><a href='edit_course.php?course_id=$id' class='btn btn-outline-secondary'>Options</a></td>
-    </tr>
-    ";
-    }
-}
 
 function getCoursesAsOptionsEditable($prerequisite)
 {
@@ -1340,9 +1213,7 @@ function updateCourse($old, $id, $name, $credits, $category, $type, $prerequisit
     $course_practicalCheckbox = $practicalCheckbox == '1' ? 1 : 0;
     $course_sectionsCheckbox = $sectionsCheckbox == '1' ? 1 : 0;
     $course_has_prereq = $prerequisite == "" ? 0 : 1;
-    $query = "UPDATE courses SET course_id = $course_id, credits= $course_credits, has_preq = $course_has_prereq,
-  has_labs = $course_sectionsCheckbox, has_practical = $course_practicalCheckbox,
-  name = '$course_name', category = '$course_category', elective = '$course_type'
+    $query = "UPDATE courses SET course_id = $course_id, credits= $course_credits, has_preq = $course_has_prereq, has_labs = $course_sectionsCheckbox, has_practical = $course_practicalCheckbox, name = '$course_name', category = '$course_category', elective = '$course_type'
    WHERE course_id = $old";
     $query_result = mysqli_query($conn, $query);
     checkQuery($query_result);
@@ -1362,17 +1233,7 @@ function deleteCourse($courseId)
 }
 
 
-function checkIfCourseIsOpen($courseId)
-{
-    global $conn;
-    $query = "SELECT EXISTS (SELECT * FROM open_courses WHERE course_id = $courseId)";
-    $query_result = mysqli_query($conn, $query);
-    checkQuery($query_result);
-    if (mysqli_num_rows($query_result) == 1) {
-        return true;
-    }
-    return false;
-}
+
 
 function getCourseInfo($courseId)
 {
@@ -1395,35 +1256,12 @@ function getProfessorList()
     $query_result = mysqli_query($conn, $query);
     checkQuery($query_result);
 
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $id = $row['instructor_id'];
-        $fname = $row['first_name'];
-        $mname = $row['middle_name'];
-        $lname = $row['last_name'];
-        echo "
-      <option value='$id'>$fname $mname $lname</option>
-    ";
-    }
+    return $query_result;
+    
 }
 
 
-function openCourse($courseId, $professorId)
-{
-    global $conn;
-    $query = "INSERT INTO ";
-    $query_result = mysqli_query($conn, $query);
-    checkQuery($query_result);
 
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $id = $row['instructor_id'];
-        $fname = $row['first_name'];
-        $mname = $row['middle_name'];
-        $lname = $row['last_name'];
-        echo "
-      <option value='$id'>$fname $mname $lname</option>
-    ";
-    }
-}
 
 
 function showAllCourses()

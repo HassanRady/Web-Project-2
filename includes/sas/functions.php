@@ -142,7 +142,7 @@ function addsa()
     $firstSqlQuery = "INSERT INTO users 
                         VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$sasType', '$email', '$password', '$gender', '$mobile_number', '$home_number');";
 
-    mysqli_autocommit($dataBaseConnection, FALSE);
+    mysqli_autocommit($dataBaseConnection, false);
 
     $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
     check_result($result, $dataBaseConnection, __FUNCTION__);
@@ -188,7 +188,7 @@ function updateSaData($id)
     SET department='{$department}'
     WHERE id_user = {$id};";
 
-    mysqli_autocommit($dataBaseConnection, FALSE);
+    mysqli_autocommit($dataBaseConnection, false);
 
     $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
     check_result($result, $dataBaseConnection, __FUNCTION__);
@@ -232,4 +232,77 @@ function editSaProfile($id)
     $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
     check_result($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
+}
+
+/*
+* @param string $category : The category of the courses we would like
+* returns a query_result containing (course_id, name, credits, has_preq, has_labs, has_practical, category, elective)
+*/
+function getAvailableCourses($category)
+{
+    global $conn;
+    $query = "SELECT * FROM courses WHERE category='{$category}'";
+    $query_result = mysqli_query($conn, $query);
+    checkQuery($query_result);
+    return $query_result;
+}
+
+/*
+* @param string $courseId : The ID of the course to check
+* returns ID of the prereq. course if one exists in prerequisites, null otherwise.
+*/
+function getCoursePrerequisite($courseId)
+{
+    global $conn;
+    $prerequisite = "-";
+    $preq_query = "SELECT name from prerequisites p
+    INNER JOIN courses c on p.prerequisite_id = c.course_id
+    WHERE p.id_course = $courseId";
+    $preq_query_result = mysqli_query($conn, $preq_query);
+    $data = mysqli_fetch_assoc($preq_query_result);
+    if (mysqli_num_rows($preq_query_result)) {
+        $prerequisite = $data['name'];
+    }
+    return $prerequisite;
+}
+
+
+/*
+* @param string $courseId : The ID of the course to check
+* returns True if the course exists in open_courses, False otherwise.
+*/
+function checkIfCourseIsOpen($courseId)
+{
+    global $conn;
+    $query = "SELECT EXISTS (SELECT * FROM open_courses WHERE course_id = $courseId)";
+    $query_result = mysqli_query($conn, $query);
+    checkQuery($query_result);
+    if (mysqli_num_rows($query_result) == 1) {
+        return true;
+    }
+    return false;
+}
+
+/*
+* @param string $courseId : The ID of the course to be opened
+* @param string $professorId : The ID of the professor that will teach this course
+* @param string $level : The level for which this course will be opened
+* returns nothing
+*/
+function openCourse($courseId, $professorId, $level)
+{
+    global $conn;
+
+    if(checkIfCourseIsOpen($courseId)){
+        // open_courses table
+        $open_course_query = "INSERT INTO open_courses(level, student_count, course_id) VALUES ('$level', '0', '$courseId');";
+        $open_course_query_result = mysqli_query($conn, $open_course_query);
+        checkQuery($open_course_query_result);
+        
+        // open_courses_instructors table 
+        $instructor_query = "INSERT INTO open_courses_instructors(instructor_id, course_id) VALUES ('$professorId', '$courseId');";
+        $instructor_query_result = mysqli_query($conn, $instructor_query);
+        checkQuery($instructor_query_result);
+    }
+
 }
