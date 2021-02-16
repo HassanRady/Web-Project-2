@@ -24,7 +24,7 @@ function deleteUser()
         $mainSqlQuery = "DELETE FROM users WHERE id = {$id_user};";
         $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
 
-        check_result($result, $dataBaseConnection, __FUNCTION__);
+        checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
         $dataBaseConnection->close();
 
         header("Location:./{$pageName}");

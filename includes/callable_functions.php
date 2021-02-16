@@ -2,9 +2,82 @@
 include_once "utils/variables.php";
 include_once "all_types/functions.php";
 include_once "students/functions.php";
+include_once "students/search.php";
 include_once "professors/functions.php";
+include_once "professors/search.php";
 include_once "tas/functions.php";
+include_once "tas/search.php";
 include_once "sas/functions.php";
+include_once "sas/search.php";
+
+
+
+function searchStudent()
+{
+
+    if (isset($_POST['submit'])) {
+        $d = searchForStudent();
+        showStudentSearch($d);
+    } else {
+        showStudentsList();
+    }
+}
+function studentSearchEngine()
+{
+    searchForStudent();
+}
+
+
+
+
+function searchProfessor()
+{
+
+    if (isset($_POST['submit'])) {
+        $d = searchForProfessor();
+        showProfessorSearch($d);
+    } else {
+        showProfessorsList();
+    }
+}
+function professorSearchEngine()
+{
+    searchForProfessor();
+}
+
+
+
+function searchTa()
+{
+
+    if (isset($_POST['submit'])) {
+        $d = searchForTa();
+        showTaSearch($d);
+    } else {
+        showTasList();
+    }
+}
+function taSearchEngine()
+{
+    searchForTa();
+}
+
+
+
+function searchSa()
+{
+
+    if (isset($_POST['submit'])) {
+        $d = searchForSa();
+        showSaSearch($d);
+    } else {
+        showSasList();
+    }
+}
+function saSearchEngine()
+{
+    searchForSa();
+}
 
 
 
@@ -122,13 +195,13 @@ function addNewTa()
 
 function addNewSa()
 {
-    global $sasType;
-    if (isset($_POST['submit'])) {
+        if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addSa();
         header("Location:./{$pageName}?add=success");
     }
 }
+
 
 
 function userProfile()
@@ -138,8 +211,10 @@ function userProfile()
     // $id = $_SESSION['id'];
     // $type = $_SESSION['type'];
 
-    $id = 1;
+    $id = 32;
     $type = $studentsType;
+
+    changeImage($id);
 
     switch ($type) {
         case $studentsType:

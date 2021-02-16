@@ -43,7 +43,7 @@ function getTypeForData()
 function getCommenDataFromUser($data)
 {
     global $first_name, $middle_name, $last_name,
-        $email, $mobile_number, $home_number, $national_id, $gender;
+        $email, $mobile_number, $home_number, $national_id, $gender, $image_path;
 
     $first_name = $data['first_name'];
     $middle_name = $data['middle_name'];
@@ -54,6 +54,8 @@ function getCommenDataFromUser($data)
 
     $national_id = $data['national_id'];
     $gender = $data['gender'];
+
+    $image_path = $data['image_path'];
 }
 
 
@@ -95,11 +97,32 @@ function getRowsPerPage($table)
     $dataBaseConnection = connectToDataBase();
     $post_query_count = "SELECT * FROM {$table}";
     $result = mysqli_query($dataBaseConnection, $post_query_count);
-    check_result($result, $dataBaseConnection, __FUNCTION__);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
     $dataBaseConnection->close();
 
     $count = mysqli_num_rows($result);
     $count  = ceil($count / $per_page);
 
     return array($per_page, $page_1, $count, $page);
+}
+
+
+
+function changeImage($id) {
+    if (isset($_POST['submit'])) {
+
+        $image = $_FILES['image']['name'];
+        $imageTmp = $_FILES['image']['tmp_name'];
+        $image_dir = "profile_images/$image";
+        move_uploaded_file($imageTmp, $image_dir);
+
+        $dataBaseConnection = connectToDataBase();
+        mysqli_real_escape_string($dataBaseConnection, $image_dir);
+
+        $imageSqlQuery = "UPDATE users SET image_path = '{$image_dir}' WHERE id = {$id};";
+
+        $queryResult  = mysqli_query($dataBaseConnection, $imageSqlQuery);
+        checkResultQuery($queryResult, $dataBaseConnection, __FUNCTION__);
+        $dataBaseConnection->close();
+    }
 }

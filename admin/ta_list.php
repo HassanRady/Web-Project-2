@@ -1,6 +1,7 @@
 <?php
 ob_start();
 include "../includes/callable_functions.php";
+taSearchEngine();
 ?>
 
 <!DOCTYPE html>
@@ -133,23 +134,23 @@ include "../includes/callable_functions.php";
 
                 <div class="container-fluid table-container">
                     <!-- Search form -->
-                    <form>
+                    <form action="" method="POST">
                         <div class="row ">
                             <div class="col-md mt-4">
                                 <label for="student-name">TA Name</label>
-                                <input type="text" class="form-control" placeholder="TA Name" id="student-name" name="student-name">
+                                <input type="text" class="form-control" placeholder="TA Name" id="ta-name" name="ta-name" value="<?php echo $ta_name ?>">
                             </div>
                             <div class="col-md mt-4">
                                 <label for="student-id">TA Email</label>
-                                <input type="text" class="form-control" placeholder="TA ID" id="student-id" name="student-id">
+                                <input type="text" class="form-control" placeholder="TA Email" id="ta-email" name="ta-email" value="<?php echo $ta_email ?>">
                             </div>
                             <div class="col-md mt-4">
                                 <label for="student-email">Phone Number</label>
-                                <input type="text" class="form-control" placeholder="TA Phone Number" id="student-email" name="student-email">
+                                <input type="text" class="form-control" placeholder="TA Phone Number" id="ta-phone" name="ta-phone" value="<?php echo $ta_phone ?>">
                             </div>
                         </div>
                         <div class="row justify-content-center ">
-                            <button class="btn btn-primary w-50 btn-block right-btn search-btn">Search</button>
+                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="submit">Search</button>
                         </div>
 
                     </form>
@@ -174,7 +175,7 @@ include "../includes/callable_functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                               showTasList();
+                               searchTa();
                                deleteUser();
                                 ?>
 
