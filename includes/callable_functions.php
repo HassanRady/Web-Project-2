@@ -208,11 +208,12 @@ function userProfile()
 {
     global $studentsType, $professorsType, $tasType, $sasType, $type;
 
-    // $id = $_SESSION['id'];
-    // $type = $_SESSION['type'];
+    session_start();
+    $id = $_SESSION['id'];#die($_SESSION['id']);
+    $type = $_SESSION['type'];
 
-    $id = 1;
-    $type = $studentsType;
+    // $id = 1;
+    // $type = $studentsType;
 
     changeImage($id);
 

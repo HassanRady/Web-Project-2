@@ -1,6 +1,7 @@
 <?php
 // getting connection
 include_once "db_conn.php";
+include_once "utils\\variables.php";
 
 
 /******************************** Global variables **********************************/
@@ -10,7 +11,7 @@ include_once "db_conn.php";
 
 function login()
 {
-    global $conn;
+    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType;
     $name = $_POST['email'];
     $password = $_POST['password'];
 
@@ -34,7 +35,7 @@ function login()
 
         header("Location: ./login.php");
     } elseif ($username == $email && $password == $pass) {
-        $_SESSION['id'] = $id;
+        $_SESSION['id'] = $id;#die($_SESSION['id']);
         $_SESSION['email'] = $email;
 
         $_SESSION['first_name'] = $first_name;
@@ -42,21 +43,20 @@ function login()
         $_SESSION['last_name'] = $last_name;
         $_SESSION['type'] = $type;
         switch ($type) {
-            case "student":
-                header("Location: student/announcements.php");
+            case $studentsType:
+                header("Location: my_profile.php");
                 break;
-            case "sa":
-                header("Location: /alpha/academic/discussion.html");
+            case $professorsType:
+                header("Location: my_profile.php");
                 break;
-            case "ta":
-                header("Location: /alpha/academic/discussion.html");
+            case $tasType:
+                header("Location: my_profile.php");
                 break;
-            case "admin":
-                header("Location: /alpha/admin/announcements.html");
-
+            case $sasType:
+                header("Location: my_profile.php");
                 break;
-            case "staff":
-                header("Location: /alpha/sa/announcements.html");
+            case $adminsType:
+                header("Location: my_profile.php");
                 break;
         }
     } else {
