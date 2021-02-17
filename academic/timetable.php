@@ -1,13 +1,13 @@
 <?php
 ob_start();
 include "../includes/functions.php";
-include "../includes/Student/functions.php";
+include "../includes/Professor/functions.php";
 session_start();
 
-$std_id = "";
+$id = "";
 
-if(isset($_GET['std_id'])){
-    $std_id = $_GET["std_id"];
+if(isset($_GET['id'])){
+    $id = $_GET["id"];
 }else{
     header("Location: announcements.php");
 }
@@ -50,7 +50,7 @@ if(isset($_GET['std_id'])){
                 <table class="table table-borderless table-responsive-lg">
                     <tbody>
                         <?php
-                        $timetable = getStudentTimetable($std_id);
+                        $timetable = getInstructorTimetable($id);
                         if ($timetable) {
                             foreach ($timetable as $day => $data) {
                                 ?>
@@ -61,7 +61,6 @@ if(isset($_GET['std_id'])){
                                         <td class="table-cell content-cell">
                                             <span class="name"><?php echo $data[$i]['cname'] ?></span>
                                             <span class="type"><?php echo ucfirst($data[$i]['type']) . " (" . $data[$i]['freq'] . ")" ?></span>
-                                            <span class="instructor"><?php echo $data[$i]['first_name'] . " " . $data[$i]['last_name'] ?></span>
                                             <div class="description"><span><?php echo substr($data[$i]['start'], 0, 5) . "-" . substr($data[$i]['end'], 0, 5)  ?> / </span><a href="#" class="location"><?php echo $data[$i]['vname'] ?></a>
                                             </div>
                                         </td>
@@ -70,21 +69,18 @@ if(isset($_GET['std_id'])){
                                 </tr>
                                 <?php
                             }
-                        }else{
-                        ?>
+                        }else{?>
                             <h3>No timetable data available. Please check again later.</h3>
                         <?php } ?>
                     </tbody>
                 </table>
                 <!-- STOP HERE -->
             </div>
-
-
         </div>
     </div>
 
     <?php include "../includes/bootstrap_styles_end.php"; ?>
-    <script type="text/javascript" src="../js/rootJS.js"></script>
+    <script type="text/javascript" src="rootJS.js"></script>
 
 </body>
 
