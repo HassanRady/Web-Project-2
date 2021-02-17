@@ -21,14 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="17980649-d45e-4239-9a0d-c41b55b92cf7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/discussion.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/discussion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/Add_Class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/Add_Class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/SQLfunctions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/post.php" beforeDir="false" afterPath="$PROJECT_DIR$/post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sa/add_announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/sa/add_announcements.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sa/add_new_student.php" beforeDir="false" afterPath="$PROJECT_DIR$/sa/add_new_student.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/announcements.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/discussion_no_post.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/discussion_no_post.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +44,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/sa" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -76,6 +69,18 @@
       <workItem from="1608984063238" duration="11824000" />
       <workItem from="1609068943887" duration="21602000" />
       <workItem from="1609161077574" duration="2636000" />
+      <workItem from="1609610395305" duration="2139000" />
+      <workItem from="1609683250390" duration="5441000" />
+      <workItem from="1609701816755" duration="2408000" />
+      <workItem from="1609759795263" duration="19097000" />
+      <workItem from="1609845183372" duration="6495000" />
+      <workItem from="1609939353263" duration="7089000" />
+      <workItem from="1610046910570" duration="1190000" />
+      <workItem from="1610192213908" duration="5029000" />
+      <workItem from="1610307069663" duration="11396000" />
+      <workItem from="1610364029434" duration="12555000" />
+      <workItem from="1610380687056" duration="730000" />
+      <workItem from="1613543301280" duration="167000" />
     </task>
     <servers />
   </component>
@@ -99,19 +104,21 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="517" y="307" key="NewPhpFileDialog/0.0.1366.768@0.0.1366.768" timestamp="1608911403599" />
-    <state x="339" y="172" key="run.anything.popup" timestamp="1609095908677">
+    <state x="184" y="28" key="SettingsEditor" timestamp="1610319490925">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="339" y="172" key="run.anything.popup/0.0.1366.768@0.0.1366.768" timestamp="1609095908677" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/post.php</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state x="184" y="28" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1610319490925" />
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2" timestamp="1610192249078">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1610192249078" />
+    <state x="339" y="172" key="run.anything.popup" timestamp="1609369626142">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="339" y="172" key="run.anything.popup/0.0.1366.768@0.0.1366.768" timestamp="1609369626142" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1610308668724">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1366.768@0.0.1366.768" timestamp="1610308668724" />
   </component>
 </project>
