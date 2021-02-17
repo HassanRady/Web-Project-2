@@ -1,22 +1,7 @@
 <?php
 
-// getting connection
-include_once dirname(__FILE__, 2) . "\\db_conn.php";
 
-// global variables
-include_once dirname(__FILE__, 2) . "\\utils\\variables.php";
-
-// helper functions
-include_once dirname(__FILE__, 2) . "\\utils\\helper.php";
-
-// printing functions
-include_once dirname(__FILE__, 2) . "\\utils\\print_functions.php";
-
-// form data retriever functions
-include_once dirname(__FILE__, 2) . "\\utils\\form_functions.php";
-
-include_once dirname(__FILE__, 2) . "\\utils\\all.php";
-
+include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
 
 /**
  * @param string $pageName
@@ -167,8 +152,8 @@ function updateStudentData($id)
     $result1 = mysqli_query($dataBaseConnection, $firstSqlQuery);
     checkResultQuery($result1, $dataBaseConnection, __FUNCTION__);
 
-    $result2 = mysqli_query($dataBaseConnection, $secondSqlQuery);
-    checkResultQuery($result2, $dataBaseConnection, __FUNCTION__);
+    $result3 = mysqli_query($dataBaseConnection, $secondSqlQuery);
+    checkResultQuery($result3, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();
@@ -220,8 +205,8 @@ function editStudentProfile($id)
     $result1 = mysqli_query($dataBaseConnection, $firstSqlQuery);
     checkResultQuery($result1, $dataBaseConnection, __FUNCTION__);
 
-    $result2 = mysqli_query($dataBaseConnection, $secondSqlQuery);
-    checkResultQuery($result2, $dataBaseConnection, __FUNCTION__);
+    $result3 = mysqli_query($dataBaseConnection, $secondSqlQuery);
+    checkResultQuery($result3, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();

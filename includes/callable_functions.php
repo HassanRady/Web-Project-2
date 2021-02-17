@@ -1,14 +1,14 @@
 <?php
 include_once "utils/variables.php";
-include_once "all_types/functions.php";
-include_once "students/functions.php";
-include_once "students/search.php";
-include_once "professors/functions.php";
-include_once "professors/search.php";
-include_once "tas/functions.php";
-include_once "tas/search.php";
-include_once "sas/functions.php";
-include_once "sas/search.php";
+include_once "Admin/all_types/functions.php";
+include_once "Admin/students/functions.php";
+include_once "Admin/students/search.php";
+include_once "Admin/professors/functions.php";
+include_once "Admin/professors/search.php";
+include_once "Admin/tas/functions.php";
+include_once "Admin/tas/search.php";
+include_once "Admin/sas/functions.php";
+include_once "Admin/sas/search.php";
 
 
 
@@ -211,7 +211,7 @@ function userProfile()
     // $id = $_SESSION['id'];
     // $type = $_SESSION['type'];
 
-    $id = 32;
+    $id = 1;
     $type = $studentsType;
 
     changeImage($id);
