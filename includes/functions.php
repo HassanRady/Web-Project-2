@@ -985,8 +985,11 @@ function getCourseMaterialEditable($courseId)
       </div>";
         // <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
 
+
     }
 }
+
+
 
 
 
@@ -1007,6 +1010,7 @@ function uploadMaterial($file)
         move_uploaded_file($file_tmp_name, $destination);
         return $destination;
     }
+
 
     return false;
 }
@@ -1253,6 +1257,7 @@ function getProfessorList()
 
     return $query_result;
     
+
 }
 
 
@@ -1346,30 +1351,31 @@ function addNewPost($id_user, $id_course, $post_title, $post_author, $post_user,
 }
 
 
-
 function getAllPosts($course_id)
 {
-    global  $conn;
+    global $conn;
     $query = "SELECT post_id, id_user,post_author, post_date, post_content, votes FROM posts WHERE id_course ='$course_id' ORDER BY post_id  DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
-        die("Cannot  postsForm from database  " . mysqli_error($conn));
+        die("Cannot retrieve posts from database  " . mysqli_error($conn));
     }
     return $result;
 }
+
 function getPost($post_id)
 {
-    global  $conn;
+    global $conn;
     $query = "SELECT post_author, post_date, post_content, votes FROM posts WHERE post_id = '$post_id' ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
-        die("Cannot  postsForm from database  " . mysqli_error($conn));
+        die("Cannot retrieve posts from database  " . mysqli_error($conn));
     }
     return $result;
 }
+
 function deletePost($post_id)
 {
-    global  $conn;
+    global $conn;
     $query = "DELETE FROM posts WHERE post_id = '$post_id'";
     $result = mysqli_query($conn, $query);
     if (!$result) {
@@ -1379,6 +1385,7 @@ function deletePost($post_id)
         deletePostComments($post_id);
     }
 }
+
 function deletePostComments($id_post)
 {
     global $conn;
@@ -1388,6 +1395,7 @@ function deletePostComments($id_post)
         die("Cannot delete comments" . mysqli_error($conn));
     }
 }
+
 function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date)
 {
     global $conn;
@@ -1399,25 +1407,28 @@ function addNewComment($id_post, $id_user, $comment_author, $comment_content, $c
     }
     return $result;
 }
+
 function getAllComments($id_post)
 {
-    global  $conn;
+    global $conn;
     $query = "SELECT id_user, comment_id, comment_author, comment_content, comment_date FROM comments WHERE id_post ='$id_post' ORDER BY comment_id  ASC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
-        die("Cannot  commentsForm from database  " . mysqli_error($conn));
+        die("Cannot retrieve comments from database  " . mysqli_error($conn));
     }
     return $result;
 }
+
 function deleteComment($comment_id)
 {
-    global  $conn;
+    global $conn;
     $query = "DELETE FROM comments WHERE comment_id = '$comment_id'";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("Cannot delete post" . mysqli_error($conn));
     }
 }
+
 function upVote($post_id, $user_id)
 {
     global $conn;
@@ -1432,7 +1443,9 @@ function upVote($post_id, $user_id)
     } else {
         die('cannot add vote record to votes database ' . mysqli_error($conn));
     }
+
 }
+
 function downVote($post_id, $user_id)
 {
     global $conn;
@@ -1446,8 +1459,10 @@ function downVote($post_id, $user_id)
     if (!$result2) {
         die("query 2 error " . mysqli_error($conn));
     }
+
 }
-function redoVote($post_id, $user_id)
+
+function redoVotePost($post_id, $user_id)
 {
     global $conn;
     $query1 = "SELECT vote_value FROM votes WHERE id_post = '$post_id' AND id_user = '$user_id'";
@@ -1468,9 +1483,11 @@ function redoVote($post_id, $user_id)
     if (!$result3) {
         die("Query3 error redoVote " . mysqli_error($conn));
     }
+
 }
+
 // to check if user has already vote in a post or not
-function checkIfVoted($post_id, $user_id)
+function checkIfVotedPost($post_id, $user_id)
 {
     global $conn;
     $query = "SELECT * FROM votes WHERE id_post = '$post_id' AND id_user = '$user_id'";
@@ -1480,4 +1497,119 @@ function checkIfVoted($post_id, $user_id)
     }
 
     return mysqli_num_rows($result) != 0;
+
 }
+
+// adding new poll
+
+
+function addNewPoll($id_user, $poll_content, $poll_date)
+{
+    global $conn;
+    $query = "INSERT INTO polls(id_user, poll_content, poll_date) VALUES('$id_user', '$poll_content', '$poll_date')";
+    $result = mysqli_query($conn, $query);
+    if (!$result) {
+        die("cannot insert to poll table " . mysqli_error($conn));
+    }
+    $retQuery = "SELECT poll_id FROM polls ORDER BY poll_id DESC LIMIT 1; ";
+    $retResult = mysqli_query($conn, $retQuery);
+    if (!$retResult) {
+        die("cannot Select poll_id addNewPoll " . mysqli_error($conn));
+    }
+    $retPoll_id = 0;
+    while ($row = mysqli_fetch_assoc($retResult)) {
+        $retPoll_id = $row['poll_id'];
+    }
+    return $retPoll_id;
+}
+
+
+function addPollOption($id_poll, $option_content)
+{
+    global $conn;
+    $query = "INSERT INTO poll_options(id_poll, option_content) VALUES('$id_poll', '$option_content')";
+    $result = mysqli_query($conn, $query);
+    if (!$result) {
+        die("cannot Insert to poll_options table" . mysqli_error($conn));
+    }
+}
+
+function getPolls()
+{
+    global $conn;
+    $query = "SELECT * FROM polls ORDER BY poll_id DESC ";
+    $result = mysqli_query($conn, $query);
+    if (!$result) {
+        die("cannot get the polls " . mysqli_error($conn));
+    }
+    return $result;
+}
+
+function getPollOptions($id_poll){
+    global $conn;
+    $query = "SELECT * FROM poll_options WHERE id_poll = '$id_poll' ";
+    $result = mysqli_query($conn, $query);
+    if (!$result) {
+        die("cannot get the polls " . mysqli_error($conn));
+    }
+    return $result;
+
+}
+function votePoll($id_user, $id_poll, $id_option){
+    global $conn ;
+    $query1 = "INSERT INTO poll_votes(`id_user`, `id_poll`, `id_option`) VALUES('$id_user', '$id_poll', '$id_option')";
+    $result1 = mysqli_query($conn, $query1);
+    if (!$result1) {
+        die("cannot insert to poll_votes " . mysqli_error($conn));
+    }
+    $query2 = "UPDATE poll_options SET votes = votes +1 WHERE option_id = '$id_option'";
+    $result2 = mysqli_query($conn, $query2);
+    if (!$result2) {
+        die("cannot update the votes " . mysqli_error($conn));
+    }
+}
+function checkIfVotedPoll($poll_id, $user_id)
+{
+    global $conn;
+    $query = "SELECT * FROM poll_votes WHERE id_poll = '$poll_id' AND id_user = '$user_id'";
+    $result = mysqli_query($conn, $query);
+    if (!$result) {
+        die('there is an error while accessing votes db ' . mysqli_error($conn));
+    }
+
+    return mysqli_num_rows($result) != 0;
+
+}
+function redoVotePoll($user_id, $poll_id){
+    global $conn ;
+    $query1 = "SELECT id_option FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
+    $query2 = "DELETE FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
+    $result1 = mysqli_query($conn, $query1);
+    if(!$result1){
+        die("Cannot select the option_id record redoVotePoll.. " .mysqli_error($conn));
+    }
+    $option_id = null ;
+    while($row = mysqli_fetch_assoc($result1)){
+        $option_id = $row['id_option'];
+    }
+    $query3 = "UPDATE poll_options SET votes = votes - 1 WHERE option_id = $option_id";
+    $result2 = mysqli_query($conn, $query2);
+    if(!$result2){
+        die("Cannot delete the vote record in redoVotePoll" .mysqli_error($conn));
+    }
+    $result3= mysqli_query($conn, $query3);
+    if(!$result3){
+        die("Cannot update the votes in redoVotePoll" .mysqli_error($conn));
+    }
+}
+function deletePoll($poll_id){
+    global $conn;
+    $query1 = "DELETE FROM polls WHERE poll_id = '$poll_id'";
+    $result1 = mysqli_query($conn, $query1);
+    if(!$result1){
+        die("Cannot delete the poll deletePoll" .mysqli_error($conn));
+    }
+
+
+}
+

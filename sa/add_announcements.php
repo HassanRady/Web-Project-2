@@ -4,7 +4,7 @@ include "../includes/functions.php";
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 $course_id = 1;
 $user_id = 2;
-
+$user_name = getUserName($user_id);
 ?>
 
 
@@ -28,6 +28,7 @@ $user_id = 2;
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
+
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
             integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
@@ -35,6 +36,8 @@ $user_id = 2;
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
             integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
             crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 </head>
 
@@ -128,95 +131,127 @@ $user_id = 2;
                         <button type="submit" name="post_btn" class="btn btn-primary  btn-lg btn-block">Post</button>
                         <div class="col-lg-4">OR</div>
                         <a type="button" class="col-lg-4 btn btn-primary" data-toggle="modal"
-                           data-target="#myModal" name="make_poll">Make Poll</a>
+                           data-target="#modalPoll" name="modalPoll">Make Poll</a>
                     </div>
                 </form>
+            </div>
 
-                <?php
-                if (isset($_POST['post_btn'])) {
 
-                    if (!empty($_POST['post_text'])) {
-                        // retrieving data from the form and adding customized data for professor
-                        $id_user = $user_id;
-                        $id_course = $course_id;
-                        $post_title = "title";
-                        $post_author = getUserName($id_user);
-                        $post_user = "SA";
-                        $post_date = date("Y-m-d");
-                        $post_content = $_POST['post_text'];
-                        $post_tags = $post_author;
-                        addNewPost($id_user, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
+            <?php
 
-                    } else {
-                        echo "<script>alert('Post cannot be empty')</script>";
-                    }
+            if (isset($_POST['post_btn'])) {
+
+                if (!empty($_POST['post_text'])) {
+                    // retrieving data from the form and adding customized data for professor
+                    $id_user = $user_id;
+                    $id_course = $course_id;
+                    $post_title = "title";
+                    $post_author = $user_name;
+                    $post_user = "SA";
+                    $post_date = date("Y-m-d");
+                    $post_content = $_POST['post_text'];
+                    $post_tags = $post_author;
+                    addNewPost($id_user, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
+
+                } else {
+                    echo "<script>alert('Post cannot be empty')</script>";
                 }
+            }
 
 
+            ?>
+            <?php
+            $polls = getPolls();
+            while ($row = mysqli_fetch_assoc($polls)) {
+                $res_poll_id = $row['poll_id'];
+                $poll_id_user = $row['id_user'];
+                $res_poll_content = $row['poll_content'];
+                $res_poll_date = $row['poll_date'];
+                $poll_author = getUserName($poll_id_user);
                 ?>
-            </div>
 
-            <!-- MODAL -->
-
-            <div class="modal" id="myModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="modal-title">
-
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                              style=" height: 60px; position:relative;left:120px;"
-                                              placeholder="Enter Topic here..."></textarea>
-
+                <!-- POLLS -->
+                <form action="add_announcements.php " method="post">
+                    <div class="container post">
+                        <h6>
+                            <?php echo $poll_author; ?>
+                        </h6>
+                        <p>
+                            <?php echo $res_poll_content; ?>
+                        </p>
+                        <?php if ($poll_id_user == $user_id) {
+                            ?>
+                            <input type="submit" name="delete_poll" value="Delete poll" class="btn btn-primary">
+                        <?php } ?>
+                        <hr>
+                        <!-- Radio -->
+                        <p class="text-center">
+                            <strong>Your Vote</strong>
+                        </p>
+                        <?php
+                        $poll_options = getPollOptions($res_poll_id);
+                        while ($row = mysqli_fetch_assoc($poll_options)) {
+                            $option_id = $row['option_id'];
+                            $option_content = $row['option_content'];
+                            $option_votes = $row['votes'];
+                            ?>
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" name="option_id" type="radio"
+                                       id="<?php echo $res_poll_id ?>" value="<?php echo $option_id ?>">
+                                <label class="form-check-label"
+                                       for="<?php echo $res_poll_id ?>"><?php echo $option_content ?></label>
                             </div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                            <p>Votes: <?php echo $option_votes; ?></p>
 
+                        <?php }
 
-                                <textarea class="w-50 p-3" id="exampleFormControlTextarea1" rows="3"
-                                          style=" height: 30px;"></textarea>
-
-                            <textarea class="w-50 p-3" id="exampleFormControlTextarea1" rows="3"
-                                      style=" height: 30px;position:relative;left:14px; "></textarea>
-
-                            <a href="#"
-                               style="text-decoration: none; color:blue; font-weight: bold; font-size: 40px; position:relative;left:20px;">+</a>
-
-                        </div>
-                        <div class="modal-footer">
-                            <div class="container">
-                                <div class="text-left">
-                                    <div class="row ">
-                                        <div class="form-group col-xs-3 ">
-                                            <select class="form-control form-control-lg "
-                                                    style="background-color: #206cef; color: white; cursor: pointer;">
-                                                <option value="" disabled selected>Poll Length</option>
-                                                <option>1 Day</option>
-                                                <option>2 Days</option>
-                                                <option>3 Days</option>
-                                                <option>4 Days</option>
-                                                <option>5 Days</option>
-                                                <option>6 Days</option>
-                                                <option>7 Days</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                        if (!checkIfVotedPoll($res_poll_id, $user_id)) {
+                            ?>
+                            <div class=" container">
+                                <input type="submit" name="poll_vote" value="Vote" class="btn btn-primary ">
                             </div>
+                        <?php } else {
+                            ?>
+                            <div class=" container">
+                                <input type="submit" name="redo_vote" value="Redo" class="btn btn-primary ">
+                            </div>
+                        <?php }
+                        ?>
 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Post Poll</button>
+
+                        <div class="poll-data">
+                            <input type="text" hidden name="poll_id" value="<?php echo $res_poll_id ?>">
                         </div>
+                        <p class="date"> <?php echo $res_poll_date ?> </p>
                     </div>
-                </div>
-            </div>
+                </form>
+            <?php }
+
+            /// when user votes in polls
+            if (isset($_POST['poll_vote'])) {
+                if (isset($_POST['option_id'])) {
+                    $option_id = $_POST['option_id'];
+                    $poll_id = $_POST['poll_id'];
+                    votePoll($user_id, $poll_id, $option_id);
+                } else {
+                    echo "<script>alert('Please select an option to vote')</script>";
+                }
+            }
+            //redo vote
+            if (isset($_POST['redo_vote'])) {
+
+                $poll_id = $_POST['poll_id'];
+                redoVotePoll($user_id, $poll_id);
+            }
+            if (isset($_POST['delete_poll'])) {
+                $poll_id = $_POST['poll_id'];
+                deletePoll($poll_id);
+            }
+
+            ?>
+
 
             <!-- POSTS -->
-
-
             <?php
             //checking for delete button if clicked and delete the post
             if (isset($_POST['delete_post'])) {
@@ -260,8 +295,119 @@ $user_id = 2;
             <?php } ?>
 
 
+            <!-- MODAL -->
 
-            <!-- Radio -->
+            <!--Notes:
+            - Ajax technology is needed in order to:
+                          - adding more options without refreshing the whole page
+                          - making the add poll button disabled untill all options input and poll content have data
+              until using ajax the default option inputs are 3
+
+
+            -->
+            <!-- Modal: modalPoll -->
+            <div class="modal fade right" id="modalPoll" tabindex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel"
+                 aria-hidden="true" data-backdrop="false">
+                <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header">
+                            <p class="heading lead">Poll Making
+                            </p>
+
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="white-text">×</span>
+                            </button>
+                        </div>
+
+                        <!--Body-->
+                        <form action="add_announcements.php" method="post">
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <i class="fa fa-file-text-o fa-4x mb-3 animated rotateIn"></i>
+                                    <p>
+                                        <strong>Your students opinions matters !</strong>
+                                    </p>
+                                    <p>
+                                        <strong>Tell the audience the news.</strong>
+                                    </p>
+                                </div>
+                                <hr>
+                                <!-- Radio -->
+                                <p class="text-center">
+                                    <strong>Your Suggestions</strong>
+                                </p>
+                                <div id="options-div">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">1</span>
+                                        <input type="text" class="form-control" name="option-1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">2</span>
+                                        <input type="text" class="form-control" name="option-2">
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="text" hidden id="options-num" name="options-num" value="2">
+                                </div>
+                                <!-- PLUS BUTTON -->
+                                <button type="button" class="btn btn-outline-primary" id="plus-btn">+</button>
+                                <!-- Radio -->
+                                <p class="text-center">
+                                    <strong>Poll Content</strong>
+                                </p>
+                                <!--Basic textarea-->
+                                <div class="md-form">
+                                <textarea type="text" name="poll-content" class="md-textarea form-control"
+                                          rows="3"></textarea>
+                                </div>
+                            </div>
+                            <!--Footer-->
+                            <div class="modal-footer justify-content-center">
+                                <button type="submit" name="add-poll"
+                                        class="btn btn-primary waves-effect waves-light">Add
+                                    new poll
+                                </button>
+                                <button class="btn btn-outline-primary waves-effect"
+                                        data-dismiss="modal">Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal: modalPoll -->
+            <!-- Handling the poll form in the modal            -->
+            <?php
+            if (isset($_POST['add-poll'])) {
+                if (!empty($_POST['poll-content'])) {
+                    $poll_content = $_POST['poll-content'];
+                    $poll_date = date("Y-m-d");
+                    $poll_id = addNewPoll($user_id, $poll_content, $poll_date);;
+
+
+                    //poll_op_no will be changed in next sprint and will be flexible
+                    $poll_options_no = 2;
+                    if(isset($_POST['options-num'])){
+                        $poll_options_no = $_POST['options-num'] ;
+                        echo "accessed";
+                    }else{
+                        echo"not acc";
+                    }
+
+                    for ($i = 1; $i <= $poll_options_no; $i++) {
+                        $option_no = 'option-' . $i;
+                        $option_content = $_POST[$option_no];
+                        addPollOption($poll_id, $option_content);
+
+                    }
+
+                } else {
+                    echo "<script>alert('poll content cannot be empty')</script>";
+                }
+            }
+            ?>
 
 
             <!-- STOP HERE -->
@@ -272,9 +418,11 @@ $user_id = 2;
 </div>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script
+        src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
         crossorigin="anonymous"></script>
+
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
         integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
@@ -288,6 +436,32 @@ $user_id = 2;
         src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- Navbar -->
 <script type="text/javascript" src="../js/rootJS.js"></script>
+<script>
+    $(document).ready(function () {
+        let optionsNum = 2;
+        $("#plus-btn").click(function () {
+            optionsNum++;
+            $.ajax({
+                url:'',
+                type: 'post',
+                success: function () {
+                    $("#options-div").append(`<div class="input-group mb-3">
+                                        <span class="input-group-text">${optionsNum}</span>
+                                        <input type="text" class="form-control" name="option-${optionsNum}">
+                                    </div>`);
+                    $("#options-num").val(optionsNum) ;
+
+                },
+                error: function (request, status, error){
+                    alert(status +" "+ error);
+                }
+
+            });
+        })
+
+    });
+</script>
+
 
 </body>
 
