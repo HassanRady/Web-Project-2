@@ -28,10 +28,14 @@ function which_type($haystack, $needle, $offset = 0)
 
 
 // function to check if the sql query was successful
-function check_result($result, $conn, $source=null)
+function checkResultQuery($result, $conn, $source=null)
 {
     if (!$result) {
         die("RESULT FAILED from {$source}\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));
         return;
     }
+}
+
+function displayError($result) {
+
 }

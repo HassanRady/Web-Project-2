@@ -1,6 +1,7 @@
-<?php 
+<?php
 ob_start();
-include "../includes/functions.php";
+include "../includes/callable_functions.php";
+saSearchEngine();
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,16 +45,16 @@ include "../includes/functions.php";
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="Students.php?type=student">Students</a>
+                            <a href="Students.php">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.php?type=professor">Professors</a>
+                            <a href="Professors.php">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.php?type=ta">Teaching Assistants</a>
+                            <a href="ta_list.php">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.php?type=sa">Student Affairs</a>
+                            <a href="sa_list.php">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
@@ -106,16 +107,16 @@ include "../includes/functions.php";
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="Students.php?type=student">Student</a>
+                                <a class="nav-link" href="Students.php">Student</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="Professors.php?type=professor">Professor</a>
+                                <a class="nav-link" href="Professors.php">Professor</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="ta_list.php?type=ta">Teaching Assistant</a>
+                                <a class="nav-link" href="ta_list.php">Teaching Assistant</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Student Affairs</a>
+                                <a class="nav-link" href="sa_list.php">Student Affairs</a>
                             </li>
                         </ul>
                     </div>
@@ -127,10 +128,36 @@ include "../includes/functions.php";
 
                 <div class="container-fluid">
                     <div class="row justify-content-end">
-                        <a href="add_new_sa.php?type=sa" class=" btn btn-primary btn-block w-25">Add New</a>
+                        <a href="add_new_sa.php" class=" btn btn-primary btn-block w-25">Add New</a>
                     </div>
                 </div>
                 <hr class="mb-4">
+
+                <div class="container-fluid table-container">
+                    <!-- Search form -->
+                    <form action="" method="POST">
+                        <div class="row ">
+                            <div class="col-md mt-4">
+                                <label for="student-name">SA Name</label>
+                                <input type="text" class="form-control" placeholder="SA Name" id="sa-name" name="sa-name" value="<?php echo $sa_name ?>">
+                            </div>
+                            <div class="col-md mt-4">
+                                <label for="student-id">SA Email</label>
+                                <input type="text" class="form-control" placeholder="SA Email" id="sa-email" name="sa-email" value="<?php echo $sa_email ?>">
+                            </div>
+                            <div class="col-md mt-4">
+                                <label for="student-email">Phone Number</label>
+                                <input type="text" class="form-control" placeholder="SA Phone Number" id="sa-phone" name="sa-phone" value="<?php echo $sa_phone ?>">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center ">
+                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="submit">Search</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <br>
 
                 <h3 class="font-weight-bold" style=" color:rgb(31,108,236);">
                     Student Affairs Employees List
@@ -149,8 +176,8 @@ include "../includes/functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                showData();
-                                delete();
+                                searchSa();
+                                deleteUser();
                                 ?>
 
                             </tbody>
@@ -207,10 +234,19 @@ include "../includes/functions.php";
                 <hr class="mb-4">
                 <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-primary">1</button>
-                        <button type="button" class="btn btn-primary">2</button>
-                        <button type="button" class="btn btn-primary">3</button>
-                        <button type="button" class="btn btn-primary">4</button>
+
+                        <?php
+                        list($per_page, $page_1, $count, $page) = getRowsPerPage("sas");
+
+                        for ($i = 1; $i <= $count; $i++) {
+                            if ($i == $page) {
+                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='sa_list.php?page={$i}'>{$i}</a></button>";
+                            } else {
+                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='sa_list.php?page={$i}'>{$i}</a></button>";
+                            }
+                        }
+                        ?>
+
                     </div>
 
                 </div>

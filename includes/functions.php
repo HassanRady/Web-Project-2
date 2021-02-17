@@ -985,8 +985,11 @@ function getCourseMaterialEditable($courseId)
       </div>";
         // <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
 
+
     }
 }
+
+
 
 
 
@@ -1007,6 +1010,7 @@ function uploadMaterial($file)
         move_uploaded_file($file_tmp_name, $destination);
         return $destination;
     }
+
 
     return false;
 }
@@ -1252,6 +1256,7 @@ function getProfessorList()
     checkQuery($query_result);
 
     return $query_result;
+    
 
 }
 
@@ -1480,4 +1485,6 @@ function checkIfVoted($post_id, $user_id)
     }
 
     return mysqli_num_rows($result) != 0;
+
 }
+

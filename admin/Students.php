@@ -1,7 +1,7 @@
 <?php
 ob_start();
-include "../includes/functions.php";
-
+include "../includes/callable_functions.php";
+studentSearchEngine();
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,16 +45,16 @@ include "../includes/functions.php";
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="Students.php?type=student">Students</a>
+                            <a href="Students.php">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.php?type=professor">Professors</a>
+                            <a href="Professors.php">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.php?type=ta">Teaching Assistants</a>
+                            <a href="ta_list.php">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.php?type=sa">Student Affairs</a>
+                            <a href="sa_list.php">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
@@ -107,16 +107,16 @@ include "../includes/functions.php";
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="">Student</a>
+                                <a class="nav-link" href="Students.php">Student</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="Professors.php?type=professor">Professor</a>
+                                <a class="nav-link" href="Professors.php">Professor</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="ta_list.php?type=ta">Teaching Assistant</a>
+                                <a class="nav-link" href="ta_list.php">Teaching Assistant</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="sa_list.php?type=sa">Student Affairs</a>
+                                <a class="nav-link" href="sa_list.php">Student Affairs</a>
                             </li>
                         </ul>
                     </div>
@@ -127,7 +127,7 @@ include "../includes/functions.php";
                 <!-- START HERE -->
                 <div class="container-fluid">
                     <div class="row justify-content-end">
-                        <a href="add_new_student.php?type=student" class=" btn btn-primary btn-block w-25">Add New</a>
+                        <a href="add_new_student.php" class=" btn btn-primary btn-block w-25">Add New</a>
                     </div>
                 </div>
                 <hr class="mb-4">
@@ -142,15 +142,15 @@ include "../includes/functions.php";
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-id">Student ID</label>
-                                <input type="text" class="form-control" placeholder="Student ID" id="student-id" name="student-id">
+                                <input type="text" class="form-control" placeholder="Student ID" id="student-id" name="student-id" value="<?php echo $student_id ?>">
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-email">Student University Email</label>
-                                <input type="text" class="form-control" placeholder="Student University Email" id="student-email" name="student-email">
+                                <input type="text" class="form-control" placeholder="Student University Email" id="student-email" name="student-email" value="<?php echo $student_email ?>">
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-level">Student Level</label>
-                                <select class="form-control" name="student-level" id="student-level">
+                                <select class="form-control" name="student-level" id="student-level" selected="<?php echo $student_level ?>">
                                     <option>Level 1</option>
                                     <option>Level 2</option>
                                     <option>Level 3</option>
@@ -160,7 +160,7 @@ include "../includes/functions.php";
                             </div>
                         </div>
                         <div class="row justify-content-center ">
-                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="search">Search</button>
+                            <button class="btn btn-primary w-50 btn-block right-btn search-btn" name="submit">Search</button>
                         </div>
 
                     </form>
@@ -186,8 +186,9 @@ include "../includes/functions.php";
                             <tbody style="color: rgb(0,0,0,0.5);">
 
                                 <?php
-                                showData();
-                                delete();
+                                // showStudentsList();
+                                searchStudent();
+                                deleteUser();
                                 ?>
 
                             </tbody>
@@ -195,8 +196,7 @@ include "../includes/functions.php";
                         </table>
                     </div>
                 </div>
-                <!-- <td><button class="btn btn-outline-primary right-btn" data-toggle="modal"
-                                            data-target="#edit-info-modal">View</button></td> -->
+                
 
 
                 <div class="modal fade" id="edit-info-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -212,7 +212,7 @@ include "../includes/functions.php";
                                 <form>
                                     <div class="form-group">
                                         <label for="edit-name" class="col-form-label">Student Name:</label>
-                                        <input type="text" class="form-control" id="edit-name" placeholder="Abdulrahman Khalid">
+                                        <input type="text" class="form-control" id="edit-name">
                                     </div>
                                     <div class="form-group">
                                         <label for="edit-name" class="col-form-label">Student Email:</label>
@@ -243,10 +243,15 @@ include "../includes/functions.php";
                 <hr class="mb-4">
                 <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group mr-2" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-primary">1</button>
-                        <button type="button" class="btn btn-primary">2</button>
-                        <button type="button" class="btn btn-primary">3</button>
-                        <button type="button" class="btn btn-primary">4</button>
+
+                        <?php
+                        for ($i = 1; $i <= $countRows; $i++) {
+                            
+                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
+                            
+                        }
+                        ?>
+                        
                     </div>
 
                 </div>

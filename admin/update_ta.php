@@ -1,6 +1,6 @@
 <?php
-include "../includes/functions.php";
-update();
+include "../includes/callable_functions.php";
+updateTa();
 ?>
 
 <!DOCTYPE html>
@@ -199,7 +199,7 @@ update();
                             
                             
                             <br>
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">Update</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">Update</button>
                         </form>
                         <br>
                     </div>
