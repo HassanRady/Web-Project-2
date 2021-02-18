@@ -1,6 +1,6 @@
 <?php
 ob_start();
-include "../includes/callable_functions.php";
+include dirname(__FILE__, 2) . "\\includes\\Admin\\callable_functions.php";
 studentSearchEngine();
 ?>
 <!DOCTYPE html>

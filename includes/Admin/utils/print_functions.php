@@ -1,7 +1,5 @@
 <?php
 
-include_once "helper.php";
-
 
 /**
  * @param array $data 

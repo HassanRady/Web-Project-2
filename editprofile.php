@@ -1,5 +1,5 @@
 <?php
-include "includes/callable_functions.php";
+include "includes/Admin/callable_functions.php";
 updateProfile();
 ?>
 
