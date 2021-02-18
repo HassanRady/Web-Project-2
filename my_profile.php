@@ -1,9 +1,9 @@
 <?php
-// die(dirname(__DIR__));
+
 include "includes/callable_functions.php";
 include "includes/utils/variables.php";
 userProfile();
-// die($image_path);
+
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +35,7 @@ userProfile();
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php
+    
     if ($type === $studentsType) {
       include "includes\std_sidebar.php";
     } else {
@@ -62,7 +63,8 @@ userProfile();
                 <a class="nav-link" href="#">Discussion</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Assignments</a>
+                <a class="nav-link" href="academic\assignment-answers-students.php">Assignments</a>
+                <a class="nav-link" href="academic\assignment-hand-ins.php">Assignments</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Material</a>
@@ -188,7 +190,11 @@ userProfile();
       </div>
 
 
-
+<?php
+if($type == $studentsType) {
+  echo "<button><a href='student\student_assignments.php'>course_assignments</a></button>";
+}
+?>
 
 
      <!-- STOP HERE -->

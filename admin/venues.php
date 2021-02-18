@@ -59,16 +59,16 @@ if(isset($_POST['Add'])){
           <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
           <ul class="collapse list-unstyled" id="homeSubmenu">
             <li>
-              <a href="Students.html">Students</a>
+              <a href="Students.php">Students</a>
             </li>
             <li>
-              <a href="Professors.html">Professors</a>
+              <a href="Professors.php">Professors</a>
             </li>
             <li>
-              <a href="ta_list.html">Teaching Assistants</a>
+              <a href="ta_list.php">Teaching Assistants</a>
             </li>
             <li>
-              <a href="sa_list.html">Student Affairs</a>
+              <a href="sa_list.php">Student Affairs</a>
             </li>
           </ul>
         </li>
@@ -87,7 +87,7 @@ if(isset($_POST['Add'])){
           </ul>
         </li>
         <li>
-          <a href="../my_profile.html">My Profile</a>
+          <a href="../my_profile.php">My Profile</a>
         </li>
         <li>
           <a href="timetable.html">Timetable</a>

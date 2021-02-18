@@ -209,11 +209,8 @@ function userProfile()
     global $studentsType, $professorsType, $tasType, $sasType, $type;
 
     session_start();
-    $id = $_SESSION['id'];#die($_SESSION['id']);
+    $id = $_SESSION['id'];
     $type = $_SESSION['type'];
-
-    // $id = 1;
-    // $type = $studentsType;
 
     changeImage($id);
 
@@ -275,11 +272,9 @@ function updateProfile()
 {
     global $studentsType, $professorsType, $tasType, $sasType, $type;
 
-    // $id = $_SESSION['id'];
-    // $type = $_SESSION['type'];
-
-    $id = 1;
-    $type = $studentsType;
+    session_start();
+    $id = $_SESSION['id'];
+    $type = $_SESSION['type'];
 
     switch ($type) {
         case $studentsType:

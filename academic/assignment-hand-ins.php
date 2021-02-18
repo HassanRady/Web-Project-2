@@ -2,8 +2,8 @@
 <html>
 <?php
 include '../includes/functions.php';
-$id_course=$_GET['courseid'];
-$semester=$_GET['semester'];
+// $id_course=$_GET['courseid'];
+// $semester=$_GET['semester'];
 if(isset($_POST['remove'])){
     remove_prof_assignment();
 }
@@ -120,7 +120,7 @@ if(isset($_POST['remove'])){
                 <hr class="mb-4">
 
 <?php
-show_prof_assignment($id_course,$semester);
+show_prof_assignment(1,1);
 ?>
 
 
