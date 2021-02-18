@@ -15,16 +15,16 @@ include_once "..\\includes\\utils\\variables.php";
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="<?php echo $students_list_paht ?>">Students</a>
+                            <a href="<?php echo $students_list_path ?>">Students</a>
                         </li>
                         <li>
-                            <a href="Professors.php">Professors</a>
+                            <a href="<?php echo $professors_list_path ?>">Professors</a>
                         </li>
                         <li>
-                            <a href="ta_list.php">Teaching Assistants</a>
+                            <a href="<?php echo $tas_list_path ?>">Teaching Assistants</a>
                         </li>
                         <li>
-                            <a href="sa_list.php">Student Affairs</a>
+                            <a href="<?php echo $sas_list_path ?>">Student Affairs</a>
                         </li>
                     </ul>
                 </li>
