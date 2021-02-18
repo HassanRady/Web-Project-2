@@ -7,7 +7,7 @@ include_once "utils\\helper.php";
 
 
 /******************************** Global variables **********************************/
-// $semester = getCurrentSemester();
+$semester = getCurrentSemester();
 /******************************** Global variables **********************************/
 
 

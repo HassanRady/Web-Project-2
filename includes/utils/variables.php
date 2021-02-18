@@ -6,11 +6,11 @@ $tasTable = "tas";
 $sasTable = "sas";
 $adminsTable = "admins";
 
-$studentsType = "students";
-$professorsType = "professors";
-$tasType = "tas";
-$sasType = "sas";
-$adminsType = "admins";
+$studentsType = "student";
+$professorsType = "professor";
+$tasType = "ta";
+$sasType = "sa";
+$adminsType = "admin";
 $userTypes = array($studentsType, $professorsType, $tasType, $sasType, $adminsType);
 
 $rowsPerPage = 3;

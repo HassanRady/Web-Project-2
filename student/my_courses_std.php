@@ -23,7 +23,8 @@
     <!-- Sidebar  -->
     <?php 
       include "../includes/std_sidebar.php";
-      $std_id = $_GET['std_id'];
+      session_start();
+$std_id=$_SESSION['id'];
     ?>
 
 

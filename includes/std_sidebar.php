@@ -11,7 +11,7 @@
         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
         <li>
-            <a href="my_courses_std.html">My Courses</a>
+            <a href="student\my_courses_std.php">My Courses</a>
         </li>
         <li>
             <a href="course_registration.html">All Courses</a>
@@ -19,7 +19,7 @@
         </ul>
     </li>
     <li>
-        <a href="student_transcript.html">My Profile</a>
+        <a href="../my_profile.php">My Profile</a>
     </li>
     <li>
         <a href="timetable.html">Timetable</a>
