@@ -1,18 +1,8 @@
 <?php
 
 
-// getting connection
-include_once dirname(__FILE__, 2)."\\db_conn.php";
 
-// global variables
-include_once dirname(__FILE__, 1)."\\variables.php";
-
-// helper functions
-include_once dirname(__FILE__, 1)."\\helper.php";
-
-
-// form data retriever functions
-include_once dirname(__FILE__, 1)."\\form_functions.php";
+include_once "iniclude_utils_files.php";
 
 
 

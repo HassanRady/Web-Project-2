@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
+include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 /**
  * @param string $pageName
@@ -219,7 +219,11 @@ function editSaProfile($id)
     $dataBaseConnection->close();
 }
 
-/*
+
+
+
+
+/**
 * @param string $category : The category of the courses we would like
 * returns a query_result containing (course_id, name, credits, has_preq, has_labs, has_practical, category, elective)
 */

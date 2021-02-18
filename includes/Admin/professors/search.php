@@ -1,7 +1,7 @@
 <?php
 
 
-include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
+include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 /**
  * @return array

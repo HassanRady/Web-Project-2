@@ -1,14 +1,14 @@
 <?php
-include_once "utils/variables.php";
-include_once "Admin/all_types/functions.php";
-include_once "Admin/students/functions.php";
-include_once "Admin/students/search.php";
-include_once "Admin/professors/functions.php";
-include_once "Admin/professors/search.php";
-include_once "Admin/tas/functions.php";
-include_once "Admin/tas/search.php";
-include_once "Admin/sas/functions.php";
-include_once "Admin/sas/search.php";
+include_once dirname(__FILE__, 2) . "\\utils\\variables.php";
+include_once "all_types/functions.php";
+include_once "students/functions.php";
+include_once "students/search.php";
+include_once "professors/functions.php";
+include_once "professors/search.php";
+include_once "tas/functions.php";
+include_once "tas/search.php";
+include_once "sas/functions.php";
+include_once "sas/search.php";
 
 
 
@@ -208,11 +208,9 @@ function userProfile()
 {
     global $studentsType, $professorsType, $tasType, $sasType, $type;
 
-    // $id = $_SESSION['id'];
-    // $type = $_SESSION['type'];
-
-    $id = 1;
-    $type = $studentsType;
+    session_start();
+    $id = $_SESSION['id'];
+    $type = $_SESSION['type'];
 
     changeImage($id);
 
@@ -274,11 +272,9 @@ function updateProfile()
 {
     global $studentsType, $professorsType, $tasType, $sasType, $type;
 
-    // $id = $_SESSION['id'];
-    // $type = $_SESSION['type'];
-
-    $id = 1;
-    $type = $studentsType;
+    session_start();
+    $id = $_SESSION['id'];
+    $type = $_SESSION['type'];
 
     switch ($type) {
         case $studentsType:

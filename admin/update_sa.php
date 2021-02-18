@@ -1,5 +1,5 @@
 <?php
-include "../includes/callable_functions.php";
+include dirname(__FILE__, 2) . "\\includes\\Admin\\callable_functions.php";
 updateSa();
 ?>
 
@@ -36,50 +36,9 @@ updateSa();
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <img src="../media/logo.jpeg" alt="SIM-LOGO">
-            </div>
-            <p>Navigation</p>
-            <ul class="list-unstyled components">
-                <li>
-                    <a href="announcements.html">Home</a>
-                </li>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Users</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="Students.php?type=student">Students</a>
-                        </li>
-                        <li>
-                            <a href="Professors.php?type=professor">Professors</a>
-                        </li>
-                        <li>
-                            <a href="ta_list.php?type=ta">Teaching Assistants</a>
-                        </li>
-                        <li>
-                            <a href="sa_list.php?type=sa">Student Affairs</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="../my_profile.html">My Profile</a>
-                </li>
-                <li>
-                    <a href="timetable.html">Timetable</a>
-                </li>
-                <li>
-                    <a href="venues.php">Venues</a>
-                </li>
-            </ul>
-
-            <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-                </li>
-            </ul>
-        </nav>
+        <?php
+            include dirname(__FILE__, 2) . "\\includes\\admin_sidebar.php";
+        ?>
         <!-- Page Content  -->
         <div id="content">
 

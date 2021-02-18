@@ -3,7 +3,8 @@
 <?php
 include "../includes/functions.php";
 $aid=$_GET['id'];
-$student=$_GET['studentid'];
+session_start();
+$student=$_SESSION['id'];
 
 ?>
 <head>

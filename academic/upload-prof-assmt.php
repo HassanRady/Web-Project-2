@@ -2,12 +2,12 @@
 <html>
 <?php
 include "../includes/functions.php";
-$id_course=$_GET['courseid'];
-$id_instructor=$_GET['instructorid'];
-$semester=$_GET['semester'];
+// $id_course=$_GET['courseid'];
+// $id_instructor=$_GET['instructorid'];
+// $semester=$_GET['semester'];
 if(isset($_POST['upload'])){
 
-    add_assignment($id_course,$id_instructor,$semester);
+    add_assignment(1,8,1);
 }
 ?>
 <head>
