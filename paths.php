@@ -1,6 +1,6 @@
 <?php
 
-$root =  "Web-Project-2"; # "Web-Project-2" is the root directory before "web project" is the "htdocs"
+$root = "web project" .DIRECTORY_SEPARATOR. "my branch" .DIRECTORY_SEPARATOR. "Web-Project-2";
 $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY_SEPARATOR. "logo.jpeg";
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
 
