@@ -27,11 +27,12 @@
   <component name="ChangeListManager">
     <list default="true" id="17980649-d45e-4239-9a0d-c41b55b92cf7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/admin_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/admin_sidebar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/db_conn.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/db_conn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/prof_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/prof_sidebar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/std_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/std_sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/paths.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_profile.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student/announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/announcements.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/discussion_no_post.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
