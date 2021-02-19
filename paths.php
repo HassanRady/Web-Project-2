@@ -3,7 +3,7 @@
 $root = "web project" .DIRECTORY_SEPARATOR. "my branch" .DIRECTORY_SEPARATOR. "Web-Project-2";
 $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY_SEPARATOR. "logo.jpeg";
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
-
+$login_path =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "login.php";
 
 // Admin's paths
 $admin_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "admin_sidebar.php";
