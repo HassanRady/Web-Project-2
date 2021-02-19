@@ -6,6 +6,7 @@ include_once "utils\\helper.php";
 
 
 
+
 /******************************** Global variables **********************************/
 $semester = getCurrentSemester();
 /******************************** Global variables **********************************/
@@ -1626,5 +1627,9 @@ function deletePoll($poll_id){
     }
 
 
+}
+function logout(){
+    session_destroy();
+    header("Location:../login.php");
 }
 
