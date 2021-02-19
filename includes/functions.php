@@ -17,6 +17,9 @@ function login()
     $name = $_POST['email'];
     $password = $_POST['password'];
 
+    // $password = encrypt_password($password);
+    // die($password);
+
     $username = mysqli_real_escape_string($conn, $name);
     $password = mysqli_real_escape_string($conn, $password);
     $query = "Select * FROM users WHERE email= '{$username}' ";

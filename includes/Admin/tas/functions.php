@@ -172,17 +172,5 @@ function taProfile($id)
  */
 function editTaProfile($id)
 {
-    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
-
-    $dataBaseConnection = connectToDataBase();
-    $password = encrypt_password($password);
-
-    $mainSqlQuery = "UPDATE users
-         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
-             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-         WHERE id = {$id};";
-
-    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
-    $dataBaseConnection->close();
+    editProfileCommon($id);
 }

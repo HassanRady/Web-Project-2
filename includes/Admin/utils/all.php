@@ -1,10 +1,27 @@
 <?php
 
-
-
 include_once "iniclude_utils_files.php";
 
 
+/**
+ * @param int $id
+ * @return array
+ */
+function getUser($id)
+{
+    global $usersTable;
+    $mainSqlQuery = "SELECT * 
+                    FROM {$usersTable} 
+                    WHERE id = $id";
+
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $userData =  $result->fetch_assoc();
+    return $userData;
+}
 
 
 /**
@@ -33,7 +50,7 @@ function getTypeForData()
 function getCommenDataFromUser($data)
 {
     global $first_name, $middle_name, $last_name,
-        $email, $mobile_number, $home_number, $national_id, $gender, $image_path;
+        $email, $mobile_number, $home_number, $national_id, $gender, $image_path, $password;
 
     $first_name = $data['first_name'];
     $middle_name = $data['middle_name'];
@@ -42,12 +59,13 @@ function getCommenDataFromUser($data)
     $mobile_number = $data['mobile_number'];
     $home_number = $data['home_number'];
 
+    $password = $data['password'];
+
     $national_id = $data['national_id'];
     $gender = $data['gender'];
 
     $image_path = $data['image_path'];
 }
-
 
 
 
@@ -60,6 +78,38 @@ function getDataForProfile($data)
     global  $first_name, $middle_name, $last_name, $full_name;
     $full_name = $first_name . " " . $middle_name . " " . $last_name;
 }
+
+/**
+ * @param int $id
+ * @param mysql $connection
+ */
+function editProfileCommon($id, $connection = NULL)
+{
+    list($first_name, $middle_name, $last_name, $password, $mobile_number, $home_number) = editProfileForm();
+
+    if (empty($password)) {
+        $userData = getUser($id);
+        $password = $userData['password'];
+    } else
+        $password = encrypt_password($password);
+
+    if ($connection != NULL)
+        $dataBaseConnection = $connection;
+    else
+        $dataBaseConnection = connectToDataBase();
+
+    $mainSqlQuery = "UPDATE users
+         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
+             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
+         WHERE id = {$id};";
+
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+
+    if ($connection == NULL)
+        $dataBaseConnection->close();
+}
+
 
 /**
  * This function is getting the number of records to show in the list
@@ -97,8 +147,11 @@ function getRowsPerPage($table)
 }
 
 
-
-function changeImage($id) {
+/**
+ * @param int $id
+ */
+function changeImage($id)
+{
     global $profileImageDir;
     if (isset($_POST['submit'])) {
 

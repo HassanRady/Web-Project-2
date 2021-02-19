@@ -1,6 +1,10 @@
+<?php
+include_once dirname(__FILE__, 2)."\\paths.php"; 
+?>
+
 <nav id="sidebar">
     <div class="sidebar-header">
-        <img src="media/logo.jpeg" alt="SIM-LOGO">
+        <img src="<?php echo $logo_path ?>" alt="SIM-LOGO">
     </div>
     <p>Navigation</p>
     <ul class="list-unstyled components">
@@ -11,7 +15,7 @@
             <a href="my_courses_prof_ta.html">My Courses</a>
         </li>
         <li>
-            <a href="../my_profile.html">My Profile</a>
+            <a href="<?php echo $my_profile_path ?>">My Profile</a>
         </li>
         <li>
             <a href="timetable.html">Timetable</a>

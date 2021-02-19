@@ -9,6 +9,7 @@ include_once "tas/functions.php";
 include_once "tas/search.php";
 include_once "sas/functions.php";
 include_once "sas/search.php";
+include_once "utils" .DIRECTORY_SEPARATOR. "all.php";
 
 
 
@@ -206,7 +207,7 @@ function addNewSa()
 
 function userProfile()
 {
-    global $studentsType, $professorsType, $tasType, $sasType, $type;
+    global $studentsType, $professorsType, $tasType, $sasType,$adminsType, $type;
 
     session_start();
     $id = $_SESSION['id'];
@@ -224,7 +225,7 @@ function userProfile()
         case $tasType:
             taProfile($id);
             break;
-        case $sasType:
+        case $sasType || $adminsType:
             saProfile($id);
             break;
     }
@@ -270,7 +271,7 @@ function updateSaProfile($id)
 
 function updateProfile()
 {
-    global $studentsType, $professorsType, $tasType, $sasType, $type;
+    global $studentsType, $professorsType, $tasType, $sasType,$adminsType, $type;
 
     session_start();
     $id = $_SESSION['id'];
@@ -286,7 +287,7 @@ function updateProfile()
         case $tasType:
             updateTaProfile($id);
             break;
-        case $sasType:
+        case $sasType || $adminsType:
             updateSaProfile($id);
             break;
     }
