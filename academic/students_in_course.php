@@ -81,7 +81,7 @@ include "../includes/functions.php";
 
                             </tr>
                         </thead>
-                        <tbody style="color: rgb(0,0,0,0.5);">
+                        <tbody style="color: rgba(0,0,0,0.5);">
                             <?php 
                                 getRegisteredStudents($courseId);
                             ?>
