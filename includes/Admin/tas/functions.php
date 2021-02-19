@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
+include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 /**
  * @param string $pageName
@@ -83,23 +83,12 @@ function addTa()
 {
     global $tasType;
 
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($instructor_id, $department) = NewTaDataForm();
 
-    // handling realescape
     $dataBaseConnection = connectToDataBase();
-    $email = mysqli_real_escape_string($dataBaseConnection, $email);
-
-    $password = encrypt_password($password);
-
-    // for users table
-    $firstSqlQuery = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$tasType', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
 
     mysqli_autocommit($dataBaseConnection, FALSE);
-
-    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+    addUser($tasType, $dataBaseConnection);
 
     $last_id = mysqli_insert_id($dataBaseConnection);
 
@@ -172,17 +161,5 @@ function taProfile($id)
  */
 function editTaProfile($id)
 {
-    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
-
-    $dataBaseConnection = connectToDataBase();
-    $password = encrypt_password($password);
-
-    $mainSqlQuery = "UPDATE users
-         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
-             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-         WHERE id = {$id};";
-
-    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
-    $dataBaseConnection->close();
+    editProfileCommon($id);
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
+include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 /**
  * @param string $pageName
@@ -88,28 +88,15 @@ function addStudent()
 {
     global $studentsType;
 
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
 
-    // handling realescape
     $dataBaseConnection = connectToDataBase();
-    $email = mysqli_real_escape_string($dataBaseConnection, $email);
-    $address = mysqli_real_escape_string($dataBaseConnection, $address);
-
-    $password = encrypt_password($password);
-
-    // for users table
-    $firstSqlQuery = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$studentsType', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
 
     mysqli_autocommit($dataBaseConnection, FALSE);
+    addUser($studentsType, $dataBaseConnection);
                         
-    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
-
     $last_id = mysqli_insert_id($dataBaseConnection);
 
-    // query for adding a student
     $secondSqlQuery = "INSERT INTO students (id_user, student_id, arabic_name, address, guardian_mobile_number, student_type)
                                     VALUES ($last_id, $student_id, '$arabic_name', '$address', '$guardian_mobile_number', '$student_type');";
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
@@ -182,31 +169,22 @@ function studentProfile($id)
  */
 function editStudentProfile($id)
 {
-    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
-    list($_, $_, $address, $guardian_mobile_number, $_) = NewStudentDataForm();
+    list($address, $guardian_mobile_number) = studentEditProfileForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
     $address = mysqli_real_escape_string($dataBaseConnection, $address);
 
-    $password = encrypt_password($password);
-
-    $firstSqlQuery = "UPDATE users
-             SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
-                 last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-             WHERE id = {$id};";
-    // query for updating student in students table
-    $secondSqlQuery = "UPDATE students
+    $mainSqlQuery = "UPDATE students
              SET address='{$address}', guardian_mobile_number='{$guardian_mobile_number}'
              WHERE id_user = {$id};";
 
     mysqli_autocommit($dataBaseConnection, FALSE);
 
-    $result1 = mysqli_query($dataBaseConnection, $firstSqlQuery);
-    checkResultQuery($result1, $dataBaseConnection, __FUNCTION__);
+    editProfileCommon($id, $dataBaseConnection);
 
-    $result3 = mysqli_query($dataBaseConnection, $secondSqlQuery);
-    checkResultQuery($result3, $dataBaseConnection, __FUNCTION__);
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();

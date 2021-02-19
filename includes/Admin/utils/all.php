@@ -1,20 +1,49 @@
 <?php
 
+include_once "iniclude_utils_files.php";
 
-// getting connection
-include_once dirname(__FILE__, 2)."\\db_conn.php";
+/**
+ * @param string $type
+ * @param mysqli $dataBaseConnection
+ */
+function addUser($type, $dataBaseConnection)
+{
+    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
 
-// global variables
-include_once dirname(__FILE__, 1)."\\variables.php";
+    // handling realescape
+    $dataBaseConnection = $dataBaseConnection;
+    $email = mysqli_real_escape_string($dataBaseConnection, $email);
 
-// helper functions
-include_once dirname(__FILE__, 1)."\\helper.php";
+    $password = encrypt_password($password);
+
+    $firstSqlQuery = "INSERT INTO users 
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$type', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
+
+    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+}
 
 
-// form data retriever functions
-include_once dirname(__FILE__, 1)."\\form_functions.php";
 
+/**
+ * @param int $id
+ * @return array
+ */
+function getUser($id)
+{
+    global $usersTable;
+    $mainSqlQuery = "SELECT * 
+                    FROM {$usersTable} 
+                    WHERE id = $id";
 
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $userData =  $result->fetch_assoc();
+    return $userData;
+}
 
 
 /**
@@ -43,7 +72,7 @@ function getTypeForData()
 function getCommenDataFromUser($data)
 {
     global $first_name, $middle_name, $last_name,
-        $email, $mobile_number, $home_number, $national_id, $gender, $image_path;
+        $email, $mobile_number, $home_number, $national_id, $gender, $image_path, $password;
 
     $first_name = $data['first_name'];
     $middle_name = $data['middle_name'];
@@ -52,12 +81,13 @@ function getCommenDataFromUser($data)
     $mobile_number = $data['mobile_number'];
     $home_number = $data['home_number'];
 
+    $password = $data['password'];
+
     $national_id = $data['national_id'];
     $gender = $data['gender'];
 
     $image_path = $data['image_path'];
 }
-
 
 
 
@@ -70,6 +100,38 @@ function getDataForProfile($data)
     global  $first_name, $middle_name, $last_name, $full_name;
     $full_name = $first_name . " " . $middle_name . " " . $last_name;
 }
+
+/**
+ * @param int $id
+ * @param mysql $connection
+ */
+function editProfileCommon($id, $connection = NULL)
+{
+    list($first_name, $middle_name, $last_name, $password, $mobile_number, $home_number) = editProfileForm();
+
+    if (empty($password)) {
+        $userData = getUser($id);
+        $password = $userData['password'];
+    } else
+        $password = encrypt_password($password);
+
+    if ($connection != NULL)
+        $dataBaseConnection = $connection;
+    else
+        $dataBaseConnection = connectToDataBase();
+
+    $mainSqlQuery = "UPDATE users
+         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
+             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
+         WHERE id = {$id};";
+
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+
+    if ($connection == NULL)
+        $dataBaseConnection->close();
+}
+
 
 /**
  * This function is getting the number of records to show in the list
@@ -107,8 +169,11 @@ function getRowsPerPage($table)
 }
 
 
-
-function changeImage($id) {
+/**
+ * @param int $id
+ */
+function changeImage($id)
+{
     global $profileImageDir;
     if (isset($_POST['submit'])) {
 

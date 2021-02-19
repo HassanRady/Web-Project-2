@@ -122,7 +122,7 @@
                             </thead>
                             <tbody >
 <form method="post">
-                                <?php show_prof_student_assignments(19);  ?>
+                                <?php show_prof_student_assignments(1);  ?>
                             </tbody>
                         </table>
                     </div>
@@ -136,7 +136,6 @@
 
                     ?>
                 </div>
-
 
 
 

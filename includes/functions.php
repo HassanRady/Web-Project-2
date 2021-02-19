@@ -1,18 +1,24 @@
 <?php
 // getting connection
 include_once "db_conn.php";
+include_once "utils\\variables.php";
+include_once "utils\\helper.php";
+
 
 
 /******************************** Global variables **********************************/
-// $semester = getCurrentSemester();
+$semester = getCurrentSemester();
 /******************************** Global variables **********************************/
 
 
 function login()
 {
-    global $conn;
+    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType;
     $name = $_POST['email'];
     $password = $_POST['password'];
+
+    // $password = encrypt_password($password);
+    // die($password);
 
     $username = mysqli_real_escape_string($conn, $name);
     $password = mysqli_real_escape_string($conn, $password);
@@ -42,21 +48,20 @@ function login()
         $_SESSION['last_name'] = $last_name;
         $_SESSION['type'] = $type;
         switch ($type) {
-            case "student":
-                header("Location: student/announcements.php");
+            case $studentsType:
+                header("Location: my_profile.php");
                 break;
-            case "sa":
-                header("Location: /alpha/academic/discussion.html");
+            case $professorsType:
+                header("Location: my_profile.php");
                 break;
-            case "ta":
-                header("Location: /alpha/academic/discussion.html");
+            case $tasType:
+                header("Location: my_profile.php");
                 break;
-            case "admin":
-                header("Location: /alpha/admin/announcements.html");
-
+            case $sasType:
+                header("Location: my_profile.php");
                 break;
-            case "staff":
-                header("Location: /alpha/sa/announcements.html");
+            case $adminsType:
+                header("Location: my_profile.php");
                 break;
         }
     } else {
@@ -384,9 +389,10 @@ function show_prof_student_assignments($id)
 ,sa.student_assignment,sa.grade ,sa.handin_date, sa.handin_time FROM course_semester_students css 
 INNER JOIN students s ON css.id_student = s.student_id
 INNER JOIN student_assignments sa on sa.id_student=css.id_student
- WHERE id_asignment='$id' ";
+ WHERE id_asignment='$id'";
     $i = 0;
     $result = mysqli_query($conn, $query);
+checkResultQuery($result, $conn, __FUNCTION__);
     while ($row = mysqli_fetch_assoc($result)) {
         $name = $row["arabic_name"];
         $id = $row['id_student'];
@@ -471,7 +477,7 @@ function display_student_assignments($semester, $courseid)
                          
                             <div class='btn-grp col-lg-2 col-md-12'>
                     
-                                <a href='UnHand.php?id=$id&student' class='btn btn-primary btn-block'>View</a> 
+                                <a href='UnHand.php?id=$id' class='btn btn-primary btn-block'>View</a> 
                                 
                               
         </div>
@@ -484,6 +490,8 @@ function display_student_assignments($semester, $courseid)
     ";
     }
 }
+
+
 function student_view_assignment($id, $studentid)
 {
     global $conn;
@@ -496,6 +504,8 @@ function student_view_assignment($id, $studentid)
         turnin_view($id, $studentid);
     }
 }
+
+
 function unturnin_view($id, $studentid)
 {
     global $conn;
@@ -585,6 +595,8 @@ $description <br>
 
 ";
 }
+
+
 function turnin_view($id, $studentid)
 {
     global $conn;
@@ -666,6 +678,8 @@ $description <br>
 <br><br>
 ";
 }
+
+
 function turnin($id, $studentid)
 {
     global $conn;
@@ -709,6 +723,7 @@ function add_assignment_grade()
     echo "<meta http-equiv='refresh' content='0'>";
 }
 
+########################################################################################################################################################
 
 //get the last semester_id in the database;
 function getCurrentSemester()

@@ -1,12 +1,12 @@
 <?php
 // getting connection
-include_once dirname(__FILE__, 2) . "\\db_conn.php";
+include_once dirname(__FILE__, 3) . "\\db_conn.php";
 
 // global variables
-include_once "variables.php";
+include_once dirname(__FILE__, 3) . "\\utils\\variables.php";
 
 // helper functions
-include_once "helper.php";
+include_once dirname(__FILE__, 3) . "\\utils\\helper.php";
 
 // printing functions
 include_once "print_functions.php";

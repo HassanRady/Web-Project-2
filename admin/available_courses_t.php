@@ -1,7 +1,7 @@
 <?php
 ob_start();
 include "../includes/functions.php";
-include "../includes/sas/functions.php";
+include dirname(__FILE__, 2) . "\\includes\\Admin\\sas\\functions.php";
 session_start();
 ?>
 
