@@ -39,8 +39,9 @@ function NewProfessorDataForm()
 {
     $description = $_POST['description'];
     $instructor_id = $_POST['national_id'];
+    $is_admin = $_POST['isAdmin'];
 
-    return array($instructor_id, $description);
+    return array($instructor_id, $description, $is_admin);
 }
 
 
@@ -65,4 +66,30 @@ function NewSaDataForm()
     $department = $_POST['department'];
     $instructor_id = $_POST['national_id'];
     return array($instructor_id);
+}
+
+
+/**
+ * @return array
+ */
+function editProfileForm() {
+    $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'];
+    $last_name = $_POST['last_name'];
+    $mobile_number = $_POST['mobile_number'];
+    $home_number = $_POST['home_number'];
+    $password =  $_POST['password'];
+
+    return array($first_name, $middle_name, $last_name, $password, $mobile_number, $home_number);
+}
+
+
+/**
+ * @return array
+ */
+function studentEditProfileForm() {
+    $address = $_POST["address"];
+    $guardian_mobile_number = $_POST['guardian_mobile_number'];
+
+    return array($address, $guardian_mobile_number);
 }

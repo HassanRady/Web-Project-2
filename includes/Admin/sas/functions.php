@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
+include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 /**
  * @param string $pageName
@@ -204,25 +204,17 @@ function saProfile($id)
  */
 function editSaProfile($id)
 {
-    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
-
-    $dataBaseConnection = connectToDataBase();
-    $password = encrypt_password($password);
-
-    $mainSqlQuery = "UPDATE users
-         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
-             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-         WHERE id = {$id};";
-
-    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
-    $dataBaseConnection->close();
+    editProfileCommon($id);
 }
 
-/*
-* @param string $category : The category of the courses we would like
-* returns a query_result containing (course_id, name, credits, has_preq, has_labs, has_practical, category, elective)
-*/
+
+
+
+
+/**
+ * @param string $category : The category of the courses we would like
+ * returns a query_result containing (course_id, name, credits, has_preq, has_labs, has_practical, category, elective)
+ */
 function getAvailableCourses($category)
 {
     global $conn;
@@ -278,16 +270,15 @@ function openCourse($courseId, $professorId, $level)
 {
     global $conn;
 
-    if(checkIfCourseIsOpen($courseId)){
+    if (checkIfCourseIsOpen($courseId)) {
         // open_courses table
         $open_course_query = "INSERT INTO open_courses(level, student_count, course_id) VALUES ('$level', '0', '$courseId');";
         $open_course_query_result = mysqli_query($conn, $open_course_query);
         checkQuery($open_course_query_result);
-        
+
         // open_courses_instructors table 
         $instructor_query = "INSERT INTO open_courses_instructors(instructor_id, course_id) VALUES ('$professorId', '$courseId');";
         $instructor_query_result = mysqli_query($conn, $instructor_query);
         checkQuery($instructor_query_result);
     }
-
 }

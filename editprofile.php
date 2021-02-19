@@ -1,5 +1,7 @@
 <?php
-include "includes/callable_functions.php";
+include "includes/Admin/callable_functions.php";
+include "includes/utils/variables.php";
+include_once "paths.php";
 updateProfile();
 ?>
 
@@ -29,58 +31,16 @@ updateProfile();
 <body>
 
   <div class="wrapper">
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-      <div class="sidebar-header">
-        <img src="media/logo.jpeg" alt="SIM-LOGO">
-      </div>
-      <p>Navigation</p>
-      <ul class="list-unstyled components">
-        <li class="active">
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-              <a href="#">Students</a>
-            </li>
-            <li>
-              <a href="#">Professors</a>
-            </li>
-            <li>
-              <a href="#">Teaching Assistants</a>
-            </li>
-            <li>
-              <a href="#">Student Affairs</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li>
-              <a href="#">Open Courses</a>
-            </li>
-            <li>
-              <a href="#">All Courses</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="my_profile.php?id=<?php echo $id_user . '&type=' . $type ?>">My Profile</a>
-        </li>
-        <li>
-          <a href="#">Timetable</a>
-        </li>
-        <li>
-          <a href="#">Others</a>
-        </li>
-      </ul>
+  <?php
 
-      <ul class="list-unstyled CTAs">
-        <li>
-          <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-        </li>
-      </ul>
-    </nav>
+if ($type === $studentsType) 
+  include $student_sidebar_path;
+ elseif ($type === $adminsType || $type == $sasType)
+  include $admin_sidebar_path;
+else
+  include $professor_sidebar_path;
+
+?>
     <!-- Page Content  -->
     <div id="content">
 
@@ -148,7 +108,7 @@ updateProfile();
 
 
               <?php
-              if ($type === 'students')
+              if ($type === $studentsType)
                 echo "
                     <hr class='mb-4'>
                     <div class='row'>
@@ -171,7 +131,7 @@ updateProfile();
                 </div>
 
                 <?php
-                if ($type == 'students')
+                if ($type == $studentsType)
                   echo "
                         <div class='col-lg-4 col-md-6 col-sm-12 mb-3'>
                             <label for='gender'>Guardian Mobile Number</label>

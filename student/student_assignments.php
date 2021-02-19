@@ -116,7 +116,7 @@ $semester=$_GET['semester'];
                 <div class="page-body">
 
 <?php
-display_student_assignments($semester,$id_course);
+display_student_assignments(1,1);
 ?>
 
                 </div>

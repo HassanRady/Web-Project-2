@@ -1,7 +1,7 @@
 <?php
 
 
-include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
+include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 /**
  * @param string $pageName
@@ -182,31 +182,22 @@ function studentProfile($id)
  */
 function editStudentProfile($id)
 {
-    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
-    list($_, $_, $address, $guardian_mobile_number, $_) = NewStudentDataForm();
+    list($address, $guardian_mobile_number) = studentEditProfileForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
     $address = mysqli_real_escape_string($dataBaseConnection, $address);
 
-    $password = encrypt_password($password);
-
-    $firstSqlQuery = "UPDATE users
-             SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
-                 last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-             WHERE id = {$id};";
-    // query for updating student in students table
-    $secondSqlQuery = "UPDATE students
+    $mainSqlQuery = "UPDATE students
              SET address='{$address}', guardian_mobile_number='{$guardian_mobile_number}'
              WHERE id_user = {$id};";
 
     mysqli_autocommit($dataBaseConnection, FALSE);
 
-    $result1 = mysqli_query($dataBaseConnection, $firstSqlQuery);
-    checkResultQuery($result1, $dataBaseConnection, __FUNCTION__);
+    editProfileCommon($id, $dataBaseConnection);
 
-    $result3 = mysqli_query($dataBaseConnection, $secondSqlQuery);
-    checkResultQuery($result3, $dataBaseConnection, __FUNCTION__);
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
     mysqli_commit($dataBaseConnection);
     $dataBaseConnection->close();
