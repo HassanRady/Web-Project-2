@@ -16,7 +16,7 @@ include_once dirname(__FILE__, 2)."\\paths.php";
         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
         <ul class="collapse list-unstyled" id="pageSubmenu">
         <li>
-            <a href="<?php echo $my_courses_path ?>">My Courses</a>
+            <a href="<?php echo $my_courses_path_student ?>">My Courses</a>
         </li>
         <li>
             <a href="course_registration.html">All Courses</a>

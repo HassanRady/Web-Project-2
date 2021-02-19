@@ -21,7 +21,9 @@
     <!-- Sidebar  -->
     <?php 
       include "../includes/prof_sidebar.php";
-      $instructorId = $_GET['instructor_id'];
+      session_start();
+      // $instructorId = $_SESSION['id'];
+      $instructorId = 18;
     ?>
     <!-- Page Content  -->
     <div id="content">

@@ -1,7 +1,7 @@
 <?php
 
 
-$root ="Web-Project-2"; # "Web-Project-2" is the root directory before "web project" is the "htdocs"
+$root =  "Web-Project-2";
 
 $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY_SEPARATOR. "logo.jpeg";
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
@@ -19,7 +19,8 @@ $sas_list_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "admin" .DIREC
 
 // Student's paths
 $student_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "std_sidebar.php";
-$my_courses_path =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "my_courses_std.php";
+$my_courses_path_student =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "my_courses_std.php";
 
 
 $professor_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "prof_sidebar.php";
+$my_courses_path_professor = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "my_courses_instructor.php";
