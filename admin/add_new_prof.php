@@ -166,7 +166,7 @@ addNewProfessor();
 
                             <hr class="mb-4">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="same-address">
+                                <input type="checkbox" class="custom-control-input" id="same-address" name="isAdmin" value="1">
                                 <label class="custom-control-label" for="same-address">Set as Administrator</label>
                             </div>
                             <!-- <hr class="mb-4"> -->

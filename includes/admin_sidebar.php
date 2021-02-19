@@ -1,10 +1,10 @@
 <?php
-include_once "..\\includes\\utils\\variables.php";
+include_once dirname(__FILE__, 2)."\\paths.php";
 ?>
 
 <nav id="sidebar">
             <div class="sidebar-header">
-                <img src="../media/logo.jpeg" alt="SIM-LOGO">
+                <img src="<?php echo $logo_path ?>" alt="SIM-LOGO">
             </div>
             <p>Navigation</p>
             <ul class="list-unstyled components">

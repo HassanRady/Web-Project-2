@@ -2,6 +2,7 @@
 
 include "includes/Admin/callable_functions.php";
 include "includes/utils/variables.php";
+include_once "paths.php";
 userProfile();
 
 ?>
@@ -35,12 +36,14 @@ userProfile();
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php
-    
-    if ($type === $studentsType) {
-      include "includes\std_sidebar.php";
-    } else {
-      include "includes\prof_sidebar.php";
-    }
+
+    if ($type === $studentsType) 
+      include $student_sidebar_path;
+     elseif ($type === $adminsType || $type == $sasType)
+      include $admin_sidebar_path;
+    else
+      include $professor_sidebar_path;
+
     ?>
     <!-- Page Content  -->
     <div id="content">

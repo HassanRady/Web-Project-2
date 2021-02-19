@@ -1,6 +1,7 @@
 <?php
 
 // Database tables
+$usersTable = "users";
 $studentsTable = "students";
 $professorsTable = "professors";
 $tasTable = "tas";
@@ -25,7 +26,7 @@ $profileImageDir = "profile_images";
 $all_courses_path = "..\\admin\\available_courses_t.php";
 $my_profile_path = "../my_profile.php";
 $venues_path = "..\\admin\\venues.php";
-$students_list_path = "..\\admin\\Students.php";
+$students_list_path = ".\\admin\\Students.php";
 $professors_list_path = "..\\admin\\Professors.php";
 $tas_list_path = "..\\admin\\ta_list.php";
 $sas_list_path = "..\\admin\\sa_list.php";

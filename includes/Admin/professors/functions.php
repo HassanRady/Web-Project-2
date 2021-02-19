@@ -9,7 +9,6 @@ include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 function showProfessors($pageName)
 {
     global $ProfessorsType;
-    $type = $ProfessorsType;
     $data = getProfessorsData();
     printProfessorsData($data, $pageName);
 }
@@ -81,10 +80,10 @@ function getProfessorsData()
 
 function addProfessor()
 {
-    global $professorsType;
+    global $professorsType, $adminsType;
 
     list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
-    list($instructor_id, $description) = NewProfessorDataForm();
+    list($instructor_id, $description, $is_admin) = NewProfessorDataForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
@@ -92,9 +91,11 @@ function addProfessor()
 
     $password = encrypt_password($password);
 
+    $type = $is_admin == '1' ? $adminsType : $professorsType; 
+
     // for users table
     $firstSqlQuery = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$professorsType', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$type', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
     
     mysqli_autocommit($dataBaseConnection, FALSE);
 
@@ -173,17 +174,5 @@ function professorProfile($id)
  */
 function editProfessorProfile($id)
 {
-    list($first_name, $middle_name, $last_name, $_, $_, $password, $_, $mobile_number, $home_number) = NewUserDataForm();
-
-    $dataBaseConnection = connectToDataBase();
-    $password = encrypt_password($password);
-
-    $mainSqlQuery = "UPDATE users
-         SET first_name='{$first_name}', password='{$password}', middle_name='{$middle_name}',
-             last_name='{$last_name}',  mobile_number='{$mobile_number}', home_number='{$home_number}'
-         WHERE id = {$id};";
-
-    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
-    $dataBaseConnection->close();
+    editProfileCommon($id);
 }
