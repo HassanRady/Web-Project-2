@@ -109,11 +109,12 @@ function getRowsPerPage($table)
 
 
 function changeImage($id) {
+    global $profileImageDir;
     if (isset($_POST['submit'])) {
 
         $image = $_FILES['image']['name'];
         $imageTmp = $_FILES['image']['tmp_name'];
-        $image_dir = "profile_images/$image";
+        $image_dir = "$profileImageDir/$image";
         move_uploaded_file($imageTmp, $image_dir);
 
         $dataBaseConnection = connectToDataBase();

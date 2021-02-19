@@ -14,3 +14,5 @@ $adminsType = "admins";
 $userTypes = array($studentsType, $professorsType, $tasType, $sasType, $adminsType);
 
 $rowsPerPage = 3;
+
+$profileImageDir = "profile_images";

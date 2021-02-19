@@ -1,23 +1,11 @@
 <?php
 
-// getting connection
-include_once dirname(__FILE__, 2) . "\\db_conn.php";
 
-// global variables
-include_once dirname(__FILE__, 2) . "\\utils\\variables.php";
+include_once dirname(__FILE__, 3) . "\\utils\\iniclude_utils_files.php";
 
-// helper functions
-include_once dirname(__FILE__, 2) . "\\utils\\helper.php";
-
-// printing functions
-include_once dirname(__FILE__, 2) . "\\utils\\print_functions.php";
-
-// form data retriever functions
-include_once dirname(__FILE__, 2) . "\\utils\\form_functions.php";
-
-include_once dirname(__FILE__, 2) . "\\utils\\all.php";
-
-
+/**
+ * @return array
+ */
 function searchForProfessor()
 {
     global $professorsTable, $rowsPerPage, $professor_name, $professor_email, $professor_phone, $countRows;
@@ -55,7 +43,9 @@ function searchForProfessor()
 
 
 
-
+/**
+ * @param array $professorsData
+ */
 function showProfessorSearch($professorsData)
 {
     $pageName = basename($_SERVER['PHP_SELF']);
