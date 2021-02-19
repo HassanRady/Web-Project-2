@@ -1,7 +1,7 @@
 <?php
 include_once dirname(__FILE__, 2)."\\paths.php";
 ?>
-<?php session_start();
+<?php 
 if(isset($_POST['logout-btn'])){
     logout();
 }

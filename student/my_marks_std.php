@@ -1,7 +1,5 @@
 <?php
-ob_start(); 
-include "../includes/functions.php";
-session_start();
+ob_start();
 ?>
 
 <!DOCTYPE html>

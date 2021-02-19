@@ -1,11 +1,4 @@
-<?php
 
-include "../includes/functions.php";
-//stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
-$course_id = 1;
-$user_id = 2;
-$user_name = getUserName($user_id);
-?>
 
 
 <!DOCTYPE html>
@@ -45,32 +38,13 @@ $user_name = getUserName($user_id);
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <img src="../media/logo.jpeg" alt="SIM-LOGO">
-        </div>
-        <p>Navigation</p>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="announcements.html">Home</a>
-            </li>
-            <li>
-                <a href="discussion.php">My Courses</a>
-            </li>
-            <li>
-                <a href="../my_profile.html">My Profile</a>
-            </li>
-            <li>
-                <a href="timetable.html">Timetable</a>
-            </li>
-        </ul>
-
-        <ul class="list-unstyled CTAs">
-            <li>
-                <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-            </li>
-        </ul>
-    </nav>
+    <?php
+    include "../includes/prof_sidebar.php";
+    //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
+    $course_id = 1;
+    $user_id = 2;
+    $user_name = getUserName($user_id);
+    ?>
     <!-- Page Content  -->
     <div id="content">
 
