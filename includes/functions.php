@@ -3,6 +3,7 @@
 include_once "db_conn.php";
 include_once "utils\\variables.php";
 include_once "utils\\helper.php";
+include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
 
 
 
@@ -1629,7 +1630,8 @@ function deletePoll($poll_id){
 
 }
 function logout(){
+    global $login_path;
     session_destroy();
-    header("Location:../login.php");
+    header("Location:$login_path");
 }
 
