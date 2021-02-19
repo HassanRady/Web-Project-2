@@ -12,7 +12,7 @@ include_once dirname(__FILE__, 2)."\\paths.php";
             <a href="announcements.html">Home</a>
         </li>
         <li>
-            <a href="my_courses_prof_ta.html">My Courses</a>
+            <a href="<?php echo $my_courses_path_professor ?>">My Courses</a>
         </li>
         <li>
             <a href="<?php echo $my_profile_path ?>">My Profile</a>

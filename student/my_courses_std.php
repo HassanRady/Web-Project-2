@@ -21,10 +21,10 @@
 
   <div class="wrapper">
     <!-- Sidebar  -->
-    <?php 
-      include "../includes/std_sidebar.php";
-      session_start();
-$std_id=$_SESSION['id'];
+    <?php
+    include "../includes/std_sidebar.php";
+    session_start();
+    $std_id = $_SESSION['id'];
     ?>
 
 
@@ -39,9 +39,7 @@ $std_id=$_SESSION['id'];
             <!-- <span id="nav-toggle-text">Navigation</span> -->
           </button>
           <a class="navbar-brand" id="page-title" href="#">My Courses</a>
-          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
 
@@ -53,7 +51,7 @@ $std_id=$_SESSION['id'];
               <li class="nav-item">
                 <a class="nav-link" href="#">My Courses</a>
               </li>
-              
+
             </ul>
           </div>
       </nav>
@@ -67,29 +65,29 @@ $std_id=$_SESSION['id'];
 
           <div class="row courseslist ">
 
-              <?php
-                getStudentCourses($std_id);
-              ?>
+            <?php
+            getStudentCourses($std_id);
+            ?>
 
-            </div>
           </div>
-
         </div>
 
-
-
-
-
-
-
-
-
-
-        <!-- STOP HERE -->
       </div>
 
 
+
+
+
+
+
+
+
+
+      <!-- STOP HERE -->
     </div>
+
+
+  </div>
   </div>
 
   <?php include "../includes/bootstrap_styles_end.php"; ?>

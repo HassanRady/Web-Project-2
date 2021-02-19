@@ -114,23 +114,12 @@ function addsa()
 {
     global $sasType;
 
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($instructor_id, $department) = NewSaDataForm();
 
-    // handling realescape
     $dataBaseConnection = connectToDataBase();
-    $email = mysqli_real_escape_string($dataBaseConnection, $email);
-
-    $password = encrypt_password($password);
-
-    // for users table
-    $firstSqlQuery = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$sasType', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
 
     mysqli_autocommit($dataBaseConnection, false);
-
-    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+    addUser($sasType, $dataBaseConnection);
 
     $last_id = mysqli_insert_id($dataBaseConnection);
 
