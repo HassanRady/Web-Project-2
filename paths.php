@@ -22,3 +22,4 @@ $my_courses_path_student =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "st
 
 $professor_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "prof_sidebar.php";
 $my_courses_path_professor = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "my_courses_instructor.php";
+$login_path = DIRECTORY_SEPARATOR.$root .DIRECTORY_SEPARATOR. "login.php";
