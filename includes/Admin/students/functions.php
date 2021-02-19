@@ -88,28 +88,15 @@ function addStudent()
 {
     global $studentsType;
 
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
 
-    // handling realescape
     $dataBaseConnection = connectToDataBase();
-    $email = mysqli_real_escape_string($dataBaseConnection, $email);
-    $address = mysqli_real_escape_string($dataBaseConnection, $address);
-
-    $password = encrypt_password($password);
-
-    // for users table
-    $firstSqlQuery = "INSERT INTO users 
-                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$studentsType', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
 
     mysqli_autocommit($dataBaseConnection, FALSE);
+    addUser($studentsType, $dataBaseConnection);
                         
-    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
-    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
-
     $last_id = mysqli_insert_id($dataBaseConnection);
 
-    // query for adding a student
     $secondSqlQuery = "INSERT INTO students (id_user, student_id, arabic_name, address, guardian_mobile_number, student_type)
                                     VALUES ($last_id, $student_id, '$arabic_name', '$address', '$guardian_mobile_number', '$student_type');";
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);

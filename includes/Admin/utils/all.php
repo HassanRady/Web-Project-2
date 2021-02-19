@@ -2,6 +2,28 @@
 
 include_once "iniclude_utils_files.php";
 
+/**
+ * @param string $type
+ * @param mysqli $dataBaseConnection
+ */
+function addUser($type, $dataBaseConnection)
+{
+    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+
+    // handling realescape
+    $dataBaseConnection = $dataBaseConnection;
+    $email = mysqli_real_escape_string($dataBaseConnection, $email);
+
+    $password = encrypt_password($password);
+
+    $firstSqlQuery = "INSERT INTO users 
+                        VALUES (default, '$first_name', '$middle_name', '$last_name', $national_id, '$type', '$email', '$password', '$gender', '$mobile_number', '$home_number', default);";
+
+    $result =  mysqli_query($dataBaseConnection, $firstSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+}
+
+
 
 /**
  * @param int $id
