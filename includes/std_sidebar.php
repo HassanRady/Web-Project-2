@@ -1,11 +1,11 @@
 <?php
+include "functions.php";
 include_once dirname(__FILE__, 2)."\\paths.php";
 include_once dirname(__FILE__, 1) .DIRECTORY_SEPARATOR. "functions.php";
 ?>
 
-<?php session_start();
+<?php
 if(isset($_POST['logout-btn'])){
-    echo "tested";
     logout();
 }
 ?>
