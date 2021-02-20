@@ -8,7 +8,6 @@ if(isset($_POST['logout-btn'])){
     echo "tested";
     logout();
 }
-
 ?>
 
 
