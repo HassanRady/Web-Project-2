@@ -1,9 +1,10 @@
 <?php
 
-$root =  "SIM" .DIRECTORY_SEPARATOR. "Web-Project-2";
+$root =  "web project" .DIRECTORY_SEPARATOR. "my branch" .DIRECTORY_SEPARATOR. "Web-Project-2";
 $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY_SEPARATOR. "logo.jpeg";
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
 $login_path =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "login.php";
+
 
 // Admin's paths
 $admin_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "admin_sidebar.php";
@@ -20,6 +21,9 @@ $student_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPA
 $my_courses_path_student =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "my_courses_std.php";
 
 
+// Professor's paths
 $professor_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "prof_sidebar.php";
+$professor_navbar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "professor_navbar.php";
 $my_courses_path_professor = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "my_courses_instructor.php";
-$login_path = DIRECTORY_SEPARATOR.$root .DIRECTORY_SEPARATOR. "login.php";
+$discussion_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "discussion.php";
+$assignments_professor_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "assignment-hand-ins.php";

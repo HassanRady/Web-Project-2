@@ -37,9 +37,9 @@ userProfile();
     <!-- Sidebar  -->
     <?php
 
-    if ($type === $studentsType) 
+    if ($type === $studentsType)
       include $student_sidebar_path;
-     elseif ($type === $adminsType || $type == $sasType)
+    elseif ($type === $adminsType || $type == $sasType)
       include $admin_sidebar_path;
     else
       include $professor_sidebar_path;
@@ -50,7 +50,6 @@ userProfile();
 
       <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
         <div class="container-fluid">
-
           <button type="button" id="sidebarCollapse" class="btn btn-primary">
             <i class="fas fa-align-left"></i>
             <!-- <span id="nav-toggle-text">Navigation</span> -->
@@ -59,27 +58,6 @@ userProfile();
           <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav ml-auto secondary-navigation">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Discussion</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="academic\assignment-answers-students.php">Assignments</a>
-                <a class="nav-link" href="academic\assignment-hand-ins.php">Assignments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Material</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Students</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Marks</a>
-              </li>
-            </ul>
-          </div>
       </nav>
 
 
@@ -101,13 +79,13 @@ userProfile();
                       <p class='text-secondary mb-1'>Level $level</p>";
                   ?>
 
-                <form action="" method="POST" enctype="multipart/form-data">
-                  <div class="file-input" id="f">
-                    <input type="file" id="file" class="file" name="image">
-                    <button type="submit" class="" name="submit">submit</button>
-                  </div>
-                </form>
-                
+                  <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="file-input" id="f">
+                      <input type="file" id="file" class="file" name="image">
+                      <button type="submit" class="" name="submit">submit</button>
+                    </div>
+                  </form>
+
 
                   <a href="editprofile.php" class="btn btn-outline-primary btn-md">Edit</a>
                 </div>
@@ -193,14 +171,14 @@ userProfile();
       </div>
 
 
-<?php
-if($type == $studentsType) {
-  echo "<button><a href='student\student_assignments.php'>course_assignments</a></button>";
-}
-?>
+      <?php
+      if ($type == $studentsType) {
+        echo "<button><a href='student\student_assignments.php'>course_assignments</a></button>";
+      }
+      ?>
 
 
-     <!-- STOP HERE -->
+      <!-- STOP HERE -->
     </div>
 
 

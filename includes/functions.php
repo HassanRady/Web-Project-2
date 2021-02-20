@@ -3,6 +3,7 @@
 include_once "db_conn.php";
 include_once "utils\\variables.php";
 include_once "utils\\helper.php";
+include_once "Admin" .DIRECTORY_SEPARATOR. "professors" .DIRECTORY_SEPARATOR. "functions.php";
 include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
 
 
@@ -49,11 +50,14 @@ function login()
         $_SESSION['middle_name'] = $middle_name;
         $_SESSION['last_name'] = $last_name;
         $_SESSION['type'] = $type;
+
         switch ($type) {
             case $studentsType:
                 header("Location: my_profile.php");
                 break;
             case $professorsType:
+                $data = getProfessor($id);
+                $_SESSION['id_instructor'] = $data['id_instructor'];
                 header("Location: my_profile.php");
                 break;
             case $tasType:
