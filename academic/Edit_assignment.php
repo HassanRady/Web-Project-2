@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html>
 <?php
-include "../includes/functions.php";
-$id=$_GET['id'];
-$id_course=$_GET['courseid'];
-$semester=$_GET['semester'];
-if(isset($_POST['update'])){
-
-    edit_prof_assignment($id);
-}
 ?>
 <head>
     <meta charset="utf-8">
@@ -41,32 +33,16 @@ if(isset($_POST['update'])){
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <img src="../media/logo.jpeg" alt="SIM-LOGO">
-        </div>
-        <p>Navigation</p>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="announcements.html">Home</a>
-            </li>
-            <li>
-                <a href="my_courses_prof_ta.html">My Courses</a>
-            </li>
-            <li>
-                <a href="../my_profile.html">My Profile</a>
-            </li>
-            <li>
-                <a href="timetable.html">Timetable</a>
-            </li>
-        </ul>
+    <?php
+    include "../includes/prof_sidebar.php";
+    $id=$_GET['id'];
+    $id_course=$_GET['courseid'];
+    $semester=$_GET['semester'];
+    if(isset($_POST['update'])){
 
-        <ul class="list-unstyled CTAs">
-            <li>
-                <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-            </li>
-        </ul>
-    </nav>
+        edit_prof_assignment($id);
+    }
+    ?>
     <!-- Page Content  -->
     <div id="content">
 
