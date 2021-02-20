@@ -1360,6 +1360,7 @@ function addNewPost($id_user, $id_course, $post_title, $post_author, $post_user,
     global $conn;
     $query = "INSERT INTO `posts`(id_user, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
     $query .= "VALUES('$id_user', '$id_course', '$post_title', '$post_author', '$post_user', '$post_date', '$post_content','$post_tags')";
+    // die($query);
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));

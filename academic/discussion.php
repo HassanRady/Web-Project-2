@@ -2,8 +2,10 @@
 
 include "../includes/functions.php";
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
-$course_id = 1;
-$user_id = 2;
+$course_id = $_GET['course_id'];
+// die(var_dump($course_id));
+session_start();
+$user_id = $_SESSION['id'];
 $user_name = getUserName($user_id);
 ?>
 
@@ -120,7 +122,7 @@ $user_name = getUserName($user_id);
 
             <div class="container discussion-form">
                 <h5 class="">Start a new discussion:</h5>
-                <form class="row" action="discussion.php" method="post">
+                <form class="row" action="" method="post">
                     <div class="col-lg-12">
                             <textarea class="w-100 p-3" id="exampleFormControlTextarea1"
                                       name="post_text"
