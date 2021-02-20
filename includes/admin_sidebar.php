@@ -1,13 +1,6 @@
 <?php
 include_once dirname(__FILE__, 2)."\\paths.php";
 ?>
-<?php 
-if(isset($_POST['logout-btn'])){
-    logout();
-}
-
-?>
-
 
 <nav id="sidebar">
             <div class="sidebar-header">
@@ -58,8 +51,8 @@ if(isset($_POST['logout-btn'])){
             </ul>
 
             <ul class="list-unstyled CTAs">
-                <form method="post">
-                    <input type="submit" class="cta-logout" name="logout-btn" value="Logout">
-                </form>
+                <li>
+                    <a href="#" class="cta-logout" id="logout-btn">Logout</a>
+                </li>
             </ul>
         </nav>

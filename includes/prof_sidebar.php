@@ -1,14 +1,5 @@
 <?php
-include "functions.php";
-include_once dirname(__FILE__, 2)."\\paths.php";
-include_once dirname(__FILE__, 1) .DIRECTORY_SEPARATOR. "functions.php";
-?>
-<?php
-if(isset($_POST['logout-btn'])){
-
-    logout();
-}
-
+include_once dirname(__FILE__, 2)."\\paths.php"; 
 ?>
 
 <nav id="sidebar">
@@ -32,9 +23,7 @@ if(isset($_POST['logout-btn'])){
     </ul>
     <ul class="list-unstyled CTAs">
         <li>
-            <form method="post">
-                <input type="submit" class="cta-logout" name="logout-btn" value="Logout">
-            </form>
+            <a href="login.php" class="cta-logout" id="logout-btn">Logout</a>
         </li>
     </ul>
 </nav>
