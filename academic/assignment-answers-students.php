@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-
+<?php include '../includes/functions.php' ; ?>
 
 <head>
     <meta charset="utf-8">
@@ -34,9 +34,32 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php
-        include "../includes/prof_sidebar.php";
-        ?>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="../media/logo.jpeg" alt="SIM-LOGO">
+            </div>
+            <p>Navigation</p>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="announcements.html">Home</a>
+                </li>
+                <li>
+                    <a href="my_courses_prof_ta.html">My Courses</a>
+                </li>
+                <li>
+                    <a href="../my_profile.html">My Profile</a>
+                </li>
+                <li>
+                    <a href="timetable.html">Timetable</a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="cta-logout" id="logout-btn">Logout</a>
+                </li>
+            </ul>
+        </nav>
         <!-- Page Content  -->
         <div id="content">
 

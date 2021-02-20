@@ -216,7 +216,7 @@ if($type == $studentsType) {
   <!-- jQuery Custom Scroller CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <!-- Navbar -->
-  <script type="text/javascript" src="js/rootJS.js"></script>
+  <script type="text/javascript" src="rootJS.js"></script>
 
 </body>
 

@@ -27,29 +27,11 @@
   <component name="ChangeListManager">
     <list default="true" id="17980649-d45e-4239-9a0d-c41b55b92cf7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/Edit_assignment.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/Edit_assignment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/assignment-answers-students.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/assignment-answers-students.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/assignment-hand-ins.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/assignment-hand-ins.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/discussion.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/discussion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/edit_std_grades.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/edit_std_grades.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/my_courses_instructor.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/my_courses_instructor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/std_grades.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/std_grades.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/students_in_course.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/students_in_course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/timetable.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/timetable.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/upload-prof-assmt.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/upload-prof-assmt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/upload_material.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/upload_material.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/admin_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/admin_sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/db_conn.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/db_conn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/prof_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/prof_sidebar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/std_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/std_sidebar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/paths.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/UnHand.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/UnHand.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student/announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/announcements.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/material.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/material.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/my_courses_std.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/my_courses_std.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/my_marks_std.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/my_marks_std.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/student_assignments.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/student_assignments.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/timetable.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/timetable.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/discussion_no_post.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,10 +123,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="413" y="130" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1613750923897">
+    <state x="413" y="130" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1613743503171">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="413" y="130" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.768@0.0.1366.768" timestamp="1613750923897" />
+    <state x="413" y="130" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.768@0.0.1366.768" timestamp="1613743503171" />
     <state x="517" y="307" key="NewPhpFileDialog" timestamp="1608911403599">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -157,10 +139,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="275" y="116" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1610192249078" />
-    <state x="339" y="172" key="run.anything.popup" timestamp="1613752878123">
+    <state x="339" y="172" key="run.anything.popup" timestamp="1609369626142">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="339" y="172" key="run.anything.popup/0.0.1366.768@0.0.1366.768" timestamp="1613752878123" />
+    <state x="339" y="172" key="run.anything.popup/0.0.1366.768@0.0.1366.768" timestamp="1609369626142" />
     <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1610308668724">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

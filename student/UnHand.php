@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <?php
-
+include "../includes/functions.php";
 $aid=$_GET['id'];
-
-
+session_start();
+$student=$_SESSION['id'];
 
 ?>
 <head>
@@ -32,10 +32,69 @@ $aid=$_GET['id'];
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include "../includes/std_sidebar.php";
-        $student=$_SESSION['id'];
-        ?>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="../media/logo.jpeg" alt="SIM-LOGO">
+            </div>
+            <p>Navigation</p>
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Students</a>
+                        </li>
+                        <li>
+                            <a href="#">Professors</a>
+                        </li>
+                        <li>
+                            <a href="#">Teaching Assistants</a>
+                        </li>
+                        <li>
+                            <a href="#">Student Affairs</a>
+                        </li>
+                        <li>
+                            <a href="#">Admins</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">All Courses</a>
+                        </li>
+                        <li>
+                            <a href="#">Open Courses</a>
+                        </li>
+                        <li>
+                            <a href="#">My Courses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">My Profile</a>
+                </li>
+                <li>
+                    <a href="#">Timetable</a>
+                </li>
+                <li>
+                    <a href="#">Venues</a>
+                </li>
+                <li>
+                    <a href="#">Other</a>
+                </li>
+            </ul>
 
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="cta-logout" id="logout-btn">Logout</a>
+                </li>
+            </ul>
+        </nav>
         <!-- Page Content  -->
         <div id="content">
 
