@@ -62,8 +62,12 @@
                             </thead>
                             <tbody>
                                 <form method="post">
-                                    <?php $ass_id = $_GET['ass_id'];
-                                    show_prof_student_assignments($ass_id);  ?>
+                                    <?php 
+                                    $ass_id = $_GET['ass_id'];
+                                    $course_id = $_GET['course_id'];
+                                    $sem_id = $_GET['sem_id'];
+                                    show_prof_student_assignments($ass_id, $sem_id, $course_id);  
+                                    ?>
                             </tbody>
                         </table>
                     </div>

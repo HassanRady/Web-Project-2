@@ -394,7 +394,7 @@ function edit_prof_assignment($id)
         die("Failed" . mysqli_error($conn));
     }
 }
-function show_prof_student_assignments($id)
+function show_prof_student_assignments($id,$id_sem,$id_course)
 {
     global $conn;
     $query = "SELECT css.id_student
@@ -402,7 +402,7 @@ function show_prof_student_assignments($id)
 ,sa.student_assignment,sa.grade ,sa.handin_date, sa.handin_time FROM course_semester_students css 
 INNER JOIN students s ON css.id_student = s.student_id
 INNER JOIN student_assignments sa on sa.id_student=css.id_student
- WHERE id_asignment='$id'";
+ WHERE id_asignment='$id' and id_course='$id_course' and id_semester='$id_sem'";
     $i = 0;
     $result = mysqli_query($conn, $query);
     checkResultQuery($result, $conn, __FUNCTION__);
@@ -423,8 +423,8 @@ INNER JOIN student_assignments sa on sa.id_student=css.id_student
         <td> $turn_date at $turn_time </td>
                                     <td><input type='number' name='grade[$i][point]' value='$grade'></td>
                                 </tr>
-        
-        
+
+
         ";
         $i++;
     }
