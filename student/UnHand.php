@@ -2,11 +2,12 @@
 <html>
 <?php
 
-$aid=$_GET['id'];
+$aid = $_GET['ass_id'];
 
 
 
 ?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,121 +33,42 @@ $aid=$_GET['id'];
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include "../includes/std_sidebar.php";
-        $student=$_SESSION['id'];
+        <?php
+         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+
+        include_once $student_sidebar_path;
+        session_start();
+        $student = $_SESSION['student_id'];
         ?>
 
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <i class="fas fa-align-left"></i>
-                        <!-- <span id="nav-toggle-text">Navigation</span> -->
-                    </button>
-                      <a class="navbar-brand" id="page-title" href="#">Dicussion</a>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">ITEM</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">ITEM</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">ITEM</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">ITEM</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">ITEM</a>
-                            </li>
-                        </ul>
-                    </div>
-            </nav>
+        <?php
+        include_once $student_navbar_path;
+        ?>
 
 
 
 
             <div class="page-body">
-            <!-- START HERE -->
-                <?php  student_view_assignment($aid,$student);
-                if(isset($_POST['turn'])){
-turnin($aid,$student);
+                <!-- START HERE -->
+                <?php student_view_assignment($aid, $student);
+                if (isset($_POST['turn'])) {
+                    turnin($aid, $student);
                 }
-                if(isset($_POST['unturn'])){
-                    unturnin($aid,$student);
+                if (isset($_POST['unturn'])) {
+                    unturnin($aid, $student);
                 }
                 ?>
-<!--
-<div class="row">
-  <div class="col-lg-8">
 
-            <h3 class="font-weight-bold" style=" color:rgb(31,108,236);">
-              Assignment Title </h3>              <p class="handtime">
-                            Due tomorrow at 11:59 pm
-                          </p>
-                        </div>
-  <div class="col-lg-4">
-    <p class="turntime handtime">
-  Turned in Fri Dec 11, 2020 at 7:01 PM
-    </p>
-    <button type="submit" class="btn btn-primary  turnbutton">Undo Turn in</button>
-
-</div>
-                        </div>
- <hr class="mb-4 mt-1">
-<div class="row">
-
-    <div class="col-lg-6">
-
-
-              <h6 class="Instructions">Instructions</h6>
-              <p class="handtime">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-              </p>
-
-
-</div>
-
-
-<div class="col-lg-6">
-<h6> Points</h6>
-<p class="points">
-  10 points
-</p>
-</div>
-
-
-</div>
-
-
-<div class="row">
-  <div class="col-lg-6">
-    <h6 >My Work</h6>
-
-<div class="custom-file">
-    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-    <div class="invalid-feedback">Example invalid custom file feedback</div>
-  </div>
-</div>
-
-</div>
-<br><br> -->
-            <!-- STOP HERE -->
+                <!-- STOP HERE -->
             </div>
 
 
         </div>
-    </div> </div>
+    </div>
+    </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
