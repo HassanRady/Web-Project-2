@@ -49,41 +49,19 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <img src="media/logo.jpeg" alt="SIM-LOGO">
-        </div>
-        <p>Navigation</p>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="student/announcements.php">Home</a>
-            </li>
-            <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                   class="dropdown-toggle">Courses</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="student/my_courses_std.html">My Courses</a>
-                    </li>
-                    <li>
-                        <a href="student/course_registration.html">All Courses</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="student/student_transcript.html">My Profile</a>
-            </li>
-            <li>
-                <a href="student/timetable.html">Timetable</a>
-            </li>
-        </ul>
+    <?php
+        include_once "includes/utils/variables.php";
+        include_once dirname(__FILE__, 1) .DIRECTORY_SEPARATOR. "paths.php";
 
-        <ul class="list-unstyled CTAs">
-            <li>
-                <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-            </li>
-        </ul>
-    </nav>
+        session_start();
+        $type = $_SESSION['type'];
+
+        if ($type === $studentsType)
+            include $student_sidebar_path;
+        elseif ($type === $adminsType || $type == $sasType)
+            include $admin_sidebar_path;
+        else
+            include $professor_sidebar_path; ?>
 
 
     <!-- Page Content  -->

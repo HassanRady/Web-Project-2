@@ -3,7 +3,9 @@
 include_once "db_conn.php";
 include_once "utils\\variables.php";
 include_once "utils\\helper.php";
-include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
+include_once "Admin" . DIRECTORY_SEPARATOR . "utils" . DIRECTORY_SEPARATOR . "all.php";
+include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+include_once dirname(__FILE__, 1) .DIRECTORY_SEPARATOR. "Admin" .DIRECTORY_SEPARATOR. "students" .DIRECTORY_SEPARATOR. "functions.php";
 
 
 
@@ -49,6 +51,15 @@ function login()
         $_SESSION['middle_name'] = $middle_name;
         $_SESSION['last_name'] = $last_name;
         $_SESSION['type'] = $type;
+
+        if ($type !== $studentsType) {
+            $data = getInstructor($id);
+            $_SESSION['id_instructor'] = $data['instructor_id'];
+        } else {
+            $data = getStudent($id);
+            $_SESSION['student_id'] = $data['student_id'];
+        }
+
         switch ($type) {
             case $studentsType:
                 header("Location: my_profile.php");
@@ -259,7 +270,7 @@ function show_prof_assignment($id_course, $semester)
     <form method='post'>
       <input type='hidden'  name='id' value='$id'>
         <a href='#' class='btn btn-primary btn-block '>View</a>
-            <a class='btn btn-outline-secondary btn-block ' href='Edit_assignment.php?id=$id&courseid=$courseid&semester=$semester'>Edit</a>
+            <a class='btn btn-outline-secondary btn-block ' href='Edit_assignment.php?id=$id&course_id=$courseid&sem_id=$semester'>Edit</a>
         <button type='submit'  name='remove' class='btn btn-outline-danger btn-block '>Remove</button> </form>
     </div>
 
@@ -394,7 +405,7 @@ INNER JOIN student_assignments sa on sa.id_student=css.id_student
  WHERE id_asignment='$id'";
     $i = 0;
     $result = mysqli_query($conn, $query);
-checkResultQuery($result, $conn, __FUNCTION__);
+    checkResultQuery($result, $conn, __FUNCTION__);
     while ($row = mysqli_fetch_assoc($result)) {
         $name = $row["arabic_name"];
         $id = $row['id_student'];
@@ -883,7 +894,7 @@ function getInstructorCourses($instructorId)
 
 function getStudentCourses($studentId)
 {
-    global $conn;
+    global $conn, $discussion_path;
     global $semester;
     $query = "SELECT c.course_id, c.name, u.first_name, u.last_name FROM course_semester_students css 
       INNER JOIN courses c ON css.id_course = c.course_id
@@ -900,7 +911,7 @@ function getStudentCourses($studentId)
         $id = $row['course_id'];
         echo "
             <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-            <a href='discussion.php?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
+            <a href='$discussion_path?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
               <div class='course-title'>
                 $cname
               </div>
@@ -1273,8 +1284,6 @@ function getProfessorList()
     checkQuery($query_result);
 
     return $query_result;
-    
-
 }
 
 
@@ -1360,6 +1369,7 @@ function addNewPost($id_user, $id_course, $post_title, $post_author, $post_user,
     global $conn;
     $query = "INSERT INTO `posts`(id_user, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
     $query .= "VALUES('$id_user', '$id_course', '$post_title', '$post_author', '$post_user', '$post_date', '$post_content','$post_tags')";
+    // die($query);
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
@@ -1460,7 +1470,6 @@ function upVote($post_id, $user_id)
     } else {
         die('cannot add vote record to votes database ' . mysqli_error($conn));
     }
-
 }
 
 function downVote($post_id, $user_id)
@@ -1476,7 +1485,6 @@ function downVote($post_id, $user_id)
     if (!$result2) {
         die("query 2 error " . mysqli_error($conn));
     }
-
 }
 
 function redoVotePost($post_id, $user_id)
@@ -1500,7 +1508,6 @@ function redoVotePost($post_id, $user_id)
     if (!$result3) {
         die("Query3 error redoVote " . mysqli_error($conn));
     }
-
 }
 
 // to check if user has already vote in a post or not
@@ -1514,7 +1521,6 @@ function checkIfVotedPost($post_id, $user_id)
     }
 
     return mysqli_num_rows($result) != 0;
-
 }
 
 // adding new poll
@@ -1562,7 +1568,8 @@ function getPolls()
     return $result;
 }
 
-function getPollOptions($id_poll){
+function getPollOptions($id_poll)
+{
     global $conn;
     $query = "SELECT * FROM poll_options WHERE id_poll = '$id_poll' ";
     $result = mysqli_query($conn, $query);
@@ -1570,10 +1577,10 @@ function getPollOptions($id_poll){
         die("cannot get the polls " . mysqli_error($conn));
     }
     return $result;
-
 }
-function votePoll($id_user, $id_poll, $id_option){
-    global $conn ;
+function votePoll($id_user, $id_poll, $id_option)
+{
+    global $conn;
     $query1 = "INSERT INTO poll_votes(`id_user`, `id_poll`, `id_option`) VALUES('$id_user', '$id_poll', '$id_option')";
     $result1 = mysqli_query($conn, $query1);
     if (!$result1) {
@@ -1595,43 +1602,42 @@ function checkIfVotedPoll($poll_id, $user_id)
     }
 
     return mysqli_num_rows($result) != 0;
-
 }
-function redoVotePoll($user_id, $poll_id){
-    global $conn ;
+function redoVotePoll($user_id, $poll_id)
+{
+    global $conn;
     $query1 = "SELECT id_option FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
     $query2 = "DELETE FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
     $result1 = mysqli_query($conn, $query1);
-    if(!$result1){
-        die("Cannot select the option_id record redoVotePoll.. " .mysqli_error($conn));
+    if (!$result1) {
+        die("Cannot select the option_id record redoVotePoll.. " . mysqli_error($conn));
     }
-    $option_id = null ;
-    while($row = mysqli_fetch_assoc($result1)){
+    $option_id = null;
+    while ($row = mysqli_fetch_assoc($result1)) {
         $option_id = $row['id_option'];
     }
     $query3 = "UPDATE poll_options SET votes = votes - 1 WHERE option_id = $option_id";
     $result2 = mysqli_query($conn, $query2);
-    if(!$result2){
-        die("Cannot delete the vote record in redoVotePoll" .mysqli_error($conn));
+    if (!$result2) {
+        die("Cannot delete the vote record in redoVotePoll" . mysqli_error($conn));
     }
-    $result3= mysqli_query($conn, $query3);
-    if(!$result3){
-        die("Cannot update the votes in redoVotePoll" .mysqli_error($conn));
+    $result3 = mysqli_query($conn, $query3);
+    if (!$result3) {
+        die("Cannot update the votes in redoVotePoll" . mysqli_error($conn));
     }
 }
-function deletePoll($poll_id){
+function deletePoll($poll_id)
+{
     global $conn;
     $query1 = "DELETE FROM polls WHERE poll_id = '$poll_id'";
     $result1 = mysqli_query($conn, $query1);
-    if(!$result1){
-        die("Cannot delete the poll deletePoll" .mysqli_error($conn));
+    if (!$result1) {
+        die("Cannot delete the poll deletePoll" . mysqli_error($conn));
     }
-
-
 }
-function logout(){
+function logout()
+{
     global $login_path;
     session_destroy();
     header("Location:$login_path");
 }
-

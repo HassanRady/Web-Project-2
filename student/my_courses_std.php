@@ -22,9 +22,11 @@
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php
-    include "../includes/std_sidebar.php";
+    include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+
+    include_once $student_sidebar_path;
     session_start();
-    $std_id = $_SESSION['id'];
+    $std_id = $_SESSION['student_id'];
     ?>
 
 
