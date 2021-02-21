@@ -1,4 +1,14 @@
+<?php
+session_start();
 
+
+if(isset($_POST['submit'])){
+    for(){
+        updateStudentGrades();
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -55,15 +65,40 @@
                                 </tr>
                             </thead>
                             <tbody style="color: rgb(0,0,0,0.5);">
-                                <?php 
-                                    getRegisteredStudentsMarksForEdit($courseId);
-                                ?>
+                                <form action= "" method="post">
+                                    <?php
+                                        $query_result = getRegisteredStudentsMarks($courseId); 
+                                        while ($row = mysqli_fetch_assoc($query_result)) {
+                                            $grade = $row['grade'] ? $row['grade'] : "F";
+                                            $gpa = $row['gpa'];
+                                            $oral = $row['oral'];
+                                            $mid = $row['midterm'];
+                                            $cw = $row['course_work'];
+                                            $practical = $row['practical'];
+                                            $final = $row['final'];
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $row['id_student']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row["arabic_name"]; ?>
+                                                </td>
+                                                <td><input type='number' name='midterm' value="<?php echo $row["midterm"]; ?>"></td>
+                                                <td><input type='number' name='oral' value="<?php echo $row["oral"]; ?>"></td>
+                                                <td><input type='number' name='practical' value="<?php echo $row["practical"]; ?>"></td>
+                                                <td><input type='number' name='cw' value="<?php echo $row["course_work"]; ?>"></td>
+                                                <td><input type='number' name='final' value="<?php echo $row["final"]; ?>"></td>
+                                            </tr>
+                                    <?php } 
+                                    ?>
+                                </form>
 
                             </tbody>
                         </table>
                     </div>
                     <br>
-                    <button class="btn btn-block btn-primary">Upload</button>
+                    <button class="btn btn-block btn-primary" type="submit" name="submit">Upload</button>
                 </div>
 
 
