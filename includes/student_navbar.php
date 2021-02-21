@@ -21,16 +21,13 @@ include_once "functions.php";
                                 <a class="nav-link" href="<?php echo $discussion_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Discussion</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?php echo $assignments_professor_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Assignments</a>
+                                <a class="nav-link" href="<?php echo $assignments_student_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Assignments</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?php echo $materials_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Material</a>
+                                <a class="nav-link" href="<?php echo $materials_student_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Material</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?php echo $students_course_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Students</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?php echo $student_grades_professor."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Marks</a>
+                                <a class="nav-link" href="<?php echo $grades_student_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Marks</a>
                             </li>
                         </ul>
                     </div>

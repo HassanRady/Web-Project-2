@@ -31,7 +31,7 @@
         <!-- Sidebar  -->
         <?php
         include "../includes/utils/variables.php";
-        include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
+        include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
 
         session_start();
         $type = $_SESSION['type'];
@@ -52,7 +52,10 @@
         <div id="content">
 
             <?php
-            include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes" . DIRECTORY_SEPARATOR . "professor_navbar.php";
+            if ($type === $studentsType)
+                include $student_navbar_path;
+            else
+                include $professor_navbar_path;
             ?>
 
 

@@ -57,7 +57,7 @@
 
                 <div class="container-fluid">
                     <div class="row justify-content-end">
-                        <a href="<?php echo "upload-prof-assmt.php?course_id={$_GET['course_id']}&sem_id=1" ?>" class=" btn btn-primary btn-block w-25">Upload New</a>
+                        <a href="<?php echo "upload-prof-assmt.php?course_id={$_GET['course_id']}&sem_id=$semester" ?>" class=" btn btn-primary btn-block w-25">Upload New</a>
                     </div>
                 </div>
                 <hr class="mb-4">

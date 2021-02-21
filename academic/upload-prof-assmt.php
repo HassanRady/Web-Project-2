@@ -31,7 +31,8 @@
 
         if (isset($_POST['upload'])) {
             $id_course = $_GET['course_id'];
-            $id_instructor = 18;
+            session_start();
+            $id_instructor = $_SESSION['id_instructor'];;
             $id_semester = $_GET['sem_id'];
             add_assignment($id_course, $id_instructor, $id_semester);
         }

@@ -1,5 +1,6 @@
 <?php
 include_once dirname(__FILE__, 2)."\\paths.php";
+include_once "functions.php";
 ?>
 <?php 
 if(isset($_POST['logout-btn'])){
@@ -42,7 +43,7 @@ if(isset($_POST['logout-btn'])){
                             <a href="<?php echo $all_courses_path;?>">All Courses</a>
                         </li>
                         <li>
-                            <a href="available_courses.html">Open Courses</a>
+                            <a href="<?php echo $open_courses_path;?>">Open Courses</a>
                         </li>
                     </ul>
                 </li>
