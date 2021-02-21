@@ -171,11 +171,7 @@ userProfile();
       </div>
 
 
-      <?php
-      if ($type == $studentsType) {
-        echo "<button><a href='student\student_assignments.php'>course_assignments</a></button>";
-      }
-      ?>
+      
 
 
       <!-- STOP HERE -->

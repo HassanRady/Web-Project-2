@@ -269,7 +269,7 @@ function show_prof_assignment($id_course, $semester)
     <div class=' col-lg-2 col-md-12'>
     <form method='post'>
       <input type='hidden'  name='id' value='$id'>
-        <a href='#' class='btn btn-primary btn-block '>View</a>
+        <a href='assignment-answers-students.php?course_id=$courseid&sem_id=$semester&ass_id=$id' class='btn btn-primary btn-block '>View</a>
             <a class='btn btn-outline-secondary btn-block ' href='Edit_assignment.php?id=$id&course_id=$courseid&sem_id=$semester'>Edit</a>
         <button type='submit'  name='remove' class='btn btn-outline-danger btn-block '>Remove</button> </form>
     </div>
@@ -490,7 +490,7 @@ function display_student_assignments($semester, $courseid)
                          
                             <div class='btn-grp col-lg-2 col-md-12'>
                     
-                                <a href='UnHand.php?id=$id' class='btn btn-primary btn-block'>View</a> 
+                                <a href='UnHand.php?course_id=$courseid&sem_id=$semester&ass_id=$id' class='btn btn-primary btn-block'>View</a> 
                                 
                               
         </div>
