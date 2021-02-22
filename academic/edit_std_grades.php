@@ -1,4 +1,14 @@
-<?php include "../includes/functions.php"; ?>
+<?php
+session_start();
+
+
+if(isset($_POST['submit'])){
+    for(){
+        updateStudentGrades();
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -21,46 +31,17 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <?php
-            include "../includes/prof_sidebar.php";
+            include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
+
+            include_once $professor_sidebar_path;
             $courseId = $_GET['course_id'];
         ?>
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <i class="fas fa-align-left"></i>
-                        <!-- <span id="nav-toggle-text">Navigation</span> -->
-                    </button>
-                    <a class="navbar-brand" id="page-title" href="#">Edit Marks</a>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="nav navbar-nav ml-auto secondary-navigation">
-                          <li class="nav-item active">
-                              <a class="nav-link" href="discussion.php?course_id=<?php echo $courseId ?>">Discusssion</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="assignment-hand-ins.php?course_id=<?php echo $courseId ?>">Assignments</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="material.php?course_id=<?php echo $courseId ?>">Material</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="students_in_course.php?course_id=<?php echo $courseId ?>">Students</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="std_grades.php?course_id=<?php echo $courseId ?>">Marks</a>
-                          </li>
-                      </ul>
-                  </div>
-            </nav>
+        <?php
+        include_once $professor_navbar_path;
+        ?>
 
 
             <div class="page-body">
@@ -84,15 +65,40 @@
                                 </tr>
                             </thead>
                             <tbody style="color: rgb(0,0,0,0.5);">
-                                <?php 
-                                    getRegisteredStudentsMarksForEdit($courseId);
-                                ?>
+                                <form action= "" method="post">
+                                    <?php
+                                        $query_result = getRegisteredStudentsMarks($courseId); 
+                                        while ($row = mysqli_fetch_assoc($query_result)) {
+                                            $grade = $row['grade'] ? $row['grade'] : "F";
+                                            $gpa = $row['gpa'];
+                                            $oral = $row['oral'];
+                                            $mid = $row['midterm'];
+                                            $cw = $row['course_work'];
+                                            $practical = $row['practical'];
+                                            $final = $row['final'];
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $row['id_student']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row["arabic_name"]; ?>
+                                                </td>
+                                                <td><input type='number' name='midterm' value="<?php echo $row["midterm"]; ?>"></td>
+                                                <td><input type='number' name='oral' value="<?php echo $row["oral"]; ?>"></td>
+                                                <td><input type='number' name='practical' value="<?php echo $row["practical"]; ?>"></td>
+                                                <td><input type='number' name='cw' value="<?php echo $row["course_work"]; ?>"></td>
+                                                <td><input type='number' name='final' value="<?php echo $row["final"]; ?>"></td>
+                                            </tr>
+                                    <?php } 
+                                    ?>
+                                </form>
 
                             </tbody>
                         </table>
                     </div>
                     <br>
-                    <button class="btn btn-block btn-primary">Upload</button>
+                    <button class="btn btn-block btn-primary" type="submit" name="submit">Upload</button>
                 </div>
 
 

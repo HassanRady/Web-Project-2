@@ -1,6 +1,14 @@
 <?php
 include_once dirname(__FILE__, 2)."\\paths.php";
+include_once "functions.php";
 ?>
+<?php 
+if(isset($_POST['logout-btn'])){
+    logout();
+}
+
+?>
+
 
 <nav id="sidebar">
             <div class="sidebar-header">
@@ -35,7 +43,7 @@ include_once dirname(__FILE__, 2)."\\paths.php";
                             <a href="<?php echo $all_courses_path;?>">All Courses</a>
                         </li>
                         <li>
-                            <a href="available_courses.html">Open Courses</a>
+                            <a href="<?php echo $open_courses_path;?>">Open Courses</a>
                         </li>
                     </ul>
                 </li>
@@ -51,8 +59,8 @@ include_once dirname(__FILE__, 2)."\\paths.php";
             </ul>
 
             <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-                </li>
+                <form method="post">
+                    <input type="submit" class="cta-logout" name="logout-btn" value="Logout">
+                </form>
             </ul>
         </nav>

@@ -1,8 +1,7 @@
 <?php
 ob_start();
-include "../includes/functions.php";
+
 include "../includes/Student/functions.php";
-session_start();
 
 $std_id = "";
 

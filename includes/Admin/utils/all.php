@@ -46,6 +46,30 @@ function getUser($id)
 }
 
 
+
+/**
+ * @param int $id
+ * @return array
+ */
+function getInstructor($id) {
+    global $usersTable, $instructorsTable;
+    $mainSqlQuery = "SELECT u.*, i.* 
+                    FROM {$usersTable} u
+                    JOIN  {$instructorsTable} i
+                        ON u.id = i.id_user
+                    WHERE u.id = $id";
+
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $instructorData =  $result->fetch_assoc();
+    return $instructorData;
+}
+
+
+
 /**
  * @return string
  */

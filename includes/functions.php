@@ -3,7 +3,9 @@
 include_once "db_conn.php";
 include_once "utils\\variables.php";
 include_once "utils\\helper.php";
-include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
+include_once "Admin" . DIRECTORY_SEPARATOR . "utils" . DIRECTORY_SEPARATOR . "all.php";
+include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+include_once dirname(__FILE__, 1) .DIRECTORY_SEPARATOR. "Admin" .DIRECTORY_SEPARATOR. "students" .DIRECTORY_SEPARATOR. "functions.php";
 
 
 
@@ -39,7 +41,6 @@ function login()
         $type = $row['type'];
     }
     if ($username != $email && $password != $pass) {
-
         header("Location: ./login.php");
     } elseif ($username == $email && $password == $pass) {
         $_SESSION['id'] = $id;
@@ -49,6 +50,15 @@ function login()
         $_SESSION['middle_name'] = $middle_name;
         $_SESSION['last_name'] = $last_name;
         $_SESSION['type'] = $type;
+
+        if ($type !== $studentsType) {
+            $data = getInstructor($id);
+            $_SESSION['id_instructor'] = $data['instructor_id'];
+        } else {
+            $data = getStudent($id);
+            $_SESSION['student_id'] = $data['student_id'];
+        }
+
         switch ($type) {
             case $studentsType:
                 header("Location: my_profile.php");
@@ -258,8 +268,8 @@ function show_prof_assignment($id_course, $semester)
     <div class=' col-lg-2 col-md-12'>
     <form method='post'>
       <input type='hidden'  name='id' value='$id'>
-        <a href='#' class='btn btn-primary btn-block '>View</a>
-            <a class='btn btn-outline-secondary btn-block ' href='Edit_assignment.php?id=$id&courseid=$courseid&semester=$semester'>Edit</a>
+        <a href='assignment-answers-students.php?course_id=$courseid&sem_id=$semester&ass_id=$id' class='btn btn-primary btn-block '>View</a>
+            <a class='btn btn-outline-secondary btn-block ' href='Edit_assignment.php?id=$id&course_id=$courseid&sem_id=$semester'>Edit</a>
         <button type='submit'  name='remove' class='btn btn-outline-danger btn-block '>Remove</button> </form>
     </div>
 
@@ -285,7 +295,6 @@ function remove_prof_assignment()
 }
 function edit_prof_assignment_show($id, $id_course, $semester)
 {
-
     global $conn;
     $query = "Select * FROM asignments where assignment_id='$id' and id_course='$id_course' and id_semester='$semester' ";
     $assignments_query = mysqli_query($conn, $query);
@@ -383,7 +392,7 @@ function edit_prof_assignment($id)
         die("Failed" . mysqli_error($conn));
     }
 }
-function show_prof_student_assignments($id)
+function show_prof_student_assignments($id, $id_sem, $id_course)
 {
     global $conn;
     $query = "SELECT css.id_student
@@ -391,10 +400,10 @@ function show_prof_student_assignments($id)
 ,sa.student_assignment,sa.grade ,sa.handin_date, sa.handin_time FROM course_semester_students css 
 INNER JOIN students s ON css.id_student = s.student_id
 INNER JOIN student_assignments sa on sa.id_student=css.id_student
- WHERE id_asignment='$id'";
+ WHERE id_asignment='$id' and id_course='$id_course' and id_semester='$id_sem'";
     $i = 0;
     $result = mysqli_query($conn, $query);
-checkResultQuery($result, $conn, __FUNCTION__);
+    checkResultQuery($result, $conn, __FUNCTION__);
     while ($row = mysqli_fetch_assoc($result)) {
         $name = $row["arabic_name"];
         $id = $row['id_student'];
@@ -412,8 +421,8 @@ checkResultQuery($result, $conn, __FUNCTION__);
         <td> $turn_date at $turn_time </td>
                                     <td><input type='number' name='grade[$i][point]' value='$grade'></td>
                                 </tr>
-        
-        
+
+
         ";
         $i++;
     }
@@ -479,7 +488,7 @@ function display_student_assignments($semester, $courseid)
                          
                             <div class='btn-grp col-lg-2 col-md-12'>
                     
-                                <a href='UnHand.php?id=$id' class='btn btn-primary btn-block'>View</a> 
+                                <a href='UnHand.php?course_id=$courseid&sem_id=$semester&ass_id=$id' class='btn btn-primary btn-block'>View</a> 
                                 
                               
         </div>
@@ -779,74 +788,7 @@ function getRegisteredStudents($courseId)
 
 
 //get the mark breakdown of all registered students in a course
-function getRegisteredStudentsMarks($courseId)
-{
-    global $conn;
-    global $semester;
-    $query = "SELECT id_student, arabic_name, grade, gpa, oral, midterm, course_work, practical, final FROM course_semester_students css INNER JOIN students s ON css.id_student = s.student_id WHERE id_course = $courseId AND id_semester = $semester";
-    $query_result = mysqli_query($conn, $query);
 
-    // echo mysqli_error($conn);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $name = $row["arabic_name"];
-        $id = $row['id_student'];
-        $grade = $row['grade'] ? $row['grade'] : "F";
-        $gpa = $row['gpa'];
-        $oral = $row['oral'];
-        $mid = $row['midterm'];
-        $cw = $row['course_work'];
-        $practical = $row['practical'];
-        $final = $row['final'];
-        $total = $mid + $oral + $cw + $practical + $final;
-        echo "
-          <tr>
-              <th scope='row'>$id</th>
-              <td>$name</td>
-              <td>$mid</td>
-              <td>$oral</td>
-              <td>$practical</td>
-              <td>$cw</td>
-              <td>$final</td>
-              <td>$total</td>
-              <td>$grade</td>
-              <td>$gpa</td>
-          </tr>";
-    }
-}
-
-
-function getRegisteredStudentsMarksForEdit($courseId)
-{
-    global $conn;
-    global $semester;
-    $query = "SELECT id_student, arabic_name, grade, gpa, oral, midterm, course_work, practical, final FROM course_semester_students css INNER JOIN students s ON css.id_student = s.student_id WHERE id_course = $courseId AND id_semester = $semester";
-    $query_result = mysqli_query($conn, $query);
-
-    // echo mysqli_error($conn);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $name = $row["arabic_name"];
-        $id = $row['id_student'];
-        $grade = $row['grade'] ? $row['grade'] : "F";
-        $gpa = $row['gpa'];
-        $oral = $row['oral'];
-        $mid = $row['midterm'];
-        $cw = $row['course_work'];
-        $practical = $row['practical'];
-        $final = $row['final'];
-        echo "
-          <tr>
-            <td>$id</td>
-            <td>$name</td>
-            <td><input type='number' name='midterm' value='$mid'></td>
-            <td><input type='number' name='oral' value='$oral'></td>
-            <td><input type='number' name='practical' value='$practical'></td>
-            <td><input type='number' name='cw' value='$cw'></td>
-            <td><input type='number' name='final' value='$final'></td>
-          </tr>";
-    }
-}
 
 
 function getInstructorCourses($instructorId)
@@ -883,7 +825,7 @@ function getInstructorCourses($instructorId)
 
 function getStudentCourses($studentId)
 {
-    global $conn;
+    global $conn, $discussion_path;
     global $semester;
     $query = "SELECT c.course_id, c.name, u.first_name, u.last_name FROM course_semester_students css 
       INNER JOIN courses c ON css.id_course = c.course_id
@@ -900,7 +842,7 @@ function getStudentCourses($studentId)
         $id = $row['course_id'];
         echo "
             <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-            <a href='discussion.php?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
+            <a href='$discussion_path?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
               <div class='course-title'>
                 $cname
               </div>
@@ -1001,8 +943,6 @@ function getCourseMaterialEditable($courseId)
         </div>
       </div>";
         // <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
-
-
     }
 }
 
@@ -1273,8 +1213,6 @@ function getProfessorList()
     checkQuery($query_result);
 
     return $query_result;
-    
-
 }
 
 
@@ -1360,6 +1298,7 @@ function addNewPost($id_user, $id_course, $post_title, $post_author, $post_user,
     global $conn;
     $query = "INSERT INTO `posts`(id_user, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
     $query .= "VALUES('$id_user', '$id_course', '$post_title', '$post_author', '$post_user', '$post_date', '$post_content','$post_tags')";
+    // die($query);
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
@@ -1398,7 +1337,6 @@ function deletePost($post_id)
     if (!$result) {
         die("Cannot delete post" . mysqli_error($conn));
     } else {
-
         deletePostComments($post_id);
     }
 }
@@ -1460,7 +1398,6 @@ function upVote($post_id, $user_id)
     } else {
         die('cannot add vote record to votes database ' . mysqli_error($conn));
     }
-
 }
 
 function downVote($post_id, $user_id)
@@ -1476,7 +1413,6 @@ function downVote($post_id, $user_id)
     if (!$result2) {
         die("query 2 error " . mysqli_error($conn));
     }
-
 }
 
 function redoVotePost($post_id, $user_id)
@@ -1500,7 +1436,6 @@ function redoVotePost($post_id, $user_id)
     if (!$result3) {
         die("Query3 error redoVote " . mysqli_error($conn));
     }
-
 }
 
 // to check if user has already vote in a post or not
@@ -1514,7 +1449,6 @@ function checkIfVotedPost($post_id, $user_id)
     }
 
     return mysqli_num_rows($result) != 0;
-
 }
 
 // adding new poll
@@ -1562,7 +1496,8 @@ function getPolls()
     return $result;
 }
 
-function getPollOptions($id_poll){
+function getPollOptions($id_poll)
+{
     global $conn;
     $query = "SELECT * FROM poll_options WHERE id_poll = '$id_poll' ";
     $result = mysqli_query($conn, $query);
@@ -1570,10 +1505,10 @@ function getPollOptions($id_poll){
         die("cannot get the polls " . mysqli_error($conn));
     }
     return $result;
-
 }
-function votePoll($id_user, $id_poll, $id_option){
-    global $conn ;
+function votePoll($id_user, $id_poll, $id_option)
+{
+    global $conn;
     $query1 = "INSERT INTO poll_votes(`id_user`, `id_poll`, `id_option`) VALUES('$id_user', '$id_poll', '$id_option')";
     $result1 = mysqli_query($conn, $query1);
     if (!$result1) {
@@ -1595,43 +1530,42 @@ function checkIfVotedPoll($poll_id, $user_id)
     }
 
     return mysqli_num_rows($result) != 0;
-
 }
-function redoVotePoll($user_id, $poll_id){
-    global $conn ;
+function redoVotePoll($user_id, $poll_id)
+{
+    global $conn;
     $query1 = "SELECT id_option FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
     $query2 = "DELETE FROM poll_votes WHERE id_user = '$user_id' AND id_poll = '$poll_id' ";
     $result1 = mysqli_query($conn, $query1);
-    if(!$result1){
-        die("Cannot select the option_id record redoVotePoll.. " .mysqli_error($conn));
+    if (!$result1) {
+        die("Cannot select the option_id record redoVotePoll.. " . mysqli_error($conn));
     }
-    $option_id = null ;
-    while($row = mysqli_fetch_assoc($result1)){
+    $option_id = null;
+    while ($row = mysqli_fetch_assoc($result1)) {
         $option_id = $row['id_option'];
     }
     $query3 = "UPDATE poll_options SET votes = votes - 1 WHERE option_id = $option_id";
     $result2 = mysqli_query($conn, $query2);
-    if(!$result2){
-        die("Cannot delete the vote record in redoVotePoll" .mysqli_error($conn));
+    if (!$result2) {
+        die("Cannot delete the vote record in redoVotePoll" . mysqli_error($conn));
     }
-    $result3= mysqli_query($conn, $query3);
-    if(!$result3){
-        die("Cannot update the votes in redoVotePoll" .mysqli_error($conn));
+    $result3 = mysqli_query($conn, $query3);
+    if (!$result3) {
+        die("Cannot update the votes in redoVotePoll" . mysqli_error($conn));
     }
 }
-function deletePoll($poll_id){
+function deletePoll($poll_id)
+{
     global $conn;
     $query1 = "DELETE FROM polls WHERE poll_id = '$poll_id'";
     $result1 = mysqli_query($conn, $query1);
-    if(!$result1){
-        die("Cannot delete the poll deletePoll" .mysqli_error($conn));
+    if (!$result1) {
+        die("Cannot delete the poll deletePoll" . mysqli_error($conn));
     }
-
-
 }
-function logout(){
+function logout()
+{
     global $login_path;
     session_destroy();
     header("Location:$login_path");
 }
-

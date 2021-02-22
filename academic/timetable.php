@@ -1,15 +1,14 @@
 <?php
 ob_start();
-include "../includes/functions.php";
-include "../includes/Professor/functions.php";
-session_start();
+
+
 
 $id = "";
 
 if(isset($_GET['id'])){
     $id = $_GET["id"];
 }else{
-    header("Location: announcements.php");
+    header("Location: discussion.php");
 }
 
 ?>
@@ -33,7 +32,7 @@ if(isset($_GET['id'])){
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include "../includes/std_sidebar.php"; ?>
+        <?php include "../includes/prof_sidebar.php"; ?>
         <!-- Page Content  -->
         <div id="content">
             <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">

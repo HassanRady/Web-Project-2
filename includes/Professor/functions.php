@@ -44,4 +44,25 @@ function getInstructorTimetable($id){
     }
     
 }
+
+
+/* OMAR
+ * @param int $courseId : the course whose student marks is returned
+ * @return a resultset containing the arabic name and grades of each student registered in the course
+ */
+function getRegisteredStudentsMarks($courseId)
+{
+    global $conn;
+    global $semester;
+    $query = "SELECT id_student, arabic_name, grade, gpa, oral, midterm, course_work, practical, final FROM course_semester_students css INNER JOIN students s ON css.id_student = s.student_id WHERE id_course = $courseId AND id_semester = $semester";
+    $query_result = mysqli_query($conn, $query);
+    checkQuery($query_result);
+    return $query_result;
+}
+
+
+function updateStudentGrades(){
+
+}
+
 ?>
