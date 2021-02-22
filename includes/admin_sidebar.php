@@ -17,7 +17,7 @@ if(isset($_POST['logout-btn'])){
             <p>Navigation</p>
             <ul class="list-unstyled components">
                 <li>
-                    <a href="announcements.html">Home</a>
+                    <a href="<?php echo $announcements_path ?>">Home</a>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>

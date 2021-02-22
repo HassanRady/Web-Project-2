@@ -224,7 +224,7 @@
                                 <input type="submit" name="delete_post" value="Delete post" class="btn btn-primary">
                                 <input type="hidden" name="delete_post_id" value="<?php print $result_post_id; ?>" />
                             <?php } ?>
-                            <p class="text-center"><a href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
+                            <p class="text-center"><a href="../post.php?course_id=<?php echo $course_id?>&p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
                                     comments </a></p>
                             <?php
                             echo "<p class='date'>$result_post_date </p>";

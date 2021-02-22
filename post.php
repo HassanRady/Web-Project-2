@@ -67,21 +67,12 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
     <!-- Page Content  -->
     <div id="content">
 
-        <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
-            <div class="container-fluid">
-
-                <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                    <i class="fas fa-align-left"></i>
-                    <!-- <span id="nav-toggle-text">Navigation</span> -->
-                </button>
-                <a class="navbar-brand" id="page-title" href="#">Announcements</a>
-                <div class="ml-auto"></div>
-
-                <div class="collapse navbar-collapse" style="display:  !important;">
-                </div>
-            </div>
-        </nav>
-
+    <?php
+            if ($type === $studentsType)
+                include $student_navbar_path;
+            else
+                include $professor_navbar_path;
+            ?>
 
         <div class="page-body">
             <!-- START HERE -->

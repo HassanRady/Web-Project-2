@@ -67,6 +67,7 @@ function printTasData($data, $pageName)
         aElement("btn btn-outline-primary right-btn", "edit", $row['id_user'], "update_ta.php?id={$row['id_user']}", "Edit");
         echo "<td>";
         aElement("btn btn-outline-primary right-btn", "remove", $row['id_user'], "{$pageName}?delete={$row['id_user']}", "Remove");
+        // echo "<input type='hidden' name='delete' value='{$row['id_user']}'/>";
 
         echo "</td></tr>";
     }

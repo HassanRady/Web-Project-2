@@ -17,7 +17,7 @@ $semester = getCurrentSemester();
 
 function login()
 {
-    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType;
+    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path;
     $name = $_POST['email'];
     $password = $_POST['password'];
 
@@ -62,19 +62,19 @@ function login()
 
         switch ($type) {
             case $studentsType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
             case $professorsType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
             case $tasType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
             case $sasType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
             case $adminsType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
         }
     } else {

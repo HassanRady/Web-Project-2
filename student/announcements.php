@@ -39,7 +39,18 @@ $user_id = 1;
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include "../includes/std_sidebar.php" ?>
+        <?php include "../includes/utils/variables.php";
+        include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+
+        session_start();
+        $type = $_SESSION['type'];
+
+        if ($type === $studentsType)
+            include $student_sidebar_path;
+        elseif ($type === $adminsType || $type == $sasType)
+            include $admin_sidebar_path;
+        else
+            include $professor_sidebar_path; ?>
 
 
         <!-- Page Content  -->

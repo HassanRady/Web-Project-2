@@ -5,7 +5,7 @@ $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
 $login_path =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "login.php";
 $discussion_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "discussion.php";
-$announcements_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "";
+$announcements_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "announcements.php";
 
 
 // Admin's paths
