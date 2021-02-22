@@ -41,7 +41,6 @@ function login()
         $type = $row['type'];
     }
     if ($username != $email && $password != $pass) {
-
         header("Location: ./login.php");
     } elseif ($username == $email && $password == $pass) {
         $_SESSION['id'] = $id;
@@ -296,7 +295,6 @@ function remove_prof_assignment()
 }
 function edit_prof_assignment_show($id, $id_course, $semester)
 {
-
     global $conn;
     $query = "Select * FROM asignments where assignment_id='$id' and id_course='$id_course' and id_semester='$semester' ";
     $assignments_query = mysqli_query($conn, $query);
@@ -394,7 +392,7 @@ function edit_prof_assignment($id)
         die("Failed" . mysqli_error($conn));
     }
 }
-function show_prof_student_assignments($id,$id_sem,$id_course)
+function show_prof_student_assignments($id, $id_sem, $id_course)
 {
     global $conn;
     $query = "SELECT css.id_student
@@ -790,74 +788,7 @@ function getRegisteredStudents($courseId)
 
 
 //get the mark breakdown of all registered students in a course
-function getRegisteredStudentsMarks($courseId)
-{
-    global $conn;
-    global $semester;
-    $query = "SELECT id_student, arabic_name, grade, gpa, oral, midterm, course_work, practical, final FROM course_semester_students css INNER JOIN students s ON css.id_student = s.student_id WHERE id_course = $courseId AND id_semester = $semester";
-    $query_result = mysqli_query($conn, $query);
 
-    // echo mysqli_error($conn);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $name = $row["arabic_name"];
-        $id = $row['id_student'];
-        $grade = $row['grade'] ? $row['grade'] : "F";
-        $gpa = $row['gpa'];
-        $oral = $row['oral'];
-        $mid = $row['midterm'];
-        $cw = $row['course_work'];
-        $practical = $row['practical'];
-        $final = $row['final'];
-        $total = $mid + $oral + $cw + $practical + $final;
-        echo "
-          <tr>
-              <th scope='row'>$id</th>
-              <td>$name</td>
-              <td>$mid</td>
-              <td>$oral</td>
-              <td>$practical</td>
-              <td>$cw</td>
-              <td>$final</td>
-              <td>$total</td>
-              <td>$grade</td>
-              <td>$gpa</td>
-          </tr>";
-    }
-}
-
-
-function getRegisteredStudentsMarksForEdit($courseId)
-{
-    global $conn;
-    global $semester;
-    $query = "SELECT id_student, arabic_name, grade, gpa, oral, midterm, course_work, practical, final FROM course_semester_students css INNER JOIN students s ON css.id_student = s.student_id WHERE id_course = $courseId AND id_semester = $semester";
-    $query_result = mysqli_query($conn, $query);
-
-    // echo mysqli_error($conn);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $name = $row["arabic_name"];
-        $id = $row['id_student'];
-        $grade = $row['grade'] ? $row['grade'] : "F";
-        $gpa = $row['gpa'];
-        $oral = $row['oral'];
-        $mid = $row['midterm'];
-        $cw = $row['course_work'];
-        $practical = $row['practical'];
-        $final = $row['final'];
-        echo "
-          <tr>
-            <td>$id</td>
-            <td>$name</td>
-            <td><input type='number' name='midterm' value='$mid'></td>
-            <td><input type='number' name='oral' value='$oral'></td>
-            <td><input type='number' name='practical' value='$practical'></td>
-            <td><input type='number' name='cw' value='$cw'></td>
-            <td><input type='number' name='final' value='$final'></td>
-          </tr>";
-    }
-}
 
 
 function getInstructorCourses($instructorId)
@@ -1012,8 +943,6 @@ function getCourseMaterialEditable($courseId)
         </div>
       </div>";
         // <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
-
-
     }
 }
 
@@ -1408,7 +1337,6 @@ function deletePost($post_id)
     if (!$result) {
         die("Cannot delete post" . mysqli_error($conn));
     } else {
-
         deletePostComments($post_id);
     }
 }
@@ -1557,10 +1485,10 @@ function addPollOption($id_poll, $option_content)
     }
 }
 
-function getPolls()
+function getPolls($id_course)
 {
     global $conn;
-    $query = "SELECT * FROM polls ORDER BY poll_id DESC ";
+    $query = "SELECT * FROM polls WHERE id_course = '$id_course' ORDER BY poll_id DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("cannot get the polls " . mysqli_error($conn));
