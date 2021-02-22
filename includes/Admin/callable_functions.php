@@ -9,7 +9,7 @@ include_once "tas/functions.php";
 include_once "tas/search.php";
 include_once "sas/functions.php";
 include_once "sas/search.php";
-include_once "utils" .DIRECTORY_SEPARATOR. "all.php";
+include_once "utils" . DIRECTORY_SEPARATOR . "all.php";
 
 
 
@@ -139,26 +139,22 @@ function updateSa()
 
 function showProfessorsList()
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    showProfessors($pageName);
+    showProfessors();
 }
 
 function showStudentsList()
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    showStudents($pageName);
+    showStudents();
 }
 
 function showTasList()
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    showTas($pageName);
+    showTas();
 }
 
 function showSasList()
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    showSas($pageName);
+    showSas();
 }
 
 
@@ -196,7 +192,7 @@ function addNewTa()
 
 function addNewSa()
 {
-        if (isset($_POST['submit'])) {
+    if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addSa();
         header("Location:./{$pageName}?add=success");
@@ -207,7 +203,7 @@ function addNewSa()
 
 function userProfile()
 {
-    global $studentsType, $professorsType, $tasType, $sasType,$adminsType, $type;
+    global $studentsType, $professorsType, $tasType, $sasType, $adminsType, $type;
 
     session_start();
     $id = $_SESSION['id'];
@@ -271,7 +267,7 @@ function updateSaProfile($id)
 
 function updateProfile()
 {
-    global $studentsType, $professorsType, $tasType, $sasType,$adminsType, $type;
+    global $studentsType, $professorsType, $tasType, $sasType, $adminsType, $type;
 
     session_start();
     $id = $_SESSION['id'];

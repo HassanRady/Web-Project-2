@@ -2,15 +2,11 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
-/**
- * @param string $pageName
- */
-function showTas($pageName)
+
+function showTas()
 {
-    global $TasType;
-    $type = $TasType;
     $data = getTasData();
-    printTasData($data, $pageName);
+    printCommonData($data);
 }
 
 

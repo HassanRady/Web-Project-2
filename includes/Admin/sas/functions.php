@@ -2,15 +2,12 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
-/**
- * @param string $pageName
- */
-function showSas($pageName)
+
+
+function showSas()
 {
-    global $SasType;
-    $type = $SasType;
     $data = getSasData();
-    printSasData($data, $pageName);
+    printCommonData($data);
 }
 
 

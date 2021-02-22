@@ -102,7 +102,7 @@ addNewTa();
                             </div>
                             <hr class="mb-4">
                             <div class="row">
-                                <div class="col-lg-8 col-md-12 mb-3">
+                                <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="email">E-mail</label>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="example@alexu.edu.eg">
                                     <h6 id="warn4" style="font-style: italic;color: red;"></h6>
@@ -110,6 +110,14 @@ addNewTa();
                                         Please enter a valid email address.
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4 col-md-12 mb-3">
+                                    <label for="zip">Instructor ID</label>
+                                    <input type="text" class="form-control" id="zip" name="instructor_id" placeholder="">
+                                    <h6 id="warn5" style="font-style: italic;color: red;"></h6>
+                                </div>
+
+
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="zip">National ID number</label>
                                     <input type="text" class="form-control" id="zip" name="national_id" placeholder="">
