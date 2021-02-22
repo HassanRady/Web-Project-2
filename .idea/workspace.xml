@@ -30,9 +30,8 @@
       <change beforePath="$PROJECT_DIR$/academic/discussion.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/discussion.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/db_conn.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/db_conn.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/std_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/std_sidebar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/paths.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/announcements.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/post.php" beforeDir="false" afterPath="$PROJECT_DIR$/post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sa/add_announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/sa/add_announcements.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student/discussion.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/discussion.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
