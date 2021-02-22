@@ -1485,10 +1485,10 @@ function addPollOption($id_poll, $option_content)
     }
 }
 
-function getPolls()
+function getPolls($id_course)
 {
     global $conn;
-    $query = "SELECT * FROM polls ORDER BY poll_id DESC ";
+    $query = "SELECT * FROM polls WHERE id_course = '$id_course' ORDER BY poll_id DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("cannot get the polls " . mysqli_error($conn));

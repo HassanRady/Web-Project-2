@@ -105,7 +105,7 @@
 
                 ?>
                 <?php
-                $polls = getPolls();
+                $polls = getPolls($course_id);
                 while ($row = mysqli_fetch_assoc($polls)) {
                     $res_poll_id = $row['poll_id'];
                     $poll_id_user = $row['id_user'];

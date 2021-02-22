@@ -2,8 +2,10 @@
 session_start();
 global $conn;
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
-$course_id = 1;
-$user_id = 1;
+//general announcements
+$course_id = 0;
+$user_id = $_SESSION['id'];
+$user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
 ?>
 
 
@@ -15,7 +17,7 @@ $user_id = 1;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Add Announcements </title>
+    <title>General Announcements </title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -65,7 +67,7 @@ $user_id = 1;
                 <!-- START HERE -->
 
                 <?php
-                $polls = getPolls();
+                $polls = getPolls($course_id);
                 while ($row = mysqli_fetch_assoc($polls)) {
                     $res_poll_id = $row['poll_id'];
                     $poll_id_user = $row['id_user'];
