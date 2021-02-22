@@ -1,6 +1,6 @@
 <?php
 
-$root =  "web project" .DIRECTORY_SEPARATOR. "my branch" .DIRECTORY_SEPARATOR. "Web-Project-2";
+$root =   "SIM" .DIRECTORY_SEPARATOR. "Web-Project-2";
 $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY_SEPARATOR. "logo.jpeg";
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
 $login_path =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "login.php";
@@ -26,6 +26,8 @@ $my_courses_path_student =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "st
 $assignments_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "student_assignments.php";
 $grades_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "my_marks_std.php";
 $materials_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "material.php";
+$announcements_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "announcements.php";
+$timetable_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "timetable.php";
 
 
 
