@@ -69,7 +69,7 @@
 
                 <div class="container discussion-form">
                     <h5 class="">Start a new discussion:</h5>
-                    <form class="row" action="discussion.php?course_id=<?php echo $course_id; ?>" method="post">
+                    <form class="row" action="" method="post">
                         <div class="col-lg-12">
                             <textarea class="w-100 p-3" id="exampleFormControlTextarea1" name="post_text" style="resize: none; height: 125px; border-radius: 8px;" placeholder="What are you thinking about?"></textarea>
                         </div>
@@ -115,7 +115,7 @@
                 ?>
 
                     <!-- POLLS -->
-                    <form action="discussion.php?course_id=<?php echo $course_id; ?>" method="post">
+                    <form action="" method="post">
                         <div class="container post">
                             <h6>
                                 <?php echo $poll_author; ?>
@@ -262,7 +262,7 @@
                             </div>
 
                             <!--Body-->
-                            <form action="discussion.php?course_id=<?php echo $course_id; ?>" method="post">
+                            <form action="" method="post">
                                 <div class="modal-body">
                                     <div class="text-center">
                                         <i class="fa fa-file-text-o fa-4x mb-3 animated rotateIn"></i>

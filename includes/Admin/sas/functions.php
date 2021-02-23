@@ -36,6 +36,38 @@ function getSa($id)
 
 
 /**
+ * @param int $id
+ * @return array admin's data
+ */
+function getAdmin($id)
+{
+    global $adminsTable;
+
+    $mainSqlQuery = "SELECT a.*, u.* 
+    FROM {$adminsTable} a 
+    join users u 
+        on a.id_user = u.id
+    WHERE u.id = $id";
+
+    $dataBaseConnection = connectToDataBase();
+    $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
+    checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
+    $dataBaseConnection->close();
+
+    $saData =  $result->fetch_assoc();
+    return $saData;
+}
+/**
+ * @param int $id
+ */
+function adminProfile($id)
+{
+    $data = getAdmin($id);
+    getDataForProfile($data);
+}
+
+
+/**
  * @param array $data
  */
 function getDataFromSa($data)

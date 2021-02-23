@@ -2,7 +2,6 @@
 ob_start();
 include_once "../includes/functions.php";
 session_start();
-// $courseId = $_GET['course_id'];
 
 ?>
 <!DOCTYPE html>

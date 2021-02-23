@@ -26,7 +26,7 @@ if(isset($_POST['logout-btn'])){
             <a href="<?php echo $my_profile_path ?>">My Profile</a>
         </li>
         <li>
-            <a href="timetable.html">Timetable</a>
+            <a href="<?php echo $timetable_professor_path ?>">Timetable</a>
         </li>
     </ul>
     <ul class="list-unstyled CTAs">

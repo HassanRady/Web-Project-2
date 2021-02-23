@@ -18,7 +18,7 @@ include_once "functions.php";
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item active">
-                                <a class="nav-link" href="<?php echo $discussion_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Discussion</a>
+                                <a class="nav-link" href="<?php echo $discussion_student_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Discussion</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo $assignments_student_path."?course_id={$_GET['course_id']}&sem_id=$semester" ?>">Assignments</a>

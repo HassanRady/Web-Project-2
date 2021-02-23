@@ -17,6 +17,8 @@ $professors_list_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "admin"
 $tas_list_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "admin" .DIRECTORY_SEPARATOR. "ta_list.php";
 $sas_list_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "admin" .DIRECTORY_SEPARATOR. "sa_list.php";
 $open_courses_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "admin" .DIRECTORY_SEPARATOR. "open_courses.php";
+$timetable_admin_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "admin" .DIRECTORY_SEPARATOR. "timetable.php";
+
 
 
 // Student's paths
@@ -27,6 +29,7 @@ $assignments_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "st
 $grades_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "my_marks_std.php";
 $materials_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "material.php";
 $announcements_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "announcements.php";
+$discussion_student_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "discussion.php";
 $timetable_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "timetable.php";
 
 
@@ -39,3 +42,5 @@ $assignments_professor_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "
 $materials_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "material.php";
 $students_course_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "students_in_course.php";
 $student_grades_professor = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "std_grades.php";
+$timetable_professor_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "timetable.php";
+

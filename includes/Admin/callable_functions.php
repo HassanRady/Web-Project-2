@@ -182,7 +182,6 @@ function addNewProfessor()
 
 function addNewTa()
 {
-    global $tasType;
     if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addTa();
@@ -221,8 +220,11 @@ function userProfile()
         case $tasType:
             taProfile($id);
             break;
-        case $sasType || $adminsType:
+        case $sasType:
             saProfile($id);
+            break;
+        case $adminsType:
+            adminProfile($id);
             break;
     }
 }

@@ -28,7 +28,7 @@ function getStudentTimetable($std_id){
     INNER JOIN venues v ON
         v.venue_id = cl.id_venue
     INNER JOIN instructors i ON
-        i.instructor_id = cl.instructor_id
+        i.instructor_id = cl.id_instructor
     INNER JOIN users u ON
         u.id = i.id_user
     WHERE
@@ -37,6 +37,7 @@ function getStudentTimetable($std_id){
         cl.day WHEN 'saturday' THEN 1 WHEN 'sunday' THEN 2 WHEN 'monday' THEN 3 WHEN 'tuesday' THEN 4 WHEN 'wednesday' THEN 4 WHEN 'thursday' THEN 4
     END,
     cl.start ASC";
+    // die($query);
     $query_result = mysqli_query($conn, $query);
     $result_array = array();
     if($query_result){

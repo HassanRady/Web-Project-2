@@ -4,9 +4,9 @@ ob_start();
 include "../includes/Student/functions.php";
 
 $std_id = "";
-
-if(isset($_GET['std_id'])){
-    $std_id = $_GET["std_id"];
+session_start();
+if(isset($_SESSION['student_id'])){
+    $std_id = $_SESSION['student_id'];
 }else{
     header("Location: announcements.php");
 }

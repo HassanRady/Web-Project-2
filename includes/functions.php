@@ -17,7 +17,7 @@ $semester = getCurrentSemester();
 
 function login()
 {
-    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path;
+    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path, $announcements_student_path;
     $name = $_POST['email'];
     $password = $_POST['password'];
 
@@ -61,7 +61,7 @@ function login()
 
         switch ($type) {
             case $studentsType:
-                header("Location: $announcements_path");
+                header("Location: $announcements_student_path");
                 break;
             case $professorsType:
                 header("Location: $announcements_path");
@@ -814,7 +814,7 @@ function getInstructorCourses($instructorId)
 
 function getStudentCourses($studentId)
 {
-    global $conn, $discussion_path;
+    global $conn, $discussion_student_path;
     global $semester;
     $query = "SELECT c.course_id, c.name, u.first_name, u.last_name FROM course_semester_students css 
       INNER JOIN courses c ON css.id_course = c.course_id
@@ -831,7 +831,7 @@ function getStudentCourses($studentId)
         $id = $row['course_id'];
         echo "
             <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-            <a href='$discussion_path?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
+            <a href='$discussion_student_path?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
               <div class='course-title'>
                 $cname
               </div>
@@ -1075,7 +1075,7 @@ function getOpenCourses()
           </div>
           <div class='btn-grp col-lg-2 col-md-12'>
             <a href='#' class='btn btn-primary'>View</a>
-            <a href='#' class='btn btn-outline-primary'>Add Class</a>
+            <a href='../admin/Add_Class.php' class='btn btn-outline-primary'>Add Class</a>
             <a href='#' class='btn btn-outline-secondary'>Options</a>
           </div>
         </div>

@@ -51,7 +51,7 @@ if(isset($_POST['logout-btn'])){
                     <a href="<?php echo $my_profile_path ?>">My Profile</a>
                 </li>
                 <li>
-                    <a href="timetable.html">Timetable</a>
+                    <a href="<?php echo $timetable_admin_path ?>">Timetable</a>
                 </li>
                 <li>
                     <a href="<?php echo $venues_path ?>">Venues</a>
