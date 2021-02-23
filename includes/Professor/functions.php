@@ -1,4 +1,8 @@
 <?php 
+
+$semester = getCurrentSemester();
+
+
 /*
 * OMAR
 * @param int $id : the ID of the instructor whose timetable we want 
@@ -60,9 +64,34 @@ function getRegisteredStudentsMarks($courseId)
     return $query_result;
 }
 
+/* OMAR
+ * @param int $courseId : the course whose student marks are submitted
+ */
+function updateStudentGrades($courseId){
+    global $conn;
+    global $semester;
+    $elements = count($_POST['grade']);
 
-function updateStudentGrades(){
-
+    for ($i = 0; $i < $elements; $i++) {
+        $id = $_POST["grade"][$i]['id'];
+        $midterm = $_POST['grade'][$i]['midterm'];
+        $oral = $_POST['grade'][$i]['oral'];
+        $practical = $_POST['grade'][$i]['practical'];
+        $cw = $_POST['grade'][$i]['cw'];
+        $final = $_POST['grade'][$i]['final'];
+        $query = "UPDATE `course_semester_students`
+        SET
+        `oral`=$oral,
+        `midterm`=$midterm,
+        `course_work`=$cw,
+        `practical`=$practical,
+        `final`=$final
+         WHERE `id_semester`=$semester AND `id_course`=$courseId AND `id_student`=$id";
+        $result = mysqli_query($conn, $query);
+        checkResultQuery($result, $conn, "updateStudentGrades id=$id");
+    }
+    // echo "<meta http-equiv='refresh' content='0'>";
+    return true;
 }
 
 ?>

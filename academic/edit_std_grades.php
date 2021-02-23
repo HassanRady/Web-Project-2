@@ -1,13 +1,17 @@
 <?php
 session_start();
+include_once "../includes/utils/helper.php";
+include_once "../includes/db_conn.php";
+include_once "../includes/Professor/functions.php";
 
-
+$courseId = $_GET['course_id'];
+$success = null;
 if(isset($_POST['submit'])){
-    for(){
-        updateStudentGrades();
+
+    if(updateStudentGrades($courseId)){
+        $success = true;
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,7 +38,6 @@ if(isset($_POST['submit'])){
             include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
 
             include_once $professor_sidebar_path;
-            $courseId = $_GET['course_id'];
         ?>
         <!-- Page Content  -->
         <div id="content">
@@ -50,8 +53,13 @@ if(isset($_POST['submit'])){
                     Course Grades
                 </h3>
                 <hr class="mb-4">
+                <?php if($success){ ?>
+                    <div class="alert alert-primary" role="alert">
+                        Student marks successfully updated.
+                    </div>
+                <?php } ?>
                 <div class="container-fluid">
-                    <div class="row table-container table-responsive">
+                    <div class="row table-container table-responsive w-100">
                         <table class="table">
                             <thead>
                                 <tr style="color:rgb(31,108,236);">
@@ -64,41 +72,38 @@ if(isset($_POST['submit'])){
                                     <th scope="col">Final</th>
                                 </tr>
                             </thead>
-                            <tbody style="color: rgb(0,0,0,0.5);">
-                                <form action= "" method="post">
+                            <form id="marks" action="" method="post">
+                                <tbody style="color: rgb(0,0,0,0.5);">
                                     <?php
-                                        $query_result = getRegisteredStudentsMarks($courseId); 
+                                        $query_result = getRegisteredStudentsMarks($courseId);
+                                        $i = 0;
                                         while ($row = mysqli_fetch_assoc($query_result)) {
-                                            $grade = $row['grade'] ? $row['grade'] : "F";
-                                            $gpa = $row['gpa'];
-                                            $oral = $row['oral'];
-                                            $mid = $row['midterm'];
-                                            $cw = $row['course_work'];
-                                            $practical = $row['practical'];
-                                            $final = $row['final'];
                                             ?>
                                             <tr>
                                                 <td>
                                                     <?php echo $row['id_student']; ?>
+                                                    <input type='number' style="display:none;" name=<?php echo "grade[$i][id]" ?> value="<?php echo $row["id_student"]; ?>">
                                                 </td>
                                                 <td>
                                                     <?php echo $row["arabic_name"]; ?>
                                                 </td>
-                                                <td><input type='number' name='midterm' value="<?php echo $row["midterm"]; ?>"></td>
-                                                <td><input type='number' name='oral' value="<?php echo $row["oral"]; ?>"></td>
-                                                <td><input type='number' name='practical' value="<?php echo $row["practical"]; ?>"></td>
-                                                <td><input type='number' name='cw' value="<?php echo $row["course_work"]; ?>"></td>
-                                                <td><input type='number' name='final' value="<?php echo $row["final"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][midterm]" ?> value="<?php echo $row["midterm"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][oral]" ?> value="<?php echo $row["oral"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][practical]" ?> value="<?php echo $row["practical"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][cw]" ?> value="<?php echo $row["course_work"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][final]" ?> value="<?php echo $row["final"]; ?>"></td>
                                             </tr>
-                                    <?php } 
+                                    <?php 
+                                            $i++;
+                                        } 
                                     ?>
-                                </form>
-
-                            </tbody>
+                                </tbody>
+                            </form>
                         </table>
                     </div>
                     <br>
-                    <button class="btn btn-block btn-primary" type="submit" name="submit">Upload</button>
+                    <button class="btn btn-block btn-primary" form="marks" type="submit" name="submit">Upload</button>
+                    
                 </div>
 
 
