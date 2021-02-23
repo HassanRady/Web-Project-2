@@ -1443,10 +1443,10 @@ function checkIfVotedPost($post_id, $user_id)
 // adding new poll
 
 
-function addNewPoll($id_user, $poll_content, $poll_date)
+function addNewPoll($id_user, $id_course, $poll_content, $poll_date)
 {
     global $conn;
-    $query = "INSERT INTO polls(id_user, poll_content, poll_date) VALUES('$id_user', '$poll_content', '$poll_date')";
+    $query = "INSERT INTO polls(id_user,id_course ,poll_content, poll_date) VALUES('$id_user', '$id_course', '$poll_content','$poll_date')";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("cannot insert to poll table " . mysqli_error($conn));
