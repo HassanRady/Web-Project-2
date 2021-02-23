@@ -392,6 +392,7 @@ function edit_prof_assignment($id)
         die("Failed" . mysqli_error($conn));
     }
 }
+
 function show_prof_student_assignments($id, $id_sem, $id_course)
 {
     global $conn;
@@ -736,19 +737,7 @@ function add_assignment_grade()
 
 ########################################################################################################################################################
 
-//get the last semester_id in the database;
-function getCurrentSemester()
-{
-    global $conn;
-    $query = "SELECT semester_id FROM semesters ORDER BY semester_id DESC LIMIT 1";
-    $query_result = mysqli_query($conn, $query);
-    if ($query_result) {
-        $result = mysqli_fetch_assoc($query_result);
-        return $result['semester_id'];
-    } else {
-        return -1;
-    }
-}
+
 
 
 //check the result of the query
@@ -1563,9 +1552,205 @@ function deletePoll($poll_id)
         die("Cannot delete the poll deletePoll" . mysqli_error($conn));
     }
 }
+
+function grade_courses(){
+    global $conn;
+
+    $query="Select * from course_semester_students ";
+    $result = mysqli_query($conn, $query);
+    while ($row = mysqli_fetch_array($result)) {
+        $total=$row['total'];
+        $rate=grade_gpa($total);
+        $grade=$rate[0];
+        $gpa=$rate[1];
+        $course=$row['id_course'];
+        $student=$row['id_student'];
+        $query2="update course_semester_students set grade ='$grade' , gpa='$gpa' where id_course='$course'and id_student='$student' and total='$total' ";
+        $update = mysqli_query($conn, $query2);
+        if(!$update){
+            die("" .mysqli_error($conn));
+        }
+
+    }
+
+}
+function grade_gpa($total){
+    $grade='f';
+    $gpa=0;
+    switch($total){
+        case $total>=90:
+            $grade='A';
+            $gpa=4;
+            break;
+        case $total>=85 && $total<90:
+            $grade='A-';
+            $gpa=3.67;
+            break;
+        case $total>=80 && $total <85:
+            $grade='B+';
+            $gpa=3.33;
+            break;
+
+        case $total>=75 && $total <80:
+            $grade='B';
+            $gpa=3.00;
+            break;
+
+        case $total>=70&& $total <75:
+            $grade='B-';
+            $gpa=2.67;
+            break;
+        case $total>=65 && $total <70:
+            $grade='C+';
+            $gpa=2.33;
+            break;
+
+        case $total>=60 && $total <65:
+            $grade='C';
+            $gpa=2.00;
+            break;
+        case $total>=56 && $total <60:
+            $grade='C-';
+            $gpa=1.67;
+            break;
+        case $total>=53 && $total <56:
+            $grade='D+';
+            $gpa=1.33;
+            break;
+        case $total>=50 && $total <53:
+            $grade='D';
+            $gpa=1.00;
+            break;
+
+        case $total<50:
+            $grade='F';
+            $gpa=0.00;
+            break;
+
+    }
+    $array=[$grade,$gpa];
+    return $array;
+}
+function cgpa($id){
+    global $conn;
+    $query="Select css.id_course,css.gpa, c.credits from course_semester_students as css inner join courses as c on c.course_id = css.id_course where css.id_student='$id'";
+    $result = mysqli_query($conn, $query);
+    $cgpa=0;
+    $credits=0;
+
+
+    while ($row = mysqli_fetch_array($result)) {
+        $data[$row['id_course']]=array($row['gpa'],$row['credits']);
+    }
+
+    foreach($data as $x => $x_value) {
+$cgpa+= $x_value[0]*$x_value[1];
+$credits+=$x_value[1];
+
+
+    }
+    if($credits>0){
+    $cgpa=$cgpa/$credits;}
+    else{
+        $cgpa=0;
+    }
+    return $cgpa;
+
+}
+function insert_cgpa($id){
+    global $conn;
+    $cgpa=cgpa($id);
+    $query="update students set cgpa ='$cgpa' where student_id='$id'" ;
+    $result = mysqli_query($conn, $query);
+    if(!$result){
+        die("Cannot insert cgpa" .mysqli_error($conn));
+    }
+
+}
+
+function transcript_student_information($id){
+    global $conn;
+    $query="select * from students where student_id='$id'";
+    $result = mysqli_query($conn, $query);
+
+    $row = mysqli_fetch_array($result);
+
+    $array=[$row['arabic_name'],$row['level'],$row['student_group'],$row['cgpa']];
+    return $array;
+}
+function transcript($id){
+    global $conn;
+    $query="select s.season, s.sem_year, c.name , c.credits, css.grade , css.gpa , css.id_course , css.id_semester from course_semester_students as css 
+           inner join semesters as s on s.semester_id=css.id_semester
+           inner join courses as c on c.course_id=css.id_course
+            where id_student='$id' ORDER BY css.id_semester ASC ";
+    $result = mysqli_query($conn, $query);
+    $flag=0;
+    $tgpa=0;
+    $tcredits=0;
+    if(!$result){
+        die("Cannot insert cgpa" .mysqli_error($conn));
+    }
+    while($row = mysqli_fetch_array($result)){
+        $semester=$row['id_semester'];
+$season=$row['season'];
+$sem_year=$row['sem_year'];
+$coursename=$row['name'];
+$credits=$row['credits'];
+$grade=$row['grade'];
+$gpa=$row['gpa'];
+$courseid=$row['id_course'];
+
+
+if($flag!=$semester){
+    if($flag!=0){
+        $sgpa=$tgpa/$tcredits;
+        echo" </table>
+                </div>
+                <p style='
+  color: rgb(31, 108, 236);'>GPA: $sgpa</p>";
+    $tgpa=$tcredits=0;
+    }
+
+    echo"  <h5 class='semester-heading'>$season $sem_year</h5>
+   <div class='row table-container'>
+     <table class='table'>
+    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Code</th>
+                            <th>Credit Hours</th>
+                            <th>Grade</th>
+                        </tr>
+                        </thead>
+                        <tbody>";
+    $flag=$semester;
+}
+if($flag==$semester){
+    $tgpa+=$gpa*$credits;
+    $tcredits+=$credits;
+    echo"<tr>
+                            <td>$coursename</td>
+                            <td>$courseid</td>
+                            <td>$credits</td>
+                            <td>$grade</td>
+                        </tr>";
+}
+    }
+    if($tcredits!=0){
+    $sgpa=$tgpa/$tcredits;
+    echo" </table>
+                </div>
+                <p style='
+  color: rgb(31, 108, 236);'>GPA: $sgpa</p>";
+}
+}
+
+
 function logout()
 {
     global $login_path;
     session_destroy();
     header("Location:$login_path");
 }
+
