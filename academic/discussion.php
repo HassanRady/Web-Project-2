@@ -211,7 +211,7 @@
 
                 ?>
                     <div class="container post">
-                        <form action="discussion.php" method="post">
+                        <form action="" method="post">
                             <?php echo " <h6><a href=''>$result_post_author</a></h6>" ?>
 
                             <?php

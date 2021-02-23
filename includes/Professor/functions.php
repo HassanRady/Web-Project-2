@@ -1,4 +1,5 @@
 <?php 
+include_once dirname(__FILE__, 2) ."\\utils\\helper.php";
 
 $semester = getCurrentSemester();
 
