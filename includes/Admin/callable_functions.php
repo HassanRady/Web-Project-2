@@ -267,6 +267,15 @@ function updateSaProfile($id)
     }
 }
 
+function updateAdminProfile($id)
+{
+    adminProfile($id);
+    if (isset($_POST['submit'])) {
+        editAdminProfile($id);
+        header("Location:./my_profile.php?update=success");
+    }
+}
+
 function updateProfile()
 {
     global $studentsType, $professorsType, $tasType, $sasType, $adminsType, $type;
@@ -285,8 +294,11 @@ function updateProfile()
         case $tasType:
             updateTaProfile($id);
             break;
-        case $sasType || $adminsType:
+        case $sasType:
             updateSaProfile($id);
+            break;
+        case $adminsType:
+            updateAdminProfile($id);
             break;
     }
 }

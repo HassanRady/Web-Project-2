@@ -21,9 +21,6 @@ function login()
     $name = $_POST['email'];
     $password = $_POST['password'];
 
-    // $password = encrypt_password($password);
-    // die($password);
-
     $username = mysqli_real_escape_string($conn, $name);
     $password = mysqli_real_escape_string($conn, $password);
     $query = "Select * FROM users WHERE email= '{$username}' ";
@@ -40,9 +37,8 @@ function login()
         $last_name = $row['last_name'];
         $type = $row['type'];
     }
-    if ($username != $email && $password != $pass) {
-        header("Location: ./login.php");
-    } elseif ($username == $email && $password == $pass) {
+    // die(var_dump(password_verify($password, $pass)));
+     if ($username == $email && password_verify($password, $pass)) {
         $_SESSION['id'] = $id;
         $_SESSION['email'] = $email;
 

@@ -65,6 +65,14 @@ function adminProfile($id)
     $data = getAdmin($id);
     getDataForProfile($data);
 }
+/**
+ * @param int $id
+ */
+function editAdminProfile($id)
+{
+    editProfileCommon($id);
+}
+
 
 
 /**
