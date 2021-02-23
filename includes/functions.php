@@ -392,11 +392,8 @@ function edit_prof_assignment($id)
         die("Failed" . mysqli_error($conn));
     }
 }
-<<<<<<< HEAD
-function show_prof_student_assignments($id,$id_sem,$id_course)
-=======
+
 function show_prof_student_assignments($id, $id_sem, $id_course)
->>>>>>> 49b52908996d7e5d1e237934ca930bace9d9115d
 {
     global $conn;
     $query = "SELECT css.id_student
