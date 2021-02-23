@@ -34,8 +34,28 @@ function checkResultQuery($result, $conn, $source=null)
         die("RESULT FAILED from {$source}\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));
         return;
     }
+    return true;
 }
+
+/** OMAR
+ * get the last semester_id in the database;
+ */
+
+function getCurrentSemester()
+{
+    global $conn;
+    $query = "SELECT semester_id FROM semesters ORDER BY semester_id DESC LIMIT 1";
+    $query_result = mysqli_query($conn, $query);
+    if ($query_result) {
+        $result = mysqli_fetch_assoc($query_result);
+        return $result['semester_id'];
+    } else {
+        return -1;
+    }
+}
+
 
 function displayError($result) {
 
 }
+?>
