@@ -1,6 +1,6 @@
 <?php
 
-$root =   "SIM" .DIRECTORY_SEPARATOR. "Web-Project-2";
+$root =   "web project" .DIRECTORY_SEPARATOR. "my branch" .DIRECTORY_SEPARATOR. "Web-Project-2";
 $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY_SEPARATOR. "logo.jpeg";
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
 $login_path =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "login.php";

@@ -19,7 +19,7 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <?php
-        include_once dirname(__FILE__, 2) ."\\includes\\functions.php";
+        include_once dirname(__FILE__, 2) ."\\includes\\Professor\\functions.php";
         include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
 
         include_once $professor_sidebar_path;
