@@ -1,10 +1,10 @@
 <?php
 include "includes/functions.php";
 global $conn;
-
-if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
+session_start();
+if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
-    $the_user_id = $_GET['u_id'];
+    $the_user_id = $_SESSION['id'];
 }
 
 
@@ -96,16 +96,19 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
                 $post_id = $_POST['post_id'];
                 $votes = $_POST['votes'];
                 upVote($post_id, $the_user_id, $votes);
+                header('Location: post.php?p_id='.$post_id);
             }
             if (isset($_POST['downvote'])) {
 
                 $post_id = $_POST['post_id'];
                 $votes = $_POST['votes'];
                 downVote($post_id, $the_user_id, $votes);
+                header('Location: post.php?p_id='.$post_id);
             }
             if (isset($_POST['redo'])) {
                 $post_id = $_POST['post_id'];
                 redoVotePost($post_id, $the_user_id);
+                header('Location: post.php?p_id='.$post_id);
             }
             $posts_result = getPost($the_post_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {
@@ -163,9 +166,11 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
                         $comment_date = date("Y-m-d");
                         $comment_content = $_POST['comment_content'];
                         addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date);
+
                     } else {
                         echo "<script>alert('Comment cannot be empty')</script>";
                     }
+
                 }
 
                 if (isset($_POST['delete_comment'])) {
@@ -189,7 +194,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
                         //checking if the current user has posted a comment so if he did he can delete it
                         if ($id_user == $the_user_id ) {
                             ?>
-                            <form action="post.php?p_id=<?php echo $the_post_id; ?>&&u_id=<?php echo $the_user_id; ?> "
+                            <form action="post.php?p_id=<?php echo $the_post_id; ?>"
                                   method="post" role="form">
                                 <input type="submit"  value="Delete Comment" name="delete_comment" class="btn btn-primary">
                                 <input type="hidden" name="delete_comment_id" value="<?php print $comment_id; ?>"/>
@@ -208,7 +213,7 @@ if (isset($_GET['p_id']) && isset($_GET['u_id'])) {
                 <div class="add-comment">
                     <h4>Leave a Comment:</h4>
                                                     <!--  redirecting to the current page                   -->
-                    <form action="post.php?p_id=<?php echo $the_post_id; ?>&&u_id=<?php echo $the_user_id; ?> "
+                    <form action="post.php?p_id=<?php echo $the_post_id; ?>"
                           method="post"
                           role="form">
                         <div class="form-group">
