@@ -808,38 +808,6 @@ function getInstructorCourses($instructorId)
 }
 
 
-function getStudentCourses($studentId)
-{
-    global $conn, $discussion_student_path;
-    global $semester;
-    $query = "SELECT c.course_id, c.name, u.first_name, u.last_name FROM course_semester_students css 
-      INNER JOIN courses c ON css.id_course = c.course_id
-      INNER JOIN open_courses_instructors oci ON oci.course_id = c.course_id
-      INNER JOIN instructors i on oci.instructor_id = i.instructor_id
-      INNER JOIN users u on i.id_user = u.id 
-      WHERE css.id_student = $studentId AND (u.type = 'professor' or u.type='admin')";
-    $query_result = mysqli_query($conn, $query);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $fname = $row['first_name'];
-        $lname = $row['last_name'];
-        $cname = $row['name'];
-        $id = $row['course_id'];
-        echo "
-            <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-            <a href='$discussion_student_path?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
-              <div class='course-title'>
-                $cname
-              </div>
-              <div class='course-info'>
-                Prof. $fname $lname
-              </div>
-            </a>
-            </div>              
-          ";
-    }
-}
-
 function getStudentMarksForCourse($courseId, $std_id)
 {
     global $conn;

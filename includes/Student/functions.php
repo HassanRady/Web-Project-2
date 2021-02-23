@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+include_once dirname(__FILE__, 2) ."\\utils\\helper.php";
+
 /*
 * OMAR
 * @param int $std_id : the ID of the student whose table we want 
@@ -53,4 +56,25 @@ function getStudentTimetable($std_id){
         return false;
     }
 }
+
+
+function getStudentCourses($studentId)
+{
+    global $conn, $discussion_student_path;
+    $semester = getCurrentSemester();
+    $query = "SELECT c.course_id, c.name, u.first_name, u.last_name FROM course_semester_students css 
+      INNER JOIN courses c ON css.id_course = c.course_id
+      INNER JOIN open_courses_instructors oci ON oci.course_id = c.course_id
+      INNER JOIN instructors i on oci.instructor_id = i.instructor_id
+      INNER JOIN users u on i.id_user = u.id 
+      WHERE css.id_student = $studentId AND (u.type = 'professor' or u.type='admin')";
+    $query_result = mysqli_query($conn, $query);
+    checkResultQuery($query_result, $conn, "getStudentCourses");
+    return $query_result;
+}
+
+
+
+
+
 ?>
