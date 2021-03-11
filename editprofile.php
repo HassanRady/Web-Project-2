@@ -3,6 +3,10 @@ include "includes/Admin/callable_functions.php";
 include "includes/utils/variables.php";
 include_once "paths.php";
 updateProfile();
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -31,16 +35,16 @@ updateProfile();
 <body>
 
   <div class="wrapper">
-  <?php
+    <?php
 
-if ($type === $studentsType) 
-  include $student_sidebar_path;
- elseif ($type === $adminsType || $type == $sasType)
-  include $admin_sidebar_path;
-else
-  include $professor_sidebar_path;
+    if ($type === $studentsType)
+      include $student_sidebar_path;
+    elseif ($type === $adminsType || $type == $sasType)
+      include $admin_sidebar_path;
+    else
+      include $professor_sidebar_path;
 
-?>
+    ?>
     <!-- Page Content  -->
     <div id="content">
 
@@ -139,7 +143,7 @@ else
                               <div class='invalid-feedback'>Please enter your Guardian Mobile Number.</div>
                         </div>";
                 ?>
-                
+
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                   <label for="gender">Home Phone Number</label>
                   <input type="text" class="form-control" id="HomePhoneNumber" name="home_number" value="<?php echo $home_number ?>" required>
