@@ -28,8 +28,9 @@
     include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
 
     include_once $student_sidebar_path;
-    // $std_id = $_SESSION['student_id'];
-    $std_id = $_GET['std_id'];
+    session_start();
+    $std_id = $_SESSION['student_id'];
+    // $std_id = $_GET['std_id'];
     
     ?>
 
@@ -72,13 +73,13 @@
           <div class="row courseslist ">
 
             <?php
-            $courses = getStudentCourses($std_id);
+            $courses = getStudentCourses((int) $std_id);
             while ($row = mysqli_fetch_assoc($courses)) {
               $id = $row['course_id'];
               ?>
               
               <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-                <a href='<?php echo "$discussion_student_path?std_id=$$std_id&course_id=$id&sem_id=$semester"?>' class='cbox'>
+                <a href='<?php echo "$discussion_student_path?std_id=$std_id&course_id=$id&sem_id=$semester"?>' class='cbox'>
                   <div class='course-title'>
                     <?php echo $row['name']; ?>
                   </div>
