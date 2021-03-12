@@ -3,6 +3,7 @@
 session_start();
 if(isset($_GET['course_id'])){
     $course_id = $_GET['course_id'];
+    $semester = $_GET['sem_id'];
 }
 else{
     //user should be redirected to error page
@@ -75,7 +76,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
 
             <div class="container discussion-form">
                 <h5 class="">Start a new discussion:</h5>
-                <form class="row" action="discussion.php?course_id=<?php echo $course_id;?>" method="post">
+                <form class="row" action="" method="post">
                     <div class="col-lg-12">
                             <textarea class="w-100 p-3" id="exampleFormControlTextarea1"
                                       name="post_text"
@@ -126,7 +127,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 ?>
 
                 <!-- POLLS -->
-                <form action="discussion.php?course_id=<?php echo $course_id;?>" method="post">
+                <form action="" method="post">
                     <div class="container post">
                         <h6>
                             <?php echo $poll_author; ?>
@@ -228,7 +229,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
 
                 ?>
                 <div class="container post">
-                    <form action="discussion.php?course_id=<?php echo $course_id;?>" method="post">
+                    <form action="" method="post">
                         <?php echo " <h6><a href=''>$result_post_author</a></h6>" ?>
 
                         <?php
@@ -241,7 +242,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                             <input type="hidden" name="delete_post_id" value="<?php print $result_post_id; ?>"/>
                         <?php } ?>
                         <p class="text-center"><a
-                                    href="../post.php?p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
+                                    href="../post.php?<?php echo "course_id=$course_id&sem_id=$semester&"?>p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
                                 comments </a></p>
                         <?php
                         echo "<p class='date'>$result_post_date </p>";
@@ -281,7 +282,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                         </div>
 
                         <!--Body-->
-                        <form action="discussion.php?course_id=<?php echo $course_id;?>" method="post">
+                        <form action="" method="post">
                             <div class="modal-body">
                                 <div class="text-center">
                                     <i class="fa fa-file-text-o fa-4x mb-3 animated rotateIn"></i>

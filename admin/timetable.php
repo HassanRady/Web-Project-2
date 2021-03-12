@@ -4,13 +4,13 @@ include "../includes/functions.php";
 include "../includes/Admin/admin_functions.php";
 session_start();
 
-$level = "";
+$level = "1";
 
-if(isset($_GET['level'])){
-    $level = $_GET["level"];
-}else{
-    header("Location: announcements.php");
-}
+// if(isset($_GET['level'])){
+//     $level = $_GET["level"];
+// }else{
+//     header("Location: announcements.php");
+// }
 
 
 

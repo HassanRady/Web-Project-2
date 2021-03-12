@@ -23,7 +23,7 @@ addNewStudent();
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="forms.js"> </script> -->
+    <script type="text/javascript" src="forms.js"> </script>
 </head>
 
 <body>
@@ -73,7 +73,7 @@ addNewStudent();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Student</h4>
                         <hr class="mb-4">
-                        <form novalidate action="add_new_student.php?type=student" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_NationalId() & validate_GurdianNumber() & validate_MobileNumber() & validate_StudentId() &  validate_HomeNumber() & validate_email()  & validate_gender() & validate_math() )">
+                        <form novalidate action="" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_NationalId() & validate_GurdianNumber() & validate_MobileNumber() & validate_StudentId() &  validate_HomeNumber() & validate_email()  & validate_gender() & validate_math() )">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
@@ -84,8 +84,8 @@ addNewStudent();
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="lastName">Middle name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value="">
+                                    <label for="middleName">Middle name (English)</label>
+                                    <input type="text" class="form-control" id="middleName" name="middle_name" placeholder="" value="">
                                     <h6 id="warn" style="font-style: italic;color: red;"></h6>
                                     <div class="invalid-feedback">
                                         Valid last name is required.

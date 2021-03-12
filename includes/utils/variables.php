@@ -23,4 +23,4 @@ $rowsPerPage = 3;
 // Directory 
 $profileImageDir = "profile_images";
 
-
+$developer = True;

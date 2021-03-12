@@ -200,6 +200,7 @@ function changeImage($id)
 {
     global $profileImageDir;
     if (isset($_POST['submit'])) {
+        $pageName = basename($_SERVER['PHP_SELF']);
 
         $image = $_FILES['image']['name'];
         $imageTmp = $_FILES['image']['tmp_name'];
@@ -214,5 +215,7 @@ function changeImage($id)
         $queryResult  = mysqli_query($dataBaseConnection, $imageSqlQuery);
         checkResultQuery($queryResult, $dataBaseConnection, __FUNCTION__);
         $dataBaseConnection->close();
+        
+        header("Location: $pageName");
     }
 }

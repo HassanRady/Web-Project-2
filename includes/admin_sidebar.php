@@ -17,7 +17,7 @@ if(isset($_POST['logout-btn'])){
             <p>Navigation</p>
             <ul class="list-unstyled components">
                 <li>
-                    <a href="announcements.html">Home</a>
+                    <a href="<?php echo $announcements_path ?>">Home</a>
                 </li>
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
@@ -51,7 +51,7 @@ if(isset($_POST['logout-btn'])){
                     <a href="<?php echo $my_profile_path ?>">My Profile</a>
                 </li>
                 <li>
-                    <a href="timetable.html">Timetable</a>
+                    <a href="<?php echo $timetable_admin_path ?>">Timetable</a>
                 </li>
                 <li>
                     <a href="<?php echo $venues_path ?>">Venues</a>

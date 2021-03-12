@@ -1,4 +1,7 @@
-
+<?php 
+  session_start();
+  include "../includes/Student/functions.php";
+?>
 <!DOCTYPE html>
 <html>
 
@@ -27,6 +30,8 @@
     include_once $student_sidebar_path;
     session_start();
     $std_id = $_SESSION['student_id'];
+    // $std_id = $_GET['std_id'];
+    
     ?>
 
 
@@ -68,7 +73,25 @@
           <div class="row courseslist ">
 
             <?php
-            getStudentCourses($std_id);
+            $courses = getStudentCourses((int) $std_id);
+            while ($row = mysqli_fetch_assoc($courses)) {
+              $id = $row['course_id'];
+              ?>
+              
+              <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
+                <a href='<?php echo "$discussion_student_path?std_id=$std_id&course_id=$id&sem_id=$semester"?>' class='cbox'>
+                  <div class='course-title'>
+                    <?php echo $row['name']; ?>
+                  </div>
+                  <div class='course-info'>
+                    <?php echo $row['first_name'] . ' ' . $row['last_name'];  ?>
+                  </div>
+                </a>
+              </div>              
+                
+          
+            
+            <?php }
             ?>
 
           </div>

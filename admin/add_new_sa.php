@@ -23,7 +23,7 @@ addNewSa();
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="forms.js"> </script> -->
+     <script type="text/javascript" src="forms.js"> </script>
 </head>
 
 <body>
@@ -85,8 +85,8 @@ addNewSa();
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="lastName">Middle name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value="">
+                                    <label for="middleName">Middle name (English)</label>
+                                    <input type="text" class="form-control" id="middleName" name="middle_name" placeholder="" value="">
                                     <h6 id="warn2" style="font-style: italic;color: red;"></h6>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
@@ -103,13 +103,19 @@ addNewSa();
                             </div>
                             <hr class="mb-4">
                             <div class="row">
-                                <div class="col-lg-8 col-md-12 mb-3">
+                                <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="email">E-mail</label>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="example@alexu.edu.eg">
                                     <h6 id="warn4" style="font-style: italic;color: red;"></h6>
                                     <div class="invalid-feedback">
                                         Please enter a valid email address.
                                     </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-12 mb-3">
+                                    <label for="zip">Instructor ID</label>
+                                    <input type="text" class="form-control" id="zip" name="instructor_id" placeholder="">
+                                    <h6 id="warn5" style="font-style: italic;color: red;"></h6>
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="zip">National ID number</label>

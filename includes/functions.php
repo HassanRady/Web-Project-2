@@ -17,12 +17,9 @@ $semester = getCurrentSemester();
 
 function login()
 {
-    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType;
+    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path, $announcements_student_path;
     $name = $_POST['email'];
     $password = $_POST['password'];
-
-    // $password = encrypt_password($password);
-    // die($password);
 
     $username = mysqli_real_escape_string($conn, $name);
     $password = mysqli_real_escape_string($conn, $password);
@@ -40,9 +37,8 @@ function login()
         $last_name = $row['last_name'];
         $type = $row['type'];
     }
-    if ($username != $email && $password != $pass) {
-        header("Location: ./login.php");
-    } elseif ($username == $email && $password == $pass) {
+    // die(var_dump(password_verify($password, $pass)));
+     if ($username == $email && password_verify($password, $pass)) {
         $_SESSION['id'] = $id;
         $_SESSION['email'] = $email;
 
@@ -61,19 +57,19 @@ function login()
 
         switch ($type) {
             case $studentsType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_student_path");
                 break;
             case $professorsType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
             case $tasType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
             case $sasType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
             case $adminsType:
-                header("Location: my_profile.php");
+                header("Location: $announcements_path");
                 break;
         }
     } else {
@@ -812,38 +808,6 @@ function getInstructorCourses($instructorId)
 }
 
 
-function getStudentCourses($studentId)
-{
-    global $conn, $discussion_path;
-    global $semester;
-    $query = "SELECT c.course_id, c.name, u.first_name, u.last_name FROM course_semester_students css 
-      INNER JOIN courses c ON css.id_course = c.course_id
-      INNER JOIN open_courses_instructors oci ON oci.course_id = c.course_id
-      INNER JOIN instructors i on oci.instructor_id = i.instructor_id
-      INNER JOIN users u on i.id_user = u.id 
-      WHERE css.id_student = $studentId AND (u.type = 'professor' or u.type='admin')";
-    $query_result = mysqli_query($conn, $query);
-
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $fname = $row['first_name'];
-        $lname = $row['last_name'];
-        $cname = $row['name'];
-        $id = $row['course_id'];
-        echo "
-            <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-            <a href='$discussion_path?std_id=$studentId&course_id=$id&sem_id=$semester' class='cbox'>
-              <div class='course-title'>
-                $cname
-              </div>
-              <div class='course-info'>
-                Prof. $fname $lname
-              </div>
-            </a>
-            </div>              
-          ";
-    }
-}
-
 function getStudentMarksForCourse($courseId, $std_id)
 {
     global $conn;
@@ -1075,7 +1039,7 @@ function getOpenCourses()
           </div>
           <div class='btn-grp col-lg-2 col-md-12'>
             <a href='#' class='btn btn-primary'>View</a>
-            <a href='#' class='btn btn-outline-primary'>Add Class</a>
+            <a href='../admin/Add_Class.php' class='btn btn-outline-primary'>Add Class</a>
             <a href='#' class='btn btn-outline-secondary'>Options</a>
           </div>
         </div>

@@ -1,4 +1,5 @@
 <?php
+include_once "variables.php";
 
 // function to make a link button
 function aElement($class, $name, $value, $href, $text)
@@ -30,9 +31,14 @@ function which_type($haystack, $needle, $offset = 0)
 // function to check if the sql query was successful
 function checkResultQuery($result, $conn, $source=null)
 {
+    global $developer;
     if (!$result) {
-        die("RESULT FAILED from {$source}\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));
-        return;
+        if ($developer) {
+        die("RESULT FAILED from {$source}\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));}
+        else{
+            die(mysqli_error($conn));
+            // return;
+        }
     }
     return true;
 }
@@ -53,9 +59,3 @@ function getCurrentSemester()
         return -1;
     }
 }
-
-
-function displayError($result) {
-
-}
-?>

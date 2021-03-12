@@ -26,7 +26,7 @@ function getAdminTimetable($level){
     INNER JOIN venues v ON
         v.venue_id = cl.id_venue
     INNER JOIN instructors i ON
-        i.instructor_id = cl.instructor_id
+        i.instructor_id = cl.id_instructor
     INNER JOIN users u ON
         u.id = i.id_user
     INNER JOIN open_courses oc ON

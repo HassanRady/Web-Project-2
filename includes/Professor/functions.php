@@ -1,4 +1,5 @@
 <?php 
+include_once dirname(__FILE__, 2) ."\\utils\\helper.php";
 
 $semester = getCurrentSemester();
 
@@ -24,10 +25,10 @@ function getInstructorTimetable($id){
     INNER JOIN courses c on c.course_id = cl.id_course
     INNER JOIN venues v on v.venue_id = cl.id_venue
     INNER JOIN instructors i ON
-            i.instructor_id = cl.instructor_id
+            i.instructor_id = cl.id_instructor
     INNER JOIN users u ON u.id = i.id_user
     WHERE
-        cl.instructor_id = $id
+        cl.id_instructor = $id
     ORDER BY CASE
         cl.day WHEN 'saturday' THEN 1 WHEN 'sunday' THEN 2 WHEN 'monday' THEN 3 WHEN 'tuesday' THEN 4 WHEN 'wednesday' THEN 4 WHEN 'thursday' THEN 4
     END,

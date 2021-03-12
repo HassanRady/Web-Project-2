@@ -3,13 +3,10 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
-/**
- * @param string $pageName
- */
-function showStudents($pageName)
+function showStudents()
 {
     $data = getStudentsData();
-    printStudentsData($data, $pageName);
+    printStudentsData($data);
 }
 
 

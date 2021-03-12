@@ -1,7 +1,7 @@
 <?php
 ob_start();
-include_once "../includes/functions.php";
-session_start();
+include_once dirname(__FILE__, 2) ."\\paths.php";
+include_once dirname(__FILE__, 2)."\\includes\\Student\\functions.php";
 
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ session_start();
     <title>Open Courses</title>
 
     
-    <?php include "../includes/bootstrap_styles_start.php"; ?>
+    <?php include_once "../includes/bootstrap_styles_start.php"; ?>
     <link rel="stylesheet" href="css/available_courses.css">
 </head>
 
@@ -23,7 +23,7 @@ session_start();
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include_once "../includes/admin_sidebar.php"; ?>
+        <?php include_once $student_sidebar_path; ?>
         <!-- Page Content  -->
         <div id="content">
 
@@ -41,15 +41,12 @@ session_start();
 
             <div class="page-body">
                 <!-- START HERE -->
-                <div class="container-fluid">
-                    <div class="row justify-content-end">
-                        <a href="available_courses_t.php" class=" btn btn-primary btn-block w-25">Add New</a>
-                    </div>
-                </div>
-                <hr class="mb-4">
+                
 
                 <?php 
-                    getOpenCourses();
+                session_start();
+                $studentId = $_SESSION['student_id'];
+                    getOpenCoursesForStudents($studentId);
                 ?>
 
             </div>

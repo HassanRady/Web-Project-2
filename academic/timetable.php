@@ -1,12 +1,12 @@
 <?php
 ob_start();
 
+include_once dirname(__FILE__, 2) . "\\includes\\Professor\\functions.php";
 
-
-$id = "";
-
-if(isset($_GET['id'])){
-    $id = $_GET["id"];
+$instructor_id = "";
+session_start();
+if(isset($_SESSION['id_instructor'])){
+    $instructor_id = $_SESSION["id_instructor"];
 }else{
     header("Location: discussion.php");
 }
@@ -49,7 +49,7 @@ if(isset($_GET['id'])){
                 <table class="table table-borderless table-responsive-lg">
                     <tbody>
                         <?php
-                        $timetable = getInstructorTimetable($id);
+                        $timetable = getInstructorTimetable($instructor_id);
                         if ($timetable) {
                             foreach ($timetable as $day => $data) {
                                 ?>
