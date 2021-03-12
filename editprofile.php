@@ -3,10 +3,6 @@ include "includes/Admin/callable_functions.php";
 include "includes/utils/variables.php";
 include_once "paths.php";
 updateProfile();
-
-
-
-
 ?>
 
 <!DOCTYPE html>

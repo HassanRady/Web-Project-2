@@ -27,7 +27,7 @@ if (isset($_POST['logout-btn'])) {
                     <a href="<?php echo $my_courses_path_student ?>">My Courses</a>
                 </li>
                 <li>
-                    <a href="course_registration.html">All Courses</a>
+                    <a href="<?php echo $all_courses_path_student ?>">All Courses</a>
                 </li>
             </ul>
         </li>

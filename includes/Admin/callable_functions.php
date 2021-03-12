@@ -161,7 +161,6 @@ function showSasList()
 
 function addNewStudent()
 {
-    global $studentsType;
     if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addStudent();

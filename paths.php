@@ -25,6 +25,7 @@ $timetable_admin_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "admin"
 $student_sidebar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "std_sidebar.php";
 $student_navbar_path = __DIR__ .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "student_navbar.php";
 $my_courses_path_student =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "my_courses_std.php";
+$all_courses_path_student =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "open_courses.php";
 $assignments_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "student_assignments.php";
 $grades_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "my_marks_std.php";
 $materials_student_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "material.php";

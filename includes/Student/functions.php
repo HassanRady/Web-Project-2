@@ -1,4 +1,5 @@
 <?php
+include_once dirname(__FILE__, 2) . "\\db_conn.php";
 
 include_once dirname(__FILE__, 2) ."\\utils\\helper.php";
 
@@ -75,6 +76,94 @@ function getStudentCourses($studentId)
 
 
 
+function getOpenCoursesForStudents($studentId)
+{
+    $query = "SELECT c.name, c.course_id, c.credits, c.category, c.has_preq, u.first_name, u.last_name FROM open_courses oc
+    left JOIN (SELECT * FROM course_semester_students css WHERE css.id_student = $studentId) css ON css.id_course = oc.course_id
+         JOIN courses c ON c.course_id = oc.course_id
+         JOIN open_courses_instructors oci ON oci.course_id = oc.course_id
+         JOIN instructors i ON i.instructor_id = oci.instructor_id
+         JOIN users u ON u.id = i.id_user
+        WHERE css.id_course is null;";
+    $dataBaseConnection = connectToDataBase();
+    $query_result = mysqli_query($dataBaseConnection, $query);
+    checkResultQuery($dataBaseConnection, $query_result, __FILE__."/".__FUNCTION__);
 
+    while ($row = mysqli_fetch_assoc($query_result)) {
+        $cname = $row['name'];
+        $id = $row['course_id'];
+        $credits = $row['credits'];
+        $fname = $row['first_name'];
+        $lname = $row['last_name'];
+        $category = $row['category'];
+        $has_preq = $row['has_preq'];
+        $prerequisite = '-';
+
+        if ($category == 'sim') {
+            $category = strtoupper($category);
+        } else {
+            $category = ucfirst($category);
+        }
+
+        if ($has_preq == '1') {
+            $preq_query = "SELECT name from prerequisites p
+        INNER JOIN courses c on p.prerequisite_id = c.course_id
+        WHERE p.id_course = $id";
+            $preq_query_result = mysqli_query($dataBaseConnection, $preq_query);
+            $data = mysqli_fetch_assoc($preq_query_result);
+            if (mysqli_num_rows($preq_query_result)) {
+                $prerequisite = $data['name'];
+            }
+        }
+        echo "
+      <div class='conbody container-fluid'>
+        <div class='row'>
+          <div class='col-lg-5 col-md-12'>
+            <table class='table table-borderless '>
+              <tbody>
+                <tr>
+                  <th scope='row'>Course Name</th>
+                  <td>$cname</td>
+                </tr>
+                <tr>
+                  <th scope='row'>Course ID</th>
+                  <td>$id</td>
+                </tr>
+                <tr>
+                  <th scope='row'>Credit Hours</th>
+                  <td>$credits</td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+          <div class='col-lg-5 col-md-12'>
+            <table class='table table-borderless '>
+              <tbody>
+                <tr>
+                  <th scope='row'>Professor</th>
+                  <td>Prof. $fname $lname</td>
+                </tr>
+                <tr>
+                  <th scope='row'>Prerequisites</th>
+                  <td>$prerequisite</td>
+                </tr>
+                <tr>
+                  <th scope='row'>Category</th>
+                  <td>$category</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class='btn-grp col-lg-2 col-md-12'>
+          <form action='' method='post'>
+            <button name='submit' class='btn btn-primary'>Enroll</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      ";
+    }
+}
 
 ?>
