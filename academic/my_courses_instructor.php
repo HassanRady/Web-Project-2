@@ -1,4 +1,4 @@
-<?php include "../includes/functions.php"; ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -21,7 +21,8 @@
     <!-- Sidebar  -->
     <?php 
       include "../includes/prof_sidebar.php";
-      $instructorId = $_GET['instructor_id'];
+      session_start();
+      $instructorId = $_SESSION['id_instructor'];
     ?>
     <!-- Page Content  -->
     <div id="content">

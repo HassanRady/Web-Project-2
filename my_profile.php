@@ -1,6 +1,10 @@
 <?php
-include "includes/functions.php";
+
+include "includes/Admin/callable_functions.php";
+include "includes/utils/variables.php";
+include_once "paths.php";
 userProfile();
+
 ?>
 
 <!DOCTYPE html>
@@ -18,76 +22,35 @@ userProfile();
   <!-- Our Custom CSS -->
   <link rel="stylesheet" href="css/rootStyles.css">
   <link rel="stylesheet" href="myprofile.css">
+  <link rel="stylesheet" href="css/preloader.css">
   <!-- Scrollbar Custom CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
   <!-- Font Awesome JS -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
+  <script type="text/javascript" src="js/load.js"></script>
 </head>
 
 <body>
-
+<div id="loader"></div>
   <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-      <div class="sidebar-header">
-        <img src="media/logo.jpeg" alt="SIM-LOGO">
-      </div>
-      <p>Navigation</p>
-      <ul class="list-unstyled components">
-        <li class="active">
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-              <a href="#">Students</a>
-            </li>
-            <li>
-              <a href="#">Professors</a>
-            </li>
-            <li>
-              <a href="#">Teaching Assistants</a>
-            </li>
-            <li>
-              <a href="#">Student Affairs</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li>
-              <a href="#">Open Courses</a>
-            </li>
-            <li>
-              <a href="#">All Courses</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">My Profile</a>
-        </li>
-        <li>
-          <a href="#">Timetable</a>
-        </li>
-        <li>
-          <a href="#">Others</a>
-        </li>
-      </ul>
+    <?php
 
-      <ul class="list-unstyled CTAs">
-        <li>
-          <a href="login.php" class="cta-logout" id="logout-btn">Logout</a>
-        </li>
-      </ul>
-    </nav>
+    if ($type === $studentsType)
+      include $student_sidebar_path;
+    elseif ($type === $adminsType || $type == $sasType)
+      include $admin_sidebar_path;
+    else
+      include $professor_sidebar_path;
+
+    ?>
     <!-- Page Content  -->
     <div id="content">
 
       <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
         <div class="container-fluid">
-
           <button type="button" id="sidebarCollapse" class="btn btn-primary">
             <i class="fas fa-align-left"></i>
             <!-- <span id="nav-toggle-text">Navigation</span> -->
@@ -96,26 +59,6 @@ userProfile();
           <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav ml-auto secondary-navigation">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Discussion</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Assignments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Material</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Students</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Marks</a>
-              </li>
-            </ul>
-          </div>
       </nav>
 
 
@@ -127,17 +70,25 @@ userProfile();
           <div class="card col-md-6 col-sm-12 ">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <img src="profile.png" alt="Admin" class="rounded-circle" width="150">
+                <img src="<?php echo $image_path ?>" alt="profile-pic" class="rounded-circle" width="150">
                 <div class="mt-3">
                   <h4><?php echo $full_name; ?></h4>
 
                   <?php
-                  if ($type === 'student')
+                  if ($type === $studentsType)
                     echo "
-                      <p class='text-secondary mb-1'>$level</p>";
+                      <p class='text-secondary mb-1'>Level $level</p>";
                   ?>
-                  <button class="btn btn-outline-primary btn-md">change photo</button>
-                  <a href="editprofile.php?id=<?php echo $id_user . '&type=' . $type ?>" class="btn btn-outline-primary btn-md">Edit</a>
+
+                  <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="file-input" id="f">
+                      <input type="file" id="file" class="file" name="image">
+                      <button type="submit" class="" name="submit">submit</button>
+                    </div>
+                  </form>
+
+
+                  <a href="editprofile.php" class="btn btn-outline-primary btn-md">Edit</a>
                 </div>
               </div>
             </div>
@@ -177,15 +128,15 @@ userProfile();
               </div>
 
               <?php
-              if ($type === 'student')
+              if ($type === $studentsType)
                 echo "
               <hr class='mb-4'>
               <div class='row align-items-center'>
                 <div class='col-md-6 '>
                   <h6 >Guardian Phone </h6>
-                </div> 
+                </div>
                 <div class='col-md-6 text-secondary'>
-                '$guardian_mobile_number'
+                $guardian_mobile_number
                 </div>
               </div>";
               ?>
@@ -201,7 +152,7 @@ userProfile();
               </div>
 
               <?php
-              if ($type === 'student')
+              if ($type === $studentsType)
                 echo "
               <hr class='mb-4'>
               <div class='row align-items-center'>
@@ -209,7 +160,7 @@ userProfile();
                   <h6>Address</h6>
                 </div>
                 <div class='col-md-6 text-secondary'>
-                '$address'
+                $address
                 </div>
               </div>";
               ?>
@@ -219,10 +170,6 @@ userProfile();
         </div>
         <br>
       </div>
-
-
-
-
 
 
 
@@ -244,7 +191,7 @@ userProfile();
   <!-- jQuery Custom Scroller CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <!-- Navbar -->
-  <script type="text/javascript" src="rootJS.js"></script>
+  <script type="text/javascript" src="js/rootJS.js"></script>
 
 </body>
 

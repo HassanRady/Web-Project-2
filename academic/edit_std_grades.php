@@ -1,4 +1,18 @@
-<?php include "../includes/functions.php"; ?>
+<?php
+session_start();
+include_once "../includes/utils/helper.php";
+include_once "../includes/db_conn.php";
+include_once "../includes/Professor/functions.php";
+
+$courseId = $_GET['course_id'];
+$success = null;
+if(isset($_POST['submit'])){
+
+    if(updateStudentGrades($courseId)){
+        $success = true;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -21,46 +35,16 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <?php
-            include "../includes/prof_sidebar.php";
-            $courseId = $_GET['course_id'];
+            include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
+
+            include_once $professor_sidebar_path;
         ?>
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
-                <div class="container-fluid">
-
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <i class="fas fa-align-left"></i>
-                        <!-- <span id="nav-toggle-text">Navigation</span> -->
-                    </button>
-                    <a class="navbar-brand" id="page-title" href="#">Edit Marks</a>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="nav navbar-nav ml-auto secondary-navigation">
-                          <li class="nav-item active">
-                              <a class="nav-link" href="discussion.php?course_id=<?php echo $courseId ?>">Discusssion</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="assignment-hand-ins.php?course_id=<?php echo $courseId ?>">Assignments</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="material.php?course_id=<?php echo $courseId ?>">Material</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="students_in_course.php?course_id=<?php echo $courseId ?>">Students</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link" href="std_grades.php?course_id=<?php echo $courseId ?>">Marks</a>
-                          </li>
-                      </ul>
-                  </div>
-            </nav>
+        <?php
+        include_once $professor_navbar_path;
+        ?>
 
 
             <div class="page-body">
@@ -69,8 +53,13 @@
                     Course Grades
                 </h3>
                 <hr class="mb-4">
+                <?php if($success){ ?>
+                    <div class="alert alert-primary" role="alert">
+                        Student marks successfully updated.
+                    </div>
+                <?php } ?>
                 <div class="container-fluid">
-                    <div class="row table-container table-responsive">
+                    <div class="row table-container table-responsive w-100">
                         <table class="table">
                             <thead>
                                 <tr style="color:rgb(31,108,236);">
@@ -83,16 +72,38 @@
                                     <th scope="col">Final</th>
                                 </tr>
                             </thead>
-                            <tbody style="color: rgb(0,0,0,0.5);">
-                                <?php 
-                                    getRegisteredStudentsMarksForEdit($courseId);
-                                ?>
-
-                            </tbody>
+                            <form id="marks" action="" method="post">
+                                <tbody style="color: rgb(0,0,0,0.5);">
+                                    <?php
+                                        $query_result = getRegisteredStudentsMarks($courseId);
+                                        $i = 0;
+                                        while ($row = mysqli_fetch_assoc($query_result)) {
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <?php echo $row['id_student']; ?>
+                                                    <input type='number' style="display:none;" name=<?php echo "grade[$i][id]" ?> value="<?php echo $row["id_student"]; ?>">
+                                                </td>
+                                                <td>
+                                                    <?php echo $row["arabic_name"]; ?>
+                                                </td>
+                                                <td><input type='number' name=<?php echo "grade[$i][midterm]" ?> value="<?php echo $row["midterm"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][oral]" ?> value="<?php echo $row["oral"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][practical]" ?> value="<?php echo $row["practical"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][cw]" ?> value="<?php echo $row["course_work"]; ?>"></td>
+                                                <td><input type='number' name=<?php echo "grade[$i][final]" ?> value="<?php echo $row["final"]; ?>"></td>
+                                            </tr>
+                                    <?php 
+                                            $i++;
+                                        } 
+                                    ?>
+                                </tbody>
+                            </form>
                         </table>
                     </div>
                     <br>
-                    <button class="btn btn-block btn-primary">Upload</button>
+                    <button class="btn btn-block btn-primary" form="marks" type="submit" name="submit">Upload</button>
+                    
                 </div>
 
 

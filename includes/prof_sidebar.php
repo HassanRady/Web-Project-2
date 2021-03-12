@@ -1,25 +1,39 @@
+<?php
+include_once dirname(__FILE__, 2)."\\paths.php";
+include_once dirname(__FILE__, 1) .DIRECTORY_SEPARATOR. "functions.php";
+?>
+<?php
+if(isset($_POST['logout-btn'])){
+
+    logout();
+}
+
+?>
+
 <nav id="sidebar">
     <div class="sidebar-header">
-        <img src="../media/logo.jpeg" alt="SIM-LOGO">
+        <img src="<?php echo $logo_path ?>" alt="SIM-LOGO">
     </div>
     <p>Navigation</p>
     <ul class="list-unstyled components">
         <li>
-            <a href="announcements.html">Home</a>
+            <a href="<?php echo $announcements_path ?>">Home</a>
         </li>
         <li>
-            <a href="my_courses_prof_ta.html">My Courses</a>
+            <a href="<?php echo $my_courses_path_professor ?>">My Courses</a>
         </li>
         <li>
-            <a href="../my_profile.html">My Profile</a>
+            <a href="<?php echo $my_profile_path ?>">My Profile</a>
         </li>
         <li>
-            <a href="timetable.html">Timetable</a>
+            <a href="<?php echo $timetable_professor_path ?>">Timetable</a>
         </li>
     </ul>
     <ul class="list-unstyled CTAs">
         <li>
-            <a href="#" class="cta-logout" id="logout-btn">Logout</a>
+            <form method="post">
+                <input type="submit" class="cta-logout" name="logout-btn" value="Logout">
+            </form>
         </li>
     </ul>
 </nav>

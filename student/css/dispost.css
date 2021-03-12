@@ -1,17 +1,17 @@
-.post{
-  background-color: rgb(31,108,236, 0.03);
+.post, .comment{
+  background-color: rgba(31,108,236, 0.03);
   padding:40px;
   border-radius: 8px;
   margin-top: 17px;
 }
 
 .discussion-form{
-  background-color: rgb(31,108,236, 0.03);
+  background-color: rgba(31,108,236, 0.03);
   padding:20px;
   border-radius: 8px;
 }
 
-.post h6, .discussion-form h5{
+.post h6, .discussion-form h5, .comment h6{
   color:rgb(31,108,236);
   font-weight: bold;
 }

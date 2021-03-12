@@ -1,8 +1,7 @@
 <?php
 ob_start();
-include "../includes/functions.php";
+include_once "../includes/functions.php";
 session_start();
-// $courseId = $_GET['course_id'];
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +23,7 @@ session_start();
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include "../includes/admin_sidebar.php"; ?>
+        <?php include_once "../includes/admin_sidebar.php"; ?>
         <!-- Page Content  -->
         <div id="content">
 

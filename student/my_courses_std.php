@@ -1,4 +1,7 @@
-<?php include "../includes/functions.php"; ?>
+<?php 
+  session_start();
+  include "../includes/Student/functions.php";
+?>
 <!DOCTYPE html>
 <html>
 
@@ -21,9 +24,14 @@
 
   <div class="wrapper">
     <!-- Sidebar  -->
-    <?php 
-      include "../includes/std_sidebar.php";
-      $std_id = $_GET['std_id'];
+    <?php
+    include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+
+    include_once $student_sidebar_path;
+    session_start();
+    $std_id = $_SESSION['student_id'];
+    // $std_id = $_GET['std_id'];
+    
     ?>
 
 
@@ -38,9 +46,7 @@
             <!-- <span id="nav-toggle-text">Navigation</span> -->
           </button>
           <a class="navbar-brand" id="page-title" href="#">My Courses</a>
-          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
 
@@ -52,7 +58,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">My Courses</a>
               </li>
-              
+
             </ul>
           </div>
       </nav>
@@ -66,29 +72,47 @@
 
           <div class="row courseslist ">
 
-              <?php
-                getStudentCourses($std_id);
+            <?php
+            $courses = getStudentCourses((int) $std_id);
+            while ($row = mysqli_fetch_assoc($courses)) {
+              $id = $row['course_id'];
               ?>
+              
+              <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
+                <a href='<?php echo "$discussion_student_path?std_id=$std_id&course_id=$id&sem_id=$semester"?>' class='cbox'>
+                  <div class='course-title'>
+                    <?php echo $row['name']; ?>
+                  </div>
+                  <div class='course-info'>
+                    <?php echo $row['first_name'] . ' ' . $row['last_name'];  ?>
+                  </div>
+                </a>
+              </div>              
+                
+          
+            
+            <?php }
+            ?>
 
-            </div>
           </div>
-
         </div>
 
-
-
-
-
-
-
-
-
-
-        <!-- STOP HERE -->
       </div>
 
 
+
+
+
+
+
+
+
+
+      <!-- STOP HERE -->
     </div>
+
+
+  </div>
   </div>
 
   <?php include "../includes/bootstrap_styles_end.php"; ?>

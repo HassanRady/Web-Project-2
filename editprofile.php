@@ -1,6 +1,8 @@
 <?php
-include "includes/functions.php";
-editProfile();
+include "includes/Admin/callable_functions.php";
+include "includes/utils/variables.php";
+include_once "paths.php";
+updateProfile();
 ?>
 
 <!DOCTYPE html>
@@ -29,58 +31,16 @@ editProfile();
 <body>
 
   <div class="wrapper">
-    <!-- Sidebar  -->
-    <nav id="sidebar">
-      <div class="sidebar-header">
-        <img src="media/logo.jpeg" alt="SIM-LOGO">
-      </div>
-      <p>Navigation</p>
-      <ul class="list-unstyled components">
-        <li class="active">
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-              <a href="#">Students</a>
-            </li>
-            <li>
-              <a href="#">Professors</a>
-            </li>
-            <li>
-              <a href="#">Teaching Assistants</a>
-            </li>
-            <li>
-              <a href="#">Student Affairs</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-            <li>
-              <a href="#">Open Courses</a>
-            </li>
-            <li>
-              <a href="#">All Courses</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a href="my_profile.php?id=<?php echo $id_user . '&type=' . $type ?>">My Profile</a>
-        </li>
-        <li>
-          <a href="#">Timetable</a>
-        </li>
-        <li>
-          <a href="#">Others</a>
-        </li>
-      </ul>
+    <?php
 
-      <ul class="list-unstyled CTAs">
-        <li>
-          <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-        </li>
-      </ul>
-    </nav>
+    if ($type === $studentsType)
+      include $student_sidebar_path;
+    elseif ($type === $adminsType || $type == $sasType)
+      include $admin_sidebar_path;
+    else
+      include $professor_sidebar_path;
+
+    ?>
     <!-- Page Content  -->
     <div id="content">
 
@@ -137,14 +97,14 @@ editProfile();
               <div class="row">
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="password">Password</label>
-                  <input type="text" class="form-control" id="password" placeholder="" value="" >
-                   <h6 id="warn4" style="font-style: italic;color: red;" ></h6>
+                  <input type="text" class="form-control" id="password" name="password" value="" >
+                  <h6 id="warn4" style="font-style: italic;color: red;" ></h6>
 
                 </div>
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="Re-enter Password">Re-enter Password </label>
-                  <input type="text" class="form-control" id="Re-enter" placeholder="" value="" onfocus ="check_password()" >
-                   <h6 id="warn5" style="font-style: italic;color: red;" ></h6>
+                  <input type="text" class="form-control" id="Re-enter" name="repassword" value=""  onfocus ="check_password()" >
+                  <h6 id="warn5" style="font-style: italic;color: red;" ></h6>
 
                 </div>
 
@@ -153,7 +113,7 @@ editProfile();
 
 
               <?php
-              if ($type === 'student')
+              if ($type === $studentsType)
                 echo "
                     <hr class='mb-4'>
                     <div class='row'>
@@ -178,7 +138,7 @@ editProfile();
                 </div>
 
                 <?php
-                if ($type == 'student')
+                if ($type == $studentsType)
                   echo "
                         <div class='col-lg-4 col-md-6 col-sm-12 mb-3'>
                             <label for='gender'>Guardian Mobile Number</label>
@@ -187,7 +147,7 @@ editProfile();
                               <div class='invalid-feedback'>Please enter your Guardian Mobile Number.</div>
                         </div>";
                 ?>
-                
+
                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                   <label for="gender">Home Phone Number</label>
                   <input type="text" class="form-control" id="HomeNumber" name="home_number" value="<?php echo $home_number ?>">
@@ -201,7 +161,7 @@ editProfile();
 
               <hr class="mb-4">
 
-              <button class="btn btn-primary btn-lg btn-block" type="submit" name="update">save changes</button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">save changes</button>
             </form>
             <br>
           </div>
