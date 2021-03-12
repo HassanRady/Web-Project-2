@@ -17,7 +17,7 @@ $semester = getCurrentSemester();
 
 function login()
 {
-    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path, $announcements_student_path;
+    global $conn, $semester, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path, $announcements_student_path;
     $name = $_POST['email'];
     $password = $_POST['password'];
 
@@ -54,7 +54,7 @@ function login()
             $data = getStudent($id);
             $_SESSION['student_id'] = $data['student_id'];
         }
-
+        $_SESSION['semester_id'] = $semester;
         switch ($type) {
             case $studentsType:
                 header("Location: $announcements_student_path");
