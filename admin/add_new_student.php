@@ -84,8 +84,8 @@ addNewStudent();
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="lastName">Middle name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value="">
+                                    <label for="middleName">Middle name (English)</label>
+                                    <input type="text" class="form-control" id="middleName" name="middle_name" placeholder="" value="">
                                     <h6 id="warn" style="font-style: italic;color: red;"></h6>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
