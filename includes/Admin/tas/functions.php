@@ -124,7 +124,7 @@ function updateTaData($id)
     WHERE id_user = {$id};";
     // query for updating professor in professors table
     $thirdSqlQuery = "UPDATE tas
-    SET description='{$description}'
+    SET description ='{$description}'
     WHERE id_user = {$id};";
 
     mysqli_autocommit($dataBaseConnection, FALSE);

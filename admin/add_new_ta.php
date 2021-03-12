@@ -1,11 +1,6 @@
 <?php
 include dirname(__FILE__, 2) . "\\includes\\Admin\\callable_functions.php";
-// addNewTa();
-if (isset($_POST['submit'])) {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    addTa();
-    header("Location:./{$pageName}?add=success");
-}
+addNewTa();
 ?>
 <!DOCTYPE html>
 <html>
