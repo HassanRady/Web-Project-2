@@ -17,7 +17,7 @@ $semester = getCurrentSemester();
 
 function login()
 {
-    global $conn, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path, $announcements_student_path;
+    global $conn, $semester, $studentsType, $professorsType, $tasType, $sasType, $adminsType, $announcements_path, $announcements_student_path;
     $name = $_POST['email'];
     $password = $_POST['password'];
 
@@ -54,7 +54,7 @@ function login()
             $data = getStudent($id);
             $_SESSION['student_id'] = $data['student_id'];
         }
-
+        $_SESSION['semester_id'] = $semester;
         switch ($type) {
             case $studentsType:
                 header("Location: $announcements_student_path");
@@ -1038,9 +1038,9 @@ function getOpenCourses()
             </table>
           </div>
           <div class='btn-grp col-lg-2 col-md-12'>
-            <a href='#' class='btn btn-primary'>View</a>
+            <a href='../academic/discussion.php?course_id=$id' class='btn btn-primary'>View</a>
             <a href='../admin/Add_Class.php' class='btn btn-outline-primary'>Add Class</a>
-            <a href='#' class='btn btn-outline-secondary'>Options</a>
+            <a href='#' class='btn btn-outline-danger'>Close</a>
           </div>
         </div>
       </div>
