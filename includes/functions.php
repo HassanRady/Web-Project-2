@@ -1038,9 +1038,9 @@ function getOpenCourses()
             </table>
           </div>
           <div class='btn-grp col-lg-2 col-md-12'>
-            <a href='#' class='btn btn-primary'>View</a>
+            <a href='../academic/discussion.php?course_id=$id' class='btn btn-primary'>View</a>
             <a href='../admin/Add_Class.php' class='btn btn-outline-primary'>Add Class</a>
-            <a href='#' class='btn btn-outline-secondary'>Options</a>
+            <a href='../admin/close_course.php?course_id=$id' class='btn btn-outline-danger'>Close</a>
           </div>
         </div>
       </div>

@@ -53,7 +53,7 @@ function NewTaDataForm()
     $department = $_POST['department'];
     $instructor_id = $_POST['instructor_id'];
 
-    return array($instructor_id, $department);
+    return array($instructor_id, $description);
 }
 
 

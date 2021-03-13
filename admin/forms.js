@@ -235,6 +235,21 @@ function validate_gender() {
 
     }
 
+function instructor_id(){
+
+  var flag = true;
+ var studentid= document.getElementById("instructorid").value;
+   var search_studentid = studentid.search(/^[0-9]+$/);
+ 
+   if(search_studentid!=0 && studentid!=""){
+     error(document.getElementById("instructorid"),document.getElementById("warninstructorid"),"Instructor ID must be numerical");
+    
+     flag= false;
+    
+   }
+ return flag;}
+
+function validate_gender(){
 
     return flag;
 }

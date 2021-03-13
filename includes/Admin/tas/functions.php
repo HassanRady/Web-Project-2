@@ -39,8 +39,8 @@ function getTa($id)
  */
 function getDataFromTa($data)
 {
-    global $department;
-    $department = $data['department'];
+    global $description;
+    $description = $data['description'];
 }
 
 
@@ -79,7 +79,7 @@ function addTa()
 {
     global $tasType;
 
-    list($instructor_id, $department) = NewTaDataForm();
+    list($instructor_id, $description) = NewTaDataForm();
 
     $dataBaseConnection = connectToDataBase();
 
@@ -92,7 +92,7 @@ function addTa()
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
     checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
-    $thirdSqlQuery = "INSERT INTO tas VALUES ($last_id, $instructor_id, '$department');";
+    $thirdSqlQuery = "INSERT INTO tas VALUES ($last_id, $instructor_id, '$description');";
     $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
     checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
@@ -104,7 +104,7 @@ function addTa()
 function updateTaData($id)
 {
     list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
-    list($instructor_id, $department) = NewTaDataForm();
+    list($instructor_id, $description) = NewTaDataForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
@@ -124,7 +124,7 @@ function updateTaData($id)
     WHERE id_user = {$id};";
     // query for updating professor in professors table
     $thirdSqlQuery = "UPDATE tas
-    SET department='{$department}'
+    SET description ='{$description}'
     WHERE id_user = {$id};";
 
     mysqli_autocommit($dataBaseConnection, FALSE);
