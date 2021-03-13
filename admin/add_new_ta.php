@@ -73,7 +73,7 @@ addNewTa();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Teaching Assistant</h4>
                         <hr class="mb-4">
-                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit=" return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender() & instructor_id() );">
+                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit=" return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender() & validate_instructorid() );">
                           
                      
                           
@@ -114,7 +114,7 @@ addNewTa();
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-12 mb-3">
+                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="instructorid">Instructor ID</label>
                                     <input type="text" class="form-control" id="instructorid" name="instructor_id" placeholder="" >
                                     <h6 id="warninstructorid" style="font-style: italic;color: red;"></h6>
