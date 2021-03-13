@@ -24,3 +24,5 @@ $rowsPerPage = 3;
 $profileImageDir = "profile_images";
 
 $developer = True;
+
+$hoursLimit = 12;

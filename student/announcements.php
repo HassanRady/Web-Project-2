@@ -44,7 +44,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
         <?php include "../includes/utils/variables.php";
         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
 
-        session_start();
+        // session_start();
         $type = $_SESSION['type'];
 
         if ($type === $studentsType)

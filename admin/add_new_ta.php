@@ -170,7 +170,7 @@ addNewTa();
 
                                 <div class="col-lg-12 mb-3">
                                     <label for="aboutTextArea">About</label>
-                                    <textarea class="form-control" placeholder="Brief Description" id="aboutTextArea" name="description" style="resize: none; height: 150px;"></textarea>
+                                    <textarea class="form-control" placeholder="Brief Description" id="aboutTextArea" name="department" style="resize: none; height: 150px;"></textarea>
                                 </div>
 
                             </div>
