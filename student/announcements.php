@@ -41,7 +41,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include "includes/utils/variables.php";
+        <?php include "../includes/utils/variables.php";
         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
 
         // session_start();

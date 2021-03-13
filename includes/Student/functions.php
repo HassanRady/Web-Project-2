@@ -2,6 +2,11 @@
 include_once dirname(__FILE__, 2) . "\\db_conn.php";
 
 include_once dirname(__FILE__, 2) . "\\utils\\helper.php";
+include_once dirname(__FILE__, 2) . "\\utils\\variables.php";
+
+include_once dirname(__FILE__, 3) . "\\paths.php";
+
+
 
 /*
 * OMAR
@@ -88,7 +93,7 @@ function getOpenCoursesForStudents($studentId)
         WHERE css.id_course is null;";
   $dataBaseConnection = connectToDataBase();
   $query_result = mysqli_query($dataBaseConnection, $query);
-  checkResultQuery($dataBaseConnection, $query_result, __FILE__ . "/" . __FUNCTION__);
+  checkResultQuery($dataBaseConnection, $query_result,  __FUNCTION__);
 
   while ($row = mysqli_fetch_assoc($query_result)) {
     $cname = $row['name'];
@@ -171,38 +176,64 @@ function getOpenCoursesForStudents($studentId)
 }
 
 
+function checkHours($enrolledHours)
+{
+  global $hoursLimit;
+  if ($enrolledHours >= $hoursLimit)
+    return false;
+  else
+    return true;
+}
+
+
 function getEnrolledHours($studentId)
 {
-  $semester = getCurrentSemester();
+  $semester_id = getCurrentSemester();
 
-  $query = "SELECT sum(c.credits) FROM courses c
-            JOIN (SELECT * FROM course_semester_students css WHERE css.id_student = $studentId and css.semester_id = $semester) css ON css.id_course = c.course_id;";
+  $query = "SELECT sum(c.credits) as hours FROM courses c
+            JOIN (SELECT * FROM course_semester_students css WHERE css.id_student = $studentId and css.id_semester = $semester_id) css ON css.id_course = c.course_id;";
 
   $dataBaseConnection = connectToDataBase();
   $result = mysqli_query($dataBaseConnection, $query);
   checkResultQuery($result, $dataBaseConnection, __FUNCTION__ . '@' . __FILE__);
 
-  $enrolledHours = mysqli_fetch_row($result);
+  $enrolledHours = mysqli_fetch_assoc($result)['hours'];
   $dataBaseConnection->close();
 
+  if (!$enrolledHours)
+    $enrolledHours = 0;
   return $enrolledHours;
 }
 
 
 function enrollToCourse($studentId, $course_id)
 {
-  $semester = getCurrentSemester();
-  $enrolledHours = getEnrolledHours($studentId);
+  $semester_id = getCurrentSemester();
 
-  die($enrolledHours);
+  $enrolledHours = (int) getEnrolledHours($studentId);
+  $canEnroll = checkHours($enrolledHours);
+  if (!$canEnroll)
+    die("Hour Limit");
 
-  $query = "INSERT INTO course_semester_students (id_student, id_course, id_semester) VALUES ($studentId, $course_id, $semester);";
+  $query = "INSERT INTO course_semester_students (id_student, id_course, id_semester) VALUES ($studentId, $course_id, $semester_id);";
 
   $dataBaseConnection = connectToDataBase();
-
-
-
   $result = mysqli_query($dataBaseConnection, $query);
   checkResultQuery($result, $dataBaseConnection, __FUNCTION__ . '@' . __FILE__);
   $dataBaseConnection->close();
+}
+
+
+function unEnrollFromCourse($studentId, $courseId) {
+  global $my_courses_path_student;
+  $semester_id = getCurrentSemester();
+
+  $query = "DELETE FROM course_semester_students WHERE id_course = $courseId AND id_student = $studentId;";
+
+  $dataBaseConnection = connectToDataBase();
+  $result = mysqli_query($dataBaseConnection, $query);
+  checkResultQuery($result, $dataBaseConnection, __FUNCTION__ . '@' . __FILE__);
+  $dataBaseConnection->close();
+
+  header("Location: $my_courses_path_student");
 }

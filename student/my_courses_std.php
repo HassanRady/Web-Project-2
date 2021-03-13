@@ -1,6 +1,6 @@
-<?php 
-  session_start();
-  include "../includes/Student/functions.php";
+<?php
+session_start();
+include "../includes/Student/functions.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,7 +31,7 @@
     session_start();
     $std_id = $_SESSION['student_id'];
     // $std_id = $_GET['std_id'];
-    
+
     ?>
 
 
@@ -74,25 +74,32 @@
 
             <?php
             $courses = getStudentCourses((int) $std_id);
+            $enrolledHours = getEnrolledHours($std_id);
             while ($row = mysqli_fetch_assoc($courses)) {
               $id = $row['course_id'];
-              ?>
-              
+            ?>
+
               <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-                <a href='<?php echo "$discussion_student_path?std_id=$std_id&course_id=$id&sem_id=$semester"?>' class='cbox'>
+                <a href='<?php echo "$discussion_student_path?std_id=$std_id&course_id=$id&sem_id=$semester" ?>' class='cbox'>
                   <div class='course-title'>
                     <?php echo $row['name']; ?>
                   </div>
                   <div class='course-info'>
                     <?php echo $row['first_name'] . ' ' . $row['last_name'];  ?>
                   </div>
+                  <div class='course-enrollment'>
+                    <form action="un_enroll.php" method="post">
+                      <button typed="submit" name="course_name" value="<?php echo $row['name']?>" class='btn btn-outline-danger'>Un-Enroll</button>
+                      <input type="hidden" name="course_id" value="<?php echo $id?>"/>
+                    </form>
+                    </div>
                 </a>
-              </div>              
-                
-          
-            
+              </div>
+
+
             <?php }
             ?>
+            <div> <label>Total Hours: <?php echo $enrolledHours ?></label> </div>
 
           </div>
         </div>

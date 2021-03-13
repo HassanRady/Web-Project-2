@@ -1,15 +1,21 @@
 <?php
 ob_start();
-include_once dirname(__FILE__, 2) . "\\paths.php";
-include_once dirname(__FILE__, 2) . "\\includes\\Student\\functions.php";
+include_once "..\\paths.php";
+include_once "..\\includes\\Student\\functions.php";
+
 session_start();
 $studentId = $_SESSION['student_id'];
+
 if (isset($_POST['submit'])) {
-    $course_id = $_POST['course_id'];
-    enrollToCourse($studentId, $course_id);
+$courseId = $_POST['course_id'];
+    unEnrollFromCourse($studentId, $courseId);
 }
 
+$courseName = $_POST['course_name'];
+$courseId = $_POST['course_id'];
+
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -18,10 +24,10 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Open Courses</title>
+    <title>My Courses</title>
 
 
-    <?php include_once "../includes/bootstrap_styles_start.php"; ?>
+    <?php include "../includes/bootstrap_styles_start.php"; ?>
     <link rel="stylesheet" href="css/available_courses.css">
 </head>
 
@@ -42,19 +48,32 @@ if (isset($_POST['submit'])) {
                     </button>
                     <a class="navbar-brand" id="page-title" href="#">Open Courses</a>
                     <div class="ml-auto"></div>
+                </div>
             </nav>
 
 
             <div class="page-body">
                 <!-- START HERE -->
-                <?php $enrolledHours = getEnrolledHours($studentId);?>
 
-                <div> <label>Total Hours: <?php echo $enrolledHours?></label> </div>
-                <?php
+                <div class="card text-center">
+                    <!-- <div class="card-header">
+                        Featured
+                    </div> -->
+                    <div class="card-body">
+                        <h5 class="card-title">Are you sure you want to un-enroll from "<?php echo $courseName ?>"?</h5>
+                        <form action="" method="post">
+                            <a href="my_courses_std.php" class="btn btn-outline-secondary">Go Back</a>
+                            <button type="submit" name="submit" class="btn btn-danger">Un-Enroll</button>
+                            <input type="hidden" name="course_id" value="<?php echo $courseId?>"/>
+                        </form>
 
-                getOpenCoursesForStudents($studentId);
-                ?>
+                    </div>
+                    <!-- <div class="card-footer text-muted">
+                        2 days ago
+                    </div> -->
+                </div>
 
+                <!-- END HERE -->
             </div>
 
         </div>
