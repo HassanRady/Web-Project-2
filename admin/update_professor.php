@@ -96,6 +96,13 @@ updateProfessor();
                                     <label for="email">E-mail</label>
                                     <input type="email" class="form-control" id="email" name="email" value="<?php echo $email ?>">
                                 </div>
+
+                                <div class="col-lg-4 col-md-12 mb-3">
+                                    <label for="zip">Instructor ID</label>
+                                    <input type="text" class="form-control" id="zip" name="instructor_id" value="<?php echo $instructor_id ?>">
+                                    <h6 id="warn5" style="font-style: italic;color: red;"></h6>
+                                </div>
+
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="zip">National ID number</label>
                                     <input type="text" class="form-control" id="zip" name="national_id" value="<?php echo $national_id ?>" required>

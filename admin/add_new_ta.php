@@ -22,7 +22,7 @@ addNewTa();
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <!-- <script type="text/javascript" src="forms.js"> </script> -->
+     <script type="text/javascript" src="forms.js"> </script> 
 </head>
 
 <body>
@@ -73,7 +73,10 @@ addNewTa();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Teaching Assistant</h4>
                         <hr class="mb-4">
-                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender() );">
+                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit=" return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender() & instructor_id() );">
+                          
+                     
+                          
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
@@ -84,8 +87,8 @@ addNewTa();
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="lastName">Middle name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" name="middle_name" placeholder="" value="">
+                                    <label for="middleName">Middle name (English)</label>
+                                    <input type="text" class="form-control" id="middleName" name="middle_name" placeholder="" value="">
                                     <h6 id="warn2" style="font-style: italic;color: red;"></h6>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
@@ -113,8 +116,8 @@ addNewTa();
 
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="zip">Instructor ID</label>
-                                    <input type="text" class="form-control" id="zip" name="instructor_id" placeholder="">
-                                    <h6 id="warn5" style="font-style: italic;color: red;"></h6>
+                                    <input type="text" class="form-control" id="instructorid" name="instructor_id" placeholder="">
+                                    <h6 id="warninstructorid" style="font-style: italic;color: red;"></h6>
                                 </div>
 
 
@@ -145,7 +148,7 @@ addNewTa();
 
 
                                 <div class="col-md-4 col-sm-12 mb-3">
-                                    <label for="gender">Mobile Number</label>
+                                    <label for="phone">Mobile Number</label>
                                     <input type="text" class="form-control" id="phone" name="mobile_number" placeholder="01234567890">
                                     <h6 id="warn6" style="font-style: italic;color: red;"></h6>
 
@@ -153,7 +156,7 @@ addNewTa();
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
-                                    <label for="gender">Home Number</label>
+                                    <label for="HomeNumber">Home Number</label>
                                     <input type="text" class="form-control" id="HomeNumber" name="home_number" placeholder="(optional)">
                                     <h6 id="warn8" style="font-style: italic;color: red;"></h6>
 
@@ -167,7 +170,7 @@ addNewTa();
 
                                 <div class="col-lg-12 mb-3">
                                     <label for="aboutTextArea">About</label>
-                                    <textarea class="form-control" placeholder="Brief Description" id="aboutTextArea" name="description" style="resize: none; height: 150px;"></textarea>
+                                    <textarea class="form-control" placeholder="Brief Description" id="aboutTextArea" name="department" style="resize: none; height: 150px;"></textarea>
                                 </div>
 
                             </div>
@@ -176,7 +179,7 @@ addNewTa();
 
                             <hr class="mb-4">
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">Add Professor</button>
+                            <button class="btn btn-primary btn-lg btn-block" id="submit" type="submit" name="submit">Add Professor</button>
                         </form>
                         <br>
                     </div>

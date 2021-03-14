@@ -3,6 +3,10 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
+/**
+ * @author Hassan
+ * @return void
+ */
 function showStudents()
 {
     $data = getStudentsData();
@@ -11,6 +15,7 @@ function showStudents()
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array student's data
  */
@@ -35,6 +40,7 @@ function getStudent($id)
 
 
 /**
+ * @author Hassan
  * @param array $data
  */
 function getDataFromStudent($data)
@@ -51,6 +57,7 @@ function getDataFromStudent($data)
 
 
 /**
+ * @author Hassan
  * @return array all students data
  */
 function getStudentsData()
@@ -81,6 +88,10 @@ function getStudentsData()
 }
 
 
+/**
+ * @author Hassan
+ * @return void
+ */
 function addStudent()
 {
     global $studentsType;
@@ -104,6 +115,11 @@ function addStudent()
 }
 
 
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateStudentData($id)
 {
 
@@ -145,7 +161,9 @@ function updateStudentData($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
+ * @return void
  */
 function studentProfile($id)
 {
@@ -162,7 +180,9 @@ function studentProfile($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
+ * @return void
  */
 function editStudentProfile($id)
 {

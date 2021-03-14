@@ -2,15 +2,20 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function showTas()
 {
+    global $tasType;
     $data = getTasData();
-    printCommonData($data);
+    printCommonData($data, $tasType);
 }
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array TA's data
  */
@@ -35,16 +40,19 @@ function getTa($id)
 }
 
 /**
+ * @author Hassan
  * @param array $data
  */
 function getDataFromTa($data)
 {
-    global $department;
-    $department = $data['department'];
+    global $description, $instructor_id;
+    $description = $data['description'];
+    $instructor_id = $data['id_instructor'];
 }
 
 
 /**
+ * @author Hassan
  * @return array all TA's data
  */
 function getTasData()
@@ -74,12 +82,15 @@ function getTasData()
     return $tasData;
 }
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function addTa()
 {
     global $tasType;
 
-    list($instructor_id, $department) = NewTaDataForm();
+    list($instructor_id, $description) = NewTaDataForm();
 
     $dataBaseConnection = connectToDataBase();
 
@@ -92,7 +103,7 @@ function addTa()
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
     checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
-    $thirdSqlQuery = "INSERT INTO tas VALUES ($last_id, $instructor_id, '$department');";
+    $thirdSqlQuery = "INSERT INTO tas VALUES ($last_id, $instructor_id, '$description');";
     $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
     checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
@@ -100,11 +111,15 @@ function addTa()
     $dataBaseConnection->close();
 }
 
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateTaData($id)
 {
     list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
-    list($instructor_id, $department) = NewTaDataForm();
+    list($instructor_id, $description) = NewTaDataForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
@@ -124,7 +139,7 @@ function updateTaData($id)
     WHERE id_user = {$id};";
     // query for updating professor in professors table
     $thirdSqlQuery = "UPDATE tas
-    SET department='{$department}'
+    SET description ='{$description}'
     WHERE id_user = {$id};";
 
     mysqli_autocommit($dataBaseConnection, FALSE);
@@ -144,6 +159,7 @@ function updateTaData($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function taProfile($id)
@@ -153,6 +169,7 @@ function taProfile($id)
 }
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function editTaProfile($id)

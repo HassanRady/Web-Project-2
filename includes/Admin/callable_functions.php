@@ -12,7 +12,10 @@ include_once "sas/search.php";
 include_once "utils" . DIRECTORY_SEPARATOR . "all.php";
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function searchStudent()
 {
 
@@ -23,6 +26,10 @@ function searchStudent()
         showStudentsList();
     }
 }
+/**
+ * @author Hassan
+ * @return void
+ */
 function studentSearchEngine()
 {
     searchForStudent();
@@ -30,7 +37,10 @@ function studentSearchEngine()
 
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function searchProfessor()
 {
 
@@ -41,13 +51,20 @@ function searchProfessor()
         showProfessorsList();
     }
 }
+/**
+ * @author Hassan
+ * @return void
+ */
 function professorSearchEngine()
 {
     searchForProfessor();
 }
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function searchTa()
 {
 
@@ -58,13 +75,20 @@ function searchTa()
         showTasList();
     }
 }
+/**
+ * @author Hassan
+ * @return void
+ */
 function taSearchEngine()
 {
     searchForTa();
 }
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function searchSa()
 {
 
@@ -75,13 +99,20 @@ function searchSa()
         showSasList();
     }
 }
+/**
+ * @author Hassan
+ * @return void
+ */
 function saSearchEngine()
 {
     searchForSa();
 }
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function updateStudent()
 {
     $id = $_GET['id'];
@@ -96,9 +127,14 @@ function updateStudent()
 }
 
 
+/**
+ * @author Hassan
+ * @return void
+ */
 function updateProfessor()
 {
     $id = $_GET['id'];
+
 
     $data = getProfessor($id);
     getCommenDataFromUser($data);
@@ -109,7 +145,10 @@ function updateProfessor()
     }
 }
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function updateTa()
 {
     $id = $_GET['id'];
@@ -123,7 +162,10 @@ function updateTa()
     }
 }
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function updateSa()
 {
     $id = $_GET['id'];
@@ -136,32 +178,46 @@ function updateSa()
         header("Location:./sa_list.php?update=success");
     }
 }
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function showProfessorsList()
 {
     showProfessors();
 }
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function showStudentsList()
 {
     showStudents();
 }
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function showTasList()
 {
     showTas();
 }
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function showSasList()
 {
     showSas();
 }
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function addNewStudent()
 {
-    global $studentsType;
     if (isset($_POST['submit'])) {
         $pageName = basename($_SERVER['PHP_SELF']);
         addStudent();
@@ -169,7 +225,10 @@ function addNewStudent()
     }
 }
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function addNewProfessor()
 {
     global $professorsType;
@@ -179,7 +238,10 @@ function addNewProfessor()
         header("Location:./{$pageName}?add=success");
     }
 }
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function addNewTa()
 {
     if (isset($_POST['submit'])) {
@@ -188,7 +250,10 @@ function addNewTa()
         header("Location:./{$pageName}?add=success");
     }
 }
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function addNewSa()
 {
     if (isset($_POST['submit'])) {
@@ -199,7 +264,10 @@ function addNewSa()
 }
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function userProfile()
 {
     global $studentsType, $professorsType, $tasType, $sasType, $adminsType, $type;
@@ -229,7 +297,11 @@ function userProfile()
     }
 }
 
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateStudentProfile($id)
 {
     studentProfile($id);
@@ -239,7 +311,11 @@ function updateStudentProfile($id)
     }
 }
 
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateProfessorProfile($id)
 {
     professorProfile($id);
@@ -248,7 +324,11 @@ function updateProfessorProfile($id)
         header("Location:./my_profile.php?update=success");
     }
 }
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateTaProfile($id)
 {
     taProfile($id);
@@ -257,7 +337,11 @@ function updateTaProfile($id)
         header("Location:./my_profile.php?update=success");
     }
 }
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateSaProfile($id)
 {
     saProfile($id);
@@ -266,7 +350,11 @@ function updateSaProfile($id)
         header("Location:./my_profile.php?update=success");
     }
 }
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateAdminProfile($id)
 {
     adminProfile($id);
@@ -275,7 +363,10 @@ function updateAdminProfile($id)
         header("Location:./my_profile.php?update=success");
     }
 }
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function updateProfile()
 {
     global $studentsType, $professorsType, $tasType, $sasType, $adminsType, $type;

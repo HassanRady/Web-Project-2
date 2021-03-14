@@ -3,15 +3,21 @@
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ * 
+ */
 function showProfessors()
 {
+    global $professorsType;
     $data = getProfessorsData();
-    printCommonData($data);
+    printCommonData($data, $professorsType);
 }
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array professor's data
  */
@@ -35,16 +41,21 @@ function getProfessor($id)
 }
 
 /**
+ * @author Hassan
  * @param array $data
  */
 function getDataFromProfessor($data)
 {
-    global $description;
+    global $description, $instructor_id;
     $description = $data['description'];
+    $instructor_id = $data['id_instructor'];
+
+
 }
 
 
 /**
+ * @author Hassan
  * @return array all professors data
  */
 function getProfessorsData()
@@ -74,7 +85,11 @@ function getProfessorsData()
     return $professorsData;
 }
 
-
+/**
+ * @author Hassan
+ * @return void
+ * 
+ */
 function addProfessor()
 {
     global $professorsType, $adminsType, $professorsTable, $adminsTable;
@@ -108,7 +123,12 @@ function addProfessor()
     $dataBaseConnection->close();
 }
 
-
+/**
+ * @author Hassan
+ * @param $id
+ * @return void
+ * 
+ */
 function updateProfessorData($id)
 {
     list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
@@ -152,6 +172,7 @@ function updateProfessorData($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function professorProfile($id)
@@ -162,6 +183,7 @@ function professorProfile($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function editProfessorProfile($id)

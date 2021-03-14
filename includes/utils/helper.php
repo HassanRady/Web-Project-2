@@ -1,13 +1,20 @@
 <?php
+include_once "variables.php";
 
-// function to make a link button
+/**
+ * @author Hassan
+ */
 function aElement($class, $name, $value, $href, $text)
 {
     $a = " <a class='$class' name='$name' value='$value' href='$href'>$text</a>";
     echo $a;
 }
 
-// function to crypt a password
+/**
+ * @author Hassan
+ * @param string $password
+ * @return string
+ */
 function encrypt_password($password, $cost = 10)
 {
     $options = ['cost' => $cost,];
@@ -15,7 +22,10 @@ function encrypt_password($password, $cost = 10)
     return $password_encrypted;
 }
 
-// function to compare if a substring from an array of substrings exists in a string
+/**
+ * @author Hassan
+ * @return boolean
+ * */
 function which_type($haystack, $needle, $offset = 0)
 {
     if (!is_array($needle)) $needle = array($needle);
@@ -27,12 +37,21 @@ function which_type($haystack, $needle, $offset = 0)
 }
 
 
-// function to check if the sql query was successful
+/**
+ * @author Hassan
+ * @param mysqli $result
+ * @return boolean
+ */
 function checkResultQuery($result, $conn, $source=null)
 {
+    global $developer;
     if (!$result) {
-        die("RESULT FAILED from {$source}\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));
-        return;
+        if ($developer) {
+        die("RESULT FAILED from {$source}\n: " . mysqli_error($conn) . " " . mysqli_errno($conn));}
+        else{
+            die(mysqli_error($conn));
+            // return;
+        }
     }
     return true;
 }
@@ -53,9 +72,3 @@ function getCurrentSemester()
         return -1;
     }
 }
-
-
-function displayError($result) {
-
-}
-?>

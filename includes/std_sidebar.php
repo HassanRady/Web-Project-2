@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Hassan
+ */
+
+
 include_once dirname(__FILE__, 2) . "\\paths.php";
 include_once dirname(__FILE__, 1) . DIRECTORY_SEPARATOR . "functions.php";
 ?>
@@ -27,7 +32,7 @@ if (isset($_POST['logout-btn'])) {
                     <a href="<?php echo $my_courses_path_student ?>">My Courses</a>
                 </li>
                 <li>
-                    <a href="course_registration.html">All Courses</a>
+                    <a href="<?php echo $all_courses_path_student ?>">All Courses</a>
                 </li>
             </ul>
         </li>
@@ -42,7 +47,7 @@ if (isset($_POST['logout-btn'])) {
     <ul class="list-unstyled CTAs">
         <li>
             <form method="post">
-                <input type="submit" class="cta-logout" name="logout-btn" value="Logout">
+                <button type="submit" class="btn btn-block cta-logout" style="background-color: #fafafa; color: red;" name="logout-btn" value="Logout">Logout</button>
             </form>
 
         </li>
