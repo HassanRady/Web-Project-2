@@ -25,6 +25,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../css/rootStyles.css">
     <link rel="stylesheet" href="css/dispost.css">
+    <link rel="stylesheet" href="css/preloader.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -33,12 +34,12 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="js/load.js"></script>
 
 </head>
 
 <body>
-
+<div id="loader"></div>
 
     <div class="wrapper">
         <!-- Sidebar  -->
