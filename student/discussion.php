@@ -3,7 +3,7 @@
 session_start();
 if(isset($_GET['course_id'])){
     $course_id = $_GET['course_id'];
-    $semester = $_GET['sem_id'];
+    $semester_id = $_GET['sem_id'];
 }
 else{
     //user should be redirected to error page
@@ -117,7 +117,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
 
             ?>
             <?php
-            $polls = getPolls($course_id);
+            $polls = getPolls($course_id, $semester_id);
             while ($row = mysqli_fetch_assoc($polls)) {
                 $res_poll_id = $row['poll_id'];
                 $poll_id_user = $row['id_user'];
@@ -219,7 +219,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 deletePost($post_id);
             }
             // retrieving post information
-            $posts_result = getAllPosts($course_id);
+            $posts_result = getAllPosts($course_id,$semester_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {
                 $result_id_user = $row['id_user'];
                 $result_post_id = $row['post_id'];
@@ -242,7 +242,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                             <input type="hidden" name="delete_post_id" value="<?php print $result_post_id; ?>"/>
                         <?php } ?>
                         <p class="text-center"><a
-                                    href="../post.php?<?php echo "course_id=$course_id&sem_id=$semester&"?>p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
+                                    href="../post.php?<?php echo "course_id=$course_id&sem_id=$semester_id&"?>p_id=<?php echo $result_post_id; ?>&u_id=<?php echo $user_id; ?>">show
                                 comments </a></p>
                         <?php
                         echo "<p class='date'>$result_post_date </p>";

@@ -1246,11 +1246,11 @@ function getUserName($user_id)
 }
 
 
-function addNewPost($id_user, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags)
+function addNewPost($id_user,$id_semester ,$id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags)
 {
     global $conn;
-    $query = "INSERT INTO `posts`(id_user, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
-    $query .= "VALUES('$id_user', '$id_course', '$post_title', '$post_author', '$post_user', '$post_date', '$post_content','$post_tags')";
+    $query = "INSERT INTO `posts`(id_user, id_semester, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
+    $query .= "VALUES('$id_user', $id_semester, '$id_course', '$post_title', '$post_author', '$post_user', '$post_date', '$post_content','$post_tags')";
     // die($query);
     $result = mysqli_query($conn, $query);
     if (!$result) {
@@ -1260,10 +1260,10 @@ function addNewPost($id_user, $id_course, $post_title, $post_author, $post_user,
 }
 
 
-function getAllPosts($course_id)
+function getAllPosts($course_id,$id_semester)
 {
     global $conn;
-    $query = "SELECT post_id, id_user,post_author, post_date, post_content, votes FROM posts WHERE id_course ='$course_id' ORDER BY post_id  DESC ";
+    $query = "SELECT post_id, id_user,post_author, post_date, post_content, votes FROM posts WHERE id_course ='$course_id' AND id_semester = '$id_semester' ORDER BY post_id  DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("Cannot retrieve posts from database  " . mysqli_error($conn));
@@ -1407,10 +1407,10 @@ function checkIfVotedPost($post_id, $user_id)
 // adding new poll
 
 
-function addNewPoll($id_user, $id_course, $poll_content, $poll_date)
+function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_date)
 {
     global $conn;
-    $query = "INSERT INTO polls(id_user,id_course ,poll_content, poll_date) VALUES('$id_user', '$id_course', '$poll_content','$poll_date')";
+    $query = "INSERT INTO polls(id_user, id_semester, id_course ,poll_content, poll_date) VALUES('$id_user', $id_semester, '$id_course', '$poll_content','$poll_date')";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("cannot insert to poll table " . mysqli_error($conn));
@@ -1438,10 +1438,10 @@ function addPollOption($id_poll, $option_content)
     }
 }
 
-function getPolls($id_course)
+function getPolls($id_course, $id_semester)
 {
     global $conn;
-    $query = "SELECT * FROM polls WHERE id_course = '$id_course' ORDER BY poll_id DESC ";
+    $query = "SELECT * FROM polls WHERE id_course = '$id_course' AND id_semester = '$id_semester' ORDER BY poll_id DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("cannot get the polls " . mysqli_error($conn));
