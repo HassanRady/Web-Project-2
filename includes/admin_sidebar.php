@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Hassan
+ */
+
+
 include_once dirname(__FILE__, 2)."\\paths.php";
 include_once "functions.php";
 ?>

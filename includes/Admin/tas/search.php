@@ -3,7 +3,10 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function searchForTa()
 {
     global $tasTable, $rowsPerPage, $ta_name, $ta_email, $ta_phone, $countRows;
@@ -44,6 +47,6 @@ function searchForTa()
 
 function showTaSearch($tasData)
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    printTasData($tasData, $pageName);
+    global $tasType;
+    printCommonData($tasData, $tasType);
 }

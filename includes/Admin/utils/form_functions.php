@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @author Hassan
  * @return array new user's data
  */
 function NewUserDataForm()
@@ -19,6 +20,7 @@ function NewUserDataForm()
 }
 
 /**
+ * @author Hassan
  * @return array new student's data
  */
 function NewStudentDataForm()
@@ -33,6 +35,7 @@ function NewStudentDataForm()
 }
 
 /**
+ * @author Hassan
  * @return array new professor's data
  */
 function NewProfessorDataForm()
@@ -45,7 +48,9 @@ function NewProfessorDataForm()
 }
 
 
+
 /**
+ * @author Hassan
  * @return array new TA's data
  */
 function NewTaDataForm()
@@ -53,22 +58,26 @@ function NewTaDataForm()
     $department = $_POST['department'];
     $instructor_id = $_POST['instructor_id'];
 
-    return array($instructor_id, $description);
+    return array($instructor_id, $department);
 }
 
 
 
 /**
+ * @author Hassan
  * @return array new SA's data
  */
 function NewSaDataForm()
 {
     $instructor_id = $_POST['instructor_id'];
-    return array($instructor_id);
+    $department = $_POST['department'];
+
+    return array($instructor_id, $department);
 }
 
 
 /**
+ * @author Hassan
  * @return array
  */
 function editProfileForm() {
@@ -84,6 +93,7 @@ function editProfileForm() {
 
 
 /**
+ * @author Hassan
  * @return array
  */
 function studentEditProfileForm() {

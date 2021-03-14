@@ -81,7 +81,11 @@ function getStudentCourses($studentId)
 }
 
 
-
+/**
+ * @author Hassan
+ * @param int $studentId
+ * @return void
+ */
 function getOpenCoursesForStudents($studentId)
 {
   $query = "SELECT c.name, c.course_id, c.credits, c.category, c.has_preq, u.first_name, u.last_name FROM open_courses oc
@@ -175,7 +179,11 @@ function getOpenCoursesForStudents($studentId)
   $dataBaseConnection->close();
 }
 
-
+/**
+ * @author Hassan
+ * @param int $enrolledHours
+ * @return boolean
+ */
 function checkHours($enrolledHours)
 {
   global $hoursLimit;
@@ -185,7 +193,11 @@ function checkHours($enrolledHours)
     return true;
 }
 
-
+/**
+ * @author Hassan
+ * @param int $studentId
+ * @return int
+ */
 function getEnrolledHours($studentId)
 {
   $semester_id = getCurrentSemester();
@@ -197,7 +209,7 @@ function getEnrolledHours($studentId)
   $result = mysqli_query($dataBaseConnection, $query);
   checkResultQuery($result, $dataBaseConnection, __FUNCTION__ . '@' . __FILE__);
 
-  $enrolledHours = mysqli_fetch_assoc($result)['hours'];
+  $enrolledHours = (int) mysqli_fetch_assoc($result)['hours'];
   $dataBaseConnection->close();
 
   if (!$enrolledHours)
@@ -205,12 +217,17 @@ function getEnrolledHours($studentId)
   return $enrolledHours;
 }
 
-
+/**
+ * @author Hassan
+ * @param int $studentId
+ * @param int $course_id
+ * @return void
+ */
 function enrollToCourse($studentId, $course_id)
 {
   $semester_id = getCurrentSemester();
 
-  $enrolledHours = (int) getEnrolledHours($studentId);
+  $enrolledHours = getEnrolledHours($studentId);
   $canEnroll = checkHours($enrolledHours);
   if (!$canEnroll)
     die("Hour Limit");
@@ -223,7 +240,12 @@ function enrollToCourse($studentId, $course_id)
   $dataBaseConnection->close();
 }
 
-
+/**
+ * @author Hassan
+ * @param int $studentId
+ * @param int $course_id
+ * @return void
+ */
 function unEnrollFromCourse($studentId, $courseId) {
   global $my_courses_path_student;
   $semester_id = getCurrentSemester();
