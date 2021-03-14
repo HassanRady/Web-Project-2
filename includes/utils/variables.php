@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Hassan
+ */
 
 // Database tables
 $usersTable = "users";

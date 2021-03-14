@@ -15,14 +15,20 @@ $conn = mysqli_connect(DB_HOST, DB_PATH, DB_PASSWORD, DB_NAME) or die("FAILED TO
 
 
 
-
+/**
+ * @author Hassan
+ * @return mysqli
+ */
 function reconnectToDataBase()
 {
     global $conn;
     $conn = mysqli_connect(DB_HOST, DB_PATH, DB_PASSWORD, DB_NAME) or die("FAILED TO RECONNECT");
     return $conn;
 }
-
+/**
+ * @author Hassan
+ * @return mysqli
+ */
 function connectToDataBase()
 {
     $conn = mysqli_connect(DB_HOST, DB_PATH, DB_PASSWORD, DB_NAME) or die("FAILED TO RECONNECT");

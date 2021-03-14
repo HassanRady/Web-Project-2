@@ -2,15 +2,20 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function showTas()
 {
+    global $tasType;
     $data = getTasData();
-    printCommonData($data);
+    printCommonData($data, $tasType);
 }
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array TA's data
  */
@@ -35,16 +40,19 @@ function getTa($id)
 }
 
 /**
+ * @author Hassan
  * @param array $data
  */
 function getDataFromTa($data)
 {
-    global $description;
+    global $description, $instructor_id;
     $description = $data['description'];
+    $instructor_id = $data['id_instructor'];
 }
 
 
 /**
+ * @author Hassan
  * @return array all TA's data
  */
 function getTasData()
@@ -74,7 +82,10 @@ function getTasData()
     return $tasData;
 }
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function addTa()
 {
     global $tasType;
@@ -100,7 +111,11 @@ function addTa()
     $dataBaseConnection->close();
 }
 
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateTaData($id)
 {
     list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
@@ -144,6 +159,7 @@ function updateTaData($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function taProfile($id)
@@ -153,6 +169,7 @@ function taProfile($id)
 }
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function editTaProfile($id)
