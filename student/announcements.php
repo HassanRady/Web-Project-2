@@ -3,6 +3,7 @@ session_start();
 global $conn;
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 //general announcements
+$semester_id = $_SESSION['semester_id'];
 $course_id = 0;
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
@@ -78,7 +79,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 <!-- START HERE -->
 
                 <?php
-                $polls = getPolls($course_id);
+                $polls = getPolls($course_id, $semester_id);
                 while ($row = mysqli_fetch_assoc($polls)) {
                     $res_poll_id = $row['poll_id'];
                     $poll_id_user = $row['id_user'];
@@ -179,7 +180,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 }
 
                 // retrieving post information
-                $posts_result = getAllPosts($course_id);
+                $posts_result = getAllPosts($course_id, $semester_id);
                 while ($row = mysqli_fetch_assoc($posts_result)) {
                     $result_post_id = $row['post_id'];
                     $result_post_date = $row['post_date'];
