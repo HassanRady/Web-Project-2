@@ -73,7 +73,7 @@ addNewStudent();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Student</h4>
                         <hr class="mb-4">
-                        <form novalidate action="" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_NationalId() & validate_GurdianNumber() & validate_MobileNumber() & validate_StudentId() &  validate_HomeNumber() & validate_email()  & validate_gender() & validate_math() )">
+                        <form novalidate action="" method="POST" onsubmit=" return !!(empty_field1() & validate_names() & validate_NationalId() & validate_GurdianNumber() & validate_MobileNumber() & validate_StudentId() &  validate_HomeNumber() & validate_email()  & validate_gender() & validate_math() );">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
@@ -160,8 +160,8 @@ addNewStudent();
                                     <label for="math">Starting Math</label>
                                     <select class="custom-select d-block w-100" id="math" name="student_type" required>
                                         <option value="" disabled selected hidden>Choose...</option>
-                                        <option value="">Math 0</option>
-                                        <option value="">Math 1</option>
+                                        <option value="Math 0">Math 0</option>
+                                        <option value="Math 1">Math 1</option>
                                     </select>
                                     <p id="warn_math" style="font-style: italic;color: red;"></p>
                                     <div class="invalid-feedback">
@@ -204,7 +204,7 @@ addNewStudent();
 
                             <hr class="mb-4">
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit" name="submit">Add Student</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="submit"  name="submit">Add Student</button>
                         </form>
                         <br>
                     </div>

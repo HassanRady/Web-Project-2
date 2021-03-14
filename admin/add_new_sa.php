@@ -74,7 +74,7 @@ addNewSa();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Student Affairs Employee</h4>
                         <hr class="mb-4">
-                        <form action="add_new_sa.php?type=sa" method="POST" onsubmit="return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender()  );" novalidate>
+                        <form action="add_new_sa.php?type=sa" method="POST" onsubmit="return !!(empty_field1() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender()  );" novalidate>
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
