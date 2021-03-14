@@ -33,7 +33,7 @@ userProfile();
 </head>
 
 <body>
-<div id="loader"></div>
+
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php
