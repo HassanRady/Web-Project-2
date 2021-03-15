@@ -1282,7 +1282,7 @@ function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_autho
         die("Cannot add post to database  " . mysqli_error($conn));
     }
     if($id_course ==0){
-        return $result;
+        header("Location: $page");
     }
     else{
         header("Location: $page?course_id=$id_course");
