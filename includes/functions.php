@@ -72,7 +72,6 @@ function login()
                 header("Location: $announcements_path");
                 break;
             case $adminsType:
-                getProfessorAdmin();
                 header("Location: $announcements_path");
                 break;
         }
