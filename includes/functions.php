@@ -1259,7 +1259,13 @@ function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_autho
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
-    header("Location: $page?course_id=$id_course&sem_id=$id_semester");
+    if($id_course ==0){
+        return $result;
+    }
+    else{
+        header("Location: $page?course_id=$id_course&sem_id=$id_semester");
+    }
+
     return $result;
 }
 
@@ -1429,6 +1435,7 @@ function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_dat
     while ($row = mysqli_fetch_assoc($retResult)) {
         $retPoll_id = $row['poll_id'];
     }
+
     return $retPoll_id;
 }
 
