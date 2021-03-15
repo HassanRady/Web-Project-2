@@ -30,7 +30,13 @@
         <!-- Sidebar  -->
         <?php
         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
-        include_once $professor_sidebar_path;
+       session_start();
+        $type = $_SESSION['type'];
+        if ($type === $adminsType )
+            include $admin_sidebar_path;
+        else
+            include $professor_sidebar_path;
+
         ?>
         <!-- Page Content  -->
         <div id="content">
