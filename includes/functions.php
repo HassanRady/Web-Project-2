@@ -1440,7 +1440,7 @@ function checkIfVotedPost($post_id, $user_id)
 // adding new poll
 
 
-function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_date)
+function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_date, $page)
 {
     global $conn;
     $query = "INSERT INTO polls(id_user, id_semester, id_course ,poll_content, poll_date) VALUES('$id_user', $id_semester, '$id_course', '$poll_content','$poll_date')";
@@ -1457,7 +1457,7 @@ function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_dat
     while ($row = mysqli_fetch_assoc($retResult)) {
         $retPoll_id = $row['poll_id'];
     }
-
+header("Location: $page?course_id=$id_course&sem_id=$id_semester");
     return $retPoll_id;
 }
 
