@@ -22,7 +22,15 @@
     <?php
         include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
 
-        include_once $professor_sidebar_path;
+        include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Admin\\all_types\\functions.php";
+
+        session_start();
+        $user_id = $_SESSION['id'];
+
+        if (isHeProfessorAndAdmin($user_id))
+            include $admin_sidebar_path;
+        else
+            include $professor_sidebar_path;
         $courseId = $_GET['course_id'];
     ?>
     <!-- Page Content  -->

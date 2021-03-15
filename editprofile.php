@@ -72,7 +72,7 @@ updateProfile();
               <div class="row">
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="firstName">First name</label>
-                  <input type="text" class="form-control" id="firstName" name="first_name" value="<?php echo $first_name ?>" >
+                  <input type="text" class="form-control" id="firstName" name="first_name"  value="<?php echo $first_name ?>" >
                    <h6 id="warn1" style="font-style: italic;color: red;" ></h6>
                   <div class="invalid-feedback">
                     Valid first name is required.

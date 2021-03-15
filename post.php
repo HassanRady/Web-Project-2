@@ -1,10 +1,13 @@
 <?php
+ob_start();
+
 include "includes/functions.php";
 global $conn;
 session_start();
 if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
     $the_user_id = $_SESSION['id'];
+    $course_id = $_SESSION['course_id'];
 }
 
 
@@ -156,7 +159,8 @@ if (isset($_GET['p_id'])) {
                         $comment_author = getUserName($the_user_id);
                         $comment_date = date("Y-m-d");
                         $comment_content = $_POST['comment_content'];
-                        addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date);
+                        $page = "post.php";
+                        addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $page);
 
                     } else {
                         echo "<script>alert('Comment cannot be empty')</script>";
@@ -229,3 +233,4 @@ if (isset($_GET['p_id'])) {
 <?php
 include "includes/footer.php";
 ?>
+<?php ob_end_flush(); ?>

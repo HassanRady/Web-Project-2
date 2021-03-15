@@ -1,3 +1,7 @@
+<?php
+ob_start();
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -32,6 +36,8 @@
         <?php
         include "../includes/utils/variables.php";
         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+        include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Admin\\all_types\\functions.php";
+
 
         session_start();
         $type = $_SESSION['type'];
@@ -54,7 +60,13 @@
             <?php
             if ($type === $studentsType)
                 include $student_navbar_path;
-            else
+            elseif ($type == $adminsType || $type == $sasType) {
+                if (isHeProfessorAndAdmin($user_id)){ 
+                    include $professor_navbar_path;}
+                else{
+                    echo "<hr>";
+                }
+            } else
                 include $professor_navbar_path;
             ?>
 
@@ -96,7 +108,8 @@
                         $post_date = date("Y-m-d");
                         $post_content = $_POST['post_text'];
                         $post_tags = $post_author;
-                        addNewPost($id_user, $semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
+                        $page = "discussion.php";
+                        addNewPost($id_user, $semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags, $page);
                     } else {
                         echo "<script>alert('Post cannot be empty')</script>";
                     }
@@ -393,3 +406,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

@@ -194,18 +194,17 @@ function addsa()
  */
 function updateSaData($id)
 {
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($first_name, $middle_name, $last_name, $national_id, $email, $_, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($instructor_id, $department) = NewSaDataForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
     $email = mysqli_real_escape_string($dataBaseConnection, $email);
 
-    $password = encrypt_password($password);
 
     // query for updating user in users table
     $firstSqlQuery = "UPDATE users
-    SET first_name='{$first_name}', middle_name='{$middle_name}', password='{$password}', 
+    SET first_name='{$first_name}', middle_name='{$middle_name}',  
         last_name='{$last_name}', national_id={$national_id},
         email='{$email}', gender='{$gender}', mobile_number='{$mobile_number}', home_number='{$home_number}'
     WHERE id = {$id};";
@@ -258,25 +257,21 @@ function editSaProfile($id)
 
 
 
-/**
- * @author Hassan
- * @param string $category : The category of the courses we would like
- * @return a query_result containing (course_id, name, credits, has_preq, has_labs, has_practical, category, elective)
- */
+
 function getAvailableCourses($category)
 {
     global $conn;
-    $query = "SELECT * FROM courses WHERE category='{$category}'";
+
+    $query = "SELECT c.* FROM courses c
+    LEFT JOIN open_courses oc ON oc.course_id = c.course_id
+     WHERE c.category='{$category}' AND oc.course_id IS NULL";
+
     $query_result = mysqli_query($conn, $query);
     checkQuery($query_result);
     return $query_result;
 }
 
-/** 
- * @author Hassan
- * @param string $courseId : The ID of the course to check
- * @return int
- */
+
 function getCoursePrerequisite($courseId)
 {
     global $conn;
@@ -293,11 +288,7 @@ function getCoursePrerequisite($courseId)
 }
 
 
-/**
- * @author Hassan
- * @param string $courseId : The ID of the course to check
- * @return True if the course exists in open_courses, False otherwise.
- */
+
 function checkIfCourseIsOpen($courseId)
 {
     global $conn;
@@ -310,13 +301,7 @@ function checkIfCourseIsOpen($courseId)
     return false;
 }
 
-/**
- * @author Hassan
- * @param string $courseId : The ID of the course to be opened
- * @param string $professorId : The ID of the professor that will teach this course
- * @param string $level : The level for which this course will be opened
- * @return void
- */
+
 function openCourse($courseId, $professorId, $level)
 {
     global $conn;

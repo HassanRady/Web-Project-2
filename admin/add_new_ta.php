@@ -73,7 +73,7 @@ addNewTa();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Teaching Assistant</h4>
                         <hr class="mb-4">
-                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit=" return !!(empty_field() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender() & instructor_id() );">
+                        <form novalidate action="add_new_ta.php?type=ta" method="POST" onsubmit=" return !!(empty_field1() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender() & validate_instructorid() );">
                           
                      
                           
@@ -107,16 +107,16 @@ addNewTa();
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@alexu.edu.eg">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@alexu.edu.eg" >
                                     <h6 id="warn4" style="font-style: italic;color: red;"></h6>
                                     <div class="invalid-feedback">
                                         Please enter a valid email address.
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="zip">Instructor ID</label>
-                                    <input type="text" class="form-control" id="instructorid" name="instructor_id" placeholder="">
+                                 <div class="col-lg-4 col-md-12 mb-3">
+                                    <label for="instructorid">Instructor ID</label>
+                                    <input type="text" class="form-control" id="instructorid" name="instructor_id" placeholder="" >
                                     <h6 id="warninstructorid" style="font-style: italic;color: red;"></h6>
                                 </div>
 
