@@ -3,6 +3,7 @@ ob_start();
 
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 session_start();
+$course_id = 0;
 if (isset($_GET['course_id'])) {
     $course_id = $_GET['course_id'];
     session_start();
@@ -13,6 +14,7 @@ if (isset($_GET['course_id'])) {
 }
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['first_name'] . " " . $_SESSION['middle_name'];
+$page = "discussion.php?course_id=".$course_id;
 ?>
 
 
@@ -201,19 +203,41 @@ $user_name = $_SESSION['first_name'] . " " . $_SESSION['middle_name'];
 
                 <!-- POSTS -->
                 <?php
+                if (isset($_POST['upvote'])) {
+
+                    $post_id = $_POST['post_id'];
+                    $votes = $_POST['votes'];
+                    upVote($post_id, $user_id, $votes);
+                    header("Location:$page");
+                }
+                if (isset($_POST['downvote'])) {
+
+                    $post_id = $_POST['post_id'];
+                    $votes = $_POST['votes'];
+                    downVote($post_id, $user_id, $votes);
+                    header("Location:$page");
+                }
+                if (isset($_POST['redo'])) {
+                    $post_id = $_POST['post_id'];
+                    redoVotePost($post_id, $user_id);
+                    header("Location:$page");
+
+                }
                 //checking for delete button if clicked and delete the post
                 if (isset($_POST['delete_post'])) {
                     $post_id = $_POST['delete_post_id'];
                     deletePost($post_id);
+                    header("Location:$page");
                 }
                 // retrieving post information
                 $posts_result = getAllPosts($course_id, $semester_id);
                 while ($row = mysqli_fetch_assoc($posts_result)) {
-                    $result_id_user = $row['id_user'];
                     $result_post_id = $row['post_id'];
                     $result_post_date = $row['post_date'];
                     $result_post_author = $row['post_author'];
                     $result_post_content = $row['post_content'];
+                    $result_post_votes = $row['votes'];
+                    $result_id_user = $row['id_user']
 
                 ?>
                     <div class="container post">
@@ -224,6 +248,23 @@ $user_name = $_SESSION['first_name'] . " " . $_SESSION['middle_name'];
                             echo "<p> $result_post_content </p>";
                             //                    
                             ?>
+                            <div class="row">
+                                <?php
+                                // if user hadn't voted on the post yet, show him/her the upvote, downvote buttons
+                                if (!checkIfVotedPost($result_post_id, $user_id)) {
+                                    ?>
+                                    <div class="col"><input type="submit" name="upvote" value="upvote" class="btn btn-primary"></div>
+                                    <div class="col"><input type="submit" name="downvote" value="downvote" class="btn btn-danger"></div>
+                                <?php } else {
+                                    echo "<div class='col'><input type='submit' name='redo' value='redo' class='btn btn-primary'></div>";
+                                }
+                                ?>
+                                <div class="col">
+                                    <p>Votes: <?php echo $result_post_votes; ?> </p>
+                                </div>
+                                <input type="hidden" name="post_id" value="<?php print $result_post_id; ?>" />
+                                <input type="hidden" name="votes" value="<?php print $result_post_votes; ?>" />
+                            </div>
                             <?php
                             if ($result_id_user == $user_id) {
                             ?>

@@ -1285,7 +1285,7 @@ function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_autho
         return $result;
     }
     else{
-        header("Location: $page?course_id=$id_course&sem_id=$id_semester");
+        header("Location: $page?course_id=$id_course");
     }
 
     return $result;

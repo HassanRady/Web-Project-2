@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 include_once "../includes/functions.php";
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
@@ -471,3 +472,4 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

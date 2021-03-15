@@ -27,12 +27,13 @@
   <component name="ChangeListManager">
     <list default="true" id="17980649-d45e-4239-9a0d-c41b55b92cf7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< Updated upstream
+
       <change beforePath="$PROJECT_DIR$/includes/db_conn.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/db_conn.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/paths.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/post.php" beforeDir="false" afterPath="$PROJECT_DIR$/post.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sa/add_announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/sa/add_announcements.php" afterDir="false" />
-=======
+
       <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/map/Home map.html" beforeDir="false" afterPath="$PROJECT_DIR$/map/Home map.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/map/Newhall.html" beforeDir="false" afterPath="$PROJECT_DIR$/map/Newhall.html" afterDir="false" />
@@ -53,7 +54,7 @@
       <change beforePath="$PROJECT_DIR$/map/physics1.html" beforeDir="false" afterPath="$PROJECT_DIR$/map/physics1.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/map/physics2.html" beforeDir="false" afterPath="$PROJECT_DIR$/map/physics2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/map/wa7da.html" beforeDir="false" afterPath="$PROJECT_DIR$/map/wa7da.html" afterDir="false" />
->>>>>>> Stashed changes
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
