@@ -26,8 +26,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1e80914-98b5-415a-94c6-68e36ceb0996" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/admin_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/admin_sidebar.php" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/forgot_password.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forgot_password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
