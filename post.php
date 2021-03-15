@@ -4,6 +4,8 @@ ob_start();
 include "includes/functions.php";
 global $conn;
 session_start();
+$the_post_id = 0;
+$the_user_id = 0;
 if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
     $the_user_id = $_SESSION['id'];
@@ -171,6 +173,7 @@ if (isset($_GET['p_id'])) {
                 if (isset($_POST['delete_comment'])) {
                     $comment_id = $_POST['delete_comment_id'];
                     deleteComment($comment_id);
+                    header('Location: post.php?p_id='.$post_id);
                 }
                 //getting all the comments
                 $comments_results = getAllComments($the_post_id);
