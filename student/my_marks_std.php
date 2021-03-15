@@ -35,6 +35,8 @@ ob_start();
             session_start();
             $std_id = $_SESSION['student_id'];
             $courseId = $_GET['course_id'];
+        $semester = $_GET['sem_id'];
+
         ?>
 
 
@@ -67,7 +69,7 @@ ob_start();
                             </thead>
                             <tbody style="color: rgb(0,0,0,0.5);">
                             <?php
-                                getStudentMarksForCourse($courseId, $std_id, $semester);
+                                getStudentMarksForCourse($courseId, $std_id);
                             ?>
                             </tbody>
                         </table>
