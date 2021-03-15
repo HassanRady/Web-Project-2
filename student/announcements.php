@@ -8,6 +8,7 @@ $semester_id = $_SESSION['semester_id'];
 $course_id = 0;
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
+$page = "announcements.php";
 ?>
 
 
@@ -169,16 +170,19 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                     $post_id = $_POST['post_id'];
                     $votes = $_POST['votes'];
                     upVote($post_id, $user_id, $votes);
+                    header("Location:$page");
                 }
                 if (isset($_POST['downvote'])) {
 
                     $post_id = $_POST['post_id'];
                     $votes = $_POST['votes'];
                     downVote($post_id, $user_id, $votes);
+                    header("Location:$page");
                 }
                 if (isset($_POST['redo'])) {
                     $post_id = $_POST['post_id'];
                     redoVotePost($post_id, $user_id);
+                    header("Location:$page");
                 }
 
                 // retrieving post information

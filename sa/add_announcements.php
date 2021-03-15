@@ -8,6 +8,7 @@ $semester_id = $_SESSION['semester_id'];
 $course_id = 0;
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
+$page = "add_announcements.php";
 ?>
 
 
