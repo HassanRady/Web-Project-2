@@ -2,7 +2,7 @@
 ob_start();
 include "../includes/functions.php";
 include "../includes/Admin/admin_functions.php";
-session_start();
+// session_start();
 
 $level = "1";
 

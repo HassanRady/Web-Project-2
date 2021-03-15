@@ -54,7 +54,10 @@ if(isset($_POST['logout-btn'])){
                         </li>
 
                     <?php
-                    session_start();
+                    // session_start();
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
                     $user_id = $_SESSION['id'];
                         if(isHeProfessorAndAdmin($user_id)) {
                             ?>

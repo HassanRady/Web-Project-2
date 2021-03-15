@@ -1,5 +1,7 @@
 <?php
 include_once "variables.php";
+include_once "..\includes\db_conn.php";
+// include_once 'includes\functions.php';
 
 /**
  * @author Hassan
