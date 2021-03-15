@@ -18,9 +18,12 @@ include_once "utils" . DIRECTORY_SEPARATOR . "all.php";
  */
 function searchStudent()
 {
+    global $isSearched;
+    $isSearched = false;
 
     if (isset($_POST['submit'])) {
         $d = searchForStudent();
+        $isSearched = true;
         showStudentSearch($d);
     } else {
         showStudentsList();

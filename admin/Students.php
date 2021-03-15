@@ -32,8 +32,8 @@ studentSearchEngine();
 
     <div class="wrapper">
         <!-- Sidebar  -->
-       <?php
-            include dirname(__FILE__, 2) . "\\includes\\admin_sidebar.php";
+        <?php
+        include dirname(__FILE__, 2) . "\\includes\\admin_sidebar.php";
         ?>
         <!-- Page Content  -->
         <div id="content">
@@ -84,7 +84,7 @@ studentSearchEngine();
                         <div class="row ">
                             <div class="col-md mt-3">
                                 <label for="student-name">Student Name</label>
-                                <input type="text" class="form-control" placeholder="Student Name" id="student-name" name="student-name">
+                                <input type="text" class="form-control" placeholder="Student Name" id="student-name" name="student-name" value="<?php echo $student_name ?>">
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-id">Student ID</label>
@@ -142,7 +142,7 @@ studentSearchEngine();
                         </table>
                     </div>
                 </div>
-                
+
 
 
                 <div class="modal fade" id="edit-info-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -191,13 +191,14 @@ studentSearchEngine();
                     <div class="btn-group mr-2" role="group" aria-label="First group">
 
                         <?php
-                        for ($i = 1; $i <= $countRows; $i++) {
-                            
+                        if (!$isSearched) {
+                            for ($i = 1; $i <= $countRows; $i++) {
+
                                 echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
-                            
+                            }
                         }
                         ?>
-                        
+
                     </div>
 
                 </div>
