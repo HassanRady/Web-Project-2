@@ -1,3 +1,7 @@
+<?php
+ob_start();
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -104,7 +108,8 @@
                         $post_date = date("Y-m-d");
                         $post_content = $_POST['post_text'];
                         $post_tags = $post_author;
-                        addNewPost($id_user, $semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
+                        $page = "discussion.php";
+                        addNewPost($id_user, $semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags, $page);
                     } else {
                         echo "<script>alert('Post cannot be empty')</script>";
                     }
@@ -401,3 +406,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

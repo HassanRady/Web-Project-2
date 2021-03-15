@@ -1249,7 +1249,7 @@ function getUserName($user_id)
 }
 
 
-function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags)
+function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags, $page)
 {
     global $conn;
     $query = "INSERT INTO `posts`(id_user, id_semester, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
@@ -1259,6 +1259,7 @@ function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_autho
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
+    header("Location: $page?course_id=$id_course&sem_id=$id_semester");
     return $result;
 }
 
@@ -1307,7 +1308,7 @@ function deletePostComments($id_post)
     }
 }
 
-function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date)
+function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $page)
 {
     global $conn;
     $query = "INSERT INTO `comments`(id_post, id_user, comment_author, comment_content, comment_date) ";
@@ -1316,6 +1317,7 @@ function addNewComment($id_post, $id_user, $comment_author, $comment_content, $c
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
+    header("Location: $page?course_id=$course_id&p_id=$id_post&u_id=$id_user");
     return $result;
 }
 
