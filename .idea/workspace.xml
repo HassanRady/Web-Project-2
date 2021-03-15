@@ -25,15 +25,9 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17980649-d45e-4239-9a0d-c41b55b92cf7" name="Default Changelist" comment="">
+    <list default="true" id="c1e80914-98b5-415a-94c6-68e36ceb0996" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/academic/discussion.php" beforeDir="false" afterPath="$PROJECT_DIR$/academic/discussion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/db_conn.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/db_conn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/paths.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sa/add_announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/sa/add_announcements.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/announcements.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/announcements.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/discussion.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/discussion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/admin_sidebar.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/admin_sidebar.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +66,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="17980649-d45e-4239-9a0d-c41b55b92cf7" name="Default Changelist" comment="" />
+      <changelist id="c1e80914-98b5-415a-94c6-68e36ceb0996" name="Default Changelist" comment="" />
       <created>1608893834363</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -106,6 +100,7 @@
       <workItem from="1615806113213" duration="1643000" />
       <workItem from="1615807919355" duration="1681000" />
       <workItem from="1615810046241" duration="1342000" />
+      <workItem from="1615828389639" duration="43000" />
     </task>
     <servers />
   </component>
