@@ -147,6 +147,7 @@ $page = "announcements.php";
                         $option_id = $_POST['option_id'];
                         $poll_id = $_POST['poll_id'];
                         votePoll($user_id, $poll_id, $option_id);
+                        header("Location:$page");
                     } else {
                         echo "<script>alert('Please select an option to vote')</script>";
                     }
@@ -156,6 +157,7 @@ $page = "announcements.php";
 
                     $poll_id = $_POST['poll_id'];
                     redoVotePoll($user_id, $poll_id);
+                    header("Location:$page");
                 }
 
                 ?>
@@ -166,7 +168,6 @@ $page = "announcements.php";
 
                 // triggering updating votes functions
                 if (isset($_POST['upvote'])) {
-
                     $post_id = $_POST['post_id'];
                     $votes = $_POST['votes'];
                     upVote($post_id, $user_id, $votes);

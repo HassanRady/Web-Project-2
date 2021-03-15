@@ -252,6 +252,7 @@ $page = "add_announcements.php";
             if (isset($_POST['delete_poll'])) {
                 $poll_id = $_POST['poll_id'];
                 deletePoll($poll_id);
+                header("Location:$page");
             }
 
             ?>
@@ -263,6 +264,7 @@ $page = "add_announcements.php";
             if (isset($_POST['delete_post'])) {
                 $post_id = $_POST['delete_post_id'];
                 deletePost($post_id);
+                header("Location:$page");
             }
             // retrieving post information
             $posts_result = getAllPosts($course_id,$semester_id );

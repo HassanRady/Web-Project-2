@@ -1457,7 +1457,13 @@ function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_dat
     while ($row = mysqli_fetch_assoc($retResult)) {
         $retPoll_id = $row['poll_id'];
     }
-header("Location: $page?course_id=$id_course&sem_id=$id_semester");
+    if($id_course==0){
+        header("Location: $page");
+    }
+    else{
+        header("Location: $page?course_id=$id_course");
+    }
+
     return $retPoll_id;
 }
 

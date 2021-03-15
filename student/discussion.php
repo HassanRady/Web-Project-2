@@ -181,6 +181,7 @@ $page = "discussion.php?course_id=".$course_id;
                         $option_id = $_POST['option_id'];
                         $poll_id = $_POST['poll_id'];
                         votePoll($user_id, $poll_id, $option_id);
+                        header("Location:$page");
                     } else {
                         echo "<script>alert('Please select an option to vote')</script>";
                     }
@@ -192,10 +193,12 @@ $page = "discussion.php?course_id=".$course_id;
 
                     $poll_id = $_POST['poll_id'];
                     redoVotePoll($user_id, $poll_id);
+                    header("Location:$page");
                 }
                 if (isset($_POST['delete_poll'])) {
                     $poll_id = $_POST['poll_id'];
                     deletePoll($poll_id);
+                    header("Location:$page");
                 }
 
                 ?>

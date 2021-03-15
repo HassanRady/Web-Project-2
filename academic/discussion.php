@@ -152,18 +152,6 @@ $page = "discussion.php?course_id=".$course_id;
                             <p>Votes: <?php echo $option_votes; ?></p>
 
                         <?php }
-
-                        if (!checkIfVotedPoll($res_poll_id, $user_id)) {
-                            ?>
-                            <div class=" container">
-                                <input type="submit" name="poll_vote" value="Vote" class="btn btn-primary ">
-                            </div>
-                        <?php } else {
-                            ?>
-                            <div class=" container">
-                                <input type="submit" name="redo_vote" value="Redo" class="btn btn-primary ">
-                            </div>
-                        <?php }
                         ?>
 
 
@@ -176,28 +164,11 @@ $page = "discussion.php?course_id=".$course_id;
             <?php }
 
             /// when user votes in polls
-            if (isset($_POST['poll_vote'])) {
-                if (isset($_POST['option_id'])) {
-                    $option_id = $_POST['option_id'];
-                    $poll_id = $_POST['poll_id'];
-                    votePoll($user_id, $poll_id, $option_id);
-                } else {
-                    echo "<script>alert('Please select an option to vote')</script>";
-                }
-                //search here
-
-            }
-            //redo vote
-            if (isset($_POST['redo_vote'])) {
-
-                $poll_id = $_POST['poll_id'];
-                redoVotePoll($user_id, $poll_id);
-            }
             if (isset($_POST['delete_poll'])) {
                 $poll_id = $_POST['poll_id'];
                 deletePoll($poll_id);
+                header("Location:$page");
             }
-
             ?>
 
 
@@ -329,7 +300,7 @@ $page = "discussion.php?course_id=".$course_id;
                 if (!empty($_POST['poll-content'])) {
                     $poll_content = $_POST['poll-content'];
                     $poll_date = date("Y-m-d");
-                    $poll_id = addNewPoll($user_id, $semester_id, $course_id, $poll_content, $poll_date);
+                    $poll_id = addNewPoll($user_id, $semester_id, $course_id, $poll_content, $poll_date, $page);
                     //poll_op_no will be changed in next sprint and will be flexible
                     $poll_options_no = 2;
                     if (isset($_POST['options-num'])) {
