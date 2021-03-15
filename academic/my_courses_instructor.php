@@ -20,9 +20,19 @@
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php 
-      include "../includes/prof_sidebar.php";
+    include_once dirname(__FILE__, 2)."\\paths.php";
+    include_once dirname(__FILE__, 2)."\\includes\\Admin\\all_types\\functions.php";
+
       session_start();
       $instructorId = $_SESSION['id_instructor'];
+      $user_id = $_SESSION['id'];
+
+    if(isHeProfessorAndAdmin($user_id)){
+      include_once $admin_sidebar_path;
+    }else
+    include_once $professor_sidebar_path;
+
+
     ?>
     <!-- Page Content  -->
     <div id="content">
