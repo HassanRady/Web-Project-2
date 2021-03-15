@@ -46,7 +46,7 @@ session_start();
             $sectionsCheckbox = $courseInfo['has_labs'];
         }
     }else{
-        header("Location: available_course_t.php");
+        header("Location: available_courses_t.php");
     }
 ?>
 

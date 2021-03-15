@@ -99,7 +99,7 @@ if(isset($_POST['Add'])){
                   </div>
               </div>
           </div>
-
+          <div class="container-fluid">
           <div class="row justify-content-end">
               <button type="button" class="btn btn-primary btn-block w-25 " data-toggle="modal" data-target="#Add_Form">
                   Add Venue
@@ -107,8 +107,8 @@ if(isset($_POST['Add'])){
           </div>
       </div>
         <hr class="mb-4">
-        <div class=" container-fluid">
-<?php   Display_venues();?>
+        
+          <?php   Display_venues();?>
 
         </div>
 

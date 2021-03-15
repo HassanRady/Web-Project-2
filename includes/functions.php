@@ -782,8 +782,26 @@ function getRegisteredStudents($courseId)
     }
 }
 
+/*
+ * @author Omar 
+ */
+function getInstructorList(){
+    global $conn;
+    $query = "SELECT u.id, u.first_name, u.middle_name, u.last_name, i.instructor_id FROM instructors i
+    INNER JOIN users u on i.id_user = u.id";
+    $query_result = mysqli_query($conn, $query);
+    checkQuery($query_result);
 
-//get the mark breakdown of all registered students in a course
+    while($row = mysqli_fetch_assoc($query_result)){
+      $id = $row['instructor_id'];
+      $fname = $row['first_name'];
+      $mname = $row['middle_name'];
+      $lname = $row['last_name'];
+      echo "
+        <option value='$id'>$fname $mname $lname</option>
+      ";
+    }
+  }
 
 
 
@@ -1050,7 +1068,7 @@ function getOpenCourses()
           </div>
           <div class='btn-grp col-lg-2 col-md-12'>
             <a href='../academic/discussion.php?course_id=$id' class='btn btn-primary'>View</a>
-            <a href='../admin/Add_Class.php' class='btn btn-outline-primary'>Add Class</a>
+            <a href='../admin/Add_Class.php?course_id=$id' class='btn btn-outline-primary'>Add Class</a>
             <a href='../admin/close_course.php?course_id=$id' class='btn btn-outline-danger'>Close</a>
           </div>
         </div>
@@ -1215,27 +1233,23 @@ function getVenueID($venueName)
 }
 
 
-function showALlVenues()
-{
+function showAllVenues(){
     global $conn;
-    $query = "SELECT `name` FROM venues ";
-    $result = mysqli_query($conn, $query);
-    if (!$result) {
-        die("QUERY OF SHOW ALL COURSES FAILED" . mysqli_error($conn));
+    $query = "SELECT venue_id, name FROM venues";
+    $result = mysqli_query($conn,$query);
+    if(!$result){
+        die("QUERY OF SHOW ALL COURSES FAILED". mysqli_error($conn));
     }
     return $result;
 }
 
-function addToClassTable($course_id, $venue_id, $startTime, $endTime, $day, $type, $freq)
-{
+function addToClassTable($courseId, $instructorId, $location, $start_time, $end_time, $day, $type, $group, $frequency, $level){
     global $conn;
-    $query = "INSERT INTO `classes` (`class_id`, `id_course`, `id_venue`, `start`, `end`, `day`, `type`, `freq`) VALUES(NULL,'$course_id','$venue_id','$startTime','$endTime','$day','$type','$freq' );";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        echo "DATA ARE INSERTED";
-    } else {
-        die("cannot insert data" . mysqli_error($conn));
-    }
+    $query = "INSERT INTO `classes` (`class_id`, `id_course`, `id_venue`, `start`, `end`, `day`, `type`, `students_group`, `freq`, `id_instructor`, `level`) 
+    VALUES(NULL,'$courseId','$location','$start_time','$end_time','$day','$type', '$group', '$frequency', '$instructorId', '$level' );";
+    $result = mysqli_query($conn,$query);
+    checkQuery($result);
+
 }
 function getUserName($user_id)
 {

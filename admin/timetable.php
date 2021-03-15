@@ -80,8 +80,8 @@ if(isset($_GET['level'])){
                                 // day row
                                 /*********************************************************** DAY OPEN */
                                 ?> 
-                                <tr class='table-row'>
-                                    <td class='table-cell day-cell'> <?php echo $day ?></td>
+                                <tr class='table-row' >
+                                    <td class='table-cell day-cell' style='color: black;'> <?php echo ucfirst($day) ?></td>
                                 <?php
                                 //output data
                                 $length = count($data);
