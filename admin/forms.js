@@ -30,7 +30,7 @@ function empty_field() {
     console.log(warning);
     for (let i = 0; i < inputs.length; i++) {
         if (inputs[i].value == "" && inputs[i] != document.getElementById("HomeNumber") && inputs[i] != document.getElementById("Re-enter")) {
-            error(inputs[i], warning[i-1], "Please enter this field");
+            error(inputs[i], warning[i], "Please enter this field");
             console.log(i);
             flag = false;
 
