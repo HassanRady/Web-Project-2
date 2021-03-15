@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>main map</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="rootStyles.css">
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="logo.jpeg" alt="SIM-LOGO">
+            </div>
+            <p>Navigation</p>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Users</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Students</a>
+                        </li>
+                        <li>
+                            <a href="#">Professors</a>
+                        </li>
+                        <li>
+                            <a href="#">Teaching Assistants</a>
+                        </li>
+                        <li>
+                            <a href="#">Student Affairs</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Courses</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Open Courses</a>
+                        </li>
+                        <li>
+                            <a href="#">All Courses</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">My Profile</a>
+                </li>
+                <li>
+                    <a href="#">Timetable</a>
+                </li>
+                <li>
+                    <a href="#">Others</a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="cta-logout" id="logout-btn">Logout</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
+                <div class="container-fluid">
+                    
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <i class="fas fa-align-left"></i>
+                        <!-- <span id="nav-toggle-text">Navigation</span> -->
+                    </button>
+                    <a class="navbar-brand" id="page-title" href="#">Web Programming</a>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto secondary-navigation">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Discussion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Assignments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Material</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Students</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Marks</a>
+                            </li>
+                        </ul>
+                    </div>
+            </nav>
+
+            
+
+
+            <div class="page-body">
+   
+   <div id="image_map">         <!-- START HERE 
+   Top left: 30 by 100 pixels
+Top right: 140 by 50 pixels
+Bottom right: 290 by 220 pixels
+Bottom left: 180 by 280 pixels
+
+
+Read more: https://html.com/images/how-to-make-an-image-map/#ixzz6hmvGHDQu -->
+<div class="col-12">
+          
+           
+
+
+
+<img src="main.jpg" alt="image map example" width=700 height=641 usemap="#map_example">
+
+ <map name="map_example"> 
+
+
+ 	<area href="physics1.html" alt=" Lab physics1" target="_blank" shape=poly coords="57,220, 88,221, 89,281, 55,281"> 
+
+ 	<area href="physics2.html" target="_blank" alt=" Lab physics2" shape=poly coords="56,340,88,338,89,390,56,391"> 
+
+
+<area href="LabC.html" target="_blank" alt="Labc" shape=poly coords="99,253,133,252,135,270,98,270">
+
+<area href="LabD.html" target="_blank" alt="LabD" shape=poly coords="96,345,133,344,135,368,97,370">
+
+<area href="wa7da.html" target="_blank" alt="wa7da el microscope" shape=poly coords="144,247,175,246,175,289,142,291">
+
+<area href="newhall.html" target="_blank" alt="newhall" shape=poly coords="143,325,175,324,176,380,144
+,381">
+<area href="hall7.html" target="_blank" alt="hall7" shape=poly coords="268,412,334,413,334,454,268,456">
+
+
+<area href="hall9.html" target="_blank" alt="hall9" shape=poly coords="202,374,268,371,269,412,202,415
+">
+<area href="hall8.html" target="_blank" alt="hall8" shape=poly coords="202,415,269,412,268,456,201,457">
+
+<area href="hall6.html" target="_blank" alt="hall6" shape=poly coords="268,371,334,372,334,413,269,412">
+<area href="hall6.html" target="_blank" alt="hall6" shape=poly coords="307,357,329,358,332,368,305,368">
+
+<area href="hall3.html" target="_blank" alt="hall3" shape=poly coords="304,248,335,247,335,276,304,276">
+
+<area href="hall 5.html" target="_blank" alt="hall5" shape=poly coords="341,230,367,228,366,263,340,262">
+
+<area href="hall4.html" target="_blank" alt="hall4" shape=poly coords="336,372,375,371,376,455,334,452">
+
+
+<area href="affairs.html" target="_blank" alt="student affairs" shape=poly coords="477,171,538,171,537,194,476,195">
+
+<area href="labB.html" target="_blank" alt="lab b" shape=poly coords="508,122,542,121,545,147,508,148">
+s
+
+<area href="labA.html" target="_blank" alt="labA" shape=poly coords="402,120,438,119,437,147,401,149">
+
+<area href="eman.html" target="_blank" alt="Eman libaray" shape=poly coords="401,393,457,393,459,420,401,420">
+
+<area href="cafeteria.html" target="_blank" alt="cafeteria" shape=poly coords="401,420,459,420,459,476,401,477">
+
+
+
+
+
+
+
+ </map> </div>
+
+
+</div>
+
+            <!-- STOP HERE -->
+            </div>
+
+            
+        </div>
+    </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Navbar -->
+    <script type="text/javascript" src="rootJS.js"></script>
+
+</body>
+
+</html>
