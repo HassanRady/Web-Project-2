@@ -1,6 +1,13 @@
 <?php
+/**
+ * @author Hassan
+ */
+
+
 include_once dirname(__FILE__, 2)."\\paths.php";
 include_once "functions.php";
+include_once dirname(__FILE__) . "\\Admin\\all_types\\functions.php";
+
 ?>
 <?php 
 if(isset($_POST['logout-btn'])){
@@ -45,6 +52,20 @@ if(isset($_POST['logout-btn'])){
                         <li>
                             <a href="<?php echo $open_courses_path;?>">Open Courses</a>
                         </li>
+
+                    <?php
+                    // session_start();
+                    $user_id = $_SESSION['id'];
+                        if(isHeProfessorAndAdmin($user_id)) {
+                            ?>
+                            <li>
+                            <a href="<?php echo $my_courses_path_professor;?>">My Courses</a>
+                        </li>
+                        <?php
+                        }
+                    ?>
+
+
                     </ul>
                 </li>
                 <li>
@@ -60,7 +81,7 @@ if(isset($_POST['logout-btn'])){
 
             <ul class="list-unstyled CTAs">
                 <form method="post">
-                    <input type="submit" class="cta-logout" name="logout-btn" value="Logout">
+                    <button type="submit" class="btn btn-block cta-logout" style="background-color: #fafafa; color: red;" name="logout-btn" value="Logout">Logout</button>
                 </form>
             </ul>
         </nav>

@@ -4,6 +4,7 @@
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 /**
+ * @author Hassan
  * @return array
  */
 function searchForProfessor()
@@ -44,10 +45,11 @@ function searchForProfessor()
 
 
 /**
+ * @author Hassan
  * @param array $professorsData
  */
 function showProfessorSearch($professorsData)
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    printProfessorsData($professorsData, $pageName);
+    global $professorsType;
+    printCommonData($professorsData, $professorsType);
 }

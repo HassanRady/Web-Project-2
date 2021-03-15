@@ -36,8 +36,15 @@ if(isset($_POST['submit'])){
         <!-- Sidebar  -->
         <?php
             include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
+            include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Admin\\all_types\\functions.php";
 
-            include_once $professor_sidebar_path;
+            session_start();
+            $user_id = $_SESSION['id'];
+    
+            if (isHeProfessorAndAdmin($user_id))
+                include $admin_sidebar_path;
+            else
+                include $professor_sidebar_path;
         ?>
         <!-- Page Content  -->
         <div id="content">

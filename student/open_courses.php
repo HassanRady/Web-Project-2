@@ -1,7 +1,13 @@
 <?php
 ob_start();
-include_once dirname(__FILE__, 2) ."\\paths.php";
-include_once dirname(__FILE__, 2)."\\includes\\Student\\functions.php";
+include_once dirname(__FILE__, 2) . "\\paths.php";
+include_once dirname(__FILE__, 2) . "\\includes\\Student\\functions.php";
+session_start();
+$studentId = $_SESSION['student_id'];
+if (isset($_POST['submit'])) {
+    $course_id = $_POST['course_id'];
+    enrollToCourse($studentId, $course_id);
+}
 
 ?>
 <!DOCTYPE html>
@@ -14,7 +20,7 @@ include_once dirname(__FILE__, 2)."\\includes\\Student\\functions.php";
 
     <title>Open Courses</title>
 
-    
+
     <?php include_once "../includes/bootstrap_styles_start.php"; ?>
     <link rel="stylesheet" href="css/available_courses.css">
 </head>
@@ -41,12 +47,12 @@ include_once dirname(__FILE__, 2)."\\includes\\Student\\functions.php";
 
             <div class="page-body">
                 <!-- START HERE -->
-                
+                <?php $enrolledHours = getEnrolledHours($studentId);?>
 
-                <?php 
-                session_start();
-                $studentId = $_SESSION['student_id'];
-                    getOpenCoursesForStudents($studentId);
+                <div> <label>Total Hours: <?php echo $enrolledHours?></label> </div>
+                <?php
+
+                getOpenCoursesForStudents($studentId);
                 ?>
 
             </div>

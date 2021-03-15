@@ -28,6 +28,8 @@ ob_start();
         <!-- Sidebar  -->
         <?php 
             include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+            include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Student\\functions.php";
+
 
             include_once $student_sidebar_path;
             session_start();
@@ -89,11 +91,15 @@ ob_start();
                                 </tr>
                             </thead>
                             <tbody style="color: rgb(0,0,0,0.5);">
-                                <tr>
-                                    <td>Web Assmt 1</td>
-                                    <td>1/1/2021</td>
-                                    <td>10</td>
-                                </tr>
+
+
+                                <?php
+                                
+                                getAssignments($std_id, $courseId);
+
+                                ?>
+
+
                             </tbody>
                         </table>
                     </div>

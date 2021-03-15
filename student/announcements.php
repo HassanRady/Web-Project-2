@@ -3,6 +3,7 @@ session_start();
 global $conn;
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 //general announcements
+$semester_id = $_SESSION['semester_id'];
 $course_id = 0;
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
@@ -24,6 +25,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="../css/rootStyles.css">
     <link rel="stylesheet" href="css/dispost.css">
+    <link rel="stylesheet" href="css/preloader.css">
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
@@ -32,19 +34,19 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="js/load.js"></script>
 
 </head>
 
 <body>
-
+<div id="loader"></div>
 
     <div class="wrapper">
         <!-- Sidebar  -->
         <?php include "../includes/utils/variables.php";
         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
 
-        session_start();
+        // session_start();
         $type = $_SESSION['type'];
 
         if ($type === $studentsType)
@@ -78,7 +80,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 <!-- START HERE -->
 
                 <?php
-                $polls = getPolls($course_id);
+                $polls = getPolls($course_id, $semester_id);
                 while ($row = mysqli_fetch_assoc($polls)) {
                     $res_poll_id = $row['poll_id'];
                     $poll_id_user = $row['id_user'];
@@ -179,7 +181,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 }
 
                 // retrieving post information
-                $posts_result = getAllPosts($course_id);
+                $posts_result = getAllPosts($course_id, $semester_id);
                 while ($row = mysqli_fetch_assoc($posts_result)) {
                     $result_post_id = $row['post_id'];
                     $result_post_date = $row['post_date'];

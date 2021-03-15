@@ -33,7 +33,7 @@ userProfile();
 </head>
 
 <body>
-<div id="loader"></div>
+
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php
@@ -81,14 +81,27 @@ userProfile();
                   ?>
 
                   <form action="" method="POST" enctype="multipart/form-data">
+
                     <div class="file-input" id="f">
-                      <input type="file" id="file" class="file" name="image">
-                      <button type="submit" class="" name="submit">submit</button>
+
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" id="customFile file">
+
+
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+
+
+
+
+                        </div>
+                        <button type="submit" class="btn  btn-md btn-outline-primary btn-block" name="submit">submit</button>
+
+
                     </div>
                   </form>
 
 
-                  <a href="editprofile.php" class="btn btn-outline-primary btn-md">Edit</a>
+                  <a href="editprofile.php" class="btn btn btn-outline-secondary btn-md btn-block">Edit</a>
                 </div>
               </div>
             </div>
@@ -192,7 +205,13 @@ userProfile();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <!-- Navbar -->
   <script type="text/javascript" src="js/rootJS.js"></script>
-
+  <script>
+      // Add the following code if you want the name of the file appear on select
+      $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+      });
+  </script>
 </body>
 
 </html>

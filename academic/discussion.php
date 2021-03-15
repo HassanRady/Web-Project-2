@@ -1,3 +1,7 @@
+<?php
+ob_start();
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -32,9 +36,12 @@
         <?php
         include "../includes/utils/variables.php";
         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+        include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Admin\\all_types\\functions.php";
+
 
         session_start();
         $type = $_SESSION['type'];
+        $semester_id = $_SESSION['semester_id'];
 
         if ($type === $studentsType)
             include $student_sidebar_path;
@@ -44,7 +51,6 @@
             include $professor_sidebar_path;
         //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
         $course_id = $_GET['course_id'];
-        session_start();
         $user_id = $_SESSION['id'];
         $user_name = getUserName($user_id);
         ?>
@@ -54,7 +60,13 @@
             <?php
             if ($type === $studentsType)
                 include $student_navbar_path;
-            else
+            elseif ($type == $adminsType || $type == $sasType) {
+                if (isHeProfessorAndAdmin($user_id)){ 
+                    include $professor_navbar_path;}
+                else{
+                    echo "<hr>";
+                }
+            } else
                 include $professor_navbar_path;
             ?>
 
@@ -96,7 +108,8 @@
                         $post_date = date("Y-m-d");
                         $post_content = $_POST['post_text'];
                         $post_tags = $post_author;
-                        addNewPost($id_user, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
+                        $page = "discussion.php";
+                        addNewPost($id_user, $semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags, $page);
                     } else {
                         echo "<script>alert('Post cannot be empty')</script>";
                     }
@@ -105,7 +118,7 @@
 
                 ?>
                 <?php
-                $polls = getPolls($course_id);
+                $polls = getPolls($course_id, $semester_id);
                 while ($row = mysqli_fetch_assoc($polls)) {
                     $res_poll_id = $row['poll_id'];
                     $poll_id_user = $row['id_user'];
@@ -201,7 +214,7 @@
                     deletePost($post_id);
                 }
                 // retrieving post information
-                $posts_result = getAllPosts($course_id);
+                $posts_result = getAllPosts($course_id, $semester_id);
                 while ($row = mysqli_fetch_assoc($posts_result)) {
                     $result_id_user = $row['id_user'];
                     $result_post_id = $row['post_id'];
@@ -321,7 +334,7 @@
                     if (!empty($_POST['poll-content'])) {
                         $poll_content = $_POST['poll-content'];
                         $poll_date = date("Y-m-d");
-                        $poll_id = addNewPoll($user_id, $course_id, $poll_content, $poll_date);
+                        $poll_id = addNewPoll($user_id, $semester_id, $course_id, $poll_content, $poll_date);
 
 
                         //poll_op_no will be changed in next sprint and will be flexible
@@ -393,3 +406,4 @@
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

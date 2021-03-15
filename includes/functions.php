@@ -5,7 +5,10 @@ include_once "utils\\variables.php";
 include_once "utils\\helper.php";
 include_once "Admin" . DIRECTORY_SEPARATOR . "utils" . DIRECTORY_SEPARATOR . "all.php";
 include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
-include_once dirname(__FILE__, 1) .DIRECTORY_SEPARATOR. "Admin" .DIRECTORY_SEPARATOR. "students" .DIRECTORY_SEPARATOR. "functions.php";
+include_once dirname(__FILE__, 1) . DIRECTORY_SEPARATOR . "Admin" . DIRECTORY_SEPARATOR . "students" . DIRECTORY_SEPARATOR . "functions.php";
+
+include_once dirname(__FILE__, 1) . DIRECTORY_SEPARATOR . "Admin" . DIRECTORY_SEPARATOR . "all_types" . DIRECTORY_SEPARATOR . "functions.php";
+
 
 
 
@@ -37,8 +40,8 @@ function login()
         $last_name = $row['last_name'];
         $type = $row['type'];
     }
-    // die(var_dump(password_verify($password, $pass)));
-     if ($username == $email && password_verify($password, $pass)) {
+
+    if ($username == $email && password_verify($password, $pass)) {
         $_SESSION['id'] = $id;
         $_SESSION['email'] = $email;
 
@@ -1040,7 +1043,7 @@ function getOpenCourses()
           <div class='btn-grp col-lg-2 col-md-12'>
             <a href='../academic/discussion.php?course_id=$id' class='btn btn-primary'>View</a>
             <a href='../admin/Add_Class.php' class='btn btn-outline-primary'>Add Class</a>
-            <a href='#' class='btn btn-outline-danger'>Close</a>
+            <a href='../admin/close_course.php?course_id=$id' class='btn btn-outline-danger'>Close</a>
           </div>
         </div>
       </div>
@@ -1246,24 +1249,25 @@ function getUserName($user_id)
 }
 
 
-function addNewPost($id_user, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags)
+function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags, $page)
 {
     global $conn;
-    $query = "INSERT INTO `posts`(id_user, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
-    $query .= "VALUES('$id_user', '$id_course', '$post_title', '$post_author', '$post_user', '$post_date', '$post_content','$post_tags')";
+    $query = "INSERT INTO `posts`(id_user, id_semester, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
+    $query .= "VALUES('$id_user', $id_semester, '$id_course', '$post_title', '$post_author', '$post_user', '$post_date', '$post_content','$post_tags')";
     // die($query);
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
+    header("Location: $page?course_id=$id_course&sem_id=$id_semester");
     return $result;
 }
 
 
-function getAllPosts($course_id)
+function getAllPosts($course_id, $id_semester)
 {
     global $conn;
-    $query = "SELECT post_id, id_user,post_author, post_date, post_content, votes FROM posts WHERE id_course ='$course_id' ORDER BY post_id  DESC ";
+    $query = "SELECT post_id, id_user,post_author, post_date, post_content, votes FROM posts WHERE id_course ='$course_id' AND id_semester = '$id_semester' ORDER BY post_id  DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("Cannot retrieve posts from database  " . mysqli_error($conn));
@@ -1304,7 +1308,7 @@ function deletePostComments($id_post)
     }
 }
 
-function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date)
+function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $page)
 {
     global $conn;
     $query = "INSERT INTO `comments`(id_post, id_user, comment_author, comment_content, comment_date) ";
@@ -1313,6 +1317,7 @@ function addNewComment($id_post, $id_user, $comment_author, $comment_content, $c
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
+    header("Location: $page?course_id=$course_id&p_id=$id_post&u_id=$id_user");
     return $result;
 }
 
@@ -1407,10 +1412,10 @@ function checkIfVotedPost($post_id, $user_id)
 // adding new poll
 
 
-function addNewPoll($id_user, $id_course, $poll_content, $poll_date)
+function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_date)
 {
     global $conn;
-    $query = "INSERT INTO polls(id_user,id_course ,poll_content, poll_date) VALUES('$id_user', '$id_course', '$poll_content','$poll_date')";
+    $query = "INSERT INTO polls(id_user, id_semester, id_course ,poll_content, poll_date) VALUES('$id_user', $id_semester, '$id_course', '$poll_content','$poll_date')";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("cannot insert to poll table " . mysqli_error($conn));
@@ -1438,10 +1443,10 @@ function addPollOption($id_poll, $option_content)
     }
 }
 
-function getPolls($id_course)
+function getPolls($id_course, $id_semester)
 {
     global $conn;
-    $query = "SELECT * FROM polls WHERE id_course = '$id_course' ORDER BY poll_id DESC ";
+    $query = "SELECT * FROM polls WHERE id_course = '$id_course' AND id_semester = '$id_semester' ORDER BY poll_id DESC ";
     $result = mysqli_query($conn, $query);
     if (!$result) {
         die("cannot get the polls " . mysqli_error($conn));
@@ -1517,166 +1522,165 @@ function deletePoll($poll_id)
     }
 }
 
-function grade_courses(){
+function grade_courses()
+{
     global $conn;
 
-    $query="Select * from course_semester_students ";
+    $query = "Select * from course_semester_students ";
     $result = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_array($result)) {
-        $total=$row['total'];
-        $rate=grade_gpa($total);
-        $grade=$rate[0];
-        $gpa=$rate[1];
-        $course=$row['id_course'];
-        $student=$row['id_student'];
-        $query2="update course_semester_students set grade ='$grade' , gpa='$gpa' where id_course='$course'and id_student='$student' and total='$total' ";
+        $total = $row['total'];
+        $rate = grade_gpa($total);
+        $grade = $rate[0];
+        $gpa = $rate[1];
+        $course = $row['id_course'];
+        $student = $row['id_student'];
+        $query2 = "update course_semester_students set grade ='$grade' , gpa='$gpa' where id_course='$course'and id_student='$student' and total='$total' ";
         $update = mysqli_query($conn, $query2);
-        if(!$update){
-            die("" .mysqli_error($conn));
+        if (!$update) {
+            die("" . mysqli_error($conn));
         }
-
     }
-
 }
-function grade_gpa($total){
-    $grade='f';
-    $gpa=0;
-    switch($total){
-        case $total>=90:
-            $grade='A';
-            $gpa=4;
+function grade_gpa($total)
+{
+    $grade = 'f';
+    $gpa = 0;
+    switch ($total) {
+        case $total >= 90:
+            $grade = 'A';
+            $gpa = 4;
             break;
-        case $total>=85 && $total<90:
-            $grade='A-';
-            $gpa=3.67;
+        case $total >= 85 && $total < 90:
+            $grade = 'A-';
+            $gpa = 3.67;
             break;
-        case $total>=80 && $total <85:
-            $grade='B+';
-            $gpa=3.33;
-            break;
-
-        case $total>=75 && $total <80:
-            $grade='B';
-            $gpa=3.00;
+        case $total >= 80 && $total < 85:
+            $grade = 'B+';
+            $gpa = 3.33;
             break;
 
-        case $total>=70&& $total <75:
-            $grade='B-';
-            $gpa=2.67;
-            break;
-        case $total>=65 && $total <70:
-            $grade='C+';
-            $gpa=2.33;
+        case $total >= 75 && $total < 80:
+            $grade = 'B';
+            $gpa = 3.00;
             break;
 
-        case $total>=60 && $total <65:
-            $grade='C';
-            $gpa=2.00;
+        case $total >= 70 && $total < 75:
+            $grade = 'B-';
+            $gpa = 2.67;
             break;
-        case $total>=56 && $total <60:
-            $grade='C-';
-            $gpa=1.67;
-            break;
-        case $total>=53 && $total <56:
-            $grade='D+';
-            $gpa=1.33;
-            break;
-        case $total>=50 && $total <53:
-            $grade='D';
-            $gpa=1.00;
+        case $total >= 65 && $total < 70:
+            $grade = 'C+';
+            $gpa = 2.33;
             break;
 
-        case $total<50:
-            $grade='F';
-            $gpa=0.00;
+        case $total >= 60 && $total < 65:
+            $grade = 'C';
+            $gpa = 2.00;
+            break;
+        case $total >= 56 && $total < 60:
+            $grade = 'C-';
+            $gpa = 1.67;
+            break;
+        case $total >= 53 && $total < 56:
+            $grade = 'D+';
+            $gpa = 1.33;
+            break;
+        case $total >= 50 && $total < 53:
+            $grade = 'D';
+            $gpa = 1.00;
             break;
 
+        case $total < 50:
+            $grade = 'F';
+            $gpa = 0.00;
+            break;
     }
-    $array=[$grade,$gpa];
+    $array = [$grade, $gpa];
     return $array;
 }
-function cgpa($id){
+function cgpa($id)
+{
     global $conn;
-    $query="Select css.id_course,css.gpa, c.credits from course_semester_students as css inner join courses as c on c.course_id = css.id_course where css.id_student='$id'";
+    $query = "Select css.id_course,css.gpa, c.credits from course_semester_students as css inner join courses as c on c.course_id = css.id_course where css.id_student='$id'";
     $result = mysqli_query($conn, $query);
-    $cgpa=0;
-    $credits=0;
+    $cgpa = 0;
+    $credits = 0;
 
 
     while ($row = mysqli_fetch_array($result)) {
-        $data[$row['id_course']]=array($row['gpa'],$row['credits']);
+        $data[$row['id_course']] = array($row['gpa'], $row['credits']);
     }
 
-    foreach($data as $x => $x_value) {
-$cgpa+= $x_value[0]*$x_value[1];
-$credits+=$x_value[1];
-
-
+    foreach ($data as $x => $x_value) {
+        $cgpa += $x_value[0] * $x_value[1];
+        $credits += $x_value[1];
     }
-    if($credits>0){
-    $cgpa=$cgpa/$credits;}
-    else{
-        $cgpa=0;
+    if ($credits > 0) {
+        $cgpa = $cgpa / $credits;
+    } else {
+        $cgpa = 0;
     }
     return $cgpa;
-
 }
-function insert_cgpa($id){
+function insert_cgpa($id)
+{
     global $conn;
-    $cgpa=cgpa($id);
-    $query="update students set cgpa ='$cgpa' where student_id='$id'" ;
+    $cgpa = cgpa($id);
+    $query = "update students set cgpa ='$cgpa' where student_id='$id'";
     $result = mysqli_query($conn, $query);
-    if(!$result){
-        die("Cannot insert cgpa" .mysqli_error($conn));
+    if (!$result) {
+        die("Cannot insert cgpa" . mysqli_error($conn));
     }
-
 }
 
-function transcript_student_information($id){
+function transcript_student_information($id)
+{
     global $conn;
-    $query="select * from students where student_id='$id'";
+    $query = "select * from students where student_id='$id'";
     $result = mysqli_query($conn, $query);
 
     $row = mysqli_fetch_array($result);
 
-    $array=[$row['arabic_name'],$row['level'],$row['student_group'],$row['cgpa']];
+    $array = [$row['arabic_name'], $row['level'], $row['student_group'], $row['cgpa']];
     return $array;
 }
-function transcript($id){
+function transcript($id)
+{
     global $conn;
-    $query="select s.season, s.sem_year, c.name , c.credits, css.grade , css.gpa , css.id_course , css.id_semester from course_semester_students as css 
+    $query = "select s.season, s.sem_year, c.name , c.credits, css.grade , css.gpa , css.id_course , css.id_semester from course_semester_students as css 
            inner join semesters as s on s.semester_id=css.id_semester
            inner join courses as c on c.course_id=css.id_course
             where id_student='$id' ORDER BY css.id_semester ASC ";
     $result = mysqli_query($conn, $query);
-    $flag=0;
-    $tgpa=0;
-    $tcredits=0;
-    if(!$result){
-        die("Cannot insert cgpa" .mysqli_error($conn));
+    $flag = 0;
+    $tgpa = 0;
+    $tcredits = 0;
+    if (!$result) {
+        die("Cannot insert cgpa" . mysqli_error($conn));
     }
-    while($row = mysqli_fetch_array($result)){
-        $semester=$row['id_semester'];
-$season=$row['season'];
-$sem_year=$row['sem_year'];
-$coursename=$row['name'];
-$credits=$row['credits'];
-$grade=$row['grade'];
-$gpa=$row['gpa'];
-$courseid=$row['id_course'];
+    while ($row = mysqli_fetch_array($result)) {
+        $semester = $row['id_semester'];
+        $season = $row['season'];
+        $sem_year = $row['sem_year'];
+        $coursename = $row['name'];
+        $credits = $row['credits'];
+        $grade = $row['grade'];
+        $gpa = $row['gpa'];
+        $courseid = $row['id_course'];
 
 
-if($flag!=$semester){
-    if($flag!=0){
-        $sgpa=$tgpa/$tcredits;
-        echo" </table>
+        if ($flag != $semester) {
+            if ($flag != 0) {
+                $sgpa = $tgpa / $tcredits;
+                echo " </table>
                 </div>
                 <p style='
   color: rgb(31, 108, 236);'>GPA: $sgpa</p>";
-    $tgpa=$tcredits=0;
-    }
+                $tgpa = $tcredits = 0;
+            }
 
-    echo"  <h5 class='semester-heading'>$season $sem_year</h5>
+            echo "  <h5 class='semester-heading'>$season $sem_year</h5>
    <div class='row table-container'>
      <table class='table'>
     <thead>
@@ -1688,26 +1692,26 @@ if($flag!=$semester){
                         </tr>
                         </thead>
                         <tbody>";
-    $flag=$semester;
-}
-if($flag==$semester){
-    $tgpa+=$gpa*$credits;
-    $tcredits+=$credits;
-    echo"<tr>
+            $flag = $semester;
+        }
+        if ($flag == $semester) {
+            $tgpa += $gpa * $credits;
+            $tcredits += $credits;
+            echo "<tr>
                             <td>$coursename</td>
                             <td>$courseid</td>
                             <td>$credits</td>
                             <td>$grade</td>
                         </tr>";
-}
+        }
     }
-    if($tcredits!=0){
-    $sgpa=$tgpa/$tcredits;
-    echo" </table>
+    if ($tcredits != 0) {
+        $sgpa = $tgpa / $tcredits;
+        echo " </table>
                 </div>
                 <p style='
   color: rgb(31, 108, 236);'>GPA: $sgpa</p>";
-}
+    }
 }
 
 
@@ -1717,4 +1721,3 @@ function logout()
     session_destroy();
     header("Location:$login_path");
 }
-

@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author Hassan
+ */
 
 // Database tables
 $usersTable = "users";
@@ -24,3 +27,5 @@ $rowsPerPage = 3;
 $profileImageDir = "profile_images";
 
 $developer = True;
+
+$hoursLimit = 12;

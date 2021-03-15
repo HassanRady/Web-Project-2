@@ -3,6 +3,10 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
+/**
+ * @author Hassan
+ * @return void
+ */
 function showStudents()
 {
     $data = getStudentsData();
@@ -11,6 +15,7 @@ function showStudents()
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array student's data
  */
@@ -35,6 +40,7 @@ function getStudent($id)
 
 
 /**
+ * @author Hassan
  * @param array $data
  */
 function getDataFromStudent($data)
@@ -51,6 +57,7 @@ function getDataFromStudent($data)
 
 
 /**
+ * @author Hassan
  * @return array all students data
  */
 function getStudentsData()
@@ -81,6 +88,10 @@ function getStudentsData()
 }
 
 
+/**
+ * @author Hassan
+ * @return void
+ */
 function addStudent()
 {
     global $studentsType;
@@ -104,10 +115,15 @@ function addStudent()
 }
 
 
+/**
+ * @author Hassan
+ * @param int $id
+ * @return void
+ */
 function updateStudentData($id)
 {
 
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($first_name, $middle_name, $last_name, $national_id, $email, $_, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
 
     // handling realescape
@@ -115,11 +131,10 @@ function updateStudentData($id)
     $email = mysqli_real_escape_string($dataBaseConnection, $email);
     $address = mysqli_real_escape_string($dataBaseConnection, $address);
 
-    $password = encrypt_password($password);
 
     // query for updating user in users table
     $firstSqlQuery = "UPDATE users
-    SET first_name='{$first_name}', middle_name='{$middle_name}', password='{$password}',
+    SET first_name='{$first_name}', middle_name='{$middle_name}', 
         last_name='{$last_name}', national_id={$national_id},
         email='{$email}', gender='{$gender}', mobile_number='{$mobile_number}', home_number='{$home_number}'
     WHERE id = {$id};";
@@ -145,7 +160,9 @@ function updateStudentData($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
+ * @return void
  */
 function studentProfile($id)
 {
@@ -162,7 +179,9 @@ function studentProfile($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
+ * @return void
  */
 function editStudentProfile($id)
 {

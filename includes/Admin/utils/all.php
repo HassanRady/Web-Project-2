@@ -3,6 +3,7 @@
 include_once "iniclude_utils_files.php";
 
 /**
+ * @author Hassan
  * @param string $type
  * @param mysqli $dataBaseConnection
  */
@@ -26,6 +27,7 @@ function addUser($type, $dataBaseConnection)
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array
  */
@@ -48,10 +50,12 @@ function getUser($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array
  */
-function getInstructor($id) {
+function getInstructor($id)
+{
     global $usersTable, $instructorsTable;
     $mainSqlQuery = "SELECT u.*, i.* 
                     FROM {$usersTable} u
@@ -71,6 +75,7 @@ function getInstructor($id) {
 
 
 /**
+ * @author Hassan
  * @return string
  */
 function getTypeForData()
@@ -90,7 +95,9 @@ function getTypeForData()
 }
 
 
+
 /**
+ * @author Hassan
  * @param array $data
  */
 function getCommenDataFromUser($data)
@@ -116,6 +123,7 @@ function getCommenDataFromUser($data)
 
 
 /**
+ * @author Hassan
  * @param array $data
  */
 function getDataForProfile($data)
@@ -126,6 +134,7 @@ function getDataForProfile($data)
 }
 
 /**
+ * @author Hassan
  * @param int $id
  * @param mysql $connection
  */
@@ -159,6 +168,7 @@ function editProfileCommon($id, $connection = NULL)
 
 /**
  * This function is getting the number of records to show in the list
+ * @author Hassan
  * @param string $table the table from the database that need to be shown
  * @return int  
  */
@@ -194,6 +204,7 @@ function getRowsPerPage($table)
 
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function changeImage($id)
@@ -215,7 +226,7 @@ function changeImage($id)
         $queryResult  = mysqli_query($dataBaseConnection, $imageSqlQuery);
         checkResultQuery($queryResult, $dataBaseConnection, __FUNCTION__);
         $dataBaseConnection->close();
-        
+
         header("Location: $pageName");
     }
 }

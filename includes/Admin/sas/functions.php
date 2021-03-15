@@ -3,15 +3,20 @@
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function showSas()
 {
+    global $sasType;
     $data = getSasData();
-    printCommonData($data);
+    printCommonData($data, $sasType);
 }
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array SA's data
  */
@@ -36,6 +41,7 @@ function getSa($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  * @return array admin's data
  */
@@ -58,6 +64,7 @@ function getAdmin($id)
     return $saData;
 }
 /**
+ * @author Hassan
  * @param int $id
  */
 function adminProfile($id)
@@ -66,6 +73,7 @@ function adminProfile($id)
     getDataForProfile($data);
 }
 /**
+ * @author Hassan
  * @param int $id
  */
 function editAdminProfile($id)
@@ -76,16 +84,19 @@ function editAdminProfile($id)
 
 
 /**
+ * @author Hassan
  * @param array $data
  */
 function getDataFromSa($data)
 {
-    global $department;
+    global $department, $instructor_id;
     $department = $data['department'];
+    $instructor_id = $data['id_instructor'];
 }
 
 
 /**
+ * @author Hassan
  * @return array all SA's data
  */
 function getSasData()
@@ -117,6 +128,7 @@ function getSasData()
 
 
 /**
+ * @author Hassan
  * @return array all admins data
  */
 function getAdminsData()
@@ -146,7 +158,10 @@ function getAdminsData()
     return $adminsData;
 }
 
-
+/**
+ * @author Hassan
+ * @return void
+ */
 function addsa()
 {
     global $sasType;
@@ -164,7 +179,7 @@ function addsa()
     $result =  mysqli_query($dataBaseConnection, $secondSqlQuery);
     checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
-    $thirdSqlQuery = "INSERT INTO sas VALUES ($last_id, '$department');";
+    $thirdSqlQuery = "INSERT INTO sas VALUES ($last_id, '$department', $instructor_id);";
     $result =  mysqli_query($dataBaseConnection, $thirdSqlQuery);
     checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
@@ -172,21 +187,24 @@ function addsa()
     $dataBaseConnection->close();
 }
 
-
+/**
+ * @author Hassan
+ * @param int $id 
+ * @return void
+ */
 function updateSaData($id)
 {
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($first_name, $middle_name, $last_name, $national_id, $email, $_, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($instructor_id, $department) = NewSaDataForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
     $email = mysqli_real_escape_string($dataBaseConnection, $email);
 
-    $password = encrypt_password($password);
 
     // query for updating user in users table
     $firstSqlQuery = "UPDATE users
-    SET first_name='{$first_name}', middle_name='{$middle_name}', password='{$password}', 
+    SET first_name='{$first_name}', middle_name='{$middle_name}',  
         last_name='{$last_name}', national_id={$national_id},
         email='{$email}', gender='{$gender}', mobile_number='{$mobile_number}', home_number='{$home_number}'
     WHERE id = {$id};";
@@ -216,6 +234,7 @@ function updateSaData($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function saProfile($id)
@@ -226,6 +245,7 @@ function saProfile($id)
 
 
 /**
+ * @author Hassan
  * @param int $id
  */
 function editSaProfile($id)
@@ -237,23 +257,21 @@ function editSaProfile($id)
 
 
 
-/**
- * @param string $category : The category of the courses we would like
- * returns a query_result containing (course_id, name, credits, has_preq, has_labs, has_practical, category, elective)
- */
+
 function getAvailableCourses($category)
 {
     global $conn;
-    $query = "SELECT * FROM courses WHERE category='{$category}'";
+
+    $query = "SELECT c.* FROM courses c
+    LEFT JOIN open_courses oc ON oc.course_id = c.course_id
+     WHERE c.category='{$category}' AND oc.course_id IS NULL";
+
     $query_result = mysqli_query($conn, $query);
     checkQuery($query_result);
     return $query_result;
 }
 
-/*
-* @param string $courseId : The ID of the course to check
-* returns ID of the prereq. course if one exists in prerequisites, null otherwise.
-*/
+
 function getCoursePrerequisite($courseId)
 {
     global $conn;
@@ -270,10 +288,7 @@ function getCoursePrerequisite($courseId)
 }
 
 
-/*
-* @param string $courseId : The ID of the course to check
-* returns True if the course exists in open_courses, False otherwise.
-*/
+
 function checkIfCourseIsOpen($courseId)
 {
     global $conn;
@@ -286,12 +301,7 @@ function checkIfCourseIsOpen($courseId)
     return false;
 }
 
-/*
-* @param string $courseId : The ID of the course to be opened
-* @param string $professorId : The ID of the professor that will teach this course
-* @param string $level : The level for which this course will be opened
-* returns nothing
-*/
+
 function openCourse($courseId, $professorId, $level)
 {
     global $conn;

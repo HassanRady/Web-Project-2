@@ -3,6 +3,11 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
+
+/**
+ * @author Hassan
+ * @return array
+ */
 function searchForSa()
 {
     global $sasTable, $rowsPerPage, $sa_name, $sa_email, $sa_phone, $countRows;
@@ -24,25 +29,28 @@ function searchForSa()
         checkResultQuery($resultQuery, $dasaBaseConnection, __FUNCTION__);
         $dasaBaseConnection->close();
 
-        $sasDasa = array();
+        $sasData = array();
         $countRows = 0;
 
         while ($row = $resultQuery->fetch_assoc()) {
-            $sasDasa[$countRows++] = $row;
+            $sasData[$countRows++] = $row;
         }
 
         $countRows  = ceil($countRows / $rowsPerPage);
 
 
-        return $sasDasa;
+        return $sasData;
     }
 }
 
 
 
-
-function showSaSearch($sasDasa)
+/**
+ * @author Hassan
+ * @return void
+ */
+function showSaSearch($sasData)
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    printSasDaTa($sasDasa, $pageName);
+    global $sasType;
+    printCommonData($sasData, $sasType);
 }

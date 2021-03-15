@@ -46,7 +46,7 @@ login();
                             <button type="submit"  name="login" class="btn1 mt-3 mb-3"> Login</button>
                         </div>        </div>
 
-                    <a class="mb-3" href="#">Forgot Password ?</a>
+                    <a class="mb-3" href="forgot_password.html">Forgot Password ?</a>
                     <div class="form-row">
                         <br />
                         <br />

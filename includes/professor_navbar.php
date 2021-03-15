@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Hassan
+ */
+
 include_once dirname(__FILE__, 2) .DIRECTORY_SEPARATOR. "paths.php";
 include_once "functions.php";
 ?>

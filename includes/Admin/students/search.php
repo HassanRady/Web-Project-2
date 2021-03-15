@@ -3,7 +3,11 @@
 
 include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
 
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @return array
+ */
 function searchForStudent()
 {
     global $studentsTable, $rowsPerPage, $student_email, $student_id, $student_level, $countRows;
@@ -43,9 +47,13 @@ function searchForStudent()
     }
 }
 
-
+/**
+ * @author Hassan
+ * @param array $studentsData
+ * @return void
+ */
 function showStudentSearch($studentsData)
 {
-    $pageName = basename($_SERVER['PHP_SELF']);
-    printStudentsData($studentsData, $pageName);
+    global $studentsData;
+    printStudentsData($studentsData, $studentsData);
 }

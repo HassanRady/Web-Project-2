@@ -3,6 +3,55 @@ ob_start();
 include_once "../includes/functions.php";
 session_start();
 
+$courseId = null;
+$courseInfo = null; 
+
+function closeCourse($courseId){
+    global $conn;
+    $classes_query = "DELETE FROM classes WHERE id_course = $courseId";
+    $css_query = "DELETE FROM course_semester_students WHERE id_course = $courseId";
+    $open_courses_query = "DELETE FROM open_courses WHERE course_id = $courseId";
+    $oci_query = "DELETE FROM open_courses_instructors WHERE course_id = $courseId";
+
+    $queries = array($classes_query, $css_query, $open_courses_query, $oci_query);
+
+    foreach( $queries as $q){
+        $result = mysqli_query($conn, $q);
+        print("here");
+        if(!$result){
+            die(mysqli_error($conn));
+        }
+    }
+
+    header("Location: open_courses.php");
+
+}
+
+
+if(isset($_GET['course_id'])){
+    $courseId = $_GET['course_id'];
+}else{
+    header("Location: ../announcements.php");
+}
+
+if(isset($_POST['submit'])){
+    closeCourse($courseId);
+}
+
+
+$query = "SELECT * FROM courses WHERE course_id = $courseId";
+$result = mysqli_query($conn, $query);
+
+if($result){
+    $courseInfo = mysqli_fetch_assoc($result);
+    // print_r($courseInfo);
+}else{
+    die("something went wrong with the query " . mysqli_error($conn));
+}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,6 +85,7 @@ session_start();
                     </button>
                     <a class="navbar-brand" id="page-title" href="#">Open Courses</a>
                     <div class="ml-auto"></div>
+                </div>
             </nav>
 
 
@@ -47,10 +97,13 @@ session_start();
                         Featured
                     </div> -->
                     <div class="card-body">
-                        <h5 class="card-title">Are you sure you want to delete "course name"</h5>
-                        <p class="card-text">Proceeding with this action means that all of the course's data including students' grades and assignments will be permanently deleted. Are you sure you want to continue?</p>
-                        <a href="#" class="btn btn-outline-secondary">Cancel</a>
-                        <a href="#" class="btn btn-danger">Close Course</a>
+                        <h5 class="card-title">Are you sure you want to delete "<?php echo $courseInfo['name'] ?>"?</h5>
+                        <p class="card-text">Proceeding with this action means that all of the course's data including classes, students' grades, and assignments will be permanently deleted. Are you sure you want to continue?</p>
+                        <form action="#" method="post">
+                            <a href="#" class="btn btn-outline-secondary">No, Go Back</a>
+                            <button type="submit" name="submit" class="btn btn-danger">Yes, Close Course</button>
+                        </form>
+                        
                     </div>
                     <!-- <div class="card-footer text-muted">
                         2 days ago
