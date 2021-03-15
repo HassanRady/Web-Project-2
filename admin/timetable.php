@@ -51,16 +51,16 @@ if(isset($_GET['level'])){
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 1) echo 'active'; ?> ">
                                 <a class="nav-link" href="timetable.php?level=1">Level 1</a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 2) echo 'active'; ?> ">
                                 <a class="nav-link" href="timetable.php?level=2">Level 2</a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 3) echo 'active'; ?>">
                                 <a class="nav-link" href="timetable.php?level=3">Level 3</a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 4) echo 'active'; ?>">
                                 <a class="nav-link" href="timetable.php?level=4">Level 4</a>
                             </li>
 

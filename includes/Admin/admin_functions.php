@@ -32,7 +32,7 @@ function getAdminTimetable($level){
     INNER JOIN open_courses oc ON
         oc.course_id = c.course_id
     WHERE 
-        oc.level = $level
+        cl.level = $level
     ORDER BY CASE
         cl.day WHEN 'saturday' THEN 1 WHEN 'sunday' THEN 2 WHEN 'monday' THEN 3 WHEN 'tuesday' THEN 4 WHEN 'wednesday' THEN 4 WHEN 'thursday' THEN 4
     END,
