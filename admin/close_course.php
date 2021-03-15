@@ -72,7 +72,8 @@ if($result){
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <?php include_once "../includes/admin_sidebar.php"; ?>
+        <?php include_once "../paths.php";
+        include_once $admin_sidebar_path ?>
         <!-- Page Content  -->
         <div id="content">
 
@@ -100,7 +101,7 @@ if($result){
                         <h5 class="card-title">Are you sure you want to delete "<?php echo $courseInfo['name'] ?>"?</h5>
                         <p class="card-text">Proceeding with this action means that all of the course's data including classes, students' grades, and assignments will be permanently deleted. Are you sure you want to continue?</p>
                         <form action="#" method="post">
-                            <a href="#" class="btn btn-outline-secondary">No, Go Back</a>
+                            <a href="<?php echo $open_courses_path ?>" class="btn btn-outline-secondary">No, Go Back</a>
                             <button type="submit" name="submit" class="btn btn-danger">Yes, Close Course</button>
                         </form>
                         
