@@ -123,7 +123,7 @@ function addStudent()
 function updateStudentData($id)
 {
 
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($first_name, $middle_name, $last_name, $national_id, $email, $_, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($student_id, $arabic_name, $address, $guardian_mobile_number, $student_type) = NewStudentDataForm();
 
     // handling realescape
@@ -131,11 +131,10 @@ function updateStudentData($id)
     $email = mysqli_real_escape_string($dataBaseConnection, $email);
     $address = mysqli_real_escape_string($dataBaseConnection, $address);
 
-    $password = encrypt_password($password);
 
     // query for updating user in users table
     $firstSqlQuery = "UPDATE users
-    SET first_name='{$first_name}', middle_name='{$middle_name}', password='{$password}',
+    SET first_name='{$first_name}', middle_name='{$middle_name}', 
         last_name='{$last_name}', national_id={$national_id},
         email='{$email}', gender='{$gender}', mobile_number='{$mobile_number}', home_number='{$home_number}'
     WHERE id = {$id};";
