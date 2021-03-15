@@ -62,9 +62,11 @@ function login()
             case $studentsType:
                 header("Location: $announcements_student_path");
                 break;
+                //change path here
             case $professorsType:
                 header("Location: $announcements_path");
                 break;
+                //change path here
             case $tasType:
                 header("Location: $announcements_path");
                 break;
