@@ -67,8 +67,9 @@
                                 <tbody style="color: rgb(0,0,0,0.5);">
                                     <?php
                                         getRegisteredStudentsMarks($courseId);
+
                                     ?>
-                                    
+
                                 </tbody>
                             </table>
                         </div>

@@ -1,6 +1,6 @@
 <?php
 include_once "variables.php";
-include_once "..\includes\db_conn.php";
+include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\db_conn.php";
 // include_once 'includes\functions.php';
 
 /**
