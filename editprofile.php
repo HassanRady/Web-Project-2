@@ -32,7 +32,8 @@ updateProfile();
 
   <div class="wrapper">
     <?php
-
+    session_start();
+    $type = $_SESSION['type'];
     if ($type === $studentsType)
       include $student_sidebar_path;
     elseif ($type === $adminsType || $type == $sasType)
@@ -68,7 +69,7 @@ updateProfile();
           <div class="col-md-12 order-md-1 col-lg-12">
             <h4 class="mb-3">Edit profile</h4>
             <hr class="mb-4">
-            <form novalidate action="/" method="POST" onsubmit="return !!(empty_field1() & validate_names() & validate_GurdianNumber() & validate_MobileNumber() &  validate_HomeNumber() & validate_1stpassword() & validate_2ndpassword())">
+            <form novalidate action="" method="POST" onsubmit="return !!(empty_field1() & validate_names() & validate_GurdianNumber() & validate_MobileNumber() &  validate_HomeNumber() & validate_1stpassword() & validate_2ndpassword())">
               <div class="row">
                 <div class="col-lg-4 col-md-12 mb-3">
                   <label for="firstName">First name</label>

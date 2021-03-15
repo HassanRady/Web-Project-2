@@ -6,11 +6,11 @@ session_start();
 
 $level = "1";
 
-// if(isset($_GET['level'])){
-//     $level = $_GET["level"];
+if(isset($_GET['level'])){
+    $level = $_GET["level"];
 // }else{
 //     header("Location: announcements.php");
-// }
+}
 
 
 
@@ -52,16 +52,16 @@ $level = "1";
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
                             <li class="nav-item ">
-                                <a class="nav-link" href="#">Level 1</a>
+                                <a class="nav-link" href="timetable.php?level=1">Level 1</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="#">Level 2</a>
+                                <a class="nav-link" href="timetable.php?level=2">Level 2</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="#">Level 3</a>
+                                <a class="nav-link" href="timetable.php?level=3">Level 3</a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="#">Level 4</a>
+                                <a class="nav-link" href="timetable.php?level=4">Level 4</a>
                             </li>
 
                         </ul>
@@ -80,8 +80,8 @@ $level = "1";
                                 // day row
                                 /*********************************************************** DAY OPEN */
                                 ?> 
-                                <tr class='table-row'>
-                                    <td class='table-cell day-cell'> <?php echo $day ?></td>
+                                <tr class='table-row' >
+                                    <td class='table-cell day-cell' style='color: black;'> <?php echo ucfirst($day) ?></td>
                                 <?php
                                 //output data
                                 $length = count($data);

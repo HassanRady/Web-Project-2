@@ -15,7 +15,7 @@ userProfile();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>my profile</title>
+  <title>My Profile</title>
 
   <!-- Bootstrap CSS CDN -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
@@ -55,10 +55,8 @@ userProfile();
             <i class="fas fa-align-left"></i>
             <!-- <span id="nav-toggle-text">Navigation</span> -->
           </button>
-          <a class="navbar-brand" id="page-title" href="#">Web Programming</a>
-          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-align-justify"></i>
-          </button>
+          <a class="navbar-brand" id="page-title" href="#">My Profile</a>
+          <div class="ml-auto"></div>
       </nav>
 
 
@@ -70,7 +68,7 @@ userProfile();
           <div class="card col-md-6 col-sm-12 ">
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
-                <img src="<?php echo $image_path ?>" alt="profile-pic" class="rounded-circle" width="150">
+                <img src="<?php echo $image_path ? $image_path : "media/avatar-placeholder.png" ?>" alt="profile-pic" class="rounded-circle" width="150">
                 <div class="mt-3">
                   <h4><?php echo $full_name; ?></h4>
 
@@ -81,14 +79,27 @@ userProfile();
                   ?>
 
                   <form action="" method="POST" enctype="multipart/form-data">
+
                     <div class="file-input" id="f">
-                      <input type="file" id="file" class="file" name="image">
-                      <button type="submit" class="" name="submit">submit</button>
+
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="image" id="customFile file">
+
+
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+
+
+
+
+                        </div>
+                        <button type="submit" class="btn  btn-md btn-outline-primary btn-block" name="submit">submit</button>
+
+
                     </div>
                   </form>
 
 
-                  <a href="editprofile.php" class="btn btn-outline-primary btn-md">Edit</a>
+                  <a href="editprofile.php" class="btn btn btn-outline-secondary btn-md btn-block">Edit</a>
                 </div>
               </div>
             </div>
@@ -192,7 +203,13 @@ userProfile();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
   <!-- Navbar -->
   <script type="text/javascript" src="js/rootJS.js"></script>
-
+  <script>
+      // Add the following code if you want the name of the file appear on select
+      $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+      });
+  </script>
 </body>
 
 </html>

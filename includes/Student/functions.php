@@ -259,3 +259,27 @@ function unEnrollFromCourse($studentId, $courseId) {
 
   header("Location: $my_courses_path_student");
 }
+
+
+
+function getAssignments($id, $course_id) {
+
+  $query = "SELECT sa.*, a.* FROM student_assignments sa
+  JOIN asignments a ON a.assignment_id = sa.id_asignment
+   WHERE sa.id_student = $id AND a.id_course = $course_id;";
+
+  $dataBaseConnection = connectToDataBase();
+  $result = mysqli_query($dataBaseConnection, $query);
+  checkResultQuery($result, $dataBaseConnection, __FUNCTION__ . '@' . __FILE__);
+  $dataBaseConnection->close();
+
+  while ($row = mysqli_fetch_assoc($result)) {
+
+    echo "<tr>
+    <td>{$row['title']}</td>
+    <td>{$row['handin_date']}</td>
+    <td>10</td>
+</tr>";
+
+  }
+}

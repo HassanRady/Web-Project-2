@@ -153,7 +153,8 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                     $post_date = date("Y-m-d");
                     $post_content = $_POST['post_text'];
                     $post_tags = $post_author;
-                    addNewPost($id_user,$semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
+                    $page = 'add_announcements.php';
+                    addNewPost($id_user,$semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags,$page);
 
 
                 } else {
@@ -262,7 +263,7 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 deletePost($post_id);
             }
             // retrieving post information
-            $posts_result = getAllPosts($course_id);
+            $posts_result = getAllPosts($course_id,$semester_id );
             while ($row = mysqli_fetch_assoc($posts_result)) {
                 $result_id_user = $row['id_user'];
                 $result_post_id = $row['post_id'];
@@ -387,7 +388,8 @@ $user_name = $_SESSION['first_name']." ".$_SESSION['middle_name'];
                 if (!empty($_POST['poll-content'])) {
                     $poll_content = $_POST['poll-content'];
                     $poll_date = date("Y-m-d");
-                    $poll_id = addNewPoll($user_id,$semester_id, $course_id,$poll_content, $poll_date);
+                    $page = 'add_announcements.php';
+                    $poll_id = addNewPoll($user_id,$semester_id, $course_id,$poll_content, $poll_date,$page);
 
 
                     //poll_op_no will be changed in next sprint and will be flexible

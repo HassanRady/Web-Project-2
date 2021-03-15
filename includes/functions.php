@@ -72,7 +72,6 @@ function login()
                 header("Location: $announcements_path");
                 break;
             case $adminsType:
-                getProfessorAdmin();
                 header("Location: $announcements_path");
                 break;
         }
@@ -80,13 +79,21 @@ function login()
         header("Location: ./login.php");
     }
 }
+function map_location($venue_id){
+    global $conn;
+    $query = "Select venue_location FROM venues where venue_id='$venue_id' ";
+    $venue_query = mysqli_query($conn, $query);
+    $row = mysqli_fetch_array($venue_query);
+    $location=$row["venue_location"];
+return $location;
+}
 function add_venue()
 {
     global $conn;
     $venue_name = $_POST['venue_name'];
     $venue_location = $_FILES['venue_location']['name'];
     $venue_location_temp = $_FILES['venue_location']['tmp_name'];
-    move_uploaded_file($venue_location_temp, "../media/$venue_location");
+    move_uploaded_file($venue_location_temp, "../map/$venue_location");
     // Create connection
     $venue_name = mysqli_real_escape_string($conn, $venue_name);
     $venue_location = mysqli_real_escape_string($conn, $venue_location);
@@ -105,7 +112,7 @@ function update_venue()
     $venue_name = $_POST['name'];
     $venue_location = $_FILES['venue_location']['name'];
     $venue_location_temp = $_FILES['venue_location']['tmp_name'];
-    move_uploaded_file($venue_location_temp, "../media/$venue_location");
+    move_uploaded_file($venue_location_temp, "../map/$venue_location");
     // Create connection
     $venue_name = mysqli_real_escape_string($conn, $venue_name);
     $venue_id = mysqli_real_escape_string($conn, $venue_id);
@@ -149,7 +156,7 @@ function Display_venues()
             <div class='col-lg-10'>
 
 
-              <a href='../media/$venue_location'>
+              <a href='../map.php?venue_id=$venue_id'>
               $venue_name
               </a>
             </div>
@@ -775,8 +782,26 @@ function getRegisteredStudents($courseId)
     }
 }
 
+/*
+ * @author Omar 
+ */
+function getInstructorList(){
+    global $conn;
+    $query = "SELECT u.id, u.first_name, u.middle_name, u.last_name, i.instructor_id FROM instructors i
+    INNER JOIN users u on i.id_user = u.id";
+    $query_result = mysqli_query($conn, $query);
+    checkQuery($query_result);
 
-//get the mark breakdown of all registered students in a course
+    while($row = mysqli_fetch_assoc($query_result)){
+      $id = $row['instructor_id'];
+      $fname = $row['first_name'];
+      $mname = $row['middle_name'];
+      $lname = $row['last_name'];
+      echo "
+        <option value='$id'>$fname $mname $lname</option>
+      ";
+    }
+  }
 
 
 
@@ -1043,7 +1068,7 @@ function getOpenCourses()
           </div>
           <div class='btn-grp col-lg-2 col-md-12'>
             <a href='../academic/discussion.php?course_id=$id' class='btn btn-primary'>View</a>
-            <a href='../admin/Add_Class.php' class='btn btn-outline-primary'>Add Class</a>
+            <a href='../admin/Add_Class.php?course_id=$id' class='btn btn-outline-primary'>Add Class</a>
             <a href='../admin/close_course.php?course_id=$id' class='btn btn-outline-danger'>Close</a>
           </div>
         </div>
@@ -1208,27 +1233,23 @@ function getVenueID($venueName)
 }
 
 
-function showALlVenues()
-{
+function showAllVenues(){
     global $conn;
-    $query = "SELECT `name` FROM venues ";
-    $result = mysqli_query($conn, $query);
-    if (!$result) {
-        die("QUERY OF SHOW ALL COURSES FAILED" . mysqli_error($conn));
+    $query = "SELECT venue_id, name FROM venues";
+    $result = mysqli_query($conn,$query);
+    if(!$result){
+        die("QUERY OF SHOW ALL COURSES FAILED". mysqli_error($conn));
     }
     return $result;
 }
 
-function addToClassTable($course_id, $venue_id, $startTime, $endTime, $day, $type, $freq)
-{
+function addToClassTable($courseId, $instructorId, $location, $start_time, $end_time, $day, $type, $group, $frequency, $level){
     global $conn;
-    $query = "INSERT INTO `classes` (`class_id`, `id_course`, `id_venue`, `start`, `end`, `day`, `type`, `freq`) VALUES(NULL,'$course_id','$venue_id','$startTime','$endTime','$day','$type','$freq' );";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        echo "DATA ARE INSERTED";
-    } else {
-        die("cannot insert data" . mysqli_error($conn));
-    }
+    $query = "INSERT INTO `classes` (`class_id`, `id_course`, `id_venue`, `start`, `end`, `day`, `type`, `students_group`, `freq`, `id_instructor`, `level`) 
+    VALUES(NULL,'$courseId','$location','$start_time','$end_time','$day','$type', '$group', '$frequency', '$instructorId', '$level' );";
+    $result = mysqli_query($conn,$query);
+    checkQuery($result);
+
 }
 function getUserName($user_id)
 {
@@ -1250,7 +1271,7 @@ function getUserName($user_id)
 }
 
 
-function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags)
+function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags, $page)
 {
     global $conn;
     $query = "INSERT INTO `posts`(id_user, id_semester, id_course, post_title, post_author, post_user, post_date, post_content, post_tags) ";
@@ -1260,6 +1281,13 @@ function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_autho
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
+    if($id_course ==0){
+        return $result;
+    }
+    else{
+        header("Location: $page?course_id=$id_course&sem_id=$id_semester");
+    }
+
     return $result;
 }
 
@@ -1308,7 +1336,7 @@ function deletePostComments($id_post)
     }
 }
 
-function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date)
+function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $page)
 {
     global $conn;
     $query = "INSERT INTO `comments`(id_post, id_user, comment_author, comment_content, comment_date) ";
@@ -1317,6 +1345,7 @@ function addNewComment($id_post, $id_user, $comment_author, $comment_content, $c
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
+    header("Location: $page?course_id=$course_id&p_id=$id_post&u_id=$id_user");
     return $result;
 }
 
@@ -1428,6 +1457,7 @@ function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_dat
     while ($row = mysqli_fetch_assoc($retResult)) {
         $retPoll_id = $row['poll_id'];
     }
+
     return $retPoll_id;
 }
 

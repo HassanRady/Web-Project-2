@@ -42,7 +42,7 @@ $dataBaseConnection = connectToDataBase();
 $result = mysqli_query($dataBaseConnection, $mainSqlQuery);
 checkResultQuery($result, $dataBaseConnection, __FUNCTION__);
 
-$professor_admins = mysqli_fetch_assoc($result)['id_user'];
+$professor_admins = mysqli_fetch_all($result);
 $dataBaseConnection->close();
 
 return $professor_admins;
@@ -52,4 +52,9 @@ return $professor_admins;
 function isHeProfessorAndAdmin($user_id) {
 $professor_and_admins_id = getProfessorAdmin();
 
+foreach($professor_and_admins_id as $id){
+    if ($id[0] == $user_id)
+    return true;
+}
+return false;
 }

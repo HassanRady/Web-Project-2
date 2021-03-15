@@ -1,0 +1,11 @@
+#loader{
+  position:fixed;
+  width:110%;
+  height: 100%;
+  z-index:2000;
+  overflow: visible;
+  background: #1F6CEC url('Untitled-1.gif') no-repeat ;
+  background-size: 50%;
+  background-position: center;
+
+}

@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 session_start();
 if (isset($_GET['course_id'])) {
@@ -97,7 +99,8 @@ $user_name = $_SESSION['first_name'] . " " . $_SESSION['middle_name'];
                         $post_date = date("Y-m-d");
                         $post_content = $_POST['post_text'];
                         $post_tags = $post_author;
-                        addNewPost($id_user, $semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags);
+                        $page = "discussion.php";
+                        addNewPost($id_user, $semester_id, $id_course, $post_title, $post_author, $post_user, $post_date, $post_content, $post_tags, $page);
                     } else {
                         echo "<script>alert('Post cannot be empty')</script>";
                     }
@@ -324,7 +327,7 @@ $user_name = $_SESSION['first_name'] . " " . $_SESSION['middle_name'];
                     if (!empty($_POST['poll-content'])) {
                         $poll_content = $_POST['poll-content'];
                         $poll_date = date("Y-m-d");
-                        $poll_id = addNewPoll($user_id, $course_id, $poll_content, $poll_date);
+                        $poll_id = addNewPoll($user_id, $semester_id, $course_id, $poll_content, $poll_date);
                         //poll_op_no will be changed in next sprint and will be flexible
                         $poll_options_no = 2;
                         if (isset($_POST['options-num'])) {
@@ -394,3 +397,4 @@ $user_name = $_SESSION['first_name'] . " " . $_SESSION['middle_name'];
 </body>
 
 </html>
+<?php ob_end_flush(); ?>

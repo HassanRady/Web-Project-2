@@ -131,18 +131,17 @@ function addProfessor()
  */
 function updateProfessorData($id)
 {
-    list($first_name, $middle_name, $last_name, $national_id, $email, $password, $gender, $mobile_number, $home_number) = NewUserDataForm();
+    list($first_name, $middle_name, $last_name, $national_id, $email, $_, $gender, $mobile_number, $home_number) = NewUserDataForm();
     list($instructor_id, $description) = NewProfessorDataForm();
 
     // handling realescape
     $dataBaseConnection = connectToDataBase();
     $email = mysqli_real_escape_string($dataBaseConnection, $email);
 
-    $password = encrypt_password($password);
 
     // query for updating user in users table
     $firstSqlQuery = "UPDATE users
-                        SET first_name='{$first_name}', middle_name='{$middle_name}', password='{$password}', 
+                        SET first_name='{$first_name}', middle_name='{$middle_name}',  
                             last_name='{$last_name}', national_id={$national_id},
                             email='{$email}', gender='{$gender}', mobile_number='{$mobile_number}', home_number='{$home_number}'
                         WHERE id = {$id};";
