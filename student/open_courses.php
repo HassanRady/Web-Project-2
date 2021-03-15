@@ -49,7 +49,10 @@ if (isset($_POST['submit'])) {
                 <!-- START HERE -->
                 <?php $enrolledHours = getEnrolledHours($studentId);?>
 
-                <div> <label>Total Hours: <?php echo $enrolledHours?></label> </div>
+                <div class="container"> <label class="float-right">Total Hours: <?php echo $enrolledHours?></label> </div>
+                <br>
+                <hr>
+
                 <?php
 
                 getOpenCoursesForStudents($studentId);

@@ -1,5 +1,5 @@
 <?php
-$db["db_host"] = "localhost";
+$db["db_host"] = "localhost:3307";
 $db["db_path"] = "root";
 $db["db_password"] = "";
 $db["db_name"] = "sim";

@@ -57,10 +57,10 @@
                               <?php echo $row['name']; ?>
                           </div>
                           <div class='course-info'>
-                              <?php echo $row['level'];  ?>
+                              <p>Level: <?php echo $row['level'];  ?></p>
                           </div>
                           <div class='course-enrollment'>
-                              <?php echo $row['student_count']; ?>
+                              <p>Enrolled Students: <?php echo $row['student_count']; ?></p>
                           </div>
                       </a>
                   </div>
