@@ -10,6 +10,7 @@ function getAdminTimetable($level){
     $query = "SELECT
     c.name AS cname,
     v.name AS vname,
+    cl.id_venue AS vid,
     cl.type,
     cl.start,
     cl.end,
