@@ -36,7 +36,7 @@
             include $admin_sidebar_path;
         else
             include $professor_sidebar_path;
-    
+
         ?>
         <!-- Page Content  -->
         <div id="content">
