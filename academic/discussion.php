@@ -52,7 +52,7 @@ $page = "discussion.php?course_id=".$course_id;
     <?php
     include "../includes/utils/variables.php";
     include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
-    include $student_sidebar_path;
+    include $professor_sidebar_path;
 
 
     ?>
@@ -60,7 +60,7 @@ $page = "discussion.php?course_id=".$course_id;
     <div id="content">
 
         <?php
-        include $student_navbar_path;
+        include $professor_navbar_path;
         ?>
 
 
