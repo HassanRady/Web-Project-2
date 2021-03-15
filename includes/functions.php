@@ -813,28 +813,10 @@ function getInstructorCourses($instructorId)
       INNER JOIN courses c ON oc.course_id = c.course_id WHERE instructor_id = $instructorId ";
     $query_result = mysqli_query($conn, $query);
 
-    while ($row = mysqli_fetch_assoc($query_result)) {
-        $name = $row['name'];
-        $id = $row['course_id'];
-        $level = $row['level'];
-        $count = $row['student_count'];
-        echo "
-            <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
-            <a href='discussion.php?course_id=$id&sem_id=$semester' class='cbox'>
-              <div class='course-title'>
-                $name
-              </div>
-              <div class='course-info'>
-                Level: $level
-              </div>
-              <div class='course-info'>
-                Students: $count
-              </div>
-            </a>
-            </div>              
-          ";
+
+ return $query_result;
     }
-}
+
 
 
 function getStudentMarksForCourse($courseId, $std_id)

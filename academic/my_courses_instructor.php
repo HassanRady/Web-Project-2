@@ -8,10 +8,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <title>Doctor's Courses</title>
+    <link rel="stylesheet" href="css/style.css">
 
-  
-  <link rel="stylesheet" href="css/style.css">
   <?php include "../includes/bootstrap_styles_start.php"; ?>
+
 
 </head>
 
@@ -53,22 +53,31 @@
       <div class="page-body">
         <!-- START HERE -->
 
-        <div class="container-fluid ">
+          <div class="row courseslist ">
 
-          <div class="row">
+              <?php
+              $courses = getInstructorCourses($instructorId);
+              while ($row = mysqli_fetch_assoc($courses)) {
+                  $id = $row['course_id'];
+                  ?>
+
+                  <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
+                      <a href='<?php echo "discussion.php?course_id=$id&sem_id=$semester" ?>' class='cbox'>
+                          <div class='course-title'>
+                              <?php echo $row['name']; ?>
+                          </div>
+                          <div class='course-info'>
+                              <?php echo $row['level'];  ?>
+                          </div>
+                          <div class='course-enrollment'>
+                              <?php echo $row['student_count']; ?>
+                          </div>
+                      </a>
+                  </div>
 
 
-            <?php
-
-            getInstructorCourses($instructorId);
-            ?>
-            
-            
-
-            
-          </div>
-
-        </div>
+              <?php }
+              ?>
         <!-- STOP HERE -->
       </div>
 
