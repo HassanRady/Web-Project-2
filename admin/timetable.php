@@ -87,6 +87,7 @@ if(isset($_GET['level'])){
                                 $length = count($data);
                                 $numItems = 0;
                                 for($i = 0; $i < $length; $i++){
+                                    // echo map_location($data[$i]['vid']);
                                     if($i == $length -1){
                                         /*********************************************************** REGULAR OUTPUT */
                                         ?> 
@@ -104,7 +105,7 @@ if(isset($_GET['level'])){
                                                 <span>
                                                     <?php echo substr($data[$i]['start'], 0 , 5) . " - " . substr($data[$i]['end'], 0 , 5); ?> / 
                                                 </span>
-                                                <a href='#' class='location'>
+                                                <a href='../map.php?venue_id=<?php echo $data[$i]['vid']; ?>' class='location'>
                                                     <?php echo $data[$i]['vname']; ?>
                                                 </a>
                                             </div>
@@ -144,7 +145,7 @@ if(isset($_GET['level'])){
                                                             <span>
                                                                 <?php echo substr($array[$j]['start'], 0 , 5) . " - " . substr($array[$j]['end'], 0 , 5); ?> / 
                                                             </span>
-                                                            <a href='#' class='location'>
+                                                            <a href='../map.php?venue_id=<?php echo $array[$i]['vid']; ?>' class='location'>
                                                                 <?php echo $array[$j]['vname']; ?>
                                                             </a>
                                                         </div>
@@ -177,7 +178,7 @@ if(isset($_GET['level'])){
                                                 <span>
                                                     <?php echo substr($data[$i]['start'], 0 , 5) . " - " . substr($data[$i]['end'], 0 , 5); ?> / 
                                                 </span>
-                                                <a href='#' class='location'>
+                                                <a href='../map.php?venue_id=<?php echo $data[$i]['vid']; ?>' class='location'>
                                                     <?php echo $data[$i]['vname']; ?>
                                                 </a>
                                             </div>
