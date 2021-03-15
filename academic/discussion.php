@@ -32,6 +32,8 @@
         <?php
         include "../includes/utils/variables.php";
         include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+        include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Admin\\all_types\\functions.php";
+
 
         session_start();
         $type = $_SESSION['type'];
@@ -54,7 +56,13 @@
             <?php
             if ($type === $studentsType)
                 include $student_navbar_path;
-            else
+            elseif ($type == $adminsType || $type == $sasType) {
+                if (isHeProfessorAndAdmin($user_id)){ 
+                    include $professor_navbar_path;}
+                else{
+                    echo "<hr>";
+                }
+            } else
                 include $professor_navbar_path;
             ?>
 
