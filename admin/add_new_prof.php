@@ -112,9 +112,9 @@ addNewProfessor();
                                 </div>
 
                                 <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="zip">Instructor ID</label>
-                                    <input type="text" class="form-control" id="zip" name="instructor_id" placeholder="">
-                                    <h6 id="warn5" style="font-style: italic;color: red;"></h6>
+                                    <label for="instructorid">Instructor ID</label>
+                                    <input type="text" class="form-control" id="instructorid" name="instructor_id" placeholder="">
+                                    <h6 id="warninstructorid" style="font-style: italic;color: red;"></h6>
                                 </div>
 
 
