@@ -79,13 +79,21 @@ function login()
         header("Location: ./login.php");
     }
 }
+function map_location($venue_id){
+    global $conn;
+    $query = "Select venue_location FROM venues where venue_id='$venue_id' ";
+    $venue_query = mysqli_query($conn, $query);
+    $row = mysqli_fetch_array($venue_query);
+    $location=$row["venue_location"];
+return $location;
+}
 function add_venue()
 {
     global $conn;
     $venue_name = $_POST['venue_name'];
     $venue_location = $_FILES['venue_location']['name'];
     $venue_location_temp = $_FILES['venue_location']['tmp_name'];
-    move_uploaded_file($venue_location_temp, "../media/$venue_location");
+    move_uploaded_file($venue_location_temp, "../map/$venue_location");
     // Create connection
     $venue_name = mysqli_real_escape_string($conn, $venue_name);
     $venue_location = mysqli_real_escape_string($conn, $venue_location);
@@ -104,7 +112,7 @@ function update_venue()
     $venue_name = $_POST['name'];
     $venue_location = $_FILES['venue_location']['name'];
     $venue_location_temp = $_FILES['venue_location']['tmp_name'];
-    move_uploaded_file($venue_location_temp, "../media/$venue_location");
+    move_uploaded_file($venue_location_temp, "../map/$venue_location");
     // Create connection
     $venue_name = mysqli_real_escape_string($conn, $venue_name);
     $venue_id = mysqli_real_escape_string($conn, $venue_id);
@@ -148,7 +156,7 @@ function Display_venues()
             <div class='col-lg-10'>
 
 
-              <a href='../media/$venue_location'>
+              <a href='../map/$venue_location'>
               $venue_name
               </a>
             </div>
