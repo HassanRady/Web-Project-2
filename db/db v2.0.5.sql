@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2021 at 08:41 AM
+-- Generation Time: Mar 15, 2021 at 03:53 PM
 -- Server version: 10.4.16-MariaDB
 -- PHP Version: 7.4.12
 
@@ -40,7 +40,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id_user`, `id_instructor`) VALUES
-(47, 0);
+(47, 0),
+(62, 11);
 
 -- --------------------------------------------------------
 
@@ -68,7 +69,8 @@ CREATE TABLE `asignments` (
 
 INSERT INTO `asignments` (`assignment_id`, `id_course`, `id_instructor`, `id_semester`, `title`, `due_time`, `due_date`, `publish_date`, `assignment`, `description`, `points`) VALUES
 (2, 6, 9, 1, 'from soft_eng2', '16:55:00', '2021-02-22', '2021-02-22', 'bk5.jpg', 'N/A', 0),
-(3, 5, 4, 1, 'from adv_multi', '08:07:00', '2021-02-23', '2021-02-23', 'bk5.jpg', 'N/A', 0);
+(3, 5, 4, 1, 'from adv_multi', '08:07:00', '2021-02-23', '2021-02-23', 'bk5.jpg', 'N/A', 0),
+(5, 5, 0, 1, 'from adv_multi2', '11:27:00', '2021-03-15', '2021-03-15', 'rock.jfif', 'test', 0);
 
 -- --------------------------------------------------------
 
@@ -83,7 +85,7 @@ CREATE TABLE `classes` (
   `id_venue` int(12) NOT NULL,
   `start` time DEFAULT NULL,
   `end` time DEFAULT NULL,
-  `day` date DEFAULT NULL,
+  `day` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `level` int(11) DEFAULT NULL,
   `students_group` int(2) DEFAULT NULL,
@@ -95,7 +97,14 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`class_id`, `id_course`, `id_instructor`, `id_venue`, `start`, `end`, `day`, `type`, `level`, `students_group`, `freq`) VALUES
-(2, 5, 4, 2, '08:03:49', '10:03:49', '2021-02-23', 'lec', 3, NULL, '3');
+(1, 1, 0, 2, '08:32:07', '11:32:11', '2021-03-15', NULL, 3, NULL, NULL),
+(2, 7, 9, 2, '08:32:12', '11:32:09', '2021-03-15', NULL, 1, NULL, NULL),
+(3, 6, 9, 1, '08:34:08', '11:34:05', '2021-03-16', NULL, 1, NULL, NULL),
+(4, 4, 5, 1, '12:34:05', '13:34:05', '2021-03-15', NULL, 2, NULL, NULL),
+(5, 8, 0, 2, '08:35:26', '13:35:31', '2021-03-15', NULL, 4, NULL, NULL),
+(6, 3, 7, 1, '08:35:24', '11:35:31', '2021-03-15', NULL, 4, NULL, NULL),
+(8, 2, 4, 2, '08:37:13', '13:37:08', '2021-03-16', NULL, 3, NULL, NULL),
+(9, 5, 0, 1, '08:37:10', '12:37:08', '2021-03-16', NULL, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -118,7 +127,15 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_id`, `id_post`, `id_user`, `comment_author`, `comment_content`, `comment_status`, `comment_date`) VALUES
-(8, 30, 47, 'islam xxx', 'from admin', '', '2021-03-14');
+(8, 30, 47, 'islam xxx', 'from admin', '', '2021-03-14'),
+(9, 33, 47, 'islam xxx', 'hi', '', '2021-03-15'),
+(10, 46, 56, 'Mariam Ahmed', 'z', '', '2021-03-15'),
+(11, 46, 56, 'Mariam Ahmed', 'z', '', '2021-03-15'),
+(12, 51, 47, 'islam xxx', 'a', '', '2021-03-15'),
+(13, 51, 47, 'islam xxx', 'xx', '', '2021-03-15'),
+(14, 51, 47, 'islam xxx', 'qaz', '', '2021-03-15'),
+(15, 51, 47, 'islam xxx', 'aa', '', '2021-03-15'),
+(16, 51, 1, 'hassan khaled', 'lol\r\n', '', '2021-03-15');
 
 -- --------------------------------------------------------
 
@@ -142,13 +159,16 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`course_id`, `name`, `credits`, `has_preq`, `has_labs`, `has_practical`, `category`, `elective`) VALUES
+(0, 'General Announcement', 0, 0, 0, 0, 'university', 'no'),
 (1, 'Web', 3, 0, 0, 0, 'university', 'no'),
 (2, 'Data Mining', 3, 0, 1, 1, 'university', 'yes'),
 (3, 'Graphics', 3, 0, 1, 1, 'faculty', 'no'),
 (4, 'Multi Media', 3, 0, 1, 1, 'sim', 'no'),
 (5, 'Advanced Multi Media', 3, 1, 0, 0, 'sim', 'no'),
 (6, 'Software engineering', 3, 0, 1, 1, 'sim', 'no'),
-(7, 'Software Req', 3, 1, 1, 1, 'sim', 'no');
+(7, 'Software Req', 3, 1, 1, 1, 'sim', 'no'),
+(8, 'Mobile', 3, 0, 1, 1, 'sim', 'no'),
+(9, 'Math 4', 2, 0, 0, 0, 'university', 'yes');
 
 -- --------------------------------------------------------
 
@@ -187,12 +207,10 @@ CREATE TABLE `course_semester_students` (
 --
 
 INSERT INTO `course_semester_students` (`id_student`, `id_course`, `id_semester`, `grade`, `gpa`, `oral`, `midterm`, `course_work`, `practical`, `final`) VALUES
-(1, 2, 1, NULL, 0, 0, 0, 0, 0, 0),
+(1, 5, 1, NULL, 0, 0, 0, 0, 0, 0),
 (1, 6, 1, NULL, 0, 0, 0, 0, 0, 0),
-(2, 1, 1, NULL, 0, 0, 2, 0, 0, 0),
-(2, 5, 1, NULL, 0, 0, 0, 0, 0, 0),
-(3, 1, 1, NULL, 0, 0, 0, 0, 0, 0),
-(3, 5, 1, '3', 0, 0, 0, 0, 0, 0);
+(5, 5, 1, NULL, 0, 0, 0, 0, 0, 0),
+(5, 6, 1, NULL, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -228,7 +246,8 @@ INSERT INTO `instructors` (`id_user`, `instructor_id`) VALUES
 (50, 6),
 (58, 7),
 (53, 9),
-(61, 10);
+(61, 10),
+(62, 11);
 
 -- --------------------------------------------------------
 
@@ -273,9 +292,13 @@ CREATE TABLE `open_courses` (
 
 INSERT INTO `open_courses` (`level`, `student_count`, `course_id`) VALUES
 (3, 0, 1),
-(4, 0, 2),
-(3, 0, 5),
-(1, 0, 6);
+(3, 0, 2),
+(4, 0, 3),
+(2, 0, 4),
+(2, 0, 5),
+(1, 0, 6),
+(1, 0, 7),
+(4, 0, 8);
 
 -- --------------------------------------------------------
 
@@ -294,9 +317,13 @@ CREATE TABLE `open_courses_instructors` (
 
 INSERT INTO `open_courses_instructors` (`instructor_id`, `course_id`) VALUES
 (0, 1),
-(4, 5),
-(5, 2),
-(9, 6);
+(0, 5),
+(0, 8),
+(4, 2),
+(5, 4),
+(7, 3),
+(9, 6),
+(9, 7);
 
 -- --------------------------------------------------------
 
@@ -318,7 +345,9 @@ CREATE TABLE `polls` (
 --
 
 INSERT INTO `polls` (`poll_id`, `id_user`, `poll_content`, `poll_date`, `id_course`, `id_semester`) VALUES
-(9, 53, 'choose', '2021-03-14', 6, 1);
+(9, 53, 'choose', '2021-03-14', 6, 1),
+(10, 1, 'ch', '2021-03-15', 5, 1),
+(11, 1, 'ss', '2021-03-15', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -330,7 +359,7 @@ CREATE TABLE `poll_options` (
   `option_id` int(12) NOT NULL,
   `id_poll` int(10) NOT NULL,
   `option_content` varchar(255) DEFAULT NULL,
-  `votes` int(11) DEFAULT NULL
+  `votes` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -338,9 +367,15 @@ CREATE TABLE `poll_options` (
 --
 
 INSERT INTO `poll_options` (`option_id`, `id_poll`, `option_content`, `votes`) VALUES
-(11, 9, 'big', NULL),
-(12, 9, 'medium', NULL),
-(13, 9, 'small', NULL);
+(11, 9, 'big', 3),
+(12, 9, 'medium', 0),
+(13, 9, 'small', 0),
+(14, 10, 'big', 0),
+(15, 10, 'medium', 0),
+(16, 10, 'small', 0),
+(17, 11, 'ss', 0),
+(18, 11, 'ss', 0),
+(19, 11, 's', 0);
 
 -- --------------------------------------------------------
 
@@ -360,7 +395,10 @@ CREATE TABLE `poll_votes` (
 
 INSERT INTO `poll_votes` (`id_user`, `id_poll`, `id_option`) VALUES
 (53, 9, 11),
-(53, 9, 11);
+(53, 9, 11),
+(1, 9, 11),
+(1, 9, 11),
+(1, 9, 11);
 
 -- --------------------------------------------------------
 
@@ -390,7 +428,26 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`post_id`, `id_user`, `id_course`, `post_title`, `post_author`, `post_user`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_views_count`, `votes`, `id_semester`) VALUES
 (30, 1, 2, 'title', 'hassan khaled', 'SA', '2021-03-14', '', 'from data mining\r\n', 'hassan khaled', 0, 3, 1),
-(31, 1, 6, 'title', 'hassan khaled', 'SA', '2021-03-14', '', 'from soft eng', 'hassan khaled', 0, 0, 1);
+(31, 1, 6, 'title', 'hassan khaled', 'SA', '2021-03-14', '', 'from soft eng', 'hassan khaled', 0, 0, 1),
+(32, 50, 1, 'title', 'mona xxx', 'SA', '2021-03-15', '', 'hi students', 'mona xxx', 0, 0, 1),
+(33, 50, 1, 'title', 'mona xxx', 'SA', '2021-03-15', '', 'hi students', 'mona xxx', 0, 1, 1),
+(34, 1, 5, 'title', 'hassan khaled', 'SA', '2021-03-15', '', 'hi', 'hassan khaled', 0, 0, 1),
+(35, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'test', 'Mariam Ahmed', 0, 0, 1),
+(36, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'test', 'Mariam Ahmed', 0, 0, 1),
+(37, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'test', 'Mariam Ahmed', 0, 0, 1),
+(38, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'test', 'Mariam Ahmed', 0, 0, 1),
+(39, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'test', 'Mariam Ahmed', 0, 0, 1),
+(40, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'z', 'Mariam Ahmed', 0, 0, 1),
+(41, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'z', 'Mariam Ahmed', 0, 0, 1),
+(42, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'z', 'Mariam Ahmed', 0, 0, 1),
+(43, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'z', 'Mariam Ahmed', 0, 0, 1),
+(45, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'z', 'Mariam Ahmed', 0, 0, 1),
+(46, 56, 5, 'title', 'Mariam Ahmed', 'SA', '2021-03-15', '', 'q', 'Mariam Ahmed', 0, 0, 1),
+(47, 47, 5, 'title', 'islam xxx', 'SA', '2021-03-15', '', 'ww', 'islam xxx', 0, 0, 1),
+(48, 47, 5, 'title', 'islam xxx', 'SA', '2021-03-15', '', 'ww', 'islam xxx', 0, 0, 1),
+(49, 47, 5, 'title', 'islam xxx', 'SA', '2021-03-15', '', 'ww', 'islam xxx', 0, 0, 1),
+(50, 47, 5, 'title', 'islam xxx', 'SA', '2021-03-15', '', 'aa', 'islam xxx', 0, 0, 1),
+(51, 47, 5, 'title', 'islam xxx', 'SA', '2021-03-15', '', 'vv', 'islam xxx', 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -432,7 +489,8 @@ INSERT INTO `professors` (`id_user`, `id_instructor`, `description`) VALUES
 (48, 4, ''),
 (53, 9, ''),
 (57, 5, ''),
-(58, 7, '');
+(58, 7, ''),
+(62, 11, '');
 
 -- --------------------------------------------------------
 
@@ -491,7 +549,7 @@ CREATE TABLE `students` (
   `address` varchar(255) NOT NULL,
   `guardian_mobile_number` varchar(255) NOT NULL,
   `student_type` varchar(255) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `students`
@@ -524,8 +582,10 @@ CREATE TABLE `student_assignments` (
 --
 
 INSERT INTO `student_assignments` (`id_asignment`, `grade`, `id_student`, `handin_date`, `handin_time`, `student_assignment`) VALUES
-(2, 1, 1, '2021-02-22', '03:57:17', '2413558.jpg'),
-(2, 0, 5, '2021-03-13', '06:43:47', 'photo-1503023345310-bd7c1de61c7d.jfif');
+(2, 0, 1, '2021-03-15', '03:38:43', 'rock.jfif'),
+(2, 0, 5, '2021-03-13', '06:43:47', 'photo-1503023345310-bd7c1de61c7d.jfif'),
+(3, 0, 1, '2021-03-15', '08:38:24', 'rock.jfif'),
+(3, 0, 5, '2021-03-15', '08:50:20', 'rock2.jpg');
 
 -- --------------------------------------------------------
 
@@ -565,9 +625,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `national_id`, `type`, `email`, `password`, `gender`, `mobile_number`, `home_number`, `image_path`) VALUES
-(1, 'hassan', 'khaled', 'hassan', 1, 'student', 'sim.hassan.khaled@alexu.edu.eg', '$2y$10$5ne8dXl5K.J6heByPPB50.iq0ByKpL3EjygJz.fSJK.cakNhhBbJa', 'Male', '1', '', 'profile_images/bk5.jpg'),
+(1, 'hassan', 'khaled', 'hassan', 1, 'student', 'sim.hassan.khaled@alexu.edu.eg', '$2y$10$5ne8dXl5K.J6heByPPB50.iq0ByKpL3EjygJz.fSJK.cakNhhBbJa', 'Male', '1', '', 'profile_images/IMG_E0889 - Copy.Jpeg'),
 (2, 'omar', 'khaled', 'taha', 2, 'student', 'om4r_kh4lid@yahoo.com', '$2y$10$Bq7aqctcHhuCuVzuaVG07ucs8q2myPxLaf5Q1iAEs3mUKtA.cWaVW', 'Male', '2', '', 'profile_images/rock2.jpg'),
-(47, 'islam', 'xxx', 'xxx', 3, 'admin', 'islam@me.com', '$2y$10$NvGECHi6FsEJNaASyveYCOJuV8fo11lrMtF7QxJPBkcaAlrHxu6xK', 'Male', '3', '', 'profile_images/38797033_10160632376490655_5348618237946888192_o.jpg'),
+(47, 'islam', 'xxx', 'xxx', 3, 'admin', 'islam@me.com', '$2y$10$FdwmShk3JXswzwibwaDjn.MxZ.mwc9ld0aIaKd3r2BG6Y7vEDgvCy', 'Male', '3', '', 'profile_images/38797033_10160632376490655_5348618237946888192_o.jpg'),
 (48, 'mohamed', 'xxx', 'xxx', 4, 'professor', 'mohamed@me.com', '$2y$10$DCGsgEtRDrVFyxfiV3CyPuFYcRuYxgH06kRO6wogFAdD/Y.gEYETu', 'Male', '4', '', 'profile_images\\profile.png'),
 (50, 'mona', 'xxx', 'xxx', 6, 'sa', 'mona@me.com', '$2y$10$DKiS3G4XTzPln/UyJa6YUuMIsomWTNydvapCCyU7WJPoZQPSDPVKa', 'Female', '6', '', 'profile_images\\profile.png'),
 (51, 'abdalrahman', 'khaled', 'ibrahiem', 7, 'student', 'abdalrahman@me.com', '$2y$10$PMiq.5jWSETu3gtZDEn2AeZMdBDaOjr6GqLvEAg0giE4RrGmKkoSm', 'Male', '7', '', 'profile_images\\profile.png'),
@@ -576,7 +636,8 @@ INSERT INTO `users` (`id`, `first_name`, `middle_name`, `last_name`, `national_i
 (56, 'Mariam', 'Ahmed', 'Alaa', 10, 'student', 'mariam@me.com', '$2y$10$W1UiQQaeRBIcGY0SkJCDqeO532O0omjscd0oU0fJ/XxdBy2DE8hFq', 'Female', '5', '', 'profile_images\\profile.png'),
 (57, 'mohammed', 'x', 'x', 11, 'professor', 'data@me.com', '$2y$10$THnkGw0G3egzeB.EsTaCl.gUZwb7/RAZ9BWGdsaaXIWR0iT.rIn6G', 'Male', '11', '', 'profile_images\\profile.png'),
 (58, 'nermen', 'x', 'x', 12, 'professor', 'graphics@me.com', '$2y$10$/.a6Rl/OgZQuSFi36yQS7eigx.uL/GMnr5a0CHrc1srtkWO6iu4cK', 'Female', '12', '', 'profile_images\\profile.png'),
-(61, 'Sherif', 'xx', 'xx', 13, 'sa', 'Sherif@me.com', '$2y$10$7ECb91ZnbpF3X.njcX2tpuydXSJntG.pFDi8Jp/O4qD3UjYF3jWTq', 'Male', '13', '', 'profile_images\\profile.png');
+(61, 'Sherif', 'xx', 'xx', 13, 'sa', 'Sherif@me.com', '$2y$10$7ECb91ZnbpF3X.njcX2tpuydXSJntG.pFDi8Jp/O4qD3UjYF3jWTq', 'Male', '13', '', 'profile_images\\profile.png'),
+(62, 'x', 'x', 'x', 14, 'admin', 'x@me.com', '$2y$10$qUgdQcw//OLS/bVQO/EfdOAMuQBTqGuxjiGj9a7fMAj68/CkBOrl.', 'Female', '14', '', 'profile_images\\profile.png');
 
 -- --------------------------------------------------------
 
@@ -617,7 +678,9 @@ CREATE TABLE `votes` (
 INSERT INTO `votes` (`id_user`, `id_post`, `vote_value`) VALUES
 (47, 30, 1),
 (47, 30, 1),
-(47, 30, 1);
+(47, 30, 1),
+(47, 33, 1),
+(1, 51, 1);
 
 --
 -- Indexes for dumped tables
@@ -644,7 +707,9 @@ ALTER TABLE `asignments`
 --
 ALTER TABLE `classes`
   ADD PRIMARY KEY (`class_id`),
-  ADD KEY `id_instructors_classes_fk` (`id_instructor`);
+  ADD KEY `id_instructors_classes_fk` (`id_instructor`),
+  ADD KEY `id_course_classes_fk` (`id_course`),
+  ADD KEY `id_venue_classes_fk` (`id_venue`);
 
 --
 -- Indexes for table `comments`
@@ -824,19 +889,19 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `asignments`
 --
 ALTER TABLE `asignments`
-  MODIFY `assignment_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `assignment_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `class_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `class_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `comment_id` bigint(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `materials`
@@ -848,19 +913,19 @@ ALTER TABLE `materials`
 -- AUTO_INCREMENT for table `polls`
 --
 ALTER TABLE `polls`
-  MODIFY `poll_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `poll_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `poll_options`
 --
 ALTER TABLE `poll_options`
-  MODIFY `option_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `option_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `post_id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -872,7 +937,7 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `venues`

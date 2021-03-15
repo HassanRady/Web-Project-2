@@ -368,7 +368,8 @@ $page = "discussion.php?course_id=".$course_id;
                     if (!empty($_POST['poll-content'])) {
                         $poll_content = $_POST['poll-content'];
                         $poll_date = date("Y-m-d");
-                        $poll_id = addNewPoll($user_id, $semester_id, $course_id, $poll_content, $poll_date);
+                        $page = "discussion.php";
+                        $poll_id = addNewPoll($user_id, $semester_id, $course_id, $poll_content, $poll_date, $page);
                         //poll_op_no will be changed in next sprint and will be flexible
                         $poll_options_no = 2;
                         if (isset($_POST['options-num'])) {
