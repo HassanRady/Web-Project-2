@@ -21,9 +21,13 @@ addNewProfessor();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
     <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-     <script type="text/javascript" src="forms.js"> </script> 
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+        integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+        crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+        integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+        crossorigin="anonymous"></script>
+        <script type="text/javascript" src="forms.js"> </script>
 </head>
 
 <body>
@@ -73,28 +77,31 @@ addNewProfessor();
                     <div class="col-md-12 order-md-1 col-lg-12">
                         <h4 class="mb-3">Add New Professor</h4>
                         <hr class="mb-4">
-                        <form action="" method="POST" onsubmit="return !!(empty_field1() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId()  & validate_gender());" novalidate>
+                        <form class="needs-validation" novalidate action="add_new_prof.php?type=professor" method="POST" onsubmit="return !!(empty_field1() & validate_names() & validate_email() &  validate_MobileNumber() & validate_HomeNumber() & validate_NationalId() & validate_gender());">
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="firstName">First name (English)</label>
-                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="" value="">
-                                    <h6 id="warn1" style="font-style: italic;color: red;"></h6>
+                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="" value=""
+                                        >
+                                        <h6 id="warn1" style="font-style: italic;color: red;" ></h6>
                                     <div class="invalid-feedback">
                                         Valid first name is required.
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
-                                    <label for="middleName">Middle name (English)</label>
-                                    <input type="text" class="form-control" id="middleName" name="middle_name" placeholder="" value="">
-                                    <h6 id="warn2" style="font-style: italic;color: red;"></h6>
+                                    <label for="lastName">Middle name (English)</label>
+                                    <input type="text" class="form-control" id="middleName" name="middle_name" placeholder="" value=""
+                                        >
+                                        <h6 id="warn2" style="font-style: italic;color: red;" ></h6>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="lastName">Last name (English)</label>
-                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value="">
-                                    <h6 id="warn3" style="font-style: italic;color: red;"></h6>
+                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="" value=""
+                                        >
+                                        <h6 id="warn3" style="font-style: italic;color: red;" ></h6>
                                     <div class="invalid-feedback">
                                         Valid last name is required.
                                     </div>
@@ -104,8 +111,9 @@ addNewProfessor();
                             <div class="row">
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="example@alexu.edu.eg">
-                                    <h6 id="warn4" style="font-style: italic;color: red;"></h6>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="example@alexu.edu.eg">
+                                        <h6 id="warn4" style="font-style: italic;color: red;" ></h6>
                                     <div class="invalid-feedback">
                                         Please enter a valid email address.
                                     </div>
@@ -120,8 +128,8 @@ addNewProfessor();
 
                                 <div class="col-lg-4 col-md-12 mb-3">
                                     <label for="zip">National ID number</label>
-                                    <input type="text" class="form-control" id="zip" name="national_id" placeholder="">
-                                    <h6 id="warn5" style="font-style: italic;color: red;"></h6>
+                                    <input type="text" class="form-control" id="zip" name="national_id" placeholder="" >
+                                    <h6 id="warn5" style="font-style: italic;color: red;" ></h6>
                                     <div class="invalid-feedback">
                                         Zip code required.
                                     </div>
@@ -132,12 +140,12 @@ addNewProfessor();
                             <div class="row">
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Gender</label>
-                                    <select class="custom-select d-block w-100" id="gender" name="gender">
-                                        <option value="" disabled selected>Choose...</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                    <select class="custom-select d-block w-100" id="gender" name="gender" >
+                                        <option value="">Choose...</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
                                     </select>
-                                    <p id="warn_gender" style="font-style: italic;color: red;"></p>
+                                    <p id="warn_gender" style="font-style: italic;color: red;" ></p>
                                     <div class="invalid-feedback">
                                         Please select a valid country.
                                     </div>
@@ -146,15 +154,17 @@ addNewProfessor();
 
                                 <div class="col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Mobile Number</label>
-                                    <input type="text" class="form-control" id="phone" name="mobile_number" placeholder="01234567890">
-                                    <h6 id="warn6" style="font-style: italic;color: red;"></h6>
+                                    <input type="text" class="form-control" id="phone" name="mobile_number" placeholder="01234567890"
+                                        >
+                                        <h6 id="warn6" style="font-style: italic;color: red;" ></h6>
                                     <div class="invalid-feedback">Please enter your shipping address.</div>
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
                                     <label for="gender">Home Number</label>
-                                    <input type="text" class="form-control" id="HomeNumber" name="home_number" placeholder="(optional)">
-                                    <h6 id="warn8" style="font-style: italic;color: red;"></h6>
+                                    <input type="text" class="form-control" id="HomeNumber" name="home_number" placeholder="(optional)"
+                                        >
+                                        <h6 id="warn8" style="font-style: italic;color: red;" ></h6>
                                     <div class="invalid-feedback">Please enter your shipping address.</div>
                                 </div>
 

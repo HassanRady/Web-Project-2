@@ -53,7 +53,7 @@ function validate_names() {
     var full_name = document.getElementsByTagName('input');
     var warning = document.getElementsByTagName('h6');
 
-    for (i = 0; i <= 3; ++i) {
+    for (i = 0; i <= 2; ++i) {
         var search_name = full_name[i].value.search(/^[A-Za-z]+$/);
 
         if (full_name[i].value.length < 3 && full_name[i].value != "") {
