@@ -52,7 +52,12 @@ $page = "discussion.php?course_id=".$course_id;
     <?php
     include "../includes/utils/variables.php";
     include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
-    include $professor_sidebar_path;
+    $type = $_SESSION['type'];
+
+    if ($type === $adminsType )
+        include $admin_sidebar_path;
+    else
+        include $professor_sidebar_path;
 
 
     ?>

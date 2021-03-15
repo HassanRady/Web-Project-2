@@ -23,6 +23,12 @@
       include "../includes/prof_sidebar.php";
       session_start();
       $instructorId = $_SESSION['id_instructor'];
+    $type = $_SESSION['type'];
+
+    if ($type === $adminsType )
+        include $admin_sidebar_path;
+    else
+        include $professor_sidebar_path;
     ?>
     <!-- Page Content  -->
     <div id="content">
