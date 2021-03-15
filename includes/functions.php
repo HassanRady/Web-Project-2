@@ -874,7 +874,7 @@ function getCourseMaterial($courseId)
             <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
           </div>
         </div>
-      </div>";
+      </div> <br>";
     }
 }
 
