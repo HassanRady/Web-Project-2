@@ -49,8 +49,9 @@ if(isset($_POST['submit'])){
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <?php include "../includes/admin_sidebar.php"; ?>
-
+    <?php
+            include dirname(__FILE__, 2) . "\\includes\\admin_sidebar.php";
+        ?>
 
     <!-- Page Content  -->
     <div id="content">
