@@ -65,15 +65,13 @@ function checkResultQuery($result, $conn, $source=null)
 
 function getCurrentSemester()
 {
-
-        $conn = mysqli_connect( "localhost", "root", "","sim") or die("FAILED TO RECONNECT");
-
-
-    $query = "SELECT semester_id FROM semesters ORDER BY semester_id DESC LIMIT 1";
+    $conn = mysqli_connect( "localhost", "root", "","sim") or die("FAILED TO RECONNECT");
+    $query = "SELECT semester_id, ongoing FROM semesters ORDER BY semester_id DESC LIMIT 1";
     $query_result = mysqli_query($conn, $query);
     if ($query_result) {
         $result = mysqli_fetch_assoc($query_result);
-        return $result['semester_id'];
+        // echo $result['ongoing'];
+        return $result['ongoing'] == 1 ? $result['semester_id'] : -1;
     } else {
         return -1;
     }

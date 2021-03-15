@@ -51,6 +51,7 @@ include_once "../includes/functions.php";
                 <?php 
                     getOpenCourses();
                 ?>
+            <a href="end_semester.php" class="btn btn-outline-danger btn-lg btn-block">END SEMESTER</a>
 
             </div>
 
