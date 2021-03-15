@@ -261,7 +261,11 @@ function editSaProfile($id)
 function getAvailableCourses($category)
 {
     global $conn;
-    $query = "SELECT * FROM courses WHERE category='{$category}'";
+
+    $query = "SELECT c.* FROM courses c
+    LEFT JOIN open_courses oc ON oc.course_id = c.course_id
+     WHERE c.category='{$category}' AND oc.course_id IS NULL";
+
     $query_result = mysqli_query($conn, $query);
     checkQuery($query_result);
     return $query_result;
