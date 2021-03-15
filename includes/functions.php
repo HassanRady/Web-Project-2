@@ -874,7 +874,7 @@ function getCourseMaterial($courseId)
             <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
           </div>
         </div>
-      </div> <br>";
+      </div> <br> ";
     }
 }
 
@@ -907,7 +907,7 @@ function getCourseMaterialEditable($courseId)
           <a  data-id='$material_id' data-title='$title' data-file='../files/$material' class='btn btn-primary btn-block launch-modal' data-toggle='modal' data-target='#modalContactForm'>Options</a>
           </div>
         </div>
-      </div>";
+      </div> <br>";
         // <a href='../files/$material' download='$title' type='button' class='btn btn-primary btn-block'>Download</a>
     }
 }
