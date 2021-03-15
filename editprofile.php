@@ -32,7 +32,8 @@ updateProfile();
 
   <div class="wrapper">
     <?php
-
+    session_start();
+    $type = $_SESSION['type'];
     if ($type === $studentsType)
       include $student_sidebar_path;
     elseif ($type === $adminsType || $type == $sasType)

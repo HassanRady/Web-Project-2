@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<?php include '../includes/functions.php'; ?>
 <?php
+
+include "includes/Admin/callable_functions.php";
+include "includes/utils/variables.php";
+include_once "paths.php";
+
 $location=$_GET["venue_id"];
 ?>
 <html>
@@ -22,7 +26,7 @@ $location=$_GET["venue_id"];
     <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
+<?php include "includes/bootstrap_styles_start.php"; ?>
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
             integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
@@ -37,7 +41,16 @@ $location=$_GET["venue_id"];
 
 <div class="wrapper">
     <?php
-    include dirname(__FILE__, 2) . "\\includes\\admin_sidebar.php";
+
+    session_start();
+    $type = $_SESSION['type'];
+    if ($type === $studentsType)
+        include $student_sidebar_path;
+    elseif ($type === $adminsType || $type == $sasType)
+        include $admin_sidebar_path;
+    else
+        include $professor_sidebar_path;
+
     ?>
     <!-- Page Content  -->
     <div id="content">
@@ -49,7 +62,7 @@ $location=$_GET["venue_id"];
 <hr class="mb-4">
 <div class=" container-fluid">
     <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="../map/<?php echo"". map_location($location);?>" allowfullscreen></iframe>
+        <iframe class="embed-responsive-item" src="map/<?php echo"". map_location($location);?>" allowfullscreen></iframe>
     </div>
 </div>
 

@@ -156,7 +156,7 @@ function Display_venues()
             <div class='col-lg-10'>
 
 
-              <a href='../map/$venue_location'>
+              <a href='../map.php?venue_id=$venue_id'>
               $venue_name
               </a>
             </div>
