@@ -1,6 +1,6 @@
 <?php
 include_once "variables.php";
-include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\db_conn.php";
+//include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\db_conn.php";
 // include_once 'includes\functions.php';
 
 /**
@@ -46,6 +46,7 @@ function which_type($haystack, $needle, $offset = 0)
  */
 function checkResultQuery($result, $conn, $source=null)
 {
+
     global $developer;
     if (!$result) {
         if ($developer) {
@@ -64,7 +65,10 @@ function checkResultQuery($result, $conn, $source=null)
 
 function getCurrentSemester()
 {
-    global $conn;
+
+        $conn = mysqli_connect( "localhost", "root", "","sim") or die("FAILED TO RECONNECT");
+
+
     $query = "SELECT semester_id FROM semesters ORDER BY semester_id DESC LIMIT 1";
     $query_result = mysqli_query($conn, $query);
     if ($query_result) {

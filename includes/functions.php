@@ -64,7 +64,7 @@ function login()
                 break;
                 //change path here
             case $professorsType:
-                header("Location: $announcements_path");
+                header("Location: academic/my_courses_instructor.php");
                 break;
                 //change path here
             case $tasType:
