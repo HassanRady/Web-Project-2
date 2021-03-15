@@ -3,13 +3,13 @@
  * @author Hassan
  */
 
-
+//Delete SIM if you get a path error
 $root = "Web-Project-2";
 $logo_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "media" .DIRECTORY_SEPARATOR. "logo.jpeg";
 $my_profile_path = DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "my_profile.php";
 $login_path =  DIRECTORY_SEPARATOR. $root .DIRECTORY_SEPARATOR. "login.php";
 $discussion_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "academic" .DIRECTORY_SEPARATOR. "discussion.php";
-$announcements_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "student" .DIRECTORY_SEPARATOR. "announcements.php";
+$announcements_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "sa" .DIRECTORY_SEPARATOR. "add_announcements.php";
 // $all_types_funcs_path = DIRECTORY_SEPARATOR .$root .DIRECTORY_SEPARATOR. "includes" .DIRECTORY_SEPARATOR. "Admin" .DIRECTORY_SEPARATOR. "all_types" .DIRECTORY_SEPARATOR. "functions.php";
 
 
