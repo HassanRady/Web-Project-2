@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
-<?php  include"../includes/functions.php"; ?>
+<?php  include"../includes/functions.php";
+include "../includes/Admin/callable_functions.php";
+include "../includes/utils/variables.php";
+include_once "../paths.php";
+session_start();
+$id=$_SESSION['id'];
+?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,44 +39,9 @@
 
 
 
-<div class="wrapper">
+
     <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <img src="../media/logo.jpeg" alt="SIM-LOGO">
-        </div>
-        <p>Navigation</p>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="announcements.php">Home</a>
-            </li>
-            <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                   class="dropdown-toggle">Courses</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="my_courses_std.html">My Courses</a>
-                    </li>
-                    <li>
-                        <a href="course_registration.html">All Courses</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="student_transcript.html">My Profile</a>
-            </li>
-            <li>
-                <a href="timetable.html">Timetable</a>
-            </li>
-        </ul>
-
-        <ul class="list-unstyled CTAs">
-            <li>
-                <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-            </li>
-        </ul>
-    </nav>
-
+<?php include $student_sidebar_path;?>
 
     <!-- Page Content  -->
     <div id="content">
@@ -95,7 +66,7 @@
                             <a class="nav-link" href="student_transcript.html">Transcript</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../my_profile.html">My Profile</a>
+                            <a class="nav-link" href="../my_profile.php">My Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -125,10 +96,10 @@
                         <tbody style="color: rgb(0,0,0,0.5);">
                         <tr>
                             <?php grade_courses();
-                            insert_cgpa(1952445639);
+                            insert_cgpa($id);
                             ?>
                             <?php
-                            $array=transcript_student_information(1952445639);
+                            $array=transcript_student_information($id);
 echo"                            <td scope='row'>$array[0]</td>
                             <td scope='row'>1952445639</td>
                             <td>$array[1]</td>
@@ -147,7 +118,7 @@ echo"                            <td scope='row'>$array[0]</td>
             </h4>
             <hr class="mb-4">
             <div class="container-fluid">
-          <?php transcript(1952445639); ?>
+          <?php transcript($id); ?>
             </div>
             <br class="mb-4">
 
@@ -160,8 +131,8 @@ echo"                            <td scope='row'>$array[0]</td>
             <!-- STOP HERE -->
         </div>
 
-    </div>
-</div>
+
+
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

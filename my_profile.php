@@ -173,13 +173,24 @@ userProfile();
                 <div class='col-md-6 text-secondary'>
                 $address
                 </div>
-              </div>";
+              </div>
+            
+              ";
               ?>
 
             </div>
           </div>
+
         </div>
-        <br>
+
+
+          <?php
+          if ($type === $studentsType)
+              echo "
+              <a href='student/trans.php' class='btn btn-primary btn-block'>Transcript</a>
+              ";
+          ?>
+          <br>
       </div>
 
 
