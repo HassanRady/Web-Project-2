@@ -60,7 +60,7 @@ if(isset($_SESSION['id_instructor'])){
                                         <td class="table-cell content-cell">
                                             <span class="name"><?php echo $data[$i]['cname'] ?></span>
                                             <span class="type"><?php echo ucfirst($data[$i]['type']) . " (" . $data[$i]['freq'] . ")" ?></span>
-                                            <div class="description"><span><?php echo substr($data[$i]['start'], 0, 5) . "-" . substr($data[$i]['end'], 0, 5)  ?> / </span><a href="#" class="location"><?php echo $data[$i]['vname'] ?></a>
+                                            <div class="description"><span><?php echo substr($data[$i]['start'], 0, 5) . "-" . substr($data[$i]['end'], 0, 5)  ?> / </span><a href="../map.php?venue_id=<?php echo"".$data[$i]['venue_id']?>" class="location"><?php echo $data[$i]['vname'] ?></a>
                                             </div>
                                         </td>
                                     <?php
@@ -73,6 +73,7 @@ if(isset($_SESSION['id_instructor'])){
                         <?php } ?>
                     </tbody>
                 </table>
+                <a href="../map.php?venue_id=24" class="btn btn-primary btn-block">Map</a>
                 <!-- STOP HERE -->
             </div>
         </div>

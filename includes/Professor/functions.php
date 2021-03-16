@@ -20,6 +20,7 @@ function getInstructorTimetable($id){
     cl.freq,
     cl.students_group,
     cl.day
+,v.venue_id
     FROM
         classes cl
     INNER JOIN courses c on c.course_id = cl.id_course

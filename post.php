@@ -56,7 +56,6 @@ if (isset($_GET['p_id'])) {
     include_once "includes/utils/variables.php";
     include_once dirname(__FILE__, 1) . DIRECTORY_SEPARATOR . "paths.php";
 
-    session_start();
     $type = $_SESSION['type'];
 
     if ($type === $studentsType)
@@ -70,12 +69,7 @@ if (isset($_GET['p_id'])) {
     <!-- Page Content  -->
     <div id="content">
 
-        <?php
-        if ($type === $studentsType)
-            include $student_navbar_path;
-        else
-            include $professor_navbar_path;
-        ?>
+
 
         <div class="page-body">
             <!-- START HERE -->
