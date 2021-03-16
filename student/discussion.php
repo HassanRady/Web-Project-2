@@ -3,11 +3,11 @@ ob_start();
 
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 session_start();
+$semester_id = $_SESSION['semester_id'];
 $course_id = 0;
 if (isset($_GET['course_id'])) {
     $course_id = $_GET['course_id'];
-    session_start();
-    $semester_id = $_SESSION['semester_id'];
+    
 } else {
     //user should be redirected to error page
     header("Location:../my_profile.php");
@@ -193,12 +193,12 @@ $page = "discussion.php?course_id=".$course_id;
 
                     $poll_id = $_POST['poll_id'];
                     redoVotePoll($user_id, $poll_id);
-                    header("Location:$page");
+                    // header("Location:$page");
                 }
                 if (isset($_POST['delete_poll'])) {
                     $poll_id = $_POST['poll_id'];
                     deletePoll($poll_id);
-                    header("Location:$page");
+                    header("Location:$page?course_id=$course_id&sem_id=$semester_id");
                 }
 
                 ?>
@@ -211,26 +211,26 @@ $page = "discussion.php?course_id=".$course_id;
                     $post_id = $_POST['post_id'];
                     $votes = $_POST['votes'];
                     upVote($post_id, $user_id, $votes);
-                    header("Location:$page");
+                    header("Location:$page?course_id=$course_id&sem_id=$semester_id");
                 }
                 if (isset($_POST['downvote'])) {
 
                     $post_id = $_POST['post_id'];
                     $votes = $_POST['votes'];
                     downVote($post_id, $user_id, $votes);
-                    header("Location:$page");
+                    header("Location:$page?course_id=$course_id&sem_id=$semester_id");
                 }
                 if (isset($_POST['redo'])) {
                     $post_id = $_POST['post_id'];
                     redoVotePost($post_id, $user_id);
-                    header("Location:$page");
+                    header("Location:$page?course_id=$course_id&sem_id=$semester_id");
 
                 }
                 //checking for delete button if clicked and delete the post
                 if (isset($_POST['delete_post'])) {
                     $post_id = $_POST['delete_post_id'];
                     deletePost($post_id);
-                    header("Location:$page");
+                    header("Location:$page?course_id=$course_id&sem_id=$semester_id");
                 }
                 // retrieving post information
                 $posts_result = getAllPosts($course_id, $semester_id);

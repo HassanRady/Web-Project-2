@@ -1323,8 +1323,9 @@ function deletePostComments($id_post)
     }
 }
 
-function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $page)
+function addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $semester_id, $page)
 {
+
     global $conn;
     $query = "INSERT INTO `comments`(id_post, id_user, comment_author, comment_content, comment_date) ";
     $query .= "VALUES('$id_post', '$id_user', '$comment_author', '$comment_content', '$comment_date')";
@@ -1332,7 +1333,7 @@ function addNewComment($id_post, $id_user, $comment_author, $comment_content, $c
     if (!$result) {
         die("Cannot add post to database  " . mysqli_error($conn));
     }
-    header("Location: $page?course_id=$course_id&p_id=$id_post&u_id=$id_user");
+    header("Location: $page?course_id=$course_id&sem_id=$semester_id&p_id=$id_post&u_id=$id_user");
     return $result;
 }
 

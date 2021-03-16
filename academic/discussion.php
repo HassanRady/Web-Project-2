@@ -3,18 +3,18 @@ ob_start();
 
 //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
 session_start();
+$semester_id = $_SESSION['semester_id'];
+
 $course_id = 0;
 if (isset($_GET['course_id'])) {
     $course_id = $_GET['course_id'];
-    session_start();
-    $semester_id = $_SESSION['semester_id'];
 } else {
     //user should be redirected to error page
     header("Location:../my_profile.php");
 }
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['first_name'] . " " . $_SESSION['middle_name'];
-$page = "discussion.php?course_id=".$course_id;
+$page = "discussion.php";
 ?>
 
 
@@ -54,8 +54,6 @@ $page = "discussion.php?course_id=".$course_id;
     include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
     include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Admin\\all_types\\functions.php";
 
-
-        session_start();
         $type = $_SESSION['type'];
         $semester_id = $_SESSION['semester_id'];
 
@@ -189,7 +187,7 @@ $page = "discussion.php?course_id=".$course_id;
             if (isset($_POST['delete_poll'])) {
                 $poll_id = $_POST['poll_id'];
                 deletePoll($poll_id);
-                header("Location:$page");
+                header("Location:$page?course_id=$course_id&sem_id=$semester_id");
             }
             ?>
 
@@ -322,6 +320,7 @@ $page = "discussion.php?course_id=".$course_id;
                 if (!empty($_POST['poll-content'])) {
                     $poll_content = $_POST['poll-content'];
                     $poll_date = date("Y-m-d");
+                    // $page = "discussion";
                     $poll_id = addNewPoll($user_id, $semester_id, $course_id, $poll_content, $poll_date, $page);
                     //poll_op_no will be changed in next sprint and will be flexible
                     $poll_options_no = 2;

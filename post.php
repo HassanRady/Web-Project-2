@@ -5,12 +5,20 @@ include "includes/functions.php";
 global $conn;
 session_start();
 $semester_id = $_SESSION['semester_id'];
+$course_id = $_GET['course_id'];
+
+// die($course_id);
+// $the_post_id = $_GET['p_id'];
+
+
 $the_post_id = 0;
 $the_user_id = 0;
 if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
+    // die($the_post_id);
+
     $the_user_id = $_SESSION['id'];
-    $course_id = $_GET['course_id'];
+    
 }
 
 
@@ -164,7 +172,8 @@ if (isset($_GET['p_id'])) {
                         $comment_date = date("Y-m-d");
                         $comment_content = $_POST['comment_content'];
                         $page = "post.php";
-                        addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $page);
+
+                        addNewComment($id_post, $id_user, $comment_author, $comment_content, $comment_date, $course_id, $semester_id, $page);
 
                     } else {
                         echo "<script>alert('Comment cannot be empty')</script>";
@@ -175,7 +184,8 @@ if (isset($_GET['p_id'])) {
                 if (isset($_POST['delete_comment'])) {
                     $comment_id = $_POST['delete_comment_id'];
                     deleteComment($comment_id);
-                    header('Location: post.php?p_id=' .$the_post_id);
+                    // die($post_id);
+                    header("Location: post.php?course_id=$course_id&sem_id=$semester_id&p_id=$the_post_id");
                 }
                 //getting all the comments
                 $comments_results = getAllComments($the_post_id);
@@ -194,7 +204,7 @@ if (isset($_GET['p_id'])) {
                         //checking if the current user has posted a comment so if he did he can delete it
                         if ($id_user == $the_user_id) {
                             ?>
-                            <form action="post.php?p_id=<?php echo $the_post_id; ?>"
+                            <form action=""
                                   method="post" role="form">
                                 <input type="submit" value="Delete Comment" name="delete_comment"
                                        class="btn btn-primary">
@@ -214,7 +224,7 @@ if (isset($_GET['p_id'])) {
                 <div class="add-comment">
                     <h4>Leave a Comment:</h4>
                     <!--  redirecting to the current page                   -->
-                    <form action="post.php?p_id=<?php echo $the_post_id; ?>"
+                    <form action=""
                           method="post"
                           role="form">
                         <div class="form-group">
