@@ -5,7 +5,7 @@
   color:rgb(31,108,236);
   padding: 20px 50px ;
   border-radius: 8px;
-  /* margin-bottom: 5px; */
+  margin-bottom: 5px;
   
   }
   tr td {
@@ -26,6 +26,7 @@
       color: rgb(0,0,0,0.5);
       font-weight: bold;
     display: inline-block;
+
   }
   p{
     font-size: 16px;

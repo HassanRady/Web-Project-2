@@ -22,7 +22,7 @@ if(isset($_POST['logout-btn'])){
     <p>Navigation</p>
     <ul class="list-unstyled components">
         <li>
-            <a href="<?php echo $announcements_path ?>">Home</a>
+            <a href="<?php echo $my_courses_path_professor ?>">Home</a>
         </li>
         <li>
             <a href="<?php echo $my_courses_path_professor ?>">My Courses</a>

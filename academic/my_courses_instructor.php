@@ -25,14 +25,12 @@
 
       session_start();
       $instructorId = $_SESSION['id_instructor'];
-      $user_id = $_SESSION['id'];
+      $type = $_SESSION['type'];
 
-    if(isHeProfessorAndAdmin($user_id)){
-      include_once $admin_sidebar_path;
-    }else
-    include_once $professor_sidebar_path;
-
-
+    if ($type === $adminsType )
+        include $admin_sidebar_path;
+    else
+        include $professor_sidebar_path;
     ?>
     <!-- Page Content  -->
     <div id="content">
@@ -63,15 +61,13 @@
 
                   <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
                       <a href='<?php echo "discussion.php?course_id=$id&sem_id=$semester" ?>' class='cbox'>
-                          <div class='course-title'>
-                              <?php echo $row['name']; ?>
-                          </div>
+                          <div class='course-title'><?php echo $row['name']; ?></div>
                           <div class='course-info'>
-                              <?php echo $row['level'];  ?>
+                              <p>Level: <?php echo $row['level'];  ?></p>
+                              <p>Enrolled Students: <?php echo $row['student_count']; ?></p>
                           </div>
-                          <div class='course-enrollment'>
-                              <?php echo $row['student_count']; ?>
-                          </div>
+                          <!-- <div class='course-info'>
+                          </div> -->
                       </a>
                   </div>
 

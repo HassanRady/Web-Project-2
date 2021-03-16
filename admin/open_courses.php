@@ -1,7 +1,7 @@
 <?php
 ob_start();
 include_once "../includes/functions.php";
-session_start();
+// session_start();
 
 ?>
 <!DOCTYPE html>
@@ -51,6 +51,7 @@ session_start();
                 <?php 
                     getOpenCourses();
                 ?>
+            <a href="end_semester.php" class="btn btn-outline-danger btn-lg btn-block">END SEMESTER</a>
 
             </div>
 

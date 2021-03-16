@@ -50,7 +50,7 @@ if(isset($_POST['openCourse'])){
         <!-- START HERE -->
         <div class="container-fluid">
           <div class="row justify-content-end">
-              <a href="add_new_course.php" class=" btn btn-primary btn-block w-25">Add New</a>
+              <a href="add_new_course.php" class=" btn btn-primary btn-block w-25 ml-auto">Add New</a>
           </div>
         </div>
         <hr class="mb-4">
@@ -204,10 +204,12 @@ if(isset($_POST['openCourse'])){
                   <td><a href='edit_course.php?course_id=<?php echo $id ?>' class='btn btn-outline-secondary'>Options</a></td>
                 </tr>
               <?php } ?> 
+
             </tbody>
           </table>
         </div>
         <br>
+        <a href="end_semester.php" class="btn btn-outline-danger btn-lg btn-block">END SEMESTER</a>
 
         <!-- Open Course Modal -->
         <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

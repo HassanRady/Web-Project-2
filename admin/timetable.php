@@ -2,7 +2,7 @@
 ob_start();
 include "../includes/functions.php";
 include "../includes/Admin/admin_functions.php";
-session_start();
+// session_start();
 
 $level = "1";
 
@@ -51,16 +51,16 @@ if(isset($_GET['level'])){
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto secondary-navigation">
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 1) echo 'active'; ?> ">
                                 <a class="nav-link" href="timetable.php?level=1">Level 1</a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 2) echo 'active'; ?> ">
                                 <a class="nav-link" href="timetable.php?level=2">Level 2</a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 3) echo 'active'; ?>">
                                 <a class="nav-link" href="timetable.php?level=3">Level 3</a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item <?php if($level == 4) echo 'active'; ?>">
                                 <a class="nav-link" href="timetable.php?level=4">Level 4</a>
                             </li>
 
@@ -87,6 +87,7 @@ if(isset($_GET['level'])){
                                 $length = count($data);
                                 $numItems = 0;
                                 for($i = 0; $i < $length; $i++){
+                                    // echo map_location($data[$i]['vid']);
                                     if($i == $length -1){
                                         /*********************************************************** REGULAR OUTPUT */
                                         ?> 
@@ -104,7 +105,7 @@ if(isset($_GET['level'])){
                                                 <span>
                                                     <?php echo substr($data[$i]['start'], 0 , 5) . " - " . substr($data[$i]['end'], 0 , 5); ?> / 
                                                 </span>
-                                                <a href='#' class='location'>
+                                                <a href='../map.php?venue_id=<?php echo $data[$i]['vid']; ?>' class='location'>
                                                     <?php echo $data[$i]['vname']; ?>
                                                 </a>
                                             </div>
@@ -144,7 +145,7 @@ if(isset($_GET['level'])){
                                                             <span>
                                                                 <?php echo substr($array[$j]['start'], 0 , 5) . " - " . substr($array[$j]['end'], 0 , 5); ?> / 
                                                             </span>
-                                                            <a href='#' class='location'>
+                                                            <a href='../map.php?venue_id=<?php echo $array[$i]['vid']; ?>' class='location'>
                                                                 <?php echo $array[$j]['vname']; ?>
                                                             </a>
                                                         </div>
@@ -177,7 +178,7 @@ if(isset($_GET['level'])){
                                                 <span>
                                                     <?php echo substr($data[$i]['start'], 0 , 5) . " - " . substr($data[$i]['end'], 0 , 5); ?> / 
                                                 </span>
-                                                <a href='#' class='location'>
+                                                <a href='../map.php?venue_id=<?php echo $data[$i]['vid']; ?>' class='location'>
                                                     <?php echo $data[$i]['vname']; ?>
                                                 </a>
                                             </div>

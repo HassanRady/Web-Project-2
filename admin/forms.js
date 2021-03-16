@@ -6,7 +6,7 @@ function empty_field1() {
 
     for (i = 0; i < inputs.length - 1; ++i) {
         if (inputs[i].value == "" && inputs[i] != document.getElementById("HomeNumber")) {
-            error(inputs[i], warning[i-1], "Please enter this field")
+            error(inputs[i], warning[i], "Please enter this field");
 
             flag = false;
 
@@ -30,7 +30,7 @@ function empty_field() {
     console.log(warning);
     for (let i = 0; i < inputs.length; i++) {
         if (inputs[i].value == "" && inputs[i] != document.getElementById("HomeNumber") && inputs[i] != document.getElementById("Re-enter")) {
-            error(inputs[i], warning[i-1], "Please enter this field");
+            error(inputs[i], warning[i], "Please enter this field");
             console.log(i);
             flag = false;
 
@@ -53,16 +53,16 @@ function validate_names() {
     var full_name = document.getElementsByTagName('input');
     var warning = document.getElementsByTagName('h6');
 
-    for (i = 0; i <= 3; ++i) {
+    for (i = 0; i <= 2; ++i) {
         var search_name = full_name[i].value.search(/^[A-Za-z]+$/);
 
         if (full_name[i].value.length < 3 && full_name[i].value != "") {
-            error(full_name[i], warning[i-1], "Name must be longer than 2 characters")
+            error(full_name[i], warning[i], "Name must be longer than 2 characters")
 
             flag = false;
 
         } else if (search_name != 0 && full_name[i].value != "") {
-            error(full_name[i], warning[i-1], "Name must be alphabetical characters only")
+            error(full_name[i], warning[i], "Name must be alphabetical characters only")
             flag = false;
 
         }

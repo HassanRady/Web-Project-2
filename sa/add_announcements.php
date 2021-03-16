@@ -49,35 +49,13 @@ $page = "add_announcements.php";
 
 <div class="wrapper">
     <!-- Sidebar  -->
-    <nav id="sidebar">
-        <div class="sidebar-header">
-            <img src="../media/logo.jpeg" alt="SIM-LOGO">
-        </div>
-        <p>Navigation</p>
-        <ul class="list-unstyled components">
-            <li>
-                <a href="announcements.html">Home</a>
-            </li>
-            <li>
-                <a href="discussion.php">My Courses</a>
-            </li>
-            <li>
-                <a href="../my_profile.html">My Profile</a>
-            </li>
-            <li>
-                <a href="timetable.html">Timetable</a>
-            </li>
-        </ul>
-
-        <ul class="list-unstyled CTAs">
-            <li>
-                <a href="#" class="cta-logout" id="logout-btn">Logout</a>
-            </li>
-        </ul>
-    </nav>
+    <?php
+    include "../includes/utils/variables.php";
+    include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
+    include $admin_sidebar_path;
+    ?>
     <!-- Page Content  -->
     <div id="content">
-
         <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
             <div class="container-fluid">
 
@@ -85,34 +63,14 @@ $page = "add_announcements.php";
                     <i class="fas fa-align-left"></i>
                     <!-- <span id="nav-toggle-text">Navigation</span> -->
                 </button>
-                <a class="navbar-brand" id="page-title" href="#">TITLE</a>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fas fa-align-justify"></i>
-                </button>
+                <a class="navbar-brand" id="page-title" href="#">Announcements</a>
+                <div class="ml-auto"></div>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto secondary-navigation">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="add_announcements.php">Discussion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="assignment-hand-ins.html">Assignments</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Material.html">Material</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="students_in_course.html">Students</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="std_grades.html">Marks</a>
-                        </li>
-                    </ul>
+                <div class="collapse navbar-collapse" style="display:important;">
                 </div>
+            </div>
         </nav>
-
+    <!-- Page Content  -->
 
         <div class="page-body">
             <!-- START HERE -->

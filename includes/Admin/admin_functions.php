@@ -10,6 +10,7 @@ function getAdminTimetable($level){
     $query = "SELECT
     c.name AS cname,
     v.name AS vname,
+    cl.id_venue AS vid,
     cl.type,
     cl.start,
     cl.end,
@@ -32,7 +33,7 @@ function getAdminTimetable($level){
     INNER JOIN open_courses oc ON
         oc.course_id = c.course_id
     WHERE 
-        oc.level = $level
+        cl.level = $level
     ORDER BY CASE
         cl.day WHEN 'saturday' THEN 1 WHEN 'sunday' THEN 2 WHEN 'monday' THEN 3 WHEN 'tuesday' THEN 4 WHEN 'wednesday' THEN 4 WHEN 'thursday' THEN 4
     END,
