@@ -22,6 +22,8 @@
     <?php 
     include_once dirname(__FILE__, 2)."\\paths.php";
     include_once dirname(__FILE__, 2)."\\includes\\Admin\\all_types\\functions.php";
+    include_once dirname(__FILE__, 2)."\\includes\\Student\\functions.php";
+
 
       session_start();
       $instructorId = $_SESSION['id_instructor'];
@@ -57,6 +59,7 @@
               $courses = getInstructorCourses($instructorId);
               while ($row = mysqli_fetch_assoc($courses)) {
                   $id = $row['course_id'];
+              $students_count = getStudentsCountInCourseInCurrentSemester($id);
                   ?>
 
                   <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
@@ -64,7 +67,7 @@
                           <div class='course-title'><?php echo $row['name']; ?></div>
                           <div class='course-info'>
                               <p>Level: <?php echo $row['level'];  ?></p>
-                              <p>Enrolled Students: <?php echo $row['student_count']; ?></p>
+                              <p>Enrolled Students: <?php echo $students_count; ?></p>
                           </div>
                           <!-- <div class='course-info'>
                           </div> -->

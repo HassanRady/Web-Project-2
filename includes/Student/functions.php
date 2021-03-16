@@ -180,6 +180,24 @@ function getOpenCoursesForStudents($studentId)
   $dataBaseConnection->close();
 }
 
+
+function getStudentsCountInCourseInCurrentSemester($course_id) {
+  $semester_id = getCurrentSemester();
+
+  $query = "SELECT count(*) as count FROM course_semester_students css 
+  WHERE css.id_course = $course_id AND css.id_semester = $semester_id;";
+
+$dataBaseConnection = connectToDataBase();
+$result = mysqli_query($dataBaseConnection, $query);
+checkResultQuery($result, $dataBaseConnection, __FUNCTION__ . '@' . __FILE__);
+
+$students_count = mysqli_fetch_assoc($result)['count'];
+
+$dataBaseConnection->close();
+  return $students_count;
+}
+
+
 /**
  * @author Hassan
  * @param int $enrolledHours
@@ -230,8 +248,14 @@ function enrollToCourse($studentId, $course_id)
 
   $enrolledHours = getEnrolledHours($studentId);
   $canEnroll = checkHours($enrolledHours);
-  if (!$canEnroll)
-    die("Hour Limit");
+  if (!$canEnroll) {
+    ?>
+    <!-- <div class="alert alert-primary" role="alert">
+    Student marks successfully updated.
+</div> -->
+<?php
+  // return;
+}
 
   $query = "INSERT INTO course_semester_students (id_student, id_course, id_semester) VALUES ($studentId, $course_id, $semester_id);";
 
@@ -262,7 +286,12 @@ function unEnrollFromCourse($studentId, $courseId) {
 }
 
 
-
+/**
+ * @author Hassan
+ * @param int $id
+ * @param int $course_id
+ * @return void
+ */
 function getAssignments($id, $course_id) {
 
   $query = "SELECT sa.*, a.* FROM student_assignments sa

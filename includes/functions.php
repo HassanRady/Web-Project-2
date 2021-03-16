@@ -820,6 +820,9 @@ function getInstructorCourses($instructorId)
     }
 
 
+    
+
+
 
 function getStudentMarksForCourse($courseId, $std_id)
 {
