@@ -66,10 +66,34 @@
                                 </thead>
                                 <tbody style="color: rgb(0,0,0,0.5);">
                                     <?php
-                                        getRegisteredStudentsMarks($courseId);
+                                      $query=  getRegisteredStudentsMarks($courseId);
+                                      $i =1;
+                                    while ($row = mysqli_fetch_assoc($query)) {
+$id= $row['id_student'];
+$aname= $row['arabic_name'];
+$grade= $row['grade'];
+$gpa= $row['gpa'];
+$oral= $row['oral'];
+$midterm= $row['midterm'];
+$cw= $row['course_work'];
+$prac= $row['practical'];
+$final= $row['final'];
 
                                     ?>
+                                    <tr>
 
+                                        <th scope='row'><?php echo $id ?></th>
+                                        <td><?php echo $aname ?></td>
+                                        <td><?php echo $midterm ?></td>
+                                        <td><?php echo $oral ?></td>
+                                        <td><?php echo $prac ?></td>
+                                        <td><?php echo $cw ?></td>
+                                        <td><?php echo $final ?></td>
+                                        <td><?php echo  $midterm+$oral+$cw+$final+$prac ?></td>
+                                        <td><?php echo $grade ?></td>
+                                        <td><?php echo $gpa ?></td>
+                                    </tr>
+                                <?php }?>
                                 </tbody>
                             </table>
                         </div>

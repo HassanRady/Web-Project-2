@@ -205,6 +205,7 @@ if(isset($_GET['level'])){
                         ?>
                     </tbody>
                 </table>
+                <a href="../map.php?venue_id=24" class="btn btn-primary btn-block">Map</a>
                 <!-- STOP HERE -->
             </div>
         </div>

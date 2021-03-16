@@ -28,7 +28,8 @@ function getStudentTimetable($std_id)
     cl.day,
     u.first_name,
     u.middle_name,
-    u.last_name
+    u.last_name,
+       v.venue_id
     FROM
         classes cl
     INNER JOIN courses c ON
