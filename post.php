@@ -9,7 +9,7 @@ $the_user_id = 0;
 if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
     $the_user_id = $_SESSION['id'];
-    $course_id = $_SESSION['course_id'];
+    $course_id = $_GET['course_id'];
 }
 
 
@@ -69,10 +69,14 @@ if (isset($_GET['p_id'])) {
     <!-- Page Content  -->
     <div id="content">
 
-
+    <?php
+            if ($type === $studentsType)
+                include $student_navbar_path;
+            else
+                include $professor_navbar_path;
+            ?>
 
         <div class="page-body">
-            <!-- START HERE -->
 
 
             <?php
