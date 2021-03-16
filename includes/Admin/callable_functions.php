@@ -46,9 +46,13 @@ function studentSearchEngine()
  */
 function searchProfessor()
 {
+    global $isSearched;
+    $isSearched = false;
 
     if (isset($_POST['submit'])) {
         $d = searchForProfessor();
+        $isSearched = true;
+
         showProfessorSearch($d);
     } else {
         showProfessorsList();
@@ -70,9 +74,12 @@ function professorSearchEngine()
  */
 function searchTa()
 {
-
+    global $isSearched;
+    $isSearched = false;
     if (isset($_POST['submit'])) {
         $d = searchForTa();
+        $isSearched = true;
+
         showTaSearch($d);
     } else {
         showTasList();
@@ -95,8 +102,12 @@ function taSearchEngine()
 function searchSa()
 {
 
+    global $isSearched;
+    $isSearched = false;
     if (isset($_POST['submit'])) {
         $d = searchForSa();
+        $isSearched = true;
+
         showSaSearch($d);
     } else {
         showSasList();

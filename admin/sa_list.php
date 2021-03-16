@@ -182,13 +182,10 @@ saSearchEngine();
                     <div class="btn-group mr-2" role="group" aria-label="First group">
 
                         <?php
-                        list($per_page, $page_1, $count, $page) = getRowsPerPage("sas");
+                         if (!$isSearched) {
+                            for ($i = 1; $i <= $countRows; $i++) {
 
-                        for ($i = 1; $i <= $count; $i++) {
-                            if ($i == $page) {
-                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='sa_list.php?page={$i}'>{$i}</a></button>";
-                            } else {
-                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='sa_list.php?page={$i}'>{$i}</a></button>";
+                                echo "<button type='button' class='btn btn-primary'><a class='active_link' href='Students.php?page={$i}'>{$i}</a></button>";
                             }
                         }
                         ?>
