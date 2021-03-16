@@ -71,7 +71,7 @@ function getCurrentSemester()
     if ($query_result) {
         $result = mysqli_fetch_assoc($query_result);
         // echo $result['ongoing'];
-        return $result['ongoing'] == 1 ? $result['semester_id'] : -1;
+        return $result['semester_id'];
     } else {
         return -1;
     }

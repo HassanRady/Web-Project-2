@@ -23,7 +23,7 @@
       include "../includes/prof_sidebar.php";
       session_start();
       $instructorId = $_SESSION['id_instructor'];
-    $type = $_SESSION['type'];
+      $type = $_SESSION['type'];
 
     if ($type === $adminsType )
         include $admin_sidebar_path;
@@ -59,15 +59,13 @@
 
                   <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
                       <a href='<?php echo "discussion.php?course_id=$id&sem_id=$semester" ?>' class='cbox'>
-                          <div class='course-title'>
-                              <?php echo $row['name']; ?>
-                          </div>
+                          <div class='course-title'><?php echo $row['name']; ?></div>
                           <div class='course-info'>
                               <p>Level: <?php echo $row['level'];  ?></p>
-                          </div>
-                          <div class='course-enrollment'>
                               <p>Enrolled Students: <?php echo $row['student_count']; ?></p>
                           </div>
+                          <!-- <div class='course-info'>
+                          </div> -->
                       </a>
                   </div>
 

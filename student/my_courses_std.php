@@ -28,7 +28,6 @@ include "../includes/Student/functions.php";
     include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
 
     include_once $student_sidebar_path;
-    session_start();
     $std_id = $_SESSION['student_id'];
     // $std_id = $_GET['std_id'];
 
@@ -52,10 +51,10 @@ include "../includes/Student/functions.php";
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav ml-auto secondary-navigation">
-              <li class="nav-item active">
-                <a class="nav-link" href="course_registration.html">All Courses</a>
+              <li class="nav-item ">
+                <a class="nav-link" href="open_courses.php">All Courses</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="#">My Courses</a>
               </li>
 
@@ -69,37 +68,35 @@ include "../includes/Student/functions.php";
         <!-- START HERE -->
 
         <div class="container-fluid ">
-
+          <?php
+          $courses = getStudentCourses((int) $std_id);
+          $enrolledHours = getEnrolledHours($std_id);
+           ?>
+          <div> <label>Total Hours: <?php echo $enrolledHours ?></label> </div>
+          <hr>
           <div class="row courseslist ">
 
             <?php
-            $courses = getStudentCourses((int) $std_id);
-            $enrolledHours = getEnrolledHours($std_id);
+            
             while ($row = mysqli_fetch_assoc($courses)) {
               $id = $row['course_id'];
             ?>
 
               <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 course-item'>
                 <a href='<?php echo "$discussion_student_path?std_id=$std_id&course_id=$id&sem_id=$semester" ?>' class='cbox'>
-                  <div class='course-title'>
-                    <?php echo $row['name']; ?>
-                  </div>
-                  <div class='course-info'>
-                    <?php echo $row['first_name'] . ' ' . $row['last_name'];  ?>
-                  </div>
-                  <div class='course-enrollment'>
-                    <form action="un_enroll.php" method="post">
-                      <button typed="submit" name="course_name" value="<?php echo $row['name']?>" class='btn btn-outline-danger'>Un-Enroll</button>
+                  <div class='course-title'><?php echo $row['name']; ?></div>
+                  <div class='course-info'><?php echo $row['first_name'] . ' ' . $row['last_name'];  ?></div>
+                  <form action="un_enroll.php" method="post" style="margin-top: 16px;">
+                      <button typed="submit" name="course_name" value="<?php echo $row['name']?>" class='btn btn-outline-danger'>Drop</button>
                       <input type="hidden" name="course_id" value="<?php echo $id?>"/>
-                    </form>
-                    </div>
+                  </form>
                 </a>
               </div>
 
 
             <?php }
             ?>
-            <div> <label>Total Hours: <?php echo $enrolledHours ?></label> </div>
+            
 
           </div>
         </div>

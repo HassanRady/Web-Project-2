@@ -33,24 +33,37 @@ if (isset($_POST['submit'])) {
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
-                <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
+        <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                        <i class="fas fa-align-left"></i>
-                        <!-- <span id="nav-toggle-text">Navigation</span> -->
-                    </button>
-                    <a class="navbar-brand" id="page-title" href="#">Open Courses</a>
-                    <div class="ml-auto"></div>
-            </nav>
+          <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fas fa-align-left"></i>
+            <!-- <span id="nav-toggle-text">Navigation</span> -->
+          </button>
+          <a class="navbar-brand" id="page-title" href="#">All Courses</a>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto secondary-navigation">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">All Courses</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="my_courses_std.php">My Courses</a>
+              </li>
+
+            </ul>
+          </div>
+      </nav>
 
 
             <div class="page-body">
                 <!-- START HERE -->
                 <?php $enrolledHours = getEnrolledHours($studentId);?>
 
-                <div class="container"> <label class="float-right">Total Hours: <?php echo $enrolledHours?></label> </div>
-                <br>
+                <label>Total Hours: <?php echo $enrolledHours?></label>
                 <hr>
 
                 <?php
