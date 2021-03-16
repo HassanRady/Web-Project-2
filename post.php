@@ -4,6 +4,7 @@ ob_start();
 include "includes/functions.php";
 global $conn;
 session_start();
+$semester_id = $_SESSION['semester_id'];
 $the_post_id = 0;
 $the_user_id = 0;
 if (isset($_GET['p_id'])) {
@@ -88,19 +89,19 @@ if (isset($_GET['p_id'])) {
                 $post_id = $_POST['post_id'];
                 $votes = $_POST['votes'];
                 upVote($post_id, $the_user_id, $votes);
-                header('Location: post.php?p_id=' . $post_id);
+                header("Location: post.php?p_id=$post_id&course_id=$course_id&sem_id=$semester_id");
             }
             if (isset($_POST['downvote'])) {
 
                 $post_id = $_POST['post_id'];
                 $votes = $_POST['votes'];
                 downVote($post_id, $the_user_id, $votes);
-                header('Location: post.php?p_id=' . $post_id);
+                header("Location: post.php?p_id=$post_id&course_id=$course_id&sem_id=$semester_id");
             }
             if (isset($_POST['redo'])) {
                 $post_id = $_POST['post_id'];
                 redoVotePost($post_id, $the_user_id);
-                header('Location: post.php?p_id=' . $post_id);
+                header("Location: post.php?p_id=$post_id&course_id=$course_id&sem_id=$semester_id");
             }
             $posts_result = getPost($the_post_id);
             while ($row = mysqli_fetch_assoc($posts_result)) {
