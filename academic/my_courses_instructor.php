@@ -20,7 +20,9 @@
   <div class="wrapper">
     <!-- Sidebar  -->
     <?php 
-      include "../includes/prof_sidebar.php";
+    include_once dirname(__FILE__, 2)."\\paths.php";
+    include_once dirname(__FILE__, 2)."\\includes\\Admin\\all_types\\functions.php";
+
       session_start();
       $instructorId = $_SESSION['id_instructor'];
       $type = $_SESSION['type'];

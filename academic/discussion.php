@@ -52,22 +52,39 @@ $page = "discussion.php?course_id=".$course_id;
     <?php
     include "../includes/utils/variables.php";
     include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "paths.php";
-    $type = $_SESSION['type'];
-
-    if ($type === $adminsType )
-        include $admin_sidebar_path;
-    else
-        include $professor_sidebar_path;
+    include_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . "includes\\Admin\\all_types\\functions.php";
 
 
-    ?>
-    <!-- Page Content  -->
-    <div id="content">
+        session_start();
+        $type = $_SESSION['type'];
+        $semester_id = $_SESSION['semester_id'];
 
-        <?php
-        include $professor_navbar_path;
+        if ($type === $studentsType)
+            include $student_sidebar_path;
+        elseif ($type === $adminsType || $type == $sasType)
+            include $admin_sidebar_path;
+        else
+            include $professor_sidebar_path;
+        //stimulating a cookie session where course_id = 1 is level 1 general announcement and user_id is 1
+        $course_id = $_GET['course_id'];
+        $user_id = $_SESSION['id'];
+        $user_name = getUserName($user_id);
         ?>
+        <!-- Page Content  -->
+        <div id="content">
 
+            <?php
+            if ($type === $studentsType)
+                include $student_navbar_path;
+            elseif ($type == $adminsType || $type == $sasType) {
+                if (isHeProfessorAndAdmin($user_id)){ 
+                    include $professor_navbar_path;}
+                else{
+                    echo "<hr>";
+                }
+            } else
+                include $professor_navbar_path;
+            ?>
 
         <div class="page-body">
             <!-- START HERE -->

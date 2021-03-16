@@ -1269,7 +1269,7 @@ function addNewPost($id_user, $id_semester, $id_course, $post_title, $post_autho
         header("Location: $page");
     }
     else{
-        header("Location: $page?course_id=$id_course");
+        header("Location: $page?course_id=$id_course&sem_id=$id_semester");
     }
 
     return $result;
@@ -1445,7 +1445,7 @@ function addNewPoll($id_user, $id_semester, $id_course, $poll_content, $poll_dat
         header("Location: $page");
     }
     else{
-        header("Location: $page?course_id=$id_course");
+        header("Location: $page?course_id=$id_course&sem_id=$id_semester");
     }
 
     return $retPoll_id;

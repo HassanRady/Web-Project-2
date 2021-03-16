@@ -60,6 +60,7 @@ function printCommonData($data, $type)
  */
 function printStudentsData($data)
 {
+    
     foreach ($data as $row) {
 
         echo "<tr>

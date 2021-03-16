@@ -10,7 +10,7 @@ include_once dirname(__FILE__, 2) . "\\utils\\iniclude_utils_files.php";
  */
 function searchForStudent()
 {
-    global $studentsTable, $rowsPerPage, $student_email, $student_id, $student_level, $countRows;
+    global $studentsTable, $rowsPerPage, $student_name, $student_email, $student_id, $student_level, $countRows;
     $student_email = "";
 
     if (isset($_POST['submit'])) {
@@ -25,7 +25,7 @@ function searchForStudent()
                 FROM {$studentsTable} s 
                 join users u 
                     on s.id_user = u.id
-                    WHERE u.email LIKE '%$student_email%' AND s.student_id LIKE '%$student_id%'
+                    WHERE u.email LIKE '%$student_email%' AND s.student_id LIKE '%$student_id%' AND u.first_name LIKE '%$student_name%'
                     ORDER BY s.level = {$level_search} DESC, s.level DESC;";
 
         $dataBaseConnection = connectToDataBase();
@@ -42,7 +42,7 @@ function searchForStudent()
 
         $countRows  = ceil($countRows / $rowsPerPage);
 
-
+        
         return $studentsData;
     }
 }
@@ -54,6 +54,6 @@ function searchForStudent()
  */
 function showStudentSearch($studentsData)
 {
-    global $studentsData;
-    printStudentsData($studentsData, $studentsData);
+    // global $studentsData;
+    printStudentsData($studentsData);
 }
