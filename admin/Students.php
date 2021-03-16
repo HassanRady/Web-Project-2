@@ -96,11 +96,34 @@ studentSearchEngine();
                             </div>
                             <div class="col-md mt-3">
                                 <label for="student-level">Student Level</label>
-                                <select class="form-control" name="student-level" id="student-level" selected="<?php echo $student_level ?>">
-                                    <option>Level 1</option>
-                                    <option>Level 2</option>
-                                    <option>Level 3</option>
-                                    <option>Level 4</option>
+                                <select class="form-control" name="student-level" id="student-level" value="<?php echo $student_level ?>">
+                                    <?php if ($student_level == "Level 1") {
+                                        echo "<option value='Level 1' selected>Level 1</option>";
+                                        echo "<option value='Level 2' >Level 2</option>";
+                                        echo "<option value='Level 3' >Level 3</option>";
+                                        echo "<option value='Level 4' >Level 4</option>";
+                                    } elseif ($student_level == "Level 2") {
+                                        echo "<option value='Level 1' >Level 1</option>";
+                                        echo "<option value='Level 2' selected>Level 2</option>";
+                                        echo "<option value='Level 3' >Level 3</option>";
+                                        echo "<option value='Level 4' >Level 4</option>";
+                                    } elseif ($student_level == "Level 3") {
+                                        echo "<option value='Level 1' >Level 1</option>";
+                                        echo "<option value='Level 2' >Level 2</option>";
+                                        echo "<option value='Level 3' selected>Level 3</option>";
+                                        echo "<option value='Level 4' >Level 4</option>";
+                                    } elseif ($student_level == "Level 4") {
+                                        echo "<option value='Level 1' >Level 1</option>";
+                                        echo "<option value='Level 2' >Level 2</option>";
+                                        echo "<option value='Level 3' >Level 3</option>";
+                                        echo "<option value='Level 4' selected>Level 4</option>";
+                                    } else {
+                                        echo "<option value='Level 1' selected>Level 1</option>";
+                                        echo "<option value='Level 2' >Level 2</option>";
+                                        echo "<option value='Level 3' >Level 3</option>";
+                                        echo "<option value='Level 4' >Level 4</option>";
+                                    }
+                                    ?>
                                 </select>
 
                             </div>
